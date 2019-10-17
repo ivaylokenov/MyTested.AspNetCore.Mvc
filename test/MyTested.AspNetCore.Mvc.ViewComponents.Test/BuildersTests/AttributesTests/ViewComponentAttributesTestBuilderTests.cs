@@ -1,11 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.AttributesTests
 {
+    using System;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
     using Setups;
     using Setups.Common;
     using Setups.ViewComponents;
-    using System;
     using Xunit;
 
     public class ViewComponentAttributesTestBuilderTests
@@ -14,7 +14,6 @@
         public void ContainingAttributeOfTypeShouldNotThrowExceptionWithViewComponentWithTheAttribute()
         {
             MyViewComponent<AttributesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .Attributes(attributes => attributes.ContainingAttributeOfType<CustomAttribute>());
@@ -27,7 +26,6 @@
                 () =>
                 {
                     MyViewComponent<AttributesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .Attributes(attributes => attributes.ContainingAttributeOfType<HttpPatchAttribute>());
@@ -106,6 +104,17 @@
                             .PassingFor<ActionNameAttribute>(vc => vc.Name == "Admin"));
                 },
                 "When testing AttributesComponent was expected to have ActionNameAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void AndAlsoShouldWorkCorrectly()
+        {
+            MyViewComponent<AttributesComponent>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .PassingFor<ViewComponentAttribute>(viewComponent => viewComponent.Name == "Test")
+                    .AndAlso()
+                    .ContainingAttributeOfType<ViewComponentAttribute>());
         }
     }
 }

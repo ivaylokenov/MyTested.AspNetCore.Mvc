@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
   <head>
@@ -7,13 +7,13 @@
     <title>Exceptions </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Exceptions ">
-    <meta name="generator" content="docfx 2.6.3.0">
+    <meta name="generator" content="docfx 2.45.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
     <link rel="stylesheet" href="../styles/main.css">
-    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:navrel" content="">
     <meta property="docfx:tocrel" content="toc.html">
     <meta property="docfx:rel" content="../">
     <meta property="og:title" content="Flexible and asynchronous testing framework for ASP.NET Core MVC">
@@ -30,7 +30,7 @@
     <meta property="twitter:url" content="https://mytestedasp.net/">
     <meta property="twitter:image" content="https://mytestedasp.net/Content/Images/logosocial.jpg">
   </head>
-  <body data-spy="scroll" data-target="#affix">
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
@@ -75,56 +75,40 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-              <h1 id="exceptions" sourcefile="tutorial/exceptions.md" sourcestartlinenumber="1" sourceendlinenumber="1">Exceptions</h1>
-              
-<p sourcefile="tutorial/exceptions.md" sourcestartlinenumber="3" sourceendlinenumber="3">Usually, a controller action should not throw any exceptions but rather return some result. However, that depends on the application configuration, conventions, and architecture. Let&#39;s dive deeper!</p>
-<h2 id="asserting-thrown-exceptions" sourcefile="tutorial/exceptions.md" sourcestartlinenumber="5" sourceendlinenumber="5">Asserting thrown exceptions</h2>
-<p sourcefile="tutorial/exceptions.md" sourcestartlinenumber="7" sourceendlinenumber="7">Currently the <strong>&quot;Music Store&quot;</strong> application handles most of it potential bad requests, but there is a possible exception in the <strong>&quot;AddToCart&quot;</strong> action located in the <strong>&quot;ShoppingCartController&quot;</strong>. More specifically, this code:</p>
-<pre sourcefile="tutorial/exceptions.md" sourcestartlinenumber="9" sourceendlinenumber="12"><code class="lang-c#">var addedAlbum = await DbContext.Albums
+<h1 id="exceptions">Exceptions</h1>
+
+<p>Usually, a controller action should not throw any exceptions but rather return some result. However, that depends on the application configuration, conventions, and architecture. Let&#39;s dive deeper!</p>
+<h2 id="asserting-thrown-exceptions">Asserting thrown exceptions</h2>
+<p>Currently the <strong>&quot;Music Store&quot;</strong> application handles most of its potential bad requests, but there is a possible exception in the <strong>&quot;AddToCart&quot;</strong> action located in the <strong>&quot;ShoppingCartController&quot;</strong>. More specifically, this code:</p>
+<pre><code class="lang-c#">var addedAlbum = await DbContext.Albums
     .SingleAsync(album =&gt; album.AlbumId == id);
-</code></pre><p sourcefile="tutorial/exceptions.md" sourcestartlinenumber="14" sourceendlinenumber="14">If the database does not contain the provided <strong>&quot;id&quot;</strong>, our application will throw an exception. Let&#39;s assert that. Create <strong>&quot;ShoppingCartControllerTest&quot;</strong> class, add the necessary usings and write the following test:</p>
-<pre sourcefile="tutorial/exceptions.md" sourcestartlinenumber="16" sourceendlinenumber="27"><code class="lang-c#">[Fact]
+</code></pre><p>If the database does not contain the provided <strong>&quot;id&quot;</strong>, our application will throw an exception. Let&#39;s assert that. Create <strong>&quot;ShoppingCartControllerTest&quot;</strong> class, add the necessary usings and write the following test:</p>
+<pre><code class="lang-c#">[Fact]
 public void AddToCartShouldThrowExceptionWithInvalidId()
     =&gt; MyController&lt;ShoppingCartController&gt;
         .Instance()
-        .Calling(c =&gt; c.AddToCart(1))
-        .ShouldThrow()
+        .Calling(c =&gt; c.AddToCart(1, CancellationToken.None))
+        .ShouldThrow() // &lt;---
         .AggregateException()
         .ContainingInnerExceptionOfType&lt;InvalidOperationException&gt;()
         .WithMessage()
         .Containing(&quot;Sequence contains no elements&quot;);
-</code></pre><p sourcefile="tutorial/exceptions.md" sourcestartlinenumber="29" sourceendlinenumber="29">Since we do not add any entries to the scoped in-memory database, the test should pass without any problem. With it we are validating that the action throws <strong>&quot;AggregateException&quot;</strong> with message containing <strong>&quot;Sequence contains no elements&quot;</strong> and inner <strong>&quot;InvalidOperationException&quot;</strong>. Next to the <strong>&quot;AggregateException&quot;</strong>, there is the normal <strong>&quot;Exception&quot;</strong> call, which asserts non-asynchronous errors.</p>
-<p sourcefile="tutorial/exceptions.md" sourcestartlinenumber="31" sourceendlinenumber="31">Unfortunately, if we run the above test with the .NET CLI by using <strong>&quot;dotnet test&quot;</strong>, we will receive a fail on <strong>&quot;net451&quot;</strong> because the <strong>&quot;AggregateException&quot;</strong> exception message is just &quot;One or more errors occurred.&quot;. Possible fixes include removing the <strong>&quot;WithMessage&quot;</strong> call or just adding a compiler directive for the different frameworks like so:</p>
-<pre sourcefile="tutorial/exceptions.md" sourcestartlinenumber="33" sourceendlinenumber="48"><code class="lang-c#">[Fact]
-public void AddToCartShouldThrowExceptionWithInvalidId()
-    =&gt; MyController&lt;ShoppingCartController&gt;
-        .Instance()
-        .Calling(c =&gt; c.AddToCart(1))
-        .ShouldThrow()
-        .AggregateException()
-        .ContainingInnerExceptionOfType&lt;InvalidOperationException&gt;()
-        .WithMessage()
-#if NETCOREAPP1_0
-        .Containing(&quot;Sequence contains no elements&quot;);
-#else
-        .Containing(&quot;One or more errors occurred&quot;);
-#endif
-</code></pre><h2 id="uncaught-exceptions" sourcefile="tutorial/exceptions.md" sourcestartlinenumber="50" sourceendlinenumber="50">Uncaught exceptions</h2>
-<p sourcefile="tutorial/exceptions.md" sourcestartlinenumber="52" sourceendlinenumber="52">Let&#39;s see what happens if the action throws an exception, and we try to validate a normal action result, for example:</p>
-<pre sourcefile="tutorial/exceptions.md" sourcestartlinenumber="54" sourceendlinenumber="62"><code class="lang-c#">[Fact]
+</code></pre><p>Since we do not add any entries to the scoped in-memory database, the test should pass without any problem. With it we are validating that the action throws <strong>&quot;AggregateException&quot;</strong> with inner <strong>&quot;InvalidOperationException&quot;</strong> and a message containing <strong>&quot;Sequence contains no elements&quot;</strong>. Next to the <strong>&quot;AggregateException&quot;</strong>, there is the normal <strong>&quot;Exception&quot;</strong> call, which asserts non-asynchronous errors.</p>
+<h2 id="uncaught-exceptions">Uncaught exceptions</h2>
+<p>Let&#39;s see what happens if the action throws an exception, and we try to validate a normal action result, for example:</p>
+<pre><code class="lang-c#">[Fact]
 public void AddToCartShouldThrowExceptionWithInvalidId()
     =&gt; MyController&lt;ShoppingCartController&gt;
         .Instance()
         .Calling(c =&gt; c.AddToCart(1))
         .ShouldReturn()
         .View();
-</code></pre><p sourcefile="tutorial/exceptions.md" sourcestartlinenumber="64" sourceendlinenumber="64">As you may expect, we receive a nice and descriptive error message:</p>
-<pre sourcefile="tutorial/exceptions.md" sourcestartlinenumber="66" sourceendlinenumber="68"><code class="lang-text">When calling AddToCart action in ShoppingCartController expected no exception but AggregateException (containing InvalidOperationException with &#39;Sequence contains no elements&#39; message) was thrown without being caught.
-</code></pre><h2 id="section-summary" sourcefile="tutorial/exceptions.md" sourcestartlinenumber="70" sourceendlinenumber="70">Section summary</h2>
-<p sourcefile="tutorial/exceptions.md" sourcestartlinenumber="72" sourceendlinenumber="72">And kids... that&#39;s how we assert thrown exceptions! :)</p>
-<p sourcefile="tutorial/exceptions.md" sourcestartlinenumber="74" sourceendlinenumber="74">Now let&#39;s revisit our <a href="/tutorial/options.html" sourcefile="tutorial/exceptions.md" sourcestartlinenumber="74" sourceendlinenumber="74">Options</a> testing!</p>
-
-            </article>
+</code></pre><p>As you may expect, we receive a nice and descriptive error message:</p>
+<pre><code class="lang-text">When calling AddToCart action in ShoppingCartController expected no exception but AggregateException (containing InvalidOperationException with &#39;Sequence contains no elements&#39; message) was thrown without being caught.
+</code></pre><h2 id="section-summary">Section summary</h2>
+<p>And kids... that&#39;s how we assert thrown exceptions! :)</p>
+<p>Now let&#39;s revisit our <a href="/tutorial/options.html">Options</a> testing!</p>
+</article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
@@ -132,7 +116,7 @@ public void AddToCartShouldThrowExceptionWithInvalidId()
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/tutorial/docs/_docfx/tutorial/exceptions.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/tmollov/MyTested.AspNetCore.Mvc/blob/development/docs/_docfx/tutorial/exceptions.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>

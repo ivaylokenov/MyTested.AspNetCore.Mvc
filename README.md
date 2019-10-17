@@ -10,13 +10,23 @@
           <img width="148px" src="https://softuni.org/platform/assets/icons/logo.svg">
         </a>
       </td>
+	    <td align="center" valign="middle">
+        <a href="http://bit.ly/30xsnsC" target="_blank">
+          <img width="148px" src="https://user-images.githubusercontent.com/3391906/65251792-dd848800-daef-11e9-8857-637a48048cda.png">
+        </a>
+      </td>
+      <td align="center" valign="middle">
+          <a href="http://noblehire.io?utm_medium=social&utm_source=projects&utm_campaign=platform-leads-knv" target="_blank">
+          <img width="148px" src="https://user-images.githubusercontent.com/3391906/66921689-637fea00-f02e-11e9-944a-b07c6f345a06.png">
+        </a>
+      </td>
     </tr>
   </tbody>
 </table>
 
 ## Project Description
 
-**MyTested.AspNetCore.Mvc** is a strongly-typed unit testing library providing an easy fluent interface to test the [ASP.NET Core MVC](https://github.com/aspnet/AspNetCore) framework. It is testing framework agnostic so that you can combine it with a test runner of your choice (e.g. [xUnit](https://github.com/xunit/xunit), [NUnit](https://github.com/nunit/nunit), etc.). 
+**MyTested.AspNetCore.Mvc** is a strongly-typed unit testing library providing an easy fluent interface to test the [ASP.NET Core](https://github.com/aspnet/AspNetCore) framework, perfectly suitable for both MVC and API scenarios. It is testing framework agnostic so that you can combine it with a test runner of your choice (e.g. [xUnit](https://github.com/xunit/xunit), [NUnit](https://github.com/nunit/nunit), etc.). 
 
 *Windows:* [![Build status](https://ci.appveyor.com/api/projects/status/3xlag3a7f87bg4on?svg=true)](https://ci.appveyor.com/project/ivaylokenov/mytested-aspnetcore-mvc)
 
@@ -41,7 +51,9 @@ Take a look around and...
 
 ⭐️ ...if you like the library, **star** the repository and **show** it to your friends!
 
-👀 ...if you find it useful, make sure you **subscribe** for future releases by clicking the **"Watch"** button and choosing **"Releases only"**!
+😏 ...if you find it useful, make sure you **subscribe** for future releases by clicking the **"Watch"** button and choosing **"Releases only"**!
+
+👀 ...if you want to learn cool C# coding techniques, **subscribe** to my [YouTube channel](https://www.youtube.com/channel/UCP5Ons7fK3yKhX6lhc9XcfQ), where I regularly post online video lessons!
 
 ✔ ...if you want to **support** the project, **[become a sponsor/backer](#sponsors--backers)** or go to [https://MyTestedASP.NET](https://MyTestedASP.NET), and consider **purchasing a premium [license](#license)**!
 
@@ -62,12 +74,14 @@ Take a look around and...
 - One-time donation via cryptocurrencies:
   - BTC (Bitcoin) - 3P49XMiGXxqR2Dq1HdqHpkCa6UD848rpBU 
   - BCH (Bitcoin Cash) - qqgyjlvmuydf6gtfhfdypyw2u8utmc3uqg4nwma3y4
-  - ETC (Ethereum) - 0x2bc55e4b1B9b296B751738631CD24b2f701E588F
+  - ETH (Ethereum) - 0x2bc55e4b1B9b296B751738631CD24b2f701E588F
   - LTC (Litecoin) - MQ1GJum1QuqAuUsc6LarE3Z6TQQJ3rJwsA
 
 #### What's the difference between Patreon and OpenCollective?
 
-Funds donated via both platforms are used for development and marketing purposes. Funds donated via OpenCollective are managed with transparent expenses. Your name/logo will receive proper recognition and exposure by donating on either platform.
+Funds donated via both platforms are used for development and marketing purposes. Funds donated via [OpenCollective](https://opencollective.com/mytestedaspnet) are managed with transparent expenses. Your name/logo will receive proper recognition and exposure by donating on either platform.
+
+Additionally, funds donated via [Patreon](https://www.patreon.com/ivaylokenov) (see the stretch goals) give me the freedom to add more features to the free `Lite` edition of the library.
 
 ## Quick Start
 
@@ -154,7 +168,7 @@ namespace MyApp.Tests.Controllers
                 .Controller<HomeController>()
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .View();
+                .Ok();
     }
 }
 ```
@@ -163,7 +177,7 @@ Basically, **MyTested.AspNetCore.Mvc** throws an unhandled exception with a frie
 
 ## Detailed Documentation
 
-It is **strongly advised** to read the [tutorial](http://docs.mytestedasp.net/tutorial/intro.html) to get familiar with **MyTested.AspNetCore.Mvc** in more details. Additionally, you may see the [testing guide](http://docs.mytestedasp.net/guide/intro.html) or the [API reference](http://docs.mytestedasp.net/api/index.html) for a full list of available features.
+It is **strongly advised** to read the [tutorial](http://docs.mytestedasp.net/tutorial/intro.html) or watch [this online video lesson](https://www.youtube.com/watch?v=Tf2P-410Za4) to get familiar with **MyTested.AspNetCore.Mvc** in more details. Additionally, you may see the [testing guide](http://docs.mytestedasp.net/guide/intro.html) or the [API reference](http://docs.mytestedasp.net/api/index.html) for a full list of available features.
 
 You can also check out the [provided samples](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/version-2.2/samples) for real-life ASP.NET Core MVC application testing.
 
@@ -198,7 +212,7 @@ This package will include all available assertion methods in your test project, 
  - `MyTested.AspNetCore.Mvc.DataAnnotations` - Contains setup and assertion methods for data annotation validations
  - `MyTested.AspNetCore.Mvc.EntityFrameworkCore` - Contains setup and assertion methods for `DbContext`
  - `MyTested.AspNetCore.Mvc.DependencyInjection` - Contains setup methods for dependency injection services
- - `MyTested.AspNetCore.Mvc.Caching` - Contains setup and assertion methods for `IMemoryCache`
+ - `MyTested.AspNetCore.Mvc.Caching` - Contains setup and assertion methods for `IMemoryCache` and `IDistributedCache`
  - `MyTested.AspNetCore.Mvc.Session` - Contains setup and assertion methods for `ISession`
  - `MyTested.AspNetCore.Mvc.Options` - Contains setup and assertion methods for `IOptions`
  - `MyTested.AspNetCore.Mvc.Helpers` - Contains additional helper methods for easier assertions
@@ -272,7 +286,7 @@ MyController<MyMvcController>
             .Passing(cacheModel => cacheModel.Id == 1)))
     .AndAlso()
     .ShouldReturn()
-    .View(result => result
+    .Ok(result => result
         .WithModelOfType<MyResponseModel>());
 
 // Instantiates controller with the registered global services,
@@ -302,7 +316,7 @@ MyController<MyMvcController>
         .ContainingEntryWithKey(ControllerConstants.SuccessMessage))
     .AndAlso()
     .ShouldReturn()
-    .Redirect(redirect => redirect
+    .Redirect(result => result
         .To<AnotherController>(c => c.AnotherAction()));
 ```
 
@@ -323,7 +337,7 @@ MyController<MyMvcController>
         From.Services<IYetAnotherService>()) // Provides a global service.
     .Calling(c => c.MyAction())
     .ShouldReturn()
-    .View();
+    .Accepted();
 	
 // Instantiates controller with the provided service mocks,
 // and tests for view result.
@@ -480,7 +494,7 @@ MyMvc
 			
     // Assert
     .ShouldReturn()
-    .Redirect(redirect => redirect
+    .Redirect(result => result
         .To<AnotherController>(c => c.AnotherAction(
             With.No<MyDataContext>(),
             id)));
@@ -499,7 +513,7 @@ var call = controller.Calling(c => c.MyAction(id));
 // Assert
 call
     .ShouldReturn()
-    .View(view => view
+    .Json(result => result
         .WithModelOfType<MyModel>()
         .Passing(model => model.Id == id));
 ```
@@ -556,9 +570,9 @@ MyMvc
             .WithDomain("mydomain.com")
             .WithExpiration(myDateTimeOffset)
             .WithPath("/")))
-	.AndAlso()
+    .AndAlso()
     .ShouldReturn()
-    .Ok();
+    .BadRequest();
 ```
 
 ## Versioning

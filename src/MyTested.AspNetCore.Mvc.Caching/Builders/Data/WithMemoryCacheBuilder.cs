@@ -4,9 +4,11 @@
     using System.Collections.Generic;
     using Contracts.Data;
     using Microsoft.Extensions.Caching.Memory;
+    using Contracts.Data.MemoryCache;
+    using Data.MemoryCache;
     using Utilities.Extensions;
 
-    /// <inheritdoc />
+    /// <inheritdoc />4
     public class WithMemoryCacheBuilder : BaseMemoryCacheBuilder, IAndWithMemoryCacheBuilder
     {
         /// <summary>

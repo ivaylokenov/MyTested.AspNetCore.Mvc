@@ -1,9 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.InvocationsTests
 {
+    using System;
     using Exceptions;
     using Setups;
     using Setups.ViewComponents;
-    using System;
     using Xunit;
 
     public class ShouldThrowExceptionTests
@@ -12,7 +12,6 @@
         public void ShouldThrowExceptionShouldCatchAndValidateThereIsException()
         {
             MyViewComponent<ExceptionComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldThrow()
                 .Exception();
@@ -25,7 +24,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldThrow()
                         .Exception();
@@ -37,7 +35,6 @@
         public void ShouldThrowExceptionShouldCatchAndValidateTypeOfException()
         {
             MyViewComponent<ExceptionComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldThrow()
                 .Exception()
@@ -51,7 +48,6 @@
                 () =>
                 {
                     MyViewComponent<ExceptionComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldThrow()
                         .Exception()
@@ -64,7 +60,6 @@
         public void ShouldThrowAggregateExceptionShouldCatchAndValidateAggregateException()
         {
             MyViewComponent<AggregateExceptionComponent>
-                .Instance()
                 .InvokedWith(c => c.InvokeAsync())
                 .ShouldThrow()
                 .AggregateException();
@@ -77,7 +72,6 @@
                 () =>
                 {
                     MyViewComponent<ExceptionComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldThrow()
                         .AggregateException();
@@ -89,7 +83,6 @@
         public void ShouldThrowAggregateExceptionShouldCatchAndValidateAggregateExceptionWithSpecificNumberOfInnerExceptions()
         {
             MyViewComponent<AggregateExceptionComponent>
-                .Instance()
                 .InvokedWith(c => c.InvokeAsync())
                 .ShouldThrow()
                 .AggregateException(1);
@@ -102,7 +95,6 @@
                 () =>
                 {
                     MyViewComponent<AggregateExceptionComponent>
-                        .Instance()
                         .InvokedWith(c => c.InvokeAsync())
                         .ShouldThrow()
                         .AggregateException(2);

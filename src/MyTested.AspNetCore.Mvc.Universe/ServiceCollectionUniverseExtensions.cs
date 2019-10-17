@@ -21,6 +21,7 @@
                 .AddMvcTesting()
                 .ReplaceDbContext()
                 .ReplaceMemoryCache()
+                .ReplaceDistributedCache()
                 .ReplaceSession();
 
             return serviceCollection;

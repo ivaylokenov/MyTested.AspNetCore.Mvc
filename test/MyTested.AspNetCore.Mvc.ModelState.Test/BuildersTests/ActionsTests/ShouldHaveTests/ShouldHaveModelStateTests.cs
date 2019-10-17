@@ -1,6 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ActionsTests.ShouldHaveTests
 {
     using Exceptions;
+    using Microsoft.Extensions.DependencyInjection;
+    using Plugins;
     using Setups;
     using Setups.Controllers;
     using Setups.ViewComponents;
@@ -146,7 +148,6 @@
         public void ShouldHaveValidModelStateShouldBeValidWithViewComponentValidModelState()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .ValidModelState();
@@ -221,7 +222,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .InvalidModelState();
@@ -236,7 +236,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .InvalidModelState(withNumberOfErrors: 5);

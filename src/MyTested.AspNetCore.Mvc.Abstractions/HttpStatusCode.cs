@@ -181,6 +181,11 @@
         public const int AuthenticationTimeout = 419;
 
         /// <summary>
+        /// 422 (Unprocessable Entity) HTTP status code.
+        /// </summary>
+        public const int UnprocessableEntity = 422;
+
+        /// <summary>
         /// 500 (Internal Server Error) HTTP status code.
         /// </summary>
         public const int InternalServerError = 500;

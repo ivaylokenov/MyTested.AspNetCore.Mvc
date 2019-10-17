@@ -18,7 +18,7 @@
                 .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
-                .Ok(ок => ок
+                .Ok(ok => ok
                     .WithModelOfType<ICollection<ResponseModel>>()
                     .Passing(m =>
                     {
@@ -37,7 +37,7 @@
                         .Instance()
                         .Calling(c => c.OkResultWithResponse())
                         .ShouldReturn()
-                        .Ok(ок => ок
+                        .Ok(ok => ok
                             .WithModelOfType<ICollection<ResponseModel>>()
                             .Passing(m =>
                             {
@@ -54,7 +54,7 @@
                 .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
-                .Ok(ок => ок
+                .Ok(ok => ok
                     .WithModelOfType<ICollection<ResponseModel>>()
                     .Passing(m => m.First().IntegerValue == 1));
         }
@@ -69,7 +69,7 @@
                         .Instance()
                         .Calling(c => c.OkResultWithResponse())
                         .ShouldReturn()
-                        .Ok(ок => ок
+                        .Ok(ok => ok
                             .WithModelOfType<IList<ResponseModel>>()
                             .Passing(m => m.First().IntegerValue == 2));
                 }, 

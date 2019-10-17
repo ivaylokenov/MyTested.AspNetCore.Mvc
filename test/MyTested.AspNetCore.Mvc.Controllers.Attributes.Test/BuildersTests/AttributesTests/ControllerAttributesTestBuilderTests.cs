@@ -6,6 +6,7 @@
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
+    using Setups.Pipelines;
     using Xunit;
 
     public class ControllerAttributesTestBuilderTests
@@ -15,7 +16,7 @@
         {
             MyController<AttributesController>
                 .ShouldHave()
-                .Attributes(attributes => attributes.ChangingRouteTo("api/test"));
+                .Attributes(attributes => attributes.SpecifyingRoute("api/test"));
         }
 
         [Fact]
@@ -23,7 +24,7 @@
         {
             MyController<AttributesController>
                 .ShouldHave()
-                .Attributes(attributes => attributes.ChangingRouteTo("api/Test"));
+                .Attributes(attributes => attributes.SpecifyingRoute("api/Test"));
         }
 
         [Fact]
@@ -32,7 +33,7 @@
             MyController<AttributesController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
-                    .ChangingRouteTo(route => route
+                    .SpecifyingRoute(route => route
                         .WithOrder(1)
                         .AndAlso()
                         .WithName("TestRouteAttributes")
@@ -48,7 +49,7 @@
                 {
                     MyController<AttributesController>
                         .ShouldHave()
-                        .Attributes(attributes => attributes.ChangingRouteTo("api/another"));
+                        .Attributes(attributes => attributes.SpecifyingRoute("api/another"));
                 },
                 "When testing AttributesController was expected to have RouteAttribute with 'api/another' template, but in fact found 'api/test'.");
         }
@@ -58,7 +59,7 @@
         {
             MyController<AttributesController>
                 .ShouldHave()
-                .Attributes(attributes => attributes.ChangingRouteTo("api/test", withName: "TestRouteAttributes"));
+                .Attributes(attributes => attributes.SpecifyingRoute("api/test", withName: "TestRouteAttributes"));
         }
 
         [Fact]
@@ -69,7 +70,7 @@
                 {
                     MyController<AttributesController>
                         .ShouldHave()
-                        .Attributes(attributes => attributes.ChangingRouteTo("api/test", withName: "AnotherRoute"));
+                        .Attributes(attributes => attributes.SpecifyingRoute("api/test", withName: "AnotherRoute"));
                 },
                 "When testing AttributesController was expected to have RouteAttribute with 'AnotherRoute' name, but in fact found 'TestRouteAttributes'.");
         }
@@ -79,7 +80,7 @@
         {
             MyController<AttributesController>
                 .ShouldHave()
-                .Attributes(attributes => attributes.ChangingRouteTo("api/test", withOrder: 1));
+                .Attributes(attributes => attributes.SpecifyingRoute("api/test", withOrder: 1));
         }
 
         [Fact]
@@ -90,7 +91,7 @@
                 {
                     MyController<AttributesController>
                         .ShouldHave()
-                        .Attributes(attributes => attributes.ChangingRouteTo("api/test", withOrder: 2));
+                        .Attributes(attributes => attributes.SpecifyingRoute("api/test", withOrder: 2));
                 },
                 "When testing AttributesController was expected to have RouteAttribute with order of 2, but in fact found 1.");
         }
@@ -103,7 +104,7 @@
                 {
                     MyController<AreaController>
                         .ShouldHave()
-                        .Attributes(attributes => attributes.ChangingRouteTo("api/test"));
+                        .Attributes(attributes => attributes.SpecifyingRoute("api/test"));
                 },
                 "When testing AreaController was expected to have RouteAttribute, but in fact such was not found.");
         }
@@ -393,7 +394,7 @@
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SpecifyingProduction(production => production
-                        .WithType(typeof(ResponseModel))
+                        .OfType(typeof(ResponseModel))
                         .WithContentTypes("application/xml", "application/json")
                         .WithOrder(1)));
         }
@@ -415,7 +416,7 @@
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SpecifyingProduction(production => production
-                        .WithType(typeof(ResponseModel))
+                        .OfType(typeof(ResponseModel))
                         .AndAlso()
                         .WithContentTypes(new List<string> { "application/xml", "application/json" })
                         .AndAlso()
@@ -435,6 +436,120 @@
                                 .WithOrder(2)));
                 },
                 "When testing ApiController was expected to have ProducesAttribute with order of 2, but in fact found 1.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttribute()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingMiddleware(typeof(MyPipeline)));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithMissingAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingMiddleware(typeof(MyPipeline)));
+                },
+                "When testing AttributesController was expected to have MiddlewareFilterAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithCorrectAttributeAndWrongConfigurationType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingMiddleware(typeof(MyOtherPipeline)));
+                },
+                "When testing ApiController was expected to have MiddlewareFilterAttribute with 'MyOtherPipeline' type, but in fact found 'MyPipeline'.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttributeConfigurationType()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingMiddleware(middleware => middleware
+                        .OfType(typeof(MyPipeline))));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithWrongConfigurationType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingMiddleware(middleware => middleware
+                                .OfType(typeof(MyOtherPipeline))));
+                },
+                "When testing ApiController was expected to have MiddlewareFilterAttribute with 'MyOtherPipeline' type, but in fact found 'MyPipeline'.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithCorrectAttributeAndWrongOrder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingMiddleware(middleware => middleware.WithOrder(1)));
+                },
+                "When testing ApiController was expected to have MiddlewareFilterAttribute with order of 1, but in fact found 2.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderForOrder()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingMiddleware(middleware => middleware.WithOrder(2)));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttributeConfigTypeAndUsingBuilderForOrder()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingMiddleware(middleware => middleware
+                        .OfType(typeof(MyPipeline))
+                        .AndAlso()
+                        .WithOrder(2)));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithCorrectAttributeConfigTypeAndUsingBuilderForOrderWithWrongOrder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingMiddleware(middleware => middleware
+                                .OfType(typeof(MyPipeline))
+                                .AndAlso()
+                                .WithOrder(1)));
+                },
+                "When testing ApiController was expected to have MiddlewareFilterAttribute with order of 1, but in fact found 2.");
         }
 
         [Fact]
@@ -1381,7 +1496,7 @@
                     => attributes
                         .AllowingAnonymousRequests()
                         .AndAlso()
-                        .ChangingRouteTo("api/test"));
+                        .SpecifyingRoute("api/test"));
         }
     }
 }

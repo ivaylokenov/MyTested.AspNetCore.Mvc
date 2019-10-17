@@ -188,5 +188,96 @@
                         Assert.Equal(2, responseModel.Count);
                     }));
         }
+
+        [Fact]
+
+        public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithModelStateErrorAndBeginningWith()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.CustomModelStateError())
+                .ShouldHave()
+                .ModelState(modelState => modelState
+                    .ContainingError("Test")
+                    .BeginningWith("Test"))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModelOfType<ICollection<ResponseModel>>()
+                    .ShouldPassForThe<ICollection<ResponseModel>>(responseModel =>
+                    {
+                        Assert.NotNull(responseModel);
+                        Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
+                        Assert.Equal(2, responseModel.Count);
+                    }));
+        }
+
+        [Fact]
+
+        public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithModelStateErrorAndEndingWith()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.CustomModelStateError())
+                .ShouldHave()
+                .ModelState(modelState => modelState
+                    .ContainingError("Test")
+                    .EndingWith("error"))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModelOfType<ICollection<ResponseModel>>()
+                    .ShouldPassForThe<ICollection<ResponseModel>>(responseModel =>
+                    {
+                        Assert.NotNull(responseModel);
+                        Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
+                        Assert.Equal(2, responseModel.Count);
+                    }));
+        }
+
+        [Fact]
+
+        public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithModelStateErrorAndContaining()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.CustomModelStateError())
+                .ShouldHave()
+                .ModelState(modelState => modelState
+                    .ContainingError("Test")
+                    .Containing("st err"))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModelOfType<ICollection<ResponseModel>>()
+                    .ShouldPassForThe<ICollection<ResponseModel>>(responseModel =>
+                    {
+                        Assert.NotNull(responseModel);
+                        Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
+                        Assert.Equal(2, responseModel.Count);
+                    }));
+        }
+
+        [Fact]
+
+        public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithModelStateErrorAndContainingError()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.CustomModelStateError())
+                .ShouldHave()
+                .ModelState(modelState => modelState
+                    .ContainingError("Test"))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModelOfType<ICollection<ResponseModel>>()
+                    .ShouldPassForThe<ICollection<ResponseModel>>(responseModel =>
+                    {
+                        Assert.NotNull(responseModel);
+                        Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
+                        Assert.Equal(2, responseModel.Count);
+                    }));
+        }
     }
 }

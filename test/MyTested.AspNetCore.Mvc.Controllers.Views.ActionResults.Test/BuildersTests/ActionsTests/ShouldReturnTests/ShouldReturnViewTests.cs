@@ -185,7 +185,7 @@
         }
 
         [Fact]
-        public void ShouldReturnParrtialViewShouldThrowExceptionWithIncorrectViewResult()
+        public void ShouldReturnPartialViewShouldThrowExceptionWithIncorrectViewResult()
         {
             Test.AssertException<InvocationResultAssertionException>(
                 () =>

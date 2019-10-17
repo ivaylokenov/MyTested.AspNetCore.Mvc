@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
+    using Setups.Pipelines;
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
@@ -19,7 +20,7 @@
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/test"));
+                .ActionAttributes(attributes => attributes.SpecifyingRoute("/api/test"));
         }
 
         [Fact]
@@ -29,7 +30,7 @@
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/Test"));
+                .ActionAttributes(attributes => attributes.SpecifyingRoute("/api/Test"));
         }
 
         [Fact]
@@ -42,7 +43,7 @@
                         .Instance()
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
-                        .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/another"));
+                        .ActionAttributes(attributes => attributes.SpecifyingRoute("/api/another"));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have RouteAttribute with '/api/another' template, but in fact found '/api/test'.");
         }
@@ -54,7 +55,7 @@
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/test", withName: "TestRoute"));
+                .ActionAttributes(attributes => attributes.SpecifyingRoute("/api/test", withName: "TestRoute"));
         }
 
         [Fact]
@@ -67,7 +68,7 @@
                         .Instance()
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
-                        .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/test", withName: "AnotherRoute"));
+                        .ActionAttributes(attributes => attributes.SpecifyingRoute("/api/test", withName: "AnotherRoute"));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have RouteAttribute with 'AnotherRoute' name, but in fact found 'TestRoute'.");
         }
@@ -79,7 +80,7 @@
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/test", withOrder: 1));
+                .ActionAttributes(attributes => attributes.SpecifyingRoute("/api/test", withOrder: 1));
         }
 
         [Fact]
@@ -92,7 +93,7 @@
                         .Instance()
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
-                        .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/test", withOrder: 2));
+                        .ActionAttributes(attributes => attributes.SpecifyingRoute("/api/test", withOrder: 2));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have RouteAttribute with order of 2, but in fact found 1.");
         }
@@ -107,7 +108,7 @@
                         .Instance()
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
-                        .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/test"));
+                        .ActionAttributes(attributes => attributes.SpecifyingRoute("/api/test"));
                 },
                 "When calling NormalActionWithAttributes action in MvcController expected action to have RouteAttribute, but in fact such was not found.");
         }
@@ -119,7 +120,7 @@
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes.ChangingActionNameTo("NormalAction"));
+                .ActionAttributes(attributes => attributes.SpecifyingActionName("NormalAction"));
         }
 
         [Fact]
@@ -132,7 +133,7 @@
                         .Instance()
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
-                        .ActionAttributes(attributes => attributes.ChangingActionNameTo("AnotherAction"));
+                        .ActionAttributes(attributes => attributes.SpecifyingActionName("AnotherAction"));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have ActionNameAttribute with 'AnotherAction' name, but in fact found 'NormalAction'.");
         }
@@ -147,7 +148,7 @@
                         .Instance()
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
-                        .ActionAttributes(attributes => attributes.ChangingActionNameTo("NormalAction"));
+                        .ActionAttributes(attributes => attributes.SpecifyingActionName("NormalAction"));
                 },
                 "When calling NormalActionWithAttributes action in MvcController expected action to have ActionNameAttribute, but in fact such was not found.");
         }
@@ -499,7 +500,7 @@
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .SpecifyingProduction(production => production
-                        .WithType(typeof(RequestModel))
+                        .OfType(typeof(RequestModel))
                         .WithContentTypes("application/javascript", "application/pdf")
                         .WithOrder(2)));
         }
@@ -525,7 +526,7 @@
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .SpecifyingProduction(production => production
-                        .WithType(typeof(RequestModel))
+                        .OfType(typeof(RequestModel))
                         .AndAlso()
                         .WithContentTypes(new List<string> { "application/pdf", "application/javascript" })
                         .AndAlso()
@@ -547,6 +548,138 @@
                                 .WithOrder(1)));
                 },
                 "When calling Post action in ApiController expected action to have ProducesAttribute with order of 1, but in fact found 2.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttribute()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingMiddleware(typeof(MyPipeline)));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithMissingAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.NormalActionWithAttributes())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingMiddleware(typeof(MyPipeline)));
+                },
+                "When calling NormalActionWithAttributes action in MvcController expected action to have MiddlewareFilterAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithCorrectAttributeAndWrongConfigurationType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingMiddleware(typeof(MyOtherPipeline)));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have MiddlewareFilterAttribute with 'MyOtherPipeline' type, but in fact found 'MyPipeline'.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttributeConfigurationType()
+        {
+            MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingMiddleware(middleware => middleware
+                                .OfType(typeof(MyPipeline))));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithWrongConfigurationType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingMiddleware(middleware => middleware
+                                .OfType(typeof(MyOtherPipeline))));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have MiddlewareFilterAttribute with 'MyOtherPipeline' type, but in fact found 'MyPipeline'.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithCorrectAttributeAndWrongOrder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingMiddleware(middleware => middleware.WithOrder(1)));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have MiddlewareFilterAttribute with order of 1, but in fact found 2.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderForOrder()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingMiddleware(middleware => middleware.WithOrder(2)));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttributeConfigTypeAndUsingBuilderForOrder()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingMiddleware(middleware => middleware
+                        .OfType(typeof(MyPipeline))
+                        .AndAlso()
+                        .WithOrder(2)));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithCorrectAttributeConfigTypeAndUsingBuilderForOrderWithWrongOrder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingMiddleware(middleware => middleware
+                                .OfType(typeof(MyPipeline))
+                                .AndAlso()
+                                .WithOrder(1)));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have MiddlewareFilterAttribute with order of 1, but in fact found 2.");
         }
 
         [Fact]
@@ -1717,7 +1850,7 @@
                 .Instance()
                 .Calling(c => c.EmptyActionWithParameters(With.No<int>(), With.No<RequestModel>()))
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes.ChangingActionNameTo("Test"));
+                .ActionAttributes(attributes => attributes.SpecifyingActionName("Test"));
         }
 
         [Fact]
@@ -1732,7 +1865,7 @@
                         .AllowingAnonymousRequests()
                         .AndAlso()
                         .DisablingActionCall()
-                        .ChangingActionNameTo("NormalAction"));
+                        .SpecifyingActionName("NormalAction"));
         }
     }
 }

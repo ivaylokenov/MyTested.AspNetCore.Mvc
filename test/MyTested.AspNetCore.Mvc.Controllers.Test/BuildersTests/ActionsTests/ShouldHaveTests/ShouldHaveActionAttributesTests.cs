@@ -58,7 +58,7 @@
         }
 
         [Fact]
-        public void ActionAttributesShouldNotThrowEceptionWithActionContainingAttributes()
+        public void ActionAttributesShouldNotThrowExceptionWithActionContainingAttributes()
         {
             MyController<MvcController>
                 .Instance()
@@ -68,7 +68,7 @@
         }
 
         [Fact]
-        public void ActionAttributesShouldThrowEceptionWithActionContainingNoAttributes()
+        public void ActionAttributesShouldThrowExceptionWithActionContainingNoAttributes()
         {
             Test.AssertException<AttributeAssertionException>(
                 () =>
@@ -83,7 +83,7 @@
         }
 
         [Fact]
-        public void ActionAttributesShouldNotThrowEceptionWithVoidActionContainingAttributes()
+        public void ActionAttributesShouldNotThrowExceptionWithVoidActionContainingAttributes()
         {
             MyController<MvcController>
                 .Instance()
@@ -93,7 +93,7 @@
         }
 
         [Fact]
-        public void ActionAttributesShouldThrowEceptionWithVoidActionContainingNoAttributes()
+        public void ActionAttributesShouldThrowExceptionWithVoidActionContainingNoAttributes()
         {
             Test.AssertException<AttributeAssertionException>(
                 () =>
@@ -108,7 +108,7 @@
         }
 
         [Fact]
-        public void ActionAttributesShouldNotThrowEceptionWithActionContainingNumberOfAttributes()
+        public void ActionAttributesShouldNotThrowExceptionWithActionContainingNumberOfAttributes()
         {
             MyController<MvcController>
                 .Instance()
@@ -118,7 +118,7 @@
         }
 
         [Fact]
-        public void ActionAttributesShouldThrowEceptionWithActionContainingNumberOfAttributes()
+        public void ActionAttributesShouldThrowExceptionWithActionContainingNumberOfAttributes()
         {
             Test.AssertException<AttributeAssertionException>(
                 () =>
@@ -133,7 +133,7 @@
         }
 
         [Fact]
-        public void ActionAttributesShouldThrowEceptionWithActionContainingNumberOfAttributesTestingWithOne()
+        public void ActionAttributesShouldThrowExceptionWithActionContainingNumberOfAttributesTestingWithOne()
         {
             Test.AssertException<AttributeAssertionException>(
                 () =>

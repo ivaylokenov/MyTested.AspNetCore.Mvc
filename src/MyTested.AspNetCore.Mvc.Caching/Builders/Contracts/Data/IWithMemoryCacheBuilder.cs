@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Microsoft.Extensions.Caching.Memory;
+    using Contracts.Data.MemoryCache;
 
     /// <summary>
     /// Used for building mocked <see cref="IMemoryCache"/>.
