@@ -12,41 +12,41 @@
     /// <summary>
     /// Used for building <see cref="DbContext"/>.
     /// </summary>
-    public class DbContextBuilder : BaseTestBuilder, IAndDbContextBuilder
+    public class WithDbContextBuilder : BaseTestBuilder, IAndWithDbContextBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DbContextBuilder"/> class.
+        /// Initializes a new instance of the <see cref="WithDbContextBuilder"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="HttpTestContext"/> containing data about the currently executed assertion chain.</param>
-        public DbContextBuilder(HttpTestContext testContext)
+        public WithDbContextBuilder(HttpTestContext testContext)
             : base(testContext)
         {
         }
 
         /// <inheritdoc />
-        public IAndDbContextBuilder WithEntities(IEnumerable<object> entities)
+        public IAndWithDbContextBuilder WithEntities(IEnumerable<object> entities)
             => this.WithEntities(dbContext => dbContext.AddRange(entities));
 
         /// <inheritdoc />
-        public IAndDbContextBuilder WithEntities<TDbContext>(IEnumerable<object> entities) 
+        public IAndWithDbContextBuilder WithEntities<TDbContext>(IEnumerable<object> entities)
             where TDbContext : DbContext
             => this.WithEntities<TDbContext>(dbContext => dbContext.AddRange(entities));
 
         /// <inheritdoc />
-        public IAndDbContextBuilder WithEntities(params object[] entities)
+        public IAndWithDbContextBuilder WithEntities(params object[] entities)
             => this.WithEntities(entities.AsEnumerable());
 
         /// <inheritdoc />
-        public IAndDbContextBuilder WithEntities<TDbContext>(params object[] entities)
+        public IAndWithDbContextBuilder WithEntities<TDbContext>(params object[] entities)
             where TDbContext : DbContext
             => this.WithEntities<TDbContext>(entities.AsEnumerable());
 
         /// <inheritdoc />
-        public IAndDbContextBuilder WithEntities(Action<DbContext> dbContextSetup) 
+        public IAndWithDbContextBuilder WithEntities(Action<DbContext> dbContextSetup)
             => this.WithEntities<DbContext>(dbContextSetup);
 
         /// <inheritdoc />
-        public IAndDbContextBuilder WithEntities<TDbContext>(Action<TDbContext> dbContextSetup)
+        public IAndWithDbContextBuilder WithEntities<TDbContext>(Action<TDbContext> dbContextSetup)
             where TDbContext : DbContext
         {
             CommonValidator.CheckForNullReference(dbContextSetup, nameof(dbContextSetup));
@@ -59,12 +59,12 @@
         }
 
         /// <inheritdoc />
-        public IAndDbContextBuilder WithSet<TEntity>(Action<DbSet<TEntity>> entitySetup)
-            where TEntity : class 
+        public IAndWithDbContextBuilder WithSet<TEntity>(Action<DbSet<TEntity>> entitySetup)
+            where TEntity : class
             => this.WithSet<DbContext, TEntity>(entitySetup);
 
         /// <inheritdoc />
-        public IAndDbContextBuilder WithSet<TDbContext, TEntity>(Action<DbSet<TEntity>> entitySetup)
+        public IAndWithDbContextBuilder WithSet<TDbContext, TEntity>(Action<DbSet<TEntity>> entitySetup)
             where TDbContext : DbContext
             where TEntity : class
         {
@@ -78,6 +78,6 @@
         }
 
         /// <inheritdoc />
-        public IDbContextBuilder AndAlso() => this;
+        public IWithDbContextBuilder AndAlso() => this;
     }
 }

@@ -19,8 +19,7 @@
                 return this.Ok("Normal");
             }
 
-            ICacheEntry fullEntry;
-            if (mockedMemoryCache.TryGetCacheEntry("FullEntry", out fullEntry))
+            if (mockedMemoryCache.TryGetCacheEntry("FullEntry", out ICacheEntry fullEntry))
             {
                 return this.Ok(fullEntry);
             }
@@ -32,6 +31,16 @@
             }
 
             return this.BadRequest();
+        }
+
+        public IActionResult GetCount([FromServices]IMemoryCache cache)
+        {
+            return this.Ok((cache as IMemoryCacheMock).GetCacheAsDictionary().Count);
+        }
+
+        public IActionResult GetAllEntities([FromServices]IMemoryCache cache)
+        {
+            return this.Ok((cache as IMemoryCacheMock).GetCacheAsDictionary());
         }
     }
 }

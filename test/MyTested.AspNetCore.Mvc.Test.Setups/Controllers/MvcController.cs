@@ -1188,6 +1188,16 @@
             return this.BadRequest();
         }
 
+        public IActionResult GetSessionKeys()
+        {
+            return this.Ok(this.HttpContext.Session.Keys.ToList());
+        }
+
+        public IActionResult GetSessionKeysCount()
+        {
+            return this.Ok(this.HttpContext.Session.Keys.Count());
+        }
+
         public IActionResult WithService(IHttpContextAccessor httpContextAccessor)
         {
             if (httpContextAccessor == null)

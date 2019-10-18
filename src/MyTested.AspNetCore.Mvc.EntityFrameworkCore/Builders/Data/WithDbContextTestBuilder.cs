@@ -12,31 +12,31 @@
     /// <summary>
     /// Used for testing <see cref="DbContext"/>.
     /// </summary>
-    public class DbContextTestBuilder : BaseTestBuilderWithComponent, IAndDbContextTestBuilder
+    public class WithDbContextTestBuilder : BaseTestBuilderWithComponent, IAndWithDbContextTestBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DbContextTestBuilder"/> class.
+        /// Initializes a new instance of the <see cref="WithDbContextTestBuilder"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
-        public DbContextTestBuilder(ComponentTestContext testContext)
+        public WithDbContextTestBuilder(ComponentTestContext testContext)
             : base(testContext)
         {
         }
 
         /// <inheritdoc />
-        public IAndDbContextTestBuilder WithEntities(Action<DbContext> assertions)
+        public IAndWithDbContextTestBuilder WithEntities(Action<DbContext> assertions)
         {
             return this.WithEntities<DbContext>(assertions);
         }
 
         /// <inheritdoc />
-        public IAndDbContextTestBuilder WithEntities(Func<DbContext, bool> predicate)
+        public IAndWithDbContextTestBuilder WithEntities(Func<DbContext, bool> predicate)
         {
             return this.WithEntities<DbContext>(predicate);
         }
 
         /// <inheritdoc />
-        public IAndDbContextTestBuilder WithEntities<TDbContext>(Func<TDbContext, bool> predicate) where TDbContext : DbContext
+        public IAndWithDbContextTestBuilder WithEntities<TDbContext>(Func<TDbContext, bool> predicate) where TDbContext : DbContext
         {
             CommonValidator.CheckForNullReference(predicate, nameof(predicate));
 
@@ -52,7 +52,7 @@
         }
 
         /// <inheritdoc />
-        public IAndDbContextTestBuilder WithEntities<TDbContext>(Action<TDbContext> assertions) where TDbContext : DbContext
+        public IAndWithDbContextTestBuilder WithEntities<TDbContext>(Action<TDbContext> assertions) where TDbContext : DbContext
         {
             CommonValidator.CheckForNullReference(assertions, nameof(assertions));
 
@@ -62,21 +62,21 @@
         }
 
         /// <inheritdoc />
-        public IAndDbContextTestBuilder WithSet<TEntity>(Action<DbSet<TEntity>> assertions)
+        public IAndWithDbContextTestBuilder WithSet<TEntity>(Action<DbSet<TEntity>> assertions)
             where TEntity : class
         {
             return this.WithSet<DbContext, TEntity>(assertions);
         }
 
         /// <inheritdoc />
-        public IAndDbContextTestBuilder WithSet<TEntity>(Func<DbSet<TEntity>, bool> predicate)
+        public IAndWithDbContextTestBuilder WithSet<TEntity>(Func<DbSet<TEntity>, bool> predicate)
             where TEntity : class
         {
             return this.WithSet<DbContext, TEntity>(predicate);
         }
 
         /// <inheritdoc />
-        public IAndDbContextTestBuilder WithSet<TDbContext, TEntity>(Action<DbSet<TEntity>> assertions)
+        public IAndWithDbContextTestBuilder WithSet<TDbContext, TEntity>(Action<DbSet<TEntity>> assertions)
             where TDbContext : DbContext
             where TEntity : class
         {
@@ -88,7 +88,7 @@
         }
 
         /// <inheritdoc />
-        public IAndDbContextTestBuilder WithSet<TDbContext, TEntity>(Func<DbSet<TEntity>, bool> predicate)
+        public IAndWithDbContextTestBuilder WithSet<TDbContext, TEntity>(Func<DbSet<TEntity>, bool> predicate)
             where TDbContext : DbContext
             where TEntity : class
         {
@@ -107,6 +107,6 @@
         }
 
         /// <inheritdoc />
-        public IDbContextTestBuilder AndAlso() => this;
+        public IWithDbContextTestBuilder AndAlso() => this;
     }
 }

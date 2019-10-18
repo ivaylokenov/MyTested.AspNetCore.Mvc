@@ -11,7 +11,7 @@
     /// Contains <see cref="Microsoft.EntityFrameworkCore.DbContext"/>
     /// extension methods for <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/>.
     /// </summary>
-    public static class ComponentBuilderEntityFrameworkCoreExtensions
+    public static class ComponentBuilderEntityFrameworkCoreWithExtensions
     {
         /// <summary>
         /// Sets initial values to the <see cref="Microsoft.EntityFrameworkCore.DbContext"/> on the tested component.
@@ -59,17 +59,17 @@
         /// Instance of <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/> type.
         /// </param>
         /// <param name="dbContextBuilder">
-        /// Action setting the <see cref="Microsoft.EntityFrameworkCore.DbContext"/> by using <see cref="IDbContextBuilder"/>.
+        /// Action setting the <see cref="Microsoft.EntityFrameworkCore.DbContext"/> by using <see cref="IWithDbContextBuilder"/>.
         /// </param>
         /// <returns>The same component builder.</returns>
         public static TBuilder WithData<TBuilder>(
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
-            Action<IDbContextBuilder> dbContextBuilder)
+            Action<IWithDbContextBuilder> dbContextBuilder)
             where TBuilder : IBaseTestBuilder
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            dbContextBuilder(new DbContextBuilder(actualBuilder.TestContext));
+            dbContextBuilder(new WithDbContextBuilder(actualBuilder.TestContext));
 
             return actualBuilder.Builder;
         }
