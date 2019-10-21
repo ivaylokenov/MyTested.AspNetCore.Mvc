@@ -10,20 +10,16 @@
     /// <summary>
     /// Used for building <see cref="ModelStateDictionary"/>
     /// </summary>
-    public class ModelStateBuilder : IAndModelStateBuilder
+    public class ModelStateBuilder : BaseModelStateBuilder, IAndModelStateBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelStateBuilder"/> class.
         /// </summary>
         /// <param name="actionContext"><see cref="ModelStateDictionary"/> to build.</param>
         public ModelStateBuilder(ActionTestContext actionContext) 
-            => this.ModelState = actionContext.ModelState;
-
-        /// <summary>
-        /// Gets the <see cref="ModelStateDictionary"/>
-        /// </summary>
-        /// <value>The built <see cref="ModelStateDictionary"/></value>
-        protected ModelStateDictionary ModelState { get; set; }
+            : base(actionContext)
+        {
+        }
 
         /// <inheritdoc />
         public IAndModelStateBuilder WithError(string key, string errorMessage)

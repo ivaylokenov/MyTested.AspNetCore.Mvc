@@ -10,7 +10,7 @@
     /// <summary>
     /// Contains extension methods for <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/>.
     /// </summary>
-    public static class ComponentBuilderModelStateExtensions
+    public static class ComponentBuilderModelStateWithExtensions
     {
         public static TBuilder WithModelState<TBuilder>(
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
