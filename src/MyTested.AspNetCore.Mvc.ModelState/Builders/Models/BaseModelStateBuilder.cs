@@ -3,6 +3,9 @@
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using MyTested.AspNetCore.Mvc.Internal.TestContexts;
 
+    /// <summary>
+    /// Used for testing specific <see cref="ModelStateDictionary"/>.
+    /// </summary>
     public abstract class BaseModelStateBuilder
     {
         /// <summary>
