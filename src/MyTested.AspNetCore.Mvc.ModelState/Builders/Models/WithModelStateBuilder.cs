@@ -10,33 +10,33 @@
     /// <summary>
     /// Used for building <see cref="ModelStateDictionary"/>
     /// </summary>
-    public class ModelStateBuilder : BaseModelStateBuilder, IAndModelStateBuilder
+    public class WithModelStateBuilder : BaseModelStateBuilder, IAndWithModelStateBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModelStateBuilder"/> class.
+        /// Initializes a new instance of the <see cref="WithModelStateBuilder"/> class.
         /// </summary>
         /// <param name="actionContext"><see cref="ModelStateDictionary"/> to build.</param>
-        public ModelStateBuilder(ActionTestContext actionContext) 
+        public WithModelStateBuilder(ActionTestContext actionContext) 
             : base(actionContext)
         {
         }
 
         /// <inheritdoc />
-        public IAndModelStateBuilder WithError(string key, string errorMessage)
+        public IAndWithModelStateBuilder WithError(string key, string errorMessage)
         {
             this.AddError(key, errorMessage);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndModelStateBuilder WithErrors(IDictionary<string, string> errors)
+        public IAndWithModelStateBuilder WithErrors(IDictionary<string, string> errors)
         {
             errors.ForEach(err => this.AddError(err.Key, err.Value));
             return this;
         }
 
         /// <inheritdoc />
-        public IAndModelStateBuilder WithErrors(object errors)
+        public IAndWithModelStateBuilder WithErrors(object errors)
         {
             var errorsAsDictionary = new RouteValueDictionary(errors);
             errorsAsDictionary
@@ -46,7 +46,7 @@
         }
             
         /// <inheritdoc />
-        public IModelStateBuilder AndAlso() => this;
+        public IWithModelStateBuilder AndAlso() => this;
 
         private void AddError(string key, string errorMessage) 
             => this.ModelState.AddModelError(key, errorMessage);

@@ -14,12 +14,12 @@
     {
         public static TBuilder WithModelState<TBuilder>(
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
-            Action<IModelStateBuilder> modelStateTestBuilder)
+            Action<IWithModelStateBuilder> modelStateTestBuilder)
             where TBuilder : IBaseTestBuilder
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            modelStateTestBuilder(new ModelStateBuilder(actualBuilder.TestContext as ActionTestContext));
+            modelStateTestBuilder(new WithModelStateBuilder(actualBuilder.TestContext as ActionTestContext));
 
             return actualBuilder.Builder;
         }
