@@ -1,10 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ModelsTests
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using Setups;
     using Setups.Controllers;
     using Xunit;
-    using System.Collections.Generic;
-    using System.Linq;
 
     public class ModelStateBuilderTests
     {
