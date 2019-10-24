@@ -4,6 +4,7 @@
     using Setups.Controllers;
     using Xunit;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class ModelStateBuilderTests
     {
@@ -57,6 +58,78 @@
                 .Calling(c => c.BadRequestWithModelState(requestBody))
                 .ShouldReturn()
                 .BadRequest();
+        }
+
+        [Fact]
+        public void WithoutModelStateByProvidingExistingKeyShouldWorkCorrectly()
+        {
+            var keyValuePair = new KeyValuePair<string, string>("Key1", "Value1");
+
+            MyController<MvcController>
+                .Instance()
+                .WithModelState(modelState => modelState
+                    .WithError(keyValuePair.Key, keyValuePair.Value)
+                    .WithError("PseudoRandomKey", "value"))
+                .WithoutModelState(keyValuePair.Key)
+                .Calling(c => c.GetModelStateKeys())
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModelOfType<List<string>>()
+                    .Passing(keys => keys.Count == 1 &&
+                        keys.Any(key => !key.Equals(keyValuePair.Key))));
+        }
+
+        [Fact]
+        public void WithoutModelStateByUsingTheBuilderShouldWorkCorrectly()
+        {
+            var keyValuePair = new KeyValuePair<string, string>("Key1", "Value1");
+
+            MyController<MvcController>
+                .Instance()
+                .WithModelState(modelState => modelState
+                    .WithError(keyValuePair.Key, keyValuePair.Value)
+                    .WithError("PseudoRandomKey", "value"))
+                .WithoutModelState(modelState => modelState.WithoutModelState(keyValuePair.Key))
+                .Calling(c => c.GetModelStateKeys())
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModelOfType<List<string>>()
+                    .Passing(keys => keys.Count == 1 &&
+                        keys.Any(key => !key.Equals(keyValuePair.Key))));
+        }
+
+        [Fact]
+        public void WithoutModelStateShouldWorkCorrectly()
+        {
+            MyController<MvcController>
+                .Instance()
+                .WithModelState(modelState => modelState
+                    .WithError("PseudoRandomKey1", "value1")
+                    .WithError("PseudoRandomKey2", "value2"))
+                .WithoutModelState()
+                .Calling(c => c.GetModelStateKeys())
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModelOfType<List<string>>()
+                    .Passing(keys => keys.Count == 0));
+        }
+
+        [Fact]
+        public void WithoutModelStateByRemovingNonExistingKeyShouldWorkCorrectly()
+        {
+            var keyValuePair = new KeyValuePair<string, string>("Key1", "Value1");
+
+            MyController<MvcController>
+                .Instance()
+                .WithModelState(modelState => modelState
+                    .WithError(keyValuePair.Key, keyValuePair.Value))
+                .WithoutModelState("NonExistingKey")
+                .Calling(c => c.GetModelStateKeys())
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModelOfType<List<string>>()
+                    .Passing(keys => keys.Count == 1 &&
+                        keys.Any(key => key.Equals(keyValuePair.Key))));
         }
     }
 }

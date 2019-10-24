@@ -15,7 +15,7 @@
         
         public override string ExceptionMessagePrefix => $"When invoking {this.Component.GetName()} expected";
 
-        public override ModelStateDictionary ModelState => this.viewComponentContext.ViewData.ModelState;
+        public override ModelStateDictionary ModelState => this.ViewComponentContext.ViewData.ModelState;
         
         protected override ViewContext DefaultComponentContext
             => ViewContextMock.Default(this);

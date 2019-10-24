@@ -786,6 +786,11 @@
             return this.BadRequest(this.ResponseModel);
         }
 
+        public IActionResult GetModelStateKeys()
+        {
+            return this.Ok(this.ModelState.Keys.ToList());
+        }
+
         public IActionResult AcceptedAction()
         {
             return this.Accepted();
