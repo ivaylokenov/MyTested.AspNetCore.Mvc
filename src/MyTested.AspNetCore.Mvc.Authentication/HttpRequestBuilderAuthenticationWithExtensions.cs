@@ -11,7 +11,7 @@
     /// <summary>
     /// Contains authentication extension methods for <see cref="IHttpRequestBuilder"/>.
     /// </summary>
-    public static class HttpRequestBuilderAuthenticationExtensions
+    public static class HttpRequestBuilderAuthenticationWithExtensions
     {
         /// <summary>
         /// Sets default authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the built request with "TestId" identifier and "TestUser" username.
@@ -22,7 +22,7 @@
         {
             var actualHttpRequestBuilder = (HttpRequestBuilder)httpRequestBuilder;
 
-            actualHttpRequestBuilder.HttpContext.User = ClaimsPrincipalBuilder.DefaultAuthenticated;
+            actualHttpRequestBuilder.HttpContext.User = WithClaimsPrincipalBuilder.DefaultAuthenticated;
 
             return actualHttpRequestBuilder;
         }
@@ -122,15 +122,15 @@
         /// Sets custom authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the built request using the provided user builder.
         /// </summary>
         /// <param name="httpRequestBuilder">Instance of <see cref="IHttpRequestBuilder"/> type.</param>
-        /// <param name="userBuilder">Action setting the <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> by using <see cref="IClaimsPrincipalBuilder"/>.</param>
+        /// <param name="userBuilder">Action setting the <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> by using <see cref="IWithClaimsPrincipalBuilder"/>.</param>
         /// <returns>The same <see cref="IAndHttpRequestBuilder"/>.</returns>
         public static IAndHttpRequestBuilder WithUser(
             this IHttpRequestBuilder httpRequestBuilder,
-            Action<IClaimsPrincipalBuilder> userBuilder)
+            Action<IWithClaimsPrincipalBuilder> userBuilder)
         {
             var actualHttpRequestBuilder = (HttpRequestBuilder)httpRequestBuilder;
 
-            var newUserBuilder = new ClaimsPrincipalBuilder();
+            var newUserBuilder = new WithClaimsPrincipalBuilder();
             userBuilder(newUserBuilder);
             actualHttpRequestBuilder.HttpContext.User = newUserBuilder.GetClaimsPrincipal();
 

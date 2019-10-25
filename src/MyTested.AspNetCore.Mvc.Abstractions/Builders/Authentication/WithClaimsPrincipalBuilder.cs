@@ -10,14 +10,14 @@
     /// <summary>
     /// Used for building mocked <see cref="ClaimsPrincipal"/>.
     /// </summary>
-    public class ClaimsPrincipalBuilder : BaseUserBuilder, IAndClaimsPrincipalBuilder
+    public class WithClaimsPrincipalBuilder : BaseUserBuilder, IAndWithClaimsPrincipalBuilder
     {
         private readonly ICollection<ClaimsIdentity> identities;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ClaimsPrincipalBuilder"/> class.
+        /// Initializes a new instance of the <see cref="WithClaimsPrincipalBuilder"/> class.
         /// </summary>
-        public ClaimsPrincipalBuilder()
+        public WithClaimsPrincipalBuilder()
             => this.identities = new List<ClaimsIdentity>();
 
         /// <summary>
@@ -29,82 +29,82 @@
             = new ClaimsPrincipal(CreateAuthenticatedClaimsIdentity());
 
         /// <inheritdoc />
-        public IAndClaimsPrincipalBuilder WithNameType(string nameType)
+        public IAndWithClaimsPrincipalBuilder WithNameType(string nameType)
         {
             this.AddNameType(nameType);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndClaimsPrincipalBuilder WithRoleType(string roleType)
+        public IAndWithClaimsPrincipalBuilder WithRoleType(string roleType)
         {
             this.AddRoleType(roleType);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndClaimsPrincipalBuilder WithIdentifier(string identifier)
+        public IAndWithClaimsPrincipalBuilder WithIdentifier(string identifier)
         {
             this.AddIdentifier(identifier);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndClaimsPrincipalBuilder WithUsername(string username)
+        public IAndWithClaimsPrincipalBuilder WithUsername(string username)
         {
             this.AddUsername(username);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndClaimsPrincipalBuilder WithClaim(string type, string value) 
+        public IAndWithClaimsPrincipalBuilder WithClaim(string type, string value) 
             => this.WithClaim(new Claim(type, value));
 
         /// <inheritdoc />
-        public IAndClaimsPrincipalBuilder WithClaim(Claim claim)
+        public IAndWithClaimsPrincipalBuilder WithClaim(Claim claim)
         {
             this.AddClaim(claim);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndClaimsPrincipalBuilder WithClaims(IEnumerable<Claim> claims)
+        public IAndWithClaimsPrincipalBuilder WithClaims(IEnumerable<Claim> claims)
         {
             this.AddClaims(claims);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndClaimsPrincipalBuilder WithClaims(params Claim[] claims) 
+        public IAndWithClaimsPrincipalBuilder WithClaims(params Claim[] claims) 
             => this.WithClaims(claims.AsEnumerable());
 
         /// <inheritdoc />
-        public IAndClaimsPrincipalBuilder WithAuthenticationType(string authenticationType)
+        public IAndWithClaimsPrincipalBuilder WithAuthenticationType(string authenticationType)
         {
             this.AddAuthenticationType(authenticationType);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndClaimsPrincipalBuilder InRole(string role)
+        public IAndWithClaimsPrincipalBuilder InRole(string role)
         {
             this.AddRole(role);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndClaimsPrincipalBuilder InRoles(IEnumerable<string> roles)
+        public IAndWithClaimsPrincipalBuilder InRoles(IEnumerable<string> roles)
         {
             this.AddRoles(roles);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndClaimsPrincipalBuilder InRoles(params string[] roles) 
+        public IAndWithClaimsPrincipalBuilder InRoles(params string[] roles) 
             => this.InRoles(roles.AsEnumerable());
 
         /// <inheritdoc />
-        public IAndClaimsPrincipalBuilder WithIdentity(IIdentity identity)
+        public IAndWithClaimsPrincipalBuilder WithIdentity(IIdentity identity)
         {
             if (!(identity is ClaimsIdentity claimsIdentity))
             {
@@ -116,16 +116,16 @@
         }
 
         /// <inheritdoc />
-        public IAndClaimsPrincipalBuilder WithIdentity(Action<IClaimsIdentityBuilder> claimsIdentityBuilder)
+        public IAndWithClaimsPrincipalBuilder WithIdentity(Action<IWithClaimsIdentityBuilder> claimsIdentityBuilder)
         {
-            var newClaimsIdentityBuilder = new ClaimsIdentityBuilder();
+            var newClaimsIdentityBuilder = new WithClaimsIdentityBuilder();
             claimsIdentityBuilder(newClaimsIdentityBuilder);
             this.identities.Add(newClaimsIdentityBuilder.GetClaimsIdentity());
             return this;
         }
 
         /// <inheritdoc />
-        public IClaimsPrincipalBuilder AndAlso() => this;
+        public IWithClaimsPrincipalBuilder AndAlso() => this;
 
         public ClaimsPrincipal GetClaimsPrincipal()
         {

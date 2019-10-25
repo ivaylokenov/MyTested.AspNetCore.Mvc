@@ -11,7 +11,7 @@
     /// <summary>
     /// Contains authentication extension methods for <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/>.
     /// </summary>
-    public static class ComponentBuilderAuthenticationExtensions
+    public static class ComponentBuilderAuthenticationWithExtensions
     {
         /// <summary>
         /// Sets an authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the
@@ -145,7 +145,7 @@
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            actualBuilder.HttpContext.User = ClaimsPrincipalBuilder.DefaultAuthenticated;
+            actualBuilder.HttpContext.User = WithClaimsPrincipalBuilder.DefaultAuthenticated;
 
             return actualBuilder.Builder;
         }
@@ -156,17 +156,17 @@
         /// </summary>
         /// <param name="builder">Instance of <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/> type.</param>
         /// <param name="userBuilder">
-        /// Action setting the <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> by using <see cref="IClaimsPrincipalBuilder"/>.
+        /// Action setting the <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> by using <see cref="IWithClaimsPrincipalBuilder"/>.
         /// </param>
         /// <returns>The same component builder.</returns>
         public static TBuilder WithUser<TBuilder>(
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
-            Action<IClaimsPrincipalBuilder> userBuilder)
+            Action<IWithClaimsPrincipalBuilder> userBuilder)
             where TBuilder : IBaseTestBuilder
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            var newUserBuilder = new ClaimsPrincipalBuilder();
+            var newUserBuilder = new WithClaimsPrincipalBuilder();
             userBuilder(newUserBuilder);
             actualBuilder.HttpContext.User = newUserBuilder.GetClaimsPrincipal();
 

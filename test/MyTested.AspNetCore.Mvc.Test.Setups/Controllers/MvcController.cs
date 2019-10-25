@@ -480,14 +480,14 @@
 
         public IActionResult SignInWithAuthenticationPropertiesAndScheme()
         {
-            return this.SignIn(ClaimsPrincipalBuilder.DefaultAuthenticated,
+            return this.SignIn(WithClaimsPrincipalBuilder.DefaultAuthenticated,
                 TestObjectFactory.GetAuthenticationProperties(),
                 AuthenticationScheme.Basic);
         }
 
         public IActionResult SignInWithEmptyAuthenticationPropertiesAndScheme()
         {
-            return this.SignIn(ClaimsPrincipalBuilder.DefaultAuthenticated,
+            return this.SignIn(WithClaimsPrincipalBuilder.DefaultAuthenticated,
                 TestObjectFactory.GetEmptyAuthenticationProperties(),
                 AuthenticationScheme.Basic);
         }

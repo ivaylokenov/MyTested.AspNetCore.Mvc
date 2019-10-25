@@ -81,11 +81,11 @@
         /// <returns>The same <see cref="IAndSignInTestBuilder"/>.</returns>
         public static IAndSignInTestBuilder WithPrincipal(
             this ISignInTestBuilder signInTestBuilder,
-            Action<IClaimsPrincipalBuilder> principalBuilder)
+            Action<IWithClaimsPrincipalBuilder> principalBuilder)
         {
             var actualBuilder = (SignInTestBuilder)signInTestBuilder;
             
-            var newClaimsPrincipalBuilder = new ClaimsPrincipalBuilder();
+            var newClaimsPrincipalBuilder = new WithClaimsPrincipalBuilder();
             principalBuilder(newClaimsPrincipalBuilder);
 
             var expectedPrincipal = newClaimsPrincipalBuilder.GetClaimsPrincipal();

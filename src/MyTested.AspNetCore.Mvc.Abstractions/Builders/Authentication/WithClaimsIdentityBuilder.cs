@@ -8,85 +8,85 @@
     /// <summary>
     /// Used for creating mocked authenticated <see cref="ClaimsIdentity"/>.
     /// </summary>
-    public class ClaimsIdentityBuilder : BaseUserBuilder, IAndClaimsIdentityBuilder
+    public class WithClaimsIdentityBuilder : BaseUserBuilder, IAndWithClaimsIdentityBuilder
     {
         /// <inheritdoc />
-        public IAndClaimsIdentityBuilder WithNameType(string nameType)
+        public IAndWithClaimsIdentityBuilder WithNameType(string nameType)
         {
             this.AddNameType(nameType);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndClaimsIdentityBuilder WithRoleType(string roleType)
+        public IAndWithClaimsIdentityBuilder WithRoleType(string roleType)
         {
             this.AddRoleType(roleType);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndClaimsIdentityBuilder WithIdentifier(string identifier)
+        public IAndWithClaimsIdentityBuilder WithIdentifier(string identifier)
         {
             this.AddIdentifier(identifier);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndClaimsIdentityBuilder WithUsername(string username)
+        public IAndWithClaimsIdentityBuilder WithUsername(string username)
         {
             this.AddUsername(username);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndClaimsIdentityBuilder WithClaim(string type, string value) 
+        public IAndWithClaimsIdentityBuilder WithClaim(string type, string value) 
             => this.WithClaim(new Claim(type, value));
 
         /// <inheritdoc />
-        public IAndClaimsIdentityBuilder WithClaim(Claim claim)
+        public IAndWithClaimsIdentityBuilder WithClaim(Claim claim)
         {
             this.AddClaim(claim);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndClaimsIdentityBuilder WithClaims(IEnumerable<Claim> claims)
+        public IAndWithClaimsIdentityBuilder WithClaims(IEnumerable<Claim> claims)
         {
             this.AddClaims(claims);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndClaimsIdentityBuilder WithClaims(params Claim[] claims) 
+        public IAndWithClaimsIdentityBuilder WithClaims(params Claim[] claims) 
             => this.WithClaims(claims.AsEnumerable());
 
         /// <inheritdoc />
-        public IAndClaimsIdentityBuilder WithAuthenticationType(string authenticationType)
+        public IAndWithClaimsIdentityBuilder WithAuthenticationType(string authenticationType)
         {
             this.AddAuthenticationType(authenticationType);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndClaimsIdentityBuilder InRole(string role)
+        public IAndWithClaimsIdentityBuilder InRole(string role)
         {
             this.AddRole(role);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndClaimsIdentityBuilder InRoles(IEnumerable<string> roles)
+        public IAndWithClaimsIdentityBuilder InRoles(IEnumerable<string> roles)
         {
             this.AddRoles(roles);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndClaimsIdentityBuilder InRoles(params string[] roles) 
+        public IAndWithClaimsIdentityBuilder InRoles(params string[] roles) 
             => this.InRoles(roles.AsEnumerable());
 
         /// <inheritdoc />
-        public IClaimsIdentityBuilder AndAlso() => this;
+        public IWithClaimsIdentityBuilder AndAlso() => this;
 
         internal ClaimsIdentity GetClaimsIdentity() 
             => this.GetAuthenticatedClaimsIdentity();
