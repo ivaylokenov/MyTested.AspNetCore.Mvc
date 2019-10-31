@@ -1,7 +1,5 @@
-﻿
-namespace MyTested.AspNetCore.Mvc.Builders.Data
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Data
 {
-    using System;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using MyTested.AspNetCore.Mvc.Builders.Contracts.Data;
@@ -13,29 +11,29 @@ namespace MyTested.AspNetCore.Mvc.Builders.Data
         {
         }
 
-        public IWithoutTempDataBuilder AndAlso()
+        public IAndWithoutTempDataBuilder WithoutEntries(IEnumerable<string> entriesKeys)
         {
-            throw new NotImplementedException();
+            foreach (var key in entriesKeys)
+            {
+                this.WithoutEntry(key);
+            }
+
+            return this;
         }
 
-        public IAndWithoutTempDataBuilder WithEntries(IDictionary<string, object> entries)
+        public IAndWithoutTempDataBuilder WithoutEntry(string key)
         {
-            throw new NotImplementedException();
-        }
-
-        public IAndWithoutTempDataBuilder WithEntries(object entries)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IAndWithoutTempDataBuilder WithEntry(string key, object value)
-        {
-            throw new NotImplementedException();
+            this.TempData.Remove(key);
+            return this;
         }
 
         public IAndWithoutTempDataBuilder WithoutAllEntries()
         {
-            throw new NotImplementedException();
+            this.TempData.Clear();
+            return this;
         }
+
+        public IWithoutTempDataBuilder AndAlso()
+            => this;
     }
 }

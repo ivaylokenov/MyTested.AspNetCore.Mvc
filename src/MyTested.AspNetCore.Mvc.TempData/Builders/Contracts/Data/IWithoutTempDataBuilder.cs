@@ -4,11 +4,9 @@ namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Data
 {
     public interface IWithoutTempDataBuilder
     {
-        IAndWithoutTempDataBuilder WithEntry(string key, object value);
+        IAndWithoutTempDataBuilder WithoutEntry(string key);
 
-        IAndWithoutTempDataBuilder WithEntries(IDictionary<string, object> entries);
-
-        IAndWithoutTempDataBuilder WithEntries(object entries);
+        IAndWithoutTempDataBuilder WithoutEntries(IEnumerable<string> entriesKeys);
 
         IAndWithoutTempDataBuilder WithoutAllEntries();
     }
