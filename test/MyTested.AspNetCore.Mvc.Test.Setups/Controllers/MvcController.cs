@@ -1180,6 +1180,11 @@
             return this.BadRequest();
         }
 
+        public IActionResult GetTempDataKeys()
+        {
+            return this.Ok(this.TempData.Keys.ToList());
+        }
+
         public IActionResult SessionAction()
         {
             if (this.HttpContext.Session.GetString("test") != null)

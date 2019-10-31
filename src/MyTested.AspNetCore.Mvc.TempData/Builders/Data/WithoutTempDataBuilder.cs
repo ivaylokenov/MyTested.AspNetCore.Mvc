@@ -32,7 +32,9 @@
         /// <inheritdoc />
         public IAndWithoutTempDataBuilder WithoutEntry(string key)
         {
-            this.TempData.Remove(key);
+            if (this.TempData.ContainsKey(key))
+                this.TempData.Remove(key);
+
             return this;
         }
 
