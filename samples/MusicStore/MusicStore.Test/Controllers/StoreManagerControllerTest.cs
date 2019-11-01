@@ -1,17 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Caching.Memory;
-using MusicStore.Areas.Admin.Controllers;
-using MusicStore.Models;
-using MyTested.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using Xunit;
-
-namespace MusicStore.Test.Controllers
+﻿namespace MusicStore.Test.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.Extensions.Caching.Memory;
+    using MusicStore.Areas.Admin.Controllers;
+    using MusicStore.Models;
+    using MyTested.AspNetCore.Mvc;
+    using Xunit;
+
     public class StoreManagerControllerTest
     {
         [Fact]
@@ -102,7 +102,10 @@ namespace MusicStore.Test.Controllers
         {
             MyMvc
                 .Controller<StoreManagerController>()
-                .Calling(x => x.Create(new Album(), From.Services<IMemoryCache>(), CancellationToken.None))
+                .Calling(x => x.Create(
+                    new Album(), 
+                    From.Services<IMemoryCache>(), 
+                    CancellationToken.None))
                 .ShouldHave()
                 .ActionAttributes(attr => attr
                     .ValidatingAntiForgeryToken()
@@ -139,7 +142,10 @@ namespace MusicStore.Test.Controllers
         {
             MyMvc
                 .Controller<StoreManagerController>()
-                .Calling(x => x.Create(new Album(), From.Services<IMemoryCache>(), CancellationToken.None))
+                .Calling(x => x.Create(
+                    new Album(), 
+                    From.Services<IMemoryCache>(), 
+                    CancellationToken.None))
                 .ShouldHave()
                 .InvalidModelState()
                 .AndAlso()
@@ -206,7 +212,10 @@ namespace MusicStore.Test.Controllers
                     {
                         entities.AddRange(albums);
                     }))
-                .Calling(x => x.RemoveAlbumConfirmed(From.Services<IMemoryCache>(), albumId, CancellationToken.None))
+                .Calling(x => x.RemoveAlbumConfirmed(
+                    From.Services<IMemoryCache>(), 
+                    albumId, 
+                    CancellationToken.None))
                 .ShouldHave()
                 .Data(data => data.WithEntities(context =>
                 {
@@ -232,7 +241,10 @@ namespace MusicStore.Test.Controllers
                     {
                         entities.AddRange(albums);
                     }))
-                .Calling(x => x.RemoveAlbumConfirmed(From.Services<IMemoryCache>(), albumId, CancellationToken.None))
+                .Calling(x => x.RemoveAlbumConfirmed(
+                    From.Services<IMemoryCache>(), 
+                    albumId, 
+                    CancellationToken.None))
                 .ShouldReturn()
                 .NotFound();
         }
@@ -242,7 +254,10 @@ namespace MusicStore.Test.Controllers
         {
             MyMvc
                 .Controller<StoreManagerController>()
-                .Calling(x => x.Edit(From.Services<IMemoryCache>(), new Album(), CancellationToken.None))
+                .Calling(x => x.Edit(
+                    From.Services<IMemoryCache>(), 
+                    new Album(), 
+                    CancellationToken.None))
                 .ShouldHave()
                 .ActionAttributes(attr => attr
                     .ValidatingAntiForgeryToken()
