@@ -109,7 +109,7 @@
         }
 
         [Fact]
-        public void ToUrlPassingShouldNotThrowExceptionWithValidaAssertions()
+        public void ToUrlPassingShouldNotThrowExceptionWithValidAssertions()
         {
             MyController<MvcController>
                 .Instance()

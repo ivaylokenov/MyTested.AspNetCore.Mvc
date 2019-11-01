@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
 {
     using System;
+    using Microsoft.Extensions.Caching.Distributed;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
     using Plugins;
@@ -9,25 +10,23 @@
     public class CachingTestPluginTest
     {
         [Fact]
-        public void ShouldThrowArgumentNullExceptionWithInvalidServiceCollection()
-        {
-            var testPlugin = new CachingTestPlugin();
-
-            Assert.Throws<NullReferenceException>(() => testPlugin.ServiceRegistrationDelegate(null));
-        }
-
-        [Fact]
         public void ShouldInvokeMethodOfTypeVoidWithValidServiceCollection()
         {
             var testPlugin = new CachingTestPlugin();
             var serviceCollection = new ServiceCollection();
 
+            serviceCollection.AddMemoryCache();
+            serviceCollection.AddDistributedMemoryCache();
+
             testPlugin.ServiceRegistrationDelegate(serviceCollection);
 
-            var methodReturnType = testPlugin.ServiceRegistrationDelegate.Method.ReturnType.Name;
+            Assert.Contains(
+                serviceCollection, 
+                s => s.ServiceType == typeof(IMemoryCache) && s.ImplementationType == typeof(MemoryCache));
 
-            Assert.True(methodReturnType == "Void");
-            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(IMemoryCache));
+            Assert.Contains(
+                serviceCollection, 
+                s => s.ServiceType == typeof(IDistributedCache) && s.ImplementationType == typeof(MemoryDistributedCache));
         }
     }
 }

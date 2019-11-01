@@ -4,11 +4,11 @@ Usually, a controller action should not throw any exceptions but rather return s
 
 ## Asserting thrown exceptions
 
-Currently the **"Music Store"** application handles most of it potential bad requests, but there is a possible exception in the **"AddToCart"** action located in the **"ShoppingCartController"**. More specifically, this code:
+Currently the **"Music Store"** application handles most of its potential bad requests, but there is a possible exception in the **"AddToCart"** action located in the **"ShoppingCartController"**. More specifically, this code:
 
 ```c#
 var addedAlbum = await DbContext.Albums
-	.SingleAsync(album => album.AlbumId == id);
+    .SingleAsync(album => album.AlbumId == id);
 ```
 
 If the database does not contain the provided **"id"**, our application will throw an exception. Let's assert that. Create **"ShoppingCartControllerTest"** class, add the necessary usings and write the following test:
@@ -18,34 +18,15 @@ If the database does not contain the provided **"id"**, our application will thr
 public void AddToCartShouldThrowExceptionWithInvalidId()
     => MyController<ShoppingCartController>
         .Instance()
-        .Calling(c => c.AddToCart(1))
-        .ShouldThrow()
+        .Calling(c => c.AddToCart(1, CancellationToken.None))
+        .ShouldThrow() // <---
         .AggregateException()
         .ContainingInnerExceptionOfType<InvalidOperationException>()
         .WithMessage()
         .Containing("Sequence contains no elements");
 ```
 
-Since we do not add any entries to the scoped in-memory database, the test should pass without any problem. With it we are validating that the action throws **"AggregateException"** with message containing **"Sequence contains no elements"** and inner **"InvalidOperationException"**. Next to the **"AggregateException"**, there is the normal **"Exception"** call, which asserts non-asynchronous errors.
-
-Unfortunately, if we run the above test with the .NET CLI by using **"dotnet test"**, we will receive a fail on **"net451"** because the **"AggregateException"** exception message is just "One or more errors occurred.". Possible fixes include removing the **"WithMessage"** call or just adding a compiler directive for the different frameworks like so:
-
-```c#
-[Fact]
-public void AddToCartShouldThrowExceptionWithInvalidId()
-    => MyController<ShoppingCartController>
-        .Instance()
-        .Calling(c => c.AddToCart(1))
-        .ShouldThrow()
-        .AggregateException()
-        .ContainingInnerExceptionOfType<InvalidOperationException>()
-        .WithMessage()
-#if NETCOREAPP1_0
-        .Containing("Sequence contains no elements");
-#else
-        .Containing("One or more errors occurred");
-#endif
-```
+Since we do not add any entries to the scoped in-memory database, the test should pass without any problem. With it we are validating that the action throws **"AggregateException"** with inner **"InvalidOperationException"** and a message containing **"Sequence contains no elements"**. Next to the **"AggregateException"**, there is the normal **"Exception"** call, which asserts non-asynchronous errors.
 
 ## Uncaught exceptions
 

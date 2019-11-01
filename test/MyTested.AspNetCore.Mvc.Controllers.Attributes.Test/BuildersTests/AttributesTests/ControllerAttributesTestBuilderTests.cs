@@ -6,6 +6,8 @@
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
+    using Setups.Pipelines;
+    using Setups.ActionFilters;
     using Xunit;
 
     public class ControllerAttributesTestBuilderTests
@@ -15,7 +17,7 @@
         {
             MyController<AttributesController>
                 .ShouldHave()
-                .Attributes(attributes => attributes.ChangingRouteTo("api/test"));
+                .Attributes(attributes => attributes.SpecifyingRoute("api/test"));
         }
 
         [Fact]
@@ -23,7 +25,7 @@
         {
             MyController<AttributesController>
                 .ShouldHave()
-                .Attributes(attributes => attributes.ChangingRouteTo("api/Test"));
+                .Attributes(attributes => attributes.SpecifyingRoute("api/Test"));
         }
 
         [Fact]
@@ -32,7 +34,7 @@
             MyController<AttributesController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
-                    .ChangingRouteTo(route => route
+                    .SpecifyingRoute(route => route
                         .WithOrder(1)
                         .AndAlso()
                         .WithName("TestRouteAttributes")
@@ -48,7 +50,7 @@
                 {
                     MyController<AttributesController>
                         .ShouldHave()
-                        .Attributes(attributes => attributes.ChangingRouteTo("api/another"));
+                        .Attributes(attributes => attributes.SpecifyingRoute("api/another"));
                 },
                 "When testing AttributesController was expected to have RouteAttribute with 'api/another' template, but in fact found 'api/test'.");
         }
@@ -58,7 +60,7 @@
         {
             MyController<AttributesController>
                 .ShouldHave()
-                .Attributes(attributes => attributes.ChangingRouteTo("api/test", withName: "TestRouteAttributes"));
+                .Attributes(attributes => attributes.SpecifyingRoute("api/test", withName: "TestRouteAttributes"));
         }
 
         [Fact]
@@ -69,7 +71,7 @@
                 {
                     MyController<AttributesController>
                         .ShouldHave()
-                        .Attributes(attributes => attributes.ChangingRouteTo("api/test", withName: "AnotherRoute"));
+                        .Attributes(attributes => attributes.SpecifyingRoute("api/test", withName: "AnotherRoute"));
                 },
                 "When testing AttributesController was expected to have RouteAttribute with 'AnotherRoute' name, but in fact found 'TestRouteAttributes'.");
         }
@@ -79,7 +81,7 @@
         {
             MyController<AttributesController>
                 .ShouldHave()
-                .Attributes(attributes => attributes.ChangingRouteTo("api/test", withOrder: 1));
+                .Attributes(attributes => attributes.SpecifyingRoute("api/test", withOrder: 1));
         }
 
         [Fact]
@@ -90,7 +92,7 @@
                 {
                     MyController<AttributesController>
                         .ShouldHave()
-                        .Attributes(attributes => attributes.ChangingRouteTo("api/test", withOrder: 2));
+                        .Attributes(attributes => attributes.SpecifyingRoute("api/test", withOrder: 2));
                 },
                 "When testing AttributesController was expected to have RouteAttribute with order of 2, but in fact found 1.");
         }
@@ -103,7 +105,7 @@
                 {
                     MyController<AreaController>
                         .ShouldHave()
-                        .Attributes(attributes => attributes.ChangingRouteTo("api/test"));
+                        .Attributes(attributes => attributes.SpecifyingRoute("api/test"));
                 },
                 "When testing AreaController was expected to have RouteAttribute, but in fact such was not found.");
         }
@@ -393,7 +395,7 @@
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SpecifyingProduction(production => production
-                        .WithType(typeof(ResponseModel))
+                        .OfType(typeof(ResponseModel))
                         .WithContentTypes("application/xml", "application/json")
                         .WithOrder(1)));
         }
@@ -415,7 +417,7 @@
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SpecifyingProduction(production => production
-                        .WithType(typeof(ResponseModel))
+                        .OfType(typeof(ResponseModel))
                         .AndAlso()
                         .WithContentTypes(new List<string> { "application/xml", "application/json" })
                         .AndAlso()
@@ -435,6 +437,500 @@
                                 .WithOrder(2)));
                 },
                 "When testing ApiController was expected to have ProducesAttribute with order of 2, but in fact found 1.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttribute()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingMiddleware(typeof(MyPipeline)));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithMissingAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingMiddleware(typeof(MyPipeline)));
+                },
+                "When testing AttributesController was expected to have MiddlewareFilterAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithCorrectAttributeAndWrongConfigurationType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingMiddleware(typeof(MyOtherPipeline)));
+                },
+                "When testing ApiController was expected to have MiddlewareFilterAttribute with 'MyOtherPipeline' type, but in fact found 'MyPipeline'.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttributeConfigurationType()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingMiddleware(middleware => middleware
+                        .OfType(typeof(MyPipeline))));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithWrongConfigurationType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingMiddleware(middleware => middleware
+                                .OfType(typeof(MyOtherPipeline))));
+                },
+                "When testing ApiController was expected to have MiddlewareFilterAttribute with 'MyOtherPipeline' type, but in fact found 'MyPipeline'.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithCorrectAttributeAndWrongOrder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingMiddleware(middleware => middleware.WithOrder(1)));
+                },
+                "When testing ApiController was expected to have MiddlewareFilterAttribute with order of 1, but in fact found 2.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderForOrder()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingMiddleware(middleware => middleware.WithOrder(2)));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttributeConfigTypeAndUsingBuilderForOrder()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingMiddleware(middleware => middleware
+                        .OfType(typeof(MyPipeline))
+                        .AndAlso()
+                        .WithOrder(2)));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithCorrectAttributeConfigTypeAndUsingBuilderForOrderWithWrongOrder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingMiddleware(middleware => middleware
+                                .OfType(typeof(MyPipeline))
+                                .AndAlso()
+                                .WithOrder(1)));
+                },
+                "When testing ApiController was expected to have MiddlewareFilterAttribute with order of 1, but in fact found 2.");
+        }
+
+        [Fact]
+        public void WithTypeFilterShouldNotThrowExceptionWithCorrectAttribute()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .WithTypeFilter(typeof(MyActionFilterWithArgs)));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithTypeFilterShouldThrowExceptionWithMissingAttribute()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .WithTypeFilter(typeof(MyActionFilterWithArgs)));
+                },
+                "When testing AttributesController was expected to have TypeFilterAttribute, but in fact such was not found.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithTypeFilterShouldThrowExceptionWithCorrectAttributeAndWrongImplementationType()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .WithTypeFilter(typeof(MyOtherActionFilterWithArgs)));
+                },
+                "When testing ApiController was expected to have TypeFilterAttribute with 'MyOtherActionFilterWithArgs' type, but in fact found 'MyActionFilterWithArgs'.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithTypeFilterShouldNotThrowExceptionWithCorrectImplementationType()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .WithTypeFilter(filter => filter
+                        .OfType(typeof(MyActionFilterWithArgs))));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithTypeFilterShouldThrowExceptionWithWrongImplementationType()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .WithTypeFilter(filter => filter
+                                .OfType(typeof(MyOtherActionFilterWithArgs))));
+                },
+                "When testing ApiController was expected to have TypeFilterAttribute with 'MyOtherActionFilterWithArgs' type, but in fact found 'MyActionFilterWithArgs'.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithTypeFilterShouldThrowExceptionWithCorrectAttributeAndWrongOrder()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .WithTypeFilter(filter => filter.WithOrder(1)));
+                },
+                "When testing ApiController was expected to have TypeFilterAttribute with order of 1, but in fact found 2.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithTypeFilterShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderForOrder()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .WithTypeFilter(filter => filter.WithOrder(2)));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithTypeFilterShouldNotThrowExceptionWithCorrectAttributeImplementationTypeAndUsingBuilderForOrder()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .WithTypeFilter(filter => filter
+                        .OfType(typeof(MyActionFilterWithArgs))
+                        .AndAlso()
+                        .WithOrder(2)));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithTypeFilterShouldThrowExceptionWithCorrectAttributeImplementationTypeAndUsingBuilderForOrderWithWrongOrder()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .WithTypeFilter(filter => filter
+                                .OfType(typeof(MyActionFilterWithArgs))
+                                .AndAlso()
+                                .WithOrder(1)));
+                },
+                "When testing ApiController was expected to have TypeFilterAttribute with order of 1, but in fact found 2.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithTypeFilterShouldNotThrowExceptionWithCorrectAttributeImplementationTypeAndUsingBuilderForArguments()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .WithTypeFilter(filter => filter
+                        .OfType(typeof(MyActionFilterWithArgs))
+                        .AndAlso()
+                        .WithArguments(new object[]
+                        {
+                            10
+                        })));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithTypeFilterShouldThrowExceptionWithCorrectAttributeImplementationTypeAndUsingBuilderForForArgumentsWithWrongArgs()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .WithTypeFilter(filter => filter
+                                .OfType(typeof(MyActionFilterWithArgs))
+                                .AndAlso()
+                                .WithArguments(new object[]
+                                {
+                                    1
+                                })));
+                },
+                "When testing ApiController was expected to have TypeFilterAttribute with argument with the provided value, but in fact such was not found.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithTypeFilterShouldThrowExceptionWithCorrectAttributeAndWrongArgumentsValue()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .WithTypeFilter(filter => filter.WithArguments(new object[]
+                            {
+                                1
+                            })));
+                },
+                "When testing ApiController was expected to have TypeFilterAttribute with argument with the provided value, but in fact such was not found.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithTypeFilterShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderForArguments()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .WithTypeFilter(filter => filter.WithArguments(new object[]
+                    {
+                        10
+                    })));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithServiceFilterShouldNotThrowExceptionWithCorrectAttribute()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .WithServiceFilter(typeof(MyActionFilter)));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithServiceFilterShouldThrowExceptionWithMissingAttribute()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .WithServiceFilter(typeof(MyActionFilter)));
+                },
+                "When testing AttributesController was expected to have ServiceFilterAttribute, but in fact such was not found.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithServiceFilterShouldThrowExceptionWithCorrectAttributeAndWrongServiceType()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .WithServiceFilter(typeof(MyOtherActionFilter)));
+                },
+                "When testing ApiController was expected to have ServiceFilterAttribute with 'MyOtherActionFilter' type, but in fact found 'MyActionFilter'.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithServiceFilterShouldNotThrowExceptionWithCorrectServiceFilterType()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .WithServiceFilter(filter => filter
+                        .OfType(typeof(MyActionFilter))));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithServiceFilterShouldThrowExceptionWithWrongServiceFilterType()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .WithServiceFilter(filter => filter
+                                .OfType(typeof(MyOtherActionFilter))));
+                },
+                "When testing ApiController was expected to have ServiceFilterAttribute with 'MyOtherActionFilter' type, but in fact found 'MyActionFilter'.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithServiceFilterShouldThrowExceptionWithCorrectAttributeAndWrongOrder()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .WithServiceFilter(filter => filter.WithOrder(1)));
+                },
+                "When testing ApiController was expected to have ServiceFilterAttribute with order of 1, but in fact found 2.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithServiceFilterShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderForOrder()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .WithServiceFilter(filter => filter.WithOrder(2)));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithServiceFilterShouldNotThrowExceptionWithCorrectAttributeServiceTypeAndUsingBuilderForOrder()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .WithServiceFilter(filter => filter
+                        .OfType(typeof(MyActionFilter))
+                        .AndAlso()
+                        .WithOrder(2)));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithServiceFilterShouldThrowExceptionWithCorrectAttributeServiceTypeAndUsingBuilderForOrderWithWrongOrder()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .WithServiceFilter(filter => filter
+                                .OfType(typeof(MyActionFilter))
+                                .AndAlso()
+                                .WithOrder(1)));
+                },
+                "When testing ApiController was expected to have ServiceFilterAttribute with order of 1, but in fact found 2.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -1381,7 +1877,7 @@
                     => attributes
                         .AllowingAnonymousRequests()
                         .AndAlso()
-                        .ChangingRouteTo("api/test"));
+                        .SpecifyingRoute("api/test"));
         }
     }
 }

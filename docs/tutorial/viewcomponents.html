@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
   <head>
@@ -7,13 +7,13 @@
     <title>View Components </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="View Components ">
-    <meta name="generator" content="docfx 2.6.3.0">
+    <meta name="generator" content="docfx 2.45.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
     <link rel="stylesheet" href="../styles/main.css">
-    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:navrel" content="">
     <meta property="docfx:tocrel" content="toc.html">
     <meta property="docfx:rel" content="../">
     <meta property="og:title" content="Flexible and asynchronous testing framework for ASP.NET Core MVC">
@@ -30,7 +30,7 @@
     <meta property="twitter:url" content="https://mytestedasp.net/">
     <meta property="twitter:image" content="https://mytestedasp.net/Content/Images/logosocial.jpg">
   </head>
-  <body data-spy="scroll" data-target="#affix">
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
@@ -75,32 +75,41 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-              <h1 id="view-components" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="1" sourceendlinenumber="1">View Components</h1>
-              
-<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="3" sourceendlinenumber="3">In this section we are going to stop asserting controllers (finally) and concentrate on <strong>&quot;View Components&quot;</strong>. Typical MVC application written with separation of concerns in mind should have plenty of them. Before we begin, we need the <strong>&quot;MyTested.AspNetCore.Mvc.ViewComponents&quot;</strong> package:</p>
-<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="5" sourceendlinenumber="25"><code class="lang-json">&quot;dependencies&quot;: {
-  &quot;dotnet-test-xunit&quot;: &quot;2.2.0-*&quot;,
-  &quot;xunit&quot;: &quot;2.2.0-*&quot;,
-  &quot;Moq&quot;: &quot;4.6.38-*&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Authentication&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Caching&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Controllers&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.DependencyInjection&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.EntityFrameworkCore&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Http&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.ModelState&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Models&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Options&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Session&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.ViewActionResults&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.ViewComponents&quot;: &quot;1.0.0&quot;, // &lt;---
-  &quot;MyTested.AspNetCore.Mvc.ViewData&quot;: &quot;1.0.0&quot;,
-  &quot;MusicStore&quot;: &quot;*&quot;
-},
-</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="27" sourceendlinenumber="27">Then we need to create a <strong>&quot;ViewComponents&quot;</strong> folder at the root of our test project and add <strong>&quot;CartSummaryComponentTest&quot;</strong> class in it. We are going to assert the <strong>&quot;CartSummaryComponent&quot;</strong> component.</p>
-<h2 id="arrange" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="29" sourceendlinenumber="29">Arrange</h2>
-<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="31" sourceendlinenumber="31">Arranging the test is done in the same manner as it is with controllers. This is the code we want to test:</p>
-<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="33" sourceendlinenumber="47"><code class="lang-c#">private MusicStoreContext DbContext { get; }
+<h1 id="view-components">View Components</h1>
+
+<p>In this section we are going to stop asserting controllers (finally) and concentrate on <strong>&quot;View Components&quot;</strong>. Typical MVC application written with separation of concerns in mind should have plenty of them. Before we begin, we need the <strong>&quot;MyTested.AspNetCore.Mvc.ViewComponents&quot;</strong> package:</p>
+<pre><code class="lang-xml">&lt;!-- Other ItemGroups --&gt;
+
+  &lt;ItemGroup&gt;
+    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.App&quot; /&gt;
+    &lt;PackageReference Include=&quot;Microsoft.NET.Test.Sdk&quot; Version=&quot;16.0.1&quot; /&gt;
+    &lt;PackageReference Include=&quot;Moq&quot; Version=&quot;4.13.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Authentication&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Caching&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.ActionResults&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.Attributes&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.Views&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.DependencyInjection&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.EntityFrameworkCore&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Http&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Models&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.ModelState&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Options&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Session&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;!-- MyTested.AspNetCore.Mvc.ViewComponents package --&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.ViewComponents&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.ViewData&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;xunit&quot; Version=&quot;2.4.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;xunit.runner.visualstudio&quot; Version=&quot;2.4.0&quot; /&gt;
+  &lt;/ItemGroup&gt;
+
+&lt;!-- Other ItemGroups --&gt;
+</code></pre><p>Then we need to create a <strong>&quot;ViewComponents&quot;</strong> folder at the root of our test project and add <strong>&quot;CartSummaryComponentTest&quot;</strong> class in it. We are going to assert the <strong>&quot;CartSummaryComponent&quot;</strong>.</p>
+<h2 id="arrange">Arrange</h2>
+<p>Arranging the test is done in the same manner as it is with controllers. This is the code we want to test:</p>
+<pre><code class="lang-c#">private MusicStoreContext DbContext { get; }
 
 public async Task&lt;IViewComponentResult&gt; InvokeAsync()
 {
@@ -113,56 +122,61 @@ public async Task&lt;IViewComponentResult&gt; InvokeAsync()
 
     return View();
 }
-</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="49" sourceendlinenumber="49">We need session cart ID and items in the database for the shopping cart. Let&#39;s create a helper method for generating the entities:</p>
-<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="51" sourceendlinenumber="66"><code class="lang-c#">private static IEnumerable&lt;CartItem&gt; GetCartItems(string cartId, string albumTitle)
-{
-    var album = new Album { AlbumId = 1, Title = albumTitle };
+</code></pre><p>We need session cart ID and items in the database for the shopping cart. Add a <strong>&quot;CartItemData&quot;</strong> class in the <strong>&quot;Data&quot;</strong> folder and write these lines in it:</p>
+<pre><code class="lang-c#">using MusicStore.Models;
+using System.Collections.Generic;
+using System.Linq;
 
-    return Enumerable
-        .Range(1, 10)
-        .Select(n =&gt; new CartItem
-        {
-            AlbumId = 1,
-            Album = album,
-            Count = 1,
-            CartId = cartId,
-        });
+public class CartItemData
+{
+    public static IEnumerable&lt;CartItem&gt; GetMany(string cartId, string albumTitle)
+    {
+        var album = new Album { AlbumId = 1, Title = albumTitle };
+
+        return Enumerable
+            .Range(1, 10)
+            .Select(n =&gt; new CartItem
+            {
+                AlbumId = 1,
+                Album = album,
+                Count = 1,
+                CartId = cartId,
+            });
+    }
 }
-</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="68" sourceendlinenumber="68">Starting the test is done from the <strong>&quot;MyViewComponent&quot;</strong> test:</p>
-<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="70" sourceendlinenumber="75"><code class="lang-c#">[Fact]
+</code></pre><p>Starting the test is done from the <strong>&quot;MyViewComponent&quot;</strong> test:</p>
+<pre><code class="lang-c#">[Fact]
 public void InvokingTheComponentShouldReturnCorrectCartItems()
     =&gt; MyViewComponent&lt;CartSummaryComponent&gt;
         .Instance()
-</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="77" sourceendlinenumber="77">We need to add a cart ID in the session state:</p>
-<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="79" sourceendlinenumber="84"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
+</code></pre><p>We need to add a cart ID in the session state:</p>
+<pre><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
     .Instance()
     .WithSession(session =&gt; session // &lt;---
         .WithEntry(&quot;Session&quot;, &quot;TestCart&quot;))
-</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="86" sourceendlinenumber="86">And database entities:</p>
-<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="88" sourceendlinenumber="96"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
+</code></pre><p>And database entities:</p>
+<pre><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
     .Instance()
     .WithSession(session =&gt; session
         .WithEntry(&quot;Session&quot;, &quot;TestCart&quot;))
-    .WithDbContext(db =&gt; db // &lt;---
-        .WithEntities(entities =&gt; entities
-            .AddRange(GetCartItems(&quot;TestCart&quot;, &quot;TestAlbum&quot;))))
-</code></pre><h2 id="act" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="98" sourceendlinenumber="98">Act</h2>
-<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="100" sourceendlinenumber="100">After arranging all objects we need for the view component, we have to invoke it by using the <strong>&quot;InvokedWith&quot;</strong> method:</p>
-<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="102" sourceendlinenumber="111"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
+    .WithData(CartItemData.GetMany(&quot;TestCart&quot;, &quot;TestAlbum&quot;)) // &lt;---
+</code></pre><h2 id="act">Act</h2>
+<p>After arranging all objects we need for the view component, we have to invoke it by using the <strong>&quot;InvokedWith&quot;</strong> method:</p>
+<pre><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
     .Instance()
     .WithSession(session =&gt; session
         .WithEntry(&quot;Session&quot;, &quot;TestCart&quot;))
-    .WithDbContext(db =&gt; db
+    .WithData(db =&gt; db
         .WithEntities(entities =&gt; entities
             .AddRange(GetCartItems(&quot;TestCart&quot;, &quot;TestAlbum&quot;))))
     .InvokedWith(vc =&gt; vc.InvokeAsync()) // &lt;---
-</code></pre><h2 id="assert" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="113" sourceendlinenumber="113">Assert</h2>
-<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="115" sourceendlinenumber="115">Finally, we need to assert the <strong>&quot;ViewBag&quot;</strong> and the execution result. You already now how to do it:</p>
-<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="117" sourceendlinenumber="136"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
+</code></pre><h2 id="assert">Assert</h2>
+<p>Finally, we need to assert the <strong>&quot;ViewBag&quot;</strong> and the execution result. You already now how to do it:</p>
+<pre><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
     .Instance()
     .WithSession(session =&gt; session
         .WithEntry(&quot;Session&quot;, &quot;TestCart&quot;))
-    .WithDbContext(db =&gt; db
+    .WithData(db =&gt; db
         .WithEntities(entities =&gt; entities
             .AddRange(GetCartItems(&quot;TestCart&quot;, &quot;TestAlbum&quot;))))
     .InvokedWith(vc =&gt; vc.InvokeAsync())
@@ -176,13 +190,12 @@ public void InvokingTheComponentShouldReturnCorrectCartItems()
     .AndAlso()
     .ShouldReturn() // &lt;---
     .View();
-</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="138" sourceendlinenumber="138">Rebuild the project and run the test to see it pass! :)</p>
-<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="140" sourceendlinenumber="140">As with all tests with My Tested ASP.NET Core MVC, if you have and invalid value, you will receive a friendly error message. Change <strong>&quot;Session&quot;</strong> to <strong>&quot;Cache&quot;</strong> and see for yourself:</p>
-<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="142" sourceendlinenumber="144"><code class="lang-text">When invoking CartSummaryComponent expected view bag to have entry with &#39;CartCount&#39; key and the provided value, but the value was different.
-</code></pre><h2 id="section-summary" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="146" sourceendlinenumber="146">Section Summary</h2>
-<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="148" sourceendlinenumber="148">View component testing provides the same API methods as the controller one as long as they are applicable. You should be seeing the big picture of the library now. The next section is interesting - the good old <a href="/tutorial/routing.html" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="148" sourceendlinenumber="148">Routing</a> testing!</p>
-
-            </article>
+</code></pre><p>Rebuild the project and run the test to see it pass! :)</p>
+<p>As with all tests with My Tested ASP.NET Core MVC, if you have an invalid value, you will receive a friendly error message. Change <strong>&quot;Session&quot;</strong> to <strong>&quot;Cache&quot;</strong> and see for yourself:</p>
+<pre><code class="lang-text">When invoking CartSummaryComponent expected view bag to have entry with &#39;CartCount&#39; key and the provided value, but the value was different.
+</code></pre><h2 id="section-summary">Section summary</h2>
+<p>View component testing provides the same API methods as the controller one as long as they are applicable. You should be seeing the big picture of the library now. The next section is interesting - the good old <a href="/tutorial/routing.html">Route</a> testing!</p>
+</article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
@@ -190,7 +203,7 @@ public void InvokingTheComponentShouldReturnCorrectCartItems()
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/tutorial/docs/_docfx/tutorial/viewcomponents.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/tmollov/MyTested.AspNetCore.Mvc/blob/development/docs/_docfx/tutorial/viewcomponents.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>

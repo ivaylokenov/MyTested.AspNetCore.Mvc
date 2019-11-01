@@ -25,14 +25,49 @@
         /// <param name="withName">Optional expected route name.</param>
         /// <param name="withOrder">Optional expected route order.</param>
         /// <returns>The same attributes test builder.</returns>
+       [Obsolete("This method will be removed in the next major version, please use SpecifyingRoute")]
         public static TAttributesTestBuilder ChangingRouteTo<TAttributesTestBuilder>(
             this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
             string template,
             string withName = null,
             int? withOrder = null)
             where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+            => SpecifyingRoute(controllerActionAttributesTestBuilder, template, withName, withOrder);
+
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="RouteAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="routeAttributeBuilder">Expected <see cref="RouteAttribute"/> builder.</param>
+        /// <returns>The same attributes test builder.</returns>
+        [Obsolete("This method will be removed in the next major version, please use SpecifyingRoute")]
+        public static TAttributesTestBuilder ChangingRouteTo<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            Action<IRouteAttributeTestBuilder> routeAttributeBuilder)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+            => SpecifyingRoute(controllerActionAttributesTestBuilder, routeAttributeBuilder);
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="RouteAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="template">Expected overridden route template of the controller.</param>
+        /// <param name="withName">Optional expected route name.</param>
+        /// <param name="withOrder">Optional expected route order.</param>
+        /// <returns>The same attributes test builder.</returns>
+        public static TAttributesTestBuilder SpecifyingRoute<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            string template,
+            string withName = null,
+            int? withOrder = null)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
             => controllerActionAttributesTestBuilder
-                .ChangingRouteTo(route => route
+                .SpecifyingRoute(route => route
                     .WithTemplate(template)
                     .WithName(withName)
                     .WithOrder(withOrder ?? 0));
@@ -45,7 +80,7 @@
         /// </param>
         /// <param name="routeAttributeBuilder">Expected <see cref="RouteAttribute"/> builder.</param>
         /// <returns>The same attributes test builder.</returns>
-        public static TAttributesTestBuilder ChangingRouteTo<TAttributesTestBuilder>(
+        public static TAttributesTestBuilder SpecifyingRoute<TAttributesTestBuilder>(
             this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
             Action<IRouteAttributeTestBuilder> routeAttributeBuilder)
             where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
@@ -272,7 +307,7 @@
             Type withType)
             where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
             => controllerActionAttributesTestBuilder
-                .SpecifyingProduction(production => production.WithType(withType));
+                .SpecifyingProduction(production => production.OfType(withType));
 
         /// <summary>
         /// Tests whether the collected attributes contain <see cref="ProducesAttribute"/>.
@@ -290,7 +325,7 @@
             where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
             => controllerActionAttributesTestBuilder
                 .SpecifyingProduction(production => production
-                    .WithType(withType)
+                    .OfType(withType)
                     .WithContentTypes(withContentTypes));
 
         /// <summary>
@@ -340,6 +375,156 @@
 
                 var validations = newProducesAttributeTestBuilder.GetAttributeValidations();
                 validations.ForEach(v => v(expectedProducesAttribute, actualProducesAttribute));
+            });
+
+            return actualBuilder.AttributesTestBuilder;
+        }
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="MiddlewareFilterAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="configurationType">A type which configures a middleware pipeline.</param>
+        /// <returns>The same attributes test builder.</returns>
+        public static TAttributesTestBuilder SpecifyingMiddleware<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            Type configurationType)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+            => controllerActionAttributesTestBuilder
+                .SpecifyingMiddleware(middleware => middleware.OfType(configurationType));
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="MiddlewareFilterAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="middlewareFilterAttributeBuilder">Expected <see cref="MiddlewareFilterAttribute"/> builder.</param>
+        /// <returns>The same attributes test builder.</returns>
+        public static TAttributesTestBuilder SpecifyingMiddleware<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            Action<IMiddlewareFilterAttributeTestBuilder> middlewareFilterAttributeBuilder)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+        {
+            var actualBuilder = (BaseAttributesTestBuilder<TAttributesTestBuilder>)controllerActionAttributesTestBuilder;
+
+            actualBuilder.ContainingAttributeOfType<MiddlewareFilterAttribute>();
+
+            actualBuilder.Validations.Add(attrs =>
+            {
+                var newMiddlewareFilterAttributeBuilder = new MiddlewareFilterAttributeTestBuilder(
+                    actualBuilder.TestContext,
+                    actualBuilder.ThrowNewAttributeAssertionException);
+
+                middlewareFilterAttributeBuilder(newMiddlewareFilterAttributeBuilder);
+
+                var expectedAttribute = newMiddlewareFilterAttributeBuilder.GetAttribute();
+                var actualAttribute = actualBuilder.GetAttributeOfType<MiddlewareFilterAttribute>(attrs);
+
+                var validations = newMiddlewareFilterAttributeBuilder.GetAttributeValidations();
+                validations.ForEach(v => v(expectedAttribute, actualAttribute));
+            });
+
+            return actualBuilder.AttributesTestBuilder;
+        }
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="ServiceFilterAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="type">The <see cref="Type"/> of filter to find.</param>
+        /// <returns>The same attributes test builder.</returns>
+        public static TAttributesTestBuilder WithServiceFilter<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            Type type)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+            => controllerActionAttributesTestBuilder
+                .WithServiceFilter(filter => filter.OfType(type));
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="ServiceFilterAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="serviceFilterAttributeBuilder">Expected <see cref="ServiceFilterAttribute"/> builder.</param>
+        /// <returns>The same attributes test builder.</returns>
+        public static TAttributesTestBuilder WithServiceFilter<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            Action<IServiceFilterAttributeTestBuilder> serviceFilterAttributeBuilder)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+        {
+            var actualBuilder = (BaseAttributesTestBuilder<TAttributesTestBuilder>)controllerActionAttributesTestBuilder;
+
+            actualBuilder.ContainingAttributeOfType<ServiceFilterAttribute>();
+
+            actualBuilder.Validations.Add(attrs =>
+            {
+                var newServiceFilterAttributeBuilder = new ServiceFilterAttributeTestBuilder(
+                    actualBuilder.TestContext,
+                    actualBuilder.ThrowNewAttributeAssertionException);
+
+                serviceFilterAttributeBuilder(newServiceFilterAttributeBuilder);
+
+                var expectedAttribute = newServiceFilterAttributeBuilder.GetAttribute();
+                var actualAttribute = actualBuilder.GetAttributeOfType<ServiceFilterAttribute>(attrs);
+
+                var validations = newServiceFilterAttributeBuilder.GetAttributeValidations();
+                validations.ForEach(v => v(expectedAttribute, actualAttribute));
+            });
+
+            return actualBuilder.AttributesTestBuilder;
+        }
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="TypeFilterAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="type">The <see cref="Type"/> of filter to create.</param>
+        /// <returns>The same attributes test builder.</returns>
+        public static TAttributesTestBuilder WithTypeFilter<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            Type type)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+            => controllerActionAttributesTestBuilder
+                .WithTypeFilter(filter => filter.OfType(type));
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="TypeFilterAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="typeFilterAttributeBuilder">Expected <see cref="TypeFilterAttribute"/> builder.</param>
+        /// <returns>The same attributes test builder.</returns>
+        public static TAttributesTestBuilder WithTypeFilter<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            Action<ITypeFilterAttributeTestBuilder> typeFilterAttributeBuilder)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+        {
+            var actualBuilder = (BaseAttributesTestBuilder<TAttributesTestBuilder>)controllerActionAttributesTestBuilder;
+
+            actualBuilder.ContainingAttributeOfType<TypeFilterAttribute>();
+
+            actualBuilder.Validations.Add(attrs =>
+            {
+                var newTypeFilterAttributeBuilder = new TypeFilterAttributeTestBuilder(
+                    actualBuilder.TestContext,
+                    actualBuilder.ThrowNewAttributeAssertionException);
+
+                typeFilterAttributeBuilder(newTypeFilterAttributeBuilder);
+
+                var expectedAttribute = newTypeFilterAttributeBuilder.GetAttribute();
+                var actualAttribute = actualBuilder.GetAttributeOfType<TypeFilterAttribute>(attrs);
+
+                var validations = newTypeFilterAttributeBuilder.GetAttributeValidations();
+                validations.ForEach(v => v(expectedAttribute, actualAttribute));
             });
 
             return actualBuilder.AttributesTestBuilder;

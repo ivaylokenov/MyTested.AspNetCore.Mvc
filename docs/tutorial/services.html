@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
   <head>
@@ -7,13 +7,13 @@
     <title>Services </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Services ">
-    <meta name="generator" content="docfx 2.6.3.0">
+    <meta name="generator" content="docfx 2.45.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
     <link rel="stylesheet" href="../styles/main.css">
-    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:navrel" content="">
     <meta property="docfx:tocrel" content="toc.html">
     <meta property="docfx:rel" content="../">
     <meta property="og:title" content="Flexible and asynchronous testing framework for ASP.NET Core MVC">
@@ -30,7 +30,7 @@
     <meta property="twitter:url" content="https://mytestedasp.net/">
     <meta property="twitter:image" content="https://mytestedasp.net/Content/Images/logosocial.jpg">
   </head>
-  <body data-spy="scroll" data-target="#affix">
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
@@ -75,12 +75,12 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-              <h1 id="services" sourcefile="tutorial/services.md" sourcestartlinenumber="1" sourceendlinenumber="1">Services</h1>
-              
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="3" sourceendlinenumber="3">In this section we will examine the test services concept and how My Tested ASP.NET Core MVC reduces the need to mock the world.</p>
-<h2 id="global-test-services" sourcefile="tutorial/services.md" sourcestartlinenumber="5" sourceendlinenumber="5">Global test services</h2>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="7" sourceendlinenumber="7">All controllers in the Music Store web application have service dependencies defined in their constructors and actions. For example:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="9" sourceendlinenumber="21"><code class="lang-c#">public class HomeController : Controller
+<h1 id="services">Services</h1>
+
+<p>In this section we will examine the test services concept and how My Tested ASP.NET Core MVC reduces the need to mock the world.</p>
+<h2 id="global-test-services">Global test services</h2>
+<p>All controllers in the Music Store web application have service dependencies defined in their constructors and actions. For example:</p>
+<pre><code class="lang-c#">public class HomeController : Controller
 {
     private readonly AppSettings _appSettings;
 
@@ -91,21 +91,21 @@
 
     // controller code skipped for brevity
 }
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="23" sourceendlinenumber="23">But we never specify any dependency in our tests explicitly. We do not provide a mock for the <strong>&quot;IOptions&quot;</strong> interface anywhere in our test project. So how the testing framework decides which services to use?</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="25" sourceendlinenumber="25">Remember the <strong>&quot;TestStartup&quot;</strong> class?</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="27" sourceendlinenumber="35"><code class="lang-c#">public class TestStartup : Startup
+</code></pre><p>But we never specify any dependency in our tests explicitly. We do not provide a mock for the <strong>&quot;IOptions&quot;</strong> interface anywhere in our test project. So how the testing framework decides which services to use?</p>
+<p>Remember the <strong>&quot;TestStartup&quot;</strong> class?</p>
+<pre><code class="lang-c#">public class TestStartup : Startup
 {
     public TestStartup(IHostingEnvironment hostingEnvironment)
         : base(hostingEnvironment)
     {
     }
 }
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="37" sourceendlinenumber="37">By inheriting from the web <strong>Startup</strong> class, we provide our tests all available services from the web application automatically. For example take a look at this configuration call:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="39" sourceendlinenumber="41"><code class="lang-c#">services.Configure&lt;AppSettings&gt;(Configuration.GetSection(&quot;AppSettings&quot;));
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="43" sourceendlinenumber="43">It registers the <strong>&quot;IOptions&quot;</strong> interface, which the testing framework uses to instantiate our <strong>&quot;HomeController&quot;</strong> successfully.</p>
-<h2 id="replacing-inherited-services" sourcefile="tutorial/services.md" sourcestartlinenumber="45" sourceendlinenumber="45">Replacing inherited services</h2>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="47" sourceendlinenumber="47">Like in a typical test scenario, some of the inherited services need to be replaced with mocks. As you saw in the previous section, My Tested ASP.NET Core MVC have built-in ones for the most commonly used services like the <strong>&quot;DbContext&quot;</strong>. However, custom services have to be replaced by the developer so let&#39;s replace one. Go to the HTTP Post overload of the <strong>&quot;Login&quot;</strong> action in the <strong>&quot;AccountController&quot;</strong>. We want to test a successful sign in. These are the actual lines of code we are interested in:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="49" sourceendlinenumber="63"><code class="lang-c#">public async Task&lt;IActionResult&gt; Login(LoginViewModel model, string returnUrl = null)
+</code></pre><p>By inheriting from the web <strong>Startup</strong> class, we provide our tests all available services from the web application automatically. For example take a look at this configuration call:</p>
+<pre><code class="lang-c#">services.Configure&lt;AppSettings&gt;(Configuration.GetSection(&quot;AppSettings&quot;));
+</code></pre><p>It registers the <strong>&quot;IOptions&quot;</strong> interface, which the testing framework uses to instantiate our <strong>&quot;HomeController&quot;</strong> successfully.</p>
+<h2 id="replacing-inherited-services">Replacing inherited services</h2>
+<p>Like in a typical test scenario, some of the inherited services need to be replaced with mocks. As you saw in the previous section, My Tested ASP.NET Core MVC have built-in ones for the most commonly used services like the <strong>&quot;DbContext&quot;</strong>. However, custom services have to be replaced by the developer so let&#39;s replace one. Go to the HTTP Post overload of the <strong>&quot;Login&quot;</strong> action in the <strong>&quot;AccountController&quot;</strong>. We want to test a successful sign in. These are the actual lines of code we are interested in:</p>
+<pre><code class="lang-c#">public async Task&lt;IActionResult&gt; Login(LoginViewModel model, string returnUrl = null)
 {
     // action code skipped for brevity
 
@@ -118,8 +118,8 @@
 
     // action code skipped for brevity
 }
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="65" sourceendlinenumber="65">The <strong>&quot;SignInManager&quot;</strong> class does all the work for us, and it is passed as a dependency to the <strong>&quot;AccountController&quot;</strong>:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="67" sourceendlinenumber="88"><code class="lang-c#">public class AccountController : Controller
+</code></pre><p>The <strong>&quot;SignInManager&quot;</strong> class does all the work for us, and it is passed as a dependency to the <strong>&quot;AccountController&quot;</strong>:</p>
+<pre><code class="lang-c#">public class AccountController : Controller
 {
     private readonly ILogger&lt;AccountController&gt; _logger;
 
@@ -139,27 +139,28 @@
 
     // controller code skipped for brevity
 }
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="90" sourceendlinenumber="90">We need to replace the <strong>&quot;SignInManager&quot;</strong> service with a mock.</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="92" sourceendlinenumber="92">Go to the <strong>TestStartup</strong> class, and add a <strong>&quot;ConfigureTestServices&quot;</strong> method:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="94" sourceendlinenumber="106"><code class="lang-c#">public class TestStartup : Startup
+</code></pre><p>We need to replace the <strong>&quot;SignInManager&quot;</strong> service with a mock.</p>
+<p>Go to the <strong>TestStartup</strong> class, and add a <strong>&quot;ConfigureTestServices&quot;</strong> method:</p>
+<pre><code class="lang-c#">public class TestStartup : Startup
 {
     public TestStartup(IHostingEnvironment hostingEnvironment)
         : base(hostingEnvironment)
     {
     }
 
+    // needs the Microsoft.Extensions.DependencyInjection namespace
     public void ConfigureTestServices(IServiceCollection services)
     {
     }
 }
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="108" sourceendlinenumber="108">By adding this method, we have now overridden the base <strong>&quot;ConfigureServices&quot;</strong> in the web <strong>&quot;Startup&quot;</strong> and it will not be invoked. If you try to run a test, you will see an error about missing service registration. To fix it, you need to manually call the base method in order to reuse all the web application services:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="110" sourceendlinenumber="115"><code class="lang-c#">public void ConfigureTestServices(IServiceCollection services)
+</code></pre><p>By adding this method, we have now overridden the base <strong>&quot;ConfigureServices&quot;</strong> in the web <strong>&quot;Startup&quot;</strong> and it will not be invoked. If you try to run a test, you will see an error about missing service registration. To fix it, you need to manually call the base method in order to reuse all the web application services:</p>
+<pre><code class="lang-c#">public void ConfigureTestServices(IServiceCollection services)
 {
     base.ConfigureServices(services);
 }
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="117" sourceendlinenumber="117">Now all tests should pass again.</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="119" sourceendlinenumber="119">Before replacing the <strong>&quot;SignInManager&quot;</strong>, we need a mock. Let&#39;s create a minimalistic manual mock for it. Add <strong>&quot;Mocks&quot;</strong> folder in your test project and create the following class in it:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="121" sourceendlinenumber="152"><code class="lang-c#">using Microsoft.AspNetCore.Builder;
+</code></pre><p>Now all tests should pass again.</p>
+<p>Before replacing the <strong>&quot;SignInManager&quot;</strong>, we need a mock. Let&#39;s create a minimalistic manual mock for it. Add <strong>&quot;Mocks&quot;</strong> folder in your test project and create the following class in it:</p>
+<pre><code class="lang-c#">using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -174,8 +175,9 @@ public class SignInManagerMock : SignInManager&lt;ApplicationUser&gt;
         IHttpContextAccessor contextAccessor,
         IUserClaimsPrincipalFactory&lt;ApplicationUser&gt; claimsFactory,
         IOptions&lt;IdentityOptions&gt; optionsAccessor,
-        ILogger&lt;SignInManager&lt;ApplicationUser&gt;&gt; logger)
-        : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger)
+        ILogger&lt;SignInManager&lt;ApplicationUser&gt;&gt; logger,
+        IAuthenticationSchemeProvider authProvider)
+        : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, authProvider)
     {
     }
 
@@ -189,29 +191,29 @@ public class SignInManagerMock : SignInManager&lt;ApplicationUser&gt;
         return Task.FromResult(SignInResult.Failed);
     }
 }
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="154" sourceendlinenumber="154">We have created a <strong>&quot;SignInManager&quot;</strong> mock which returns successful sign in result, if specific username and password are provided. Otherwise, returns failed result.</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="156" sourceendlinenumber="156">Now we need to tell the testing framework to use our mock instead of the actual implementation.</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="158" sourceendlinenumber="158">My Tested ASP.NET Core MVC provides a lot of useful extension methods on the service collection. Add this using in the <strong>&quot;TestStartup&quot;</strong> class:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="160" sourceendlinenumber="162"><code class="lang-c#">using MyTested.AspNetCore.Mvc;
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="164" sourceendlinenumber="164">And then replace the <strong>&quot;SignInManager&quot;</strong> service by writing the following:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="166" sourceendlinenumber="173"><code class="lang-c#">public void ConfigureTestServices(IServiceCollection services)
+</code></pre><p>We have created a <strong>&quot;SignInManager&quot;</strong> mock which returns successful sign in result, if specific username and password are provided. Otherwise, returns failed result.</p>
+<p>Now we need to tell the testing framework to use our mock instead of the actual ASP.NET Core implementation.</p>
+<p>My Tested ASP.NET Core MVC provides a lot of useful extension methods on the service collection. Add this using in the <strong>&quot;TestStartup&quot;</strong> class:</p>
+<pre><code class="lang-c#">using MyTested.AspNetCore.Mvc;
+</code></pre><p>And then replace the <strong>&quot;SignInManager&quot;</strong> service by writing the following:</p>
+<pre><code class="lang-c#">public void ConfigureTestServices(IServiceCollection services)
 {
     base.ConfigureServices(services);
 
     services.ReplaceSingleton&lt;SignInManager&lt;ApplicationUser&gt;, SignInManagerMock&gt;();
 }
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="175" sourceendlinenumber="175">From now on, during testing, all injectable constructors will receive the mock instead of the original sign in manager service.</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="177" sourceendlinenumber="177">The <strong>&quot;ReplaceSingleton&quot;</strong> method will find a singleton implementation of the service and replace it with the type we want. Other commonly used methods are:</p>
-<ul sourcefile="tutorial/services.md" sourcestartlinenumber="179" sourceendlinenumber="183">
-<li sourcefile="tutorial/services.md" sourcestartlinenumber="179" sourceendlinenumber="179"><strong>&quot;ReplaceTransient&quot;</strong>, <strong>&quot;ReplaceScoped&quot;</strong>, <strong>&quot;ReplaceSingleton&quot;</strong> - these replace the service without changing its lifetime</li>
-<li sourcefile="tutorial/services.md" sourcestartlinenumber="180" sourceendlinenumber="180"><strong>&quot;ReplaceLifetime&quot;</strong> - replaces the lifetime of the service without changing its implementation </li>
-<li sourcefile="tutorial/services.md" sourcestartlinenumber="181" sourceendlinenumber="181"><strong>&quot;Replace&quot;</strong> - allows replacing both the service implementation and its lifetime</li>
-<li sourcefile="tutorial/services.md" sourcestartlinenumber="182" sourceendlinenumber="182"><strong>&quot;RemoveTransient&quot;</strong>, <strong>&quot;RemoveScoped&quot;</strong>, <strong>&quot;RemoveSingleton&quot;</strong> - these remove the service with the corresponding lifetime</li>
-<li sourcefile="tutorial/services.md" sourcestartlinenumber="183" sourceendlinenumber="183"><strong>&quot;Remove&quot;</strong> - removes the service no matter its lifetime</li>
+</code></pre><p>From now on, during testing, all injectable constructors will receive the mock instead of the original sign in manager service.</p>
+<p>The <strong>&quot;ReplaceSingleton&quot;</strong> method will find a singleton implementation of the service and replace it with the type we want. Other commonly used methods are:</p>
+<ul>
+<li><strong>&quot;ReplaceTransient&quot;</strong>, <strong>&quot;ReplaceScoped&quot;</strong>, <strong>&quot;ReplaceSingleton&quot;</strong> - these replace the service without changing its lifetime</li>
+<li><strong>&quot;ReplaceLifetime&quot;</strong> - replaces the lifetime of the service without changing its implementation</li>
+<li><strong>&quot;Replace&quot;</strong> - allows replacing both the service implementation and its lifetime</li>
+<li><strong>&quot;RemoveTransient&quot;</strong>, <strong>&quot;RemoveScoped&quot;</strong>, <strong>&quot;RemoveSingleton&quot;</strong> - these remove the service with the corresponding lifetime</li>
+<li><strong>&quot;Remove&quot;</strong> - removes the service no matter its lifetime</li>
 </ul>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="185" sourceendlinenumber="185">Use them wisely! :)</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="187" sourceendlinenumber="187">Now, let&#39;s write the actual test. Create an <strong>&quot;AccountControllerTest&quot;</strong> class and add this test:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="189" sourceendlinenumber="211"><code class="lang-c#">[Fact]
+<p>Use them wisely! :)</p>
+<p>Now, let&#39;s write the actual test. Create an <strong>&quot;AccountControllerTest&quot;</strong> class and add this test:</p>
+<pre><code class="lang-c#">[Fact]
 public void LoginShouldReturnRedirectToLocalWithValidLoginViewModel()
 {
     var model = new LoginViewModel
@@ -229,11 +231,11 @@ public void LoginShouldReturnRedirectToLocalWithValidLoginViewModel()
         .ValidModelState()
         .AndAlso()
         .ShouldReturn()
-        .Redirect()
-        .ToUrl(redirectUrl);
+        .Redirect(result =&gt; result
+            .ToUrl(redirectUrl));
 }
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="213" sourceendlinenumber="213">And if you like to test for failed login:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="215" sourceendlinenumber="239"><code class="lang-c#">[Fact]
+</code></pre><p>And if you like to test for failed login:</p>
+<pre><code class="lang-c#">[Fact]
 public void LoginShouldReturnViewWithSameModelWithInvalidLoginViewModel()
 {
     var model = new LoginViewModel
@@ -253,13 +255,13 @@ public void LoginShouldReturnViewWithSameModelWithInvalidLoginViewModel()
             .ThatEquals(&quot;Invalid login attempt.&quot;))
         .AndAlso()
         .ShouldReturn()
-        .View()
-        .WithModel(model);
+        .View(result =&gt; result
+            .WithModel(model));
 }
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="241" sourceendlinenumber="241">You may extract the magic strings if you like (you little perfectionist)... :)</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="243" sourceendlinenumber="243">Sometimes you cannot specify the mock directly as a generic parameter so you may need to use an implementation factory.</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="245" sourceendlinenumber="245">For example, if we use <strong>&quot;Moq&quot;</strong> to create the <strong>&quot;SignInManager&quot;</strong> mock, we can create a <strong>&quot;MockProvider&quot;</strong> class and write the following in it:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="247" sourceendlinenumber="286"><code class="lang-c#">using Microsoft.AspNetCore.Builder;
+</code></pre><p>You may extract the magic strings if you like (you little perfectionist)... :)</p>
+<p>Sometimes you cannot specify the mock directly as a generic parameter so you may need to use an implementation factory.</p>
+<p>For example, if we use <strong>&quot;Moq&quot;</strong> to create the <strong>&quot;SignInManager&quot;</strong> mock, we can create a <strong>&quot;MockProvider&quot;</strong> class and write the following in it:</p>
+<pre><code class="lang-c#">using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -297,14 +299,14 @@ public static class MockProvider
         return signInManagerMock.Object;
     }
 }
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="288" sourceendlinenumber="288">And in the <strong>&quot;TestStartup&quot;</strong> class we have to use the implementation factory overload:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="290" sourceendlinenumber="293"><code class="lang-c#">services.ReplaceSingleton&lt;SignInManager&lt;ApplicationUser&gt;&gt;(sp =&gt; 
+</code></pre><p>And in the <strong>&quot;TestStartup&quot;</strong> class we have to use the implementation factory overload:</p>
+<pre><code class="lang-c#">services.ReplaceSingleton&lt;SignInManager&lt;ApplicationUser&gt;&gt;(sp =&gt; 
     MockProvider.SignInManager(sp.GetRequiredService&lt;UserManager&lt;ApplicationUser&gt;&gt;()));
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="295" sourceendlinenumber="295">Keep in mind that replacing specific services may need other configurations. For example, replacing the <strong>&quot;IOptions&quot;</strong> interface without touching the <strong>&quot;config.json&quot;</strong> file have to be done with this line:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="297" sourceendlinenumber="299"><code class="lang-c#">services.Configure&lt;AppSettings&gt;(setting =&gt; setting.SiteTitle = &quot;Test Site&quot;);
-</code></pre><h2 id="teststartup-without-inherited-services" sourcefile="tutorial/services.md" sourcestartlinenumber="301" sourceendlinenumber="301">TestStartup without inherited services</h2>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="303" sourceendlinenumber="303">Of course, in some scenarios you may be a bit scared to inherit all services from the web application directly. So don&#39;t to it and take full control, if you like:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="305" sourceendlinenumber="322"><code class="lang-c#">public class TestStartup
+</code></pre><p>Keep in mind that replacing specific services may need other configurations. For example, replacing the <strong>&quot;IOptions&quot;</strong> interface without touching the <strong>&quot;config.json&quot;</strong> file have to be done with this line:</p>
+<pre><code class="lang-c#">services.Configure&lt;AppSettings&gt;(setting =&gt; setting.SiteTitle = &quot;Test Site&quot;);
+</code></pre><h2 id="teststartup-without-inherited-services">TestStartup without inherited services</h2>
+<p>Of course, in some scenarios you may be a bit scared to inherit all services from the web application directly. So don&#39;t to it and take full control, if you like:</p>
+<pre><code class="lang-c#">public class TestStartup
 {
     public void ConfigureTestServices(IServiceCollection services)
     {
@@ -320,12 +322,12 @@ public static class MockProvider
         // add all your test application middleware here
     }
 }
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="324" sourceendlinenumber="324">This approach is safer than using inheritance, but you will need to manually keep in sync the services in the web application and the ones in the test project.</p>
-<h2 id="scoped-services" sourcefile="tutorial/services.md" sourcestartlinenumber="326" sourceendlinenumber="326">Scoped services</h2>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="328" sourceendlinenumber="328">All scoped services live only for a single test and then their state is reset. In the previous section we saw how the <strong>&quot;DbContext&quot;</strong> extension methods take advantage of this feature by clearing the database for each test.</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="330" sourceendlinenumber="330">Now, we are going to see how we can use scoped services for more custom purposes.</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="332" sourceendlinenumber="332">Let&#39;s examine the <strong>&quot;Details&quot;</strong> action in the <strong>&quot;StoreManagerController&quot;</strong>:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="334" sourceendlinenumber="371"><code class="lang-c#">public async Task&lt;IActionResult&gt; Details(
+</code></pre><p>This approach is safer than using inheritance, but you will need to manually keep in sync the services in the web application and the ones in the test project.</p>
+<h2 id="scoped-services">Scoped services</h2>
+<p>All scoped services live only for a single test and then their state is reset. In the previous section we saw how the <strong>&quot;DbContext&quot;</strong> extension methods take advantage of this feature by clearing the database for each test.</p>
+<p>Now, we are going to see how we can use scoped services for more custom purposes.</p>
+<p>Let&#39;s examine the <strong>&quot;Details&quot;</strong> action in the <strong>&quot;StoreManagerController&quot;</strong>:</p>
+<pre><code class="lang-c#">public async Task&lt;IActionResult&gt; Details(
     [FromServices] IMemoryCache cache,
     int id)
 {
@@ -361,9 +363,9 @@ public static class MockProvider
 
     return View(album);
 }
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="373" sourceendlinenumber="373">We want to test that with disabled global caching in the <strong>&quot;AppSettings&quot;</strong> options, we dot not try to cache the database result.</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="375" sourceendlinenumber="375">First, we need to prepare the <strong>&quot;IMemoryCache&quot;</strong> mock to throw an exception when setting an entry with specific key. Go to the <strong>&quot;MockProvider&quot;</strong> class (or create it, if you haven&#39;t already) and add the following:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="377" sourceendlinenumber="392"><code class="lang-c#">public static IMemoryCache ThrowableMemoryCache
+</code></pre><p>We want to test that with disabled global caching in the <strong>&quot;AppSettings&quot;</strong> options, we do not cache the database result.</p>
+<p>First, we need to prepare the <strong>&quot;IMemoryCache&quot;</strong> mock to throw an exception when setting an entry with specific key. Go to the <strong>&quot;MockProvider&quot;</strong> class (or create it, if you haven&#39;t already) and add the following:</p>
+<pre><code class="lang-c#">public static IMemoryCache ThrowableMemoryCache
 {
     get
     {
@@ -377,52 +379,64 @@ public static class MockProvider
         return memoryCacheMock.Object;
     }
 }
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="394" sourceendlinenumber="394">Our mock will throw exception, if the requested album ID is equal to the maximum integer value. We will not use this mock globally but rather only for the <strong>&quot;Details&quot;</strong> action test.</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="396" sourceendlinenumber="396">Next, we need to set the <strong>&quot;CacheDbResults&quot;</strong> property in the registered <strong>&quot;AppSettings&quot;</strong> class to <strong>&quot;false&quot;</strong>. Since we want to have other tests asserting caching functionality, it will not be a good idea to change the global <strong>&quot;config.json&quot;</strong> value.</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="398" sourceendlinenumber="398">Enter scoped service set up! :)</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="400" sourceendlinenumber="400">Go to the <strong>&quot;project.json&quot;</strong> file in the test project and add <strong>&quot;MyTested.AspNetCore.Mvc.DependencyInjection&quot;</strong> as a dependency:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="402" sourceendlinenumber="415"><code class="lang-json">&quot;dependencies&quot;: {
-  &quot;dotnet-test-xunit&quot;: &quot;2.2.0-*&quot;,
-  &quot;xunit&quot;: &quot;2.2.0-*&quot;,
-  &quot;Moq&quot;: &quot;4.6.38-*&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Controllers&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.DependencyInjection&quot;: &quot;1.0.0&quot;, // &lt;---
-  &quot;MyTested.AspNetCore.Mvc.EntityFrameworkCore&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.ModelState&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Models&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.ViewActionResults&quot;: &quot;1.0.0&quot;,
-  &quot;MusicStore&quot;: &quot;*&quot;
-},
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="417" sourceendlinenumber="417">This package will add service related extension methods to the fluent API. Let&#39;s write the test without modifying the <strong>&quot;AppSettings&quot;</strong> configuration:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="419" sourceendlinenumber="434"><code class="lang-c#">[Fact]
+</code></pre><p>Our mock will throw exception, if the requested album ID is equal to the maximum integer value. We will not use this mock globally but rather only for the <strong>&quot;Details&quot;</strong> action test.</p>
+<p>Next, we need to set the <strong>&quot;CacheDbResults&quot;</strong> property in the registered <strong>&quot;AppSettings&quot;</strong> class to <strong>&quot;false&quot;</strong>. Since we want to have other tests asserting caching functionality, it will not be a good idea to change the global <strong>&quot;config.json&quot;</strong> value.</p>
+<p>Enter scoped service set up! :)</p>
+<p>Go to the <strong>&quot;MusicStore.Test.csproj&quot;</strong> file in the test project and add <strong>&quot;MyTested.AspNetCore.Mvc.DependencyInjection&quot;</strong> as a dependency:</p>
+<pre><code class="lang-xml">&lt;!-- Other ItemGroups --&gt;
+
+  &lt;ItemGroup&gt;
+    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.App&quot; /&gt;
+    &lt;PackageReference Include=&quot;Microsoft.NET.Test.Sdk&quot; Version=&quot;16.0.1&quot; /&gt;
+    &lt;PackageReference Include=&quot;Moq&quot; Version=&quot;4.13.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.ActionResults&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.Views&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;!-- MyTested.AspNetCore.Mvc.DependencyInjection package --&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.DependencyInjection&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.EntityFrameworkCore&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Models&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.ModelState&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;xunit&quot; Version=&quot;2.4.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;xunit.runner.visualstudio&quot; Version=&quot;2.4.0&quot; /&gt;
+  &lt;/ItemGroup&gt;
+
+&lt;!-- Other ItemGroups --&gt;
+</code></pre><p>This package will add service related extension methods to the fluent API. Let&#39;s write the test without modifying the <strong>&quot;AppSettings&quot;</strong> configuration:</p>
+<pre><code class="lang-c#">[Fact]
 public void DetailsShouldNotSaveCacheEntryWithDisabledGlobalCache()
-    =&gt; MyController&lt;StoreManagerController&gt;
+{
+    var album = new Album
+    {
+        AlbumId = int.MaxValue
+    };
+
+    MyController&lt;StoreManagerController&gt;
         .Instance()
-        .WithDbContext(db =&gt; db
-            .WithEntities(entities =&gt; entities.Add(new Album 
-            { 
-                AlbumId = int.MaxValue 
-            })))
-        .Calling(c =&gt; c.Details(MockProvider.ThrowableMemoryCache, int.MaxValue))
+        .WithData(album)
+        .Calling(c =&gt; c.Details(
+            MockProvider.ThrowableMemoryCache, 
+            int.MaxValue))
         .ShouldReturn()
-        .View()
-        .WithModelOfType&lt;Album&gt;()
-        .Passing(m =&gt; m.AlbumId == int.MaxValue);
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="436" sourceendlinenumber="436">As you can see, we are adding an album with an ID equal to the maximum integer value. Additionally, in the <strong>&quot;Calling&quot;</strong> method we are providing explicitly the memory cache mock which throws invalid operation exception. Running this test will produce an error as expected:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="438" sourceendlinenumber="440"><code class="lang-text">When calling Details action in StoreManagerController expected no exception but AggregateException (containing InvalidOperationException with &#39;Caching is not available for this test.&#39; message) was thrown without being caught.
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="442" sourceendlinenumber="442">Let&#39;s disable the caching only for this test. Add the following lines of code right after the <strong>&quot;Instance&quot;</strong> call:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="444" sourceendlinenumber="448"><code class="lang-c#">.WithServices(services =&gt; services
+        .View(result =&gt; result
+            .WithModelOfType&lt;Album&gt;()
+            .Passing(m =&gt; m.AlbumId == int.MaxValue));
+}
+</code></pre><p>As you can see, we are adding an album with an ID equal to the maximum integer value. Additionally, in the <strong>&quot;Calling&quot;</strong> method we are providing explicitly the memory cache mock which throws invalid operation exception. Running this test will produce an error as expected:</p>
+<pre><code class="lang-text">When calling Details action in StoreManagerController expected no exception but AggregateException (containing InvalidOperationException with &#39;Caching is not available for this test.&#39; message) was thrown without being caught.
+</code></pre><p>Let&#39;s disable the caching only for this test. Add the following lines of code right after the <strong>&quot;Instance&quot;</strong> call:</p>
+<pre><code class="lang-c#">.WithDependencies(services =&gt; services
     .WithSetupFor&lt;IOptions&lt;AppSettings&gt;&gt;(settings =&gt; settings
         .Value.CacheDbResults = false))
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="450" sourceendlinenumber="450">This call will set up the options service to have the <strong>&quot;CacheDbResults&quot;</strong> property set to <strong>&quot;false&quot;</strong> only for this test. Run it only to see it failing again:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="452" sourceendlinenumber="454"><code class="lang-text">The &#39;WithSetupFor&#39; method can be used only for services with scoped lifetime.
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="456" sourceendlinenumber="456">Oh, yeah... We are talking about scoped services here. By default all <strong>&quot;IOptions&quot;</strong> ones are singletons. Let&#39;s change that for good in the <strong>&quot;TestStartup&quot;</strong> class:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="458" sourceendlinenumber="460"><code class="lang-c#">services.AddScoped&lt;IOptions&lt;AppSettings&gt;, OptionsManager&lt;AppSettings&gt;&gt;();
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="462" sourceendlinenumber="462">Run the test again and be happy! :)</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="464" sourceendlinenumber="464">I will not tell you there is a better way to assert with options services and that we will cover it later in this tutorial! You should know that already... :)</p>
-<h2 id="per-test-services" sourcefile="tutorial/services.md" sourcestartlinenumber="466" sourceendlinenumber="466">Per test services</h2>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="468" sourceendlinenumber="468">Sometimes you do not want to have the global services injected into the controller&#39;s constructor. You have the option to provide test specific service implementations wherever you need them. Let&#39;s assert the <strong>&quot;Browse&quot;</strong> action in the <strong>&quot;StoreController&quot;</strong> but without using any of the globally configured services:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="470" sourceendlinenumber="485"><code class="lang-c#">public async Task&lt;IActionResult&gt; Browse(string genre)
+</code></pre><p>This call will set up the options service to have the <strong>&quot;CacheDbResults&quot;</strong> property set to <strong>&quot;false&quot;</strong> only for this test. Run it only to see it failing again:</p>
+<pre><code class="lang-text">The &#39;WithSetupFor&#39; method can be used only for services with scoped lifetime.
+</code></pre><p>Oh, yeah... We are talking about scoped services here. By default all <strong>&quot;IOptions&quot;</strong> ones are singletons. Let&#39;s change that for good in the <strong>&quot;TestStartup&quot;</strong> class:</p>
+<pre><code class="lang-c#">services.AddScoped&lt;IOptions&lt;AppSettings&gt;, OptionsManager&lt;AppSettings&gt;&gt;();
+</code></pre><p>Run the test again and be happy! :)</p>
+<p>I will not tell you there is a better way to assert with options services and that we will cover it later in this tutorial! You should know that already... :)</p>
+<h2 id="per-test-services">Per test services</h2>
+<p>Sometimes you do not want to have the global services injected into the controller&#39;s constructor. You have the option to provide test specific service implementations wherever you need them. Let&#39;s assert the <strong>&quot;Browse&quot;</strong> action in the <strong>&quot;StoreController&quot;</strong> but without using any of the globally configured services:</p>
+<pre><code class="lang-c#">public async Task&lt;IActionResult&gt; Browse(string genre)
 {
     var genreModel = await DbContext.Genres
         .Include(g =&gt; g.Albums)
@@ -436,8 +450,8 @@ public void DetailsShouldNotSaveCacheEntryWithDisabledGlobalCache()
 
     return View(genreModel);
 }
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="487" sourceendlinenumber="487">First, we obviously need mocks for <strong>&quot;MusicStoreContext&quot;</strong> and <strong>&quot;IOptions&quot;</strong>. Go to the <strong>&quot;MockProvider&quot;</strong> class and add these lines:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="489" sourceendlinenumber="518"><code class="lang-c#">public static MusicStoreContext MusicStoreContext
+</code></pre><p>First, we obviously need mocks for <strong>&quot;MusicStoreContext&quot;</strong> and <strong>&quot;IOptions&quot;</strong>. Go to the <strong>&quot;MockProvider&quot;</strong> class and add these lines:</p>
+<pre><code class="lang-c#">public static MusicStoreContext MusicStoreContext
 {
     get
     {
@@ -447,7 +461,7 @@ public void DetailsShouldNotSaveCacheEntryWithDisabledGlobalCache()
 
         var serviceProvider = new ServiceCollection()
             .AddDbContext&lt;MusicStoreContext&gt;(db =&gt; db
-                .UseInMemoryDatabase()
+                .UseInMemoryDatabase(databaseName: &quot;TestDB&quot;)
                 .UseInternalServiceProvider(efServiceProvider))
             .BuildServiceProvider();
 
@@ -465,8 +479,8 @@ public void DetailsShouldNotSaveCacheEntryWithDisabledGlobalCache()
         return dbContext;
     }
 }
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="520" sourceendlinenumber="520">And then you can write your test:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="522" sourceendlinenumber="532"><code class="lang-c#">[Fact]
+</code></pre><p>And then you can write your test:</p>
+<pre><code class="lang-c#">[Fact]
 public void BrowseShouldReturnNotFoundWithInvalidGenre()
     =&gt; MyController&lt;StoreController&gt;
         .Instance(new StoreController(
@@ -475,44 +489,44 @@ public void BrowseShouldReturnNotFoundWithInvalidGenre()
         .Calling(c =&gt; c.Browse(&quot;Invalid&quot;))
         .ShouldReturn()
         .NotFound();
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="534" sourceendlinenumber="534">This way you are providing the instantiated controller directly to the <strong>&quot;Instance&quot;</strong> method specifying the dependencies manually.</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="536" sourceendlinenumber="536">You can also use the <strong>&quot;WithServices&quot;</strong> method in the following way:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="538" sourceendlinenumber="551"><code class="lang-c#">[Fact]
+</code></pre><p>This way you are providing the instantiated controller directly to the <strong>&quot;Instance&quot;</strong> method specifying the dependencies manually.</p>
+<p>You can also use the <strong>&quot;WithServices&quot;</strong> method in the following way:</p>
+<pre><code class="lang-c#">[Fact]
 public void BrowseShouldReturnCorrectViewModelWithValidGenre()
     =&gt; MyController&lt;StoreController&gt;
         .Instance()
-        .WithServices( // &lt;---
+        .WithDependencies(
             MockProvider.MusicStoreContext,
             Mock.Of&lt;IOptions&lt;AppSettings&gt;&gt;())
         .Calling(c =&gt; c.Browse(&quot;Rap&quot;))
         .ShouldReturn()
-        .View()
-        .WithModelOfType&lt;Genre&gt;()
-        .Passing(model =&gt; model.GenreId == 2);
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="553" sourceendlinenumber="553">Or like this:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="555" sourceendlinenumber="568"><code class="lang-c#">[Fact]
+        .View(result =&gt; result
+            .WithModelOfType&lt;Genre&gt;()
+            .Passing(model =&gt; model.GenreId == 2));
+</code></pre><p>Or like this:</p>
+<pre><code class="lang-c#">[Fact]
 public void BrowseShouldReturnCorrectViewModelWithValidGenre()
     =&gt; MyController&lt;StoreController&gt;
         .Instance()
-        .WithServices(services =&gt; services // &lt;---
+        .WithDependencies(dependencies =&gt; dependencies // &lt;---
             .With(MockProvider.MusicStoreContext)
             .With(Mock.Of&lt;IOptions&lt;AppSettings&gt;&gt;()))
         .Calling(c =&gt; c.Browse(&quot;Rap&quot;))
         .ShouldReturn()
-        .View()
-        .WithModelOfType&lt;Genre&gt;()
-        .Passing(model =&gt; model.GenreId == 2);
-</code></pre><h2 id="fromservices-attribute" sourcefile="tutorial/services.md" sourcestartlinenumber="570" sourceendlinenumber="570">FromServices attribute</h2>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="572" sourceendlinenumber="572">Some services are injected through the action parameters with the use of the <strong>&quot;FromServices&quot;</strong> attribute like the method we tested in the previous section:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="574" sourceendlinenumber="582"><code class="lang-c#">public async Task&lt;IActionResult&gt; Create(
+        .View(result =&gt; result
+            .WithModelOfType&lt;Genre&gt;()
+            .Passing(model =&gt; model.GenreId == 2));
+</code></pre><h2 id="fromservices-attribute">FromServices attribute</h2>
+<p>Some services are injected through the action parameters with the use of the <strong>&quot;FromServices&quot;</strong> attribute like the method we tested in the previous section:</p>
+<pre><code class="lang-c#">public async Task&lt;IActionResult&gt; Create(
     Album album,
     [FromServices] IMemoryCache cache, // &lt;---
     CancellationToken requestAborted)
 {
     // action code skipped for brevity
 }
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="584" sourceendlinenumber="584">Go to the <strong>&quot;StoreManagerControllerTest&quot;</strong> class and take a look at the unit test:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="586" sourceendlinenumber="595"><code class="lang-c#">// test code skipped for brevity
+</code></pre><p>Go to the <strong>&quot;StoreManagerControllerTest&quot;</strong> class and take a look at the unit test:</p>
+<pre><code class="lang-c#">// test code skipped for brevity
 
 .Calling(c =&gt; c.Create(
     album,
@@ -520,8 +534,8 @@ public void BrowseShouldReturnCorrectViewModelWithValidGenre()
     With.Default&lt;CancellationToken&gt;()))
 
 // test code skipped for brevity
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="597" sourceendlinenumber="597">We use a mock of the cache but it&#39;s local to that specific unit test. While we write more and more unit tests, we may see that we need the same mock object over and over again in various controllers and actions. For example imagine our cache mock had the following functionality and we wanted it in more than one test:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="599" sourceendlinenumber="608"><code class="lang-c#">var cacheEntryMock = new Mock&lt;ICacheEntry&gt;();
+</code></pre><p>We use a mock of the cache but it&#39;s local to that specific unit test. While we write more and more unit tests, we may see that we need the same mock object over and over again in various controllers and actions. For example imagine our cache mock had the following functionality and we wanted it in more than one test:</p>
+<pre><code class="lang-c#">var cacheEntryMock = new Mock&lt;ICacheEntry&gt;();
 cacheEntryMock.SetupGet(e =&gt; e.Key).Returns(&quot;MyKey&quot;);
 cacheEntryMock.SetupGet(e =&gt; e.Value).Returns(&quot;MyValue&quot;);
 
@@ -529,37 +543,36 @@ var cacheMock = new Mock&lt;IMemoryCache&gt;();
 cacheMock.Setup(c =&gt; c.Get(It.Is&lt;string&gt;(k =&gt; k == &quot;MyKey&quot;))).Returns(cacheMock);
 
 var cache = cacheMock.Object;
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="610" sourceendlinenumber="610">It would be the perfect candidate for a globally registered test service. There is a built-in mock for the <strong>&quot;IMemoryCache&quot;</strong> in My Tested ASP.NET Core MVC already, but we will cover it later in the tutorial.</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="612" sourceendlinenumber="612">Go to the <strong>&quot;TestStartup&quot;</strong> class and add a replacement for the <strong>&quot;IMemoryCache&quot;</strong> service:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="614" sourceendlinenumber="616"><code class="lang-c#">services.ReplaceSingleton&lt;IMemoryCache&gt;(Mock.Of&lt;IMemoryCache&gt;());
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="618" sourceendlinenumber="618">Run all the tests and... what the?! Some tests fail? :(</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="620" sourceendlinenumber="620">Turns out Entity Framework Core <a href="https://github.com/aspnet/EntityFramework/blob/1fa247b038927a7d7438f666dc11253f64e0432d/src/Microsoft.EntityFrameworkCore/Internal/DbContextServices.cs#L96" sourcefile="tutorial/services.md" sourcestartlinenumber="620" sourceendlinenumber="620">uses the memory cache service internally</a> so we should be very careful with the global cache mock.</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="622" sourceendlinenumber="622">The simplest solution is to still use the original memory cache service but with scoped lifetime so it resets its state after each test:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="624" sourceendlinenumber="626"><code class="lang-c#">services.ReplaceLifetime&lt;IMemoryCache&gt;(ServiceLifetime.Scoped);
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="628" sourceendlinenumber="628">This call will make all our tests pass again.</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="630" sourceendlinenumber="630">OK, but how to pass the globally configured cache mock in the action call instead of the local one?</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="632" sourceendlinenumber="632">Easy! Just use the helper <strong>&quot;From&quot;</strong> class:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="634" sourceendlinenumber="639"><code class="lang-c#">.Calling(c =&gt; c.Create(
+</code></pre><p>It would be the perfect candidate for a globally registered test service. There is a built-in mock for the <strong>&quot;IMemoryCache&quot;</strong> in My Tested ASP.NET Core MVC already, but we will cover it later in the tutorial.</p>
+<p>Go to the <strong>&quot;TestStartup&quot;</strong> class and add a replacement for the <strong>&quot;IMemoryCache&quot;</strong> service:</p>
+<pre><code class="lang-c#">services.ReplaceSingleton&lt;IMemoryCache&gt;(Mock.Of&lt;IMemoryCache&gt;());
+</code></pre><p>Run all the tests and... what the?! Some tests fail? :(</p>
+<p>Turns out Entity Framework Core <a href="https://github.com/aspnet/EntityFramework/blob/1fa247b038927a7d7438f666dc11253f64e0432d/src/Microsoft.EntityFrameworkCore/Internal/DbContextServices.cs#L96">uses the memory cache service internally</a> so we should be very careful with the global cache mock.</p>
+<p>The simplest solution is to still use the original memory cache service but with scoped lifetime so it resets its state after each test:</p>
+<pre><code class="lang-c#">services.ReplaceLifetime&lt;IMemoryCache&gt;(ServiceLifetime.Scoped);
+</code></pre><p>This call will make all our tests pass again.</p>
+<p>OK, but how to pass the globally configured cache mock in the action call instead of the local one?</p>
+<p>Easy! Just use the helper <strong>&quot;From&quot;</strong> class:</p>
+<pre><code class="lang-c#">.Calling(c =&gt; c.Create(
     album,
     From.Services&lt;IMemoryCache&gt;(), // &lt;---
     With.Default&lt;CancellationToken&gt;()))
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="641" sourceendlinenumber="641">You can even combine it with the previous example by specifying one global and one local mock:</p>
-<pre sourcefile="tutorial/services.md" sourcestartlinenumber="643" sourceendlinenumber="654"><code class="lang-c#">[Fact]
+</code></pre><p>You can even combine it with the previous example by specifying one global and one local mock:</p>
+<pre><code class="lang-c#">[Fact]
 public void BrowseShouldReturnNotFoundWithInvalidGenre()
     =&gt; MyController&lt;StoreController&gt;
         .Instance()
-        .WithServices(
+        .WithDependencies(
             MockProvider.MusicStoreContext,
             From.Services&lt;IOptions&lt;AppSettings&gt;&gt;()) // &lt;---
         .Calling(c =&gt; c.Browse(&quot;Invalid&quot;))
         .ShouldReturn()
         .NotFound();
-</code></pre><p sourcefile="tutorial/services.md" sourcestartlinenumber="656" sourceendlinenumber="656">The <strong>&quot;From.Services&quot;</strong> call is useful where you want to use a globally configured test service but need to provide it explicitly. Pretty cool, right? :)</p>
-<h2 id="section-summary" sourcefile="tutorial/services.md" sourcestartlinenumber="658" sourceendlinenumber="658">Section summary</h2>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="660" sourceendlinenumber="660">I hope you are beginning to love My Tested ASP.NET Core MVC. I sure do! :)</p>
-<p sourcefile="tutorial/services.md" sourcestartlinenumber="662" sourceendlinenumber="662">We mastered the most important part of the testing framework - the test services. Let&#39;s move on and focus on <a href="/tutorial/httpauthentication.html" sourcefile="tutorial/services.md" sourcestartlinenumber="662" sourceendlinenumber="662">HTTP &amp; Authentication</a> now!</p>
-
-            </article>
+</code></pre><p>The <strong>&quot;From.Services&quot;</strong> call is useful where you want to use a globally configured test service but need to provide it explicitly. Pretty cool, right? :)</p>
+<h2 id="section-summary">Section summary</h2>
+<p>I hope you are beginning to love My Tested ASP.NET Core MVC. I sure do! :)</p>
+<p>We mastered the most important part of the testing framework - the test services. Let&#39;s move on and focus on <a href="/tutorial/httpauthentication.html">HTTP &amp; Authentication</a> now!</p>
+</article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
@@ -567,7 +580,7 @@ public void BrowseShouldReturnNotFoundWithInvalidGenre()
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/tutorial/docs/_docfx/tutorial/services.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/tmollov/MyTested.AspNetCore.Mvc/blob/development/docs/_docfx/tutorial/services.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>

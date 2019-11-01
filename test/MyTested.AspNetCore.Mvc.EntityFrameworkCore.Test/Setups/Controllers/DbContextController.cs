@@ -19,7 +19,7 @@
             return this.Ok();
         }
 
-        public IActionResult Find(int id)
+        public IActionResult Get(int id)
         {
             var model = this.data.Models.FirstOrDefault(m => m.Id == id);
             if (model == null)
@@ -28,6 +28,17 @@
             }
 
             return this.Ok(model);
+        }
+
+        public IActionResult GetAll()
+        {
+            var models = this.data.Models;
+            if (models == null || !models.Any())
+            {
+                return this.NotFound();
+            }
+
+            return this.Ok(models.ToList());
         }
     }
 }

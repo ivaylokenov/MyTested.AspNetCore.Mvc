@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
   <head>
@@ -7,13 +7,13 @@
     <title>Attributes </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Attributes ">
-    <meta name="generator" content="docfx 2.6.3.0">
+    <meta name="generator" content="docfx 2.45.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
     <link rel="stylesheet" href="../styles/main.css">
-    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:navrel" content="">
     <meta property="docfx:tocrel" content="toc.html">
     <meta property="docfx:rel" content="../">
     <meta property="og:title" content="Flexible and asynchronous testing framework for ASP.NET Core MVC">
@@ -30,7 +30,7 @@
     <meta property="twitter:url" content="https://mytestedasp.net/">
     <meta property="twitter:image" content="https://mytestedasp.net/Content/Images/logosocial.jpg">
   </head>
-  <body data-spy="scroll" data-target="#affix">
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
@@ -75,30 +75,56 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-              <h1 id="attributes" sourcefile="tutorial/attributes.md" sourcestartlinenumber="1" sourceendlinenumber="1">Attributes</h1>
-              
-<p sourcefile="tutorial/attributes.md" sourcestartlinenumber="3" sourceendlinenumber="3">This section will cover testing of attributes and their properties.</p>
-<h2 id="controller-attributes" sourcefile="tutorial/attributes.md" sourcestartlinenumber="5" sourceendlinenumber="5">Controller attributes</h2>
-<p sourcefile="tutorial/attributes.md" sourcestartlinenumber="7" sourceendlinenumber="7">Let&#39;s assert that our <strong>&quot;CheckoutController&quot;</strong> is decorated with the commonly used <strong>&quot;AuthorizeAttribute&quot;</strong>. Go to the <strong>CheckoutControllerTest&quot;</strong> class and add the following test:</p>
-<pre sourcefile="tutorial/attributes.md" sourcestartlinenumber="9" sourceendlinenumber="17"><code class="lang-c#">[Fact]
+<h1 id="attributes">Attributes</h1>
+
+<p>This section will cover testing of attributes and their properties.</p>
+<h2 id="controller-attributes">Controller attributes</h2>
+<p>First, we need another package. Again?! </p>
+<p>Do not worry, later in this tutorial we are going to use the <strong>&quot;Universe&quot;</strong> package and this madness will end. The purpose here is to show you the different components of the testing framework.</p>
+<p>Now, obey the rules and add <strong>&quot;MyTested.AspNetCore.Mvc.Controllers.Attributes&quot;</strong> to your <strong>&quot;MusicStore.Test.csproj&quot;</strong> project:</p>
+<pre><code class="lang-xml">&lt;!-- Other ItemGroups --&gt;
+
+  &lt;ItemGroup&gt;
+    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.App&quot; /&gt;
+    &lt;PackageReference Include=&quot;Microsoft.NET.Test.Sdk&quot; Version=&quot;16.0.1&quot; /&gt;
+    &lt;PackageReference Include=&quot;Moq&quot; Version=&quot;4.13.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Authentication&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.ActionResults&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;!-- MyTested.AspNetCore.Mvc.Controllers.Attributes package --&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.Attributes&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.Views&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.DependencyInjection&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.EntityFrameworkCore&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Http&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Models&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.ModelState&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;xunit&quot; Version=&quot;2.4.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;xunit.runner.visualstudio&quot; Version=&quot;2.4.0&quot; /&gt;
+  &lt;/ItemGroup&gt;
+
+&lt;!-- Other ItemGroups --&gt;
+</code></pre><p>Let&#39;s assert that our <strong>&quot;CheckoutController&quot;</strong> is decorated with the commonly used <strong>&quot;AuthorizeAttribute&quot;</strong>. Go to the <strong>CheckoutControllerTest&quot;</strong> class and add the following test:</p>
+<pre><code class="lang-c#">[Fact]
 public void CheckoutControllerShouldHaveAuthorizeAttribute()
     =&gt; MyController&lt;CheckoutController&gt;
         .Instance()
         .ShouldHave()
         .Attributes(attributes =&gt; attributes // &lt;---
             .RestrictingForAuthorizedRequests());
-</code></pre><p sourcefile="tutorial/attributes.md" sourcestartlinenumber="19" sourceendlinenumber="19">Simple as that. Additionally, in the the <strong>&quot;HomeControllerTest&quot;</strong> class, we can add:</p>
-<pre sourcefile="tutorial/attributes.md" sourcestartlinenumber="21" sourceendlinenumber="28"><code class="lang-c#">[Fact]
+</code></pre><p>Simple as that. Additionally, in the the <strong>&quot;HomeControllerTest&quot;</strong> class, we can add:</p>
+<pre><code class="lang-c#">[Fact]
 public void HomeControllerShouldHaveNoAttributes()
     =&gt; MyController&lt;HomeController&gt;
         .Instance()
         .ShouldHave()
         .NoAttributes();
-</code></pre><p sourcefile="tutorial/attributes.md" sourcestartlinenumber="30" sourceendlinenumber="30">Of course, if you change <strong>&quot;NoAttributes&quot;</strong> to <strong>&quot;Attributes&quot;</strong>, you will receive an error:</p>
-<pre sourcefile="tutorial/attributes.md" sourcestartlinenumber="32" sourceendlinenumber="34"><code class="lang-text">When testing HomeController was expected to have at least 1 attribute, but in fact none was found.
-</code></pre><h2 id="action-attributes" sourcefile="tutorial/attributes.md" sourcestartlinenumber="36" sourceendlinenumber="36">Action attributes</h2>
-<p sourcefile="tutorial/attributes.md" sourcestartlinenumber="38" sourceendlinenumber="38">Action attributes are not different. Let&#39;s test the <strong>&quot;RemoveAlbumConfirmed&quot;</strong> action in the <strong>&quot;StoreManagerController&quot;</strong>:</p>
-<pre sourcefile="tutorial/attributes.md" sourcestartlinenumber="40" sourceendlinenumber="49"><code class="lang-c#">[HttpPost, ActionName(&quot;RemoveAlbum&quot;)]
+</code></pre><p>Of course, if you change <strong>&quot;NoAttributes&quot;</strong> to <strong>&quot;Attributes&quot;</strong>, you will receive an error:</p>
+<pre><code class="lang-text">When testing HomeController was expected to have at least 1 attribute, but in fact none was found.
+</code></pre><h2 id="action-attributes">Action attributes</h2>
+<p>Action attributes are not different. Let&#39;s test the <strong>&quot;RemoveAlbumConfirmed&quot;</strong> action in the <strong>&quot;StoreManagerController&quot;</strong>:</p>
+<pre><code class="lang-c#">[HttpPost, ActionName(&quot;RemoveAlbum&quot;)]
 public async Task&lt;IActionResult&gt; RemoveAlbumConfirmed(
     [FromServices] IMemoryCache cache,
     int id,
@@ -106,24 +132,24 @@ public async Task&lt;IActionResult&gt; RemoveAlbumConfirmed(
 {
 
 // action code skipped for brevity
-</code></pre><p sourcefile="tutorial/attributes.md" sourcestartlinenumber="51" sourceendlinenumber="51">We need to test the <strong>&quot;HttpPost&quot;</strong> and <strong>&quot;ActionName&quot;</strong> attributes:</p>
-<pre sourcefile="tutorial/attributes.md" sourcestartlinenumber="53" sourceendlinenumber="66"><code class="lang-c#">[Fact]
+</code></pre><p>We need to test the <strong>&quot;HttpPost&quot;</strong> and <strong>&quot;ActionName&quot;</strong> attributes:</p>
+<pre><code class="lang-c#">[Fact]
 public void RemoveAlbumConfirmedShouldHaveCorrectAttributes()
     =&gt; MyController&lt;StoreManagerController&gt;
-    .Instance()
-    .Calling(c =&gt; c.RemoveAlbumConfirmed(
-        With.No&lt;IMemoryCache&gt;(),
-        With.No&lt;int&gt;(),
-        With.No&lt;CancellationToken&gt;()))
-    .ShouldHave()
-    .ActionAttributes(attributes =&gt; attributes // &lt;---
-        .RestrictingForHttpMethod(HttpMethod.Post)
-        .ChangingActionNameTo(&quot;RemoveAlbum&quot;));
-</code></pre><p sourcefile="tutorial/attributes.md" sourcestartlinenumber="68" sourceendlinenumber="68">Working like a charm! :)</p>
-<h2 id="custom-attributes" sourcefile="tutorial/attributes.md" sourcestartlinenumber="70" sourceendlinenumber="70">Custom attributes</h2>
-<p sourcefile="tutorial/attributes.md" sourcestartlinenumber="72" sourceendlinenumber="72">Sometimes you will have custom attributes which are not available in the fluent testing API. For example, you may have noticed that there is no method to test the <strong>&quot;ValidateAntiForgeryTokenAttribute&quot;</strong>&quot;. Actually, it&#39;s in the <strong>&quot;ViewFeatures&quot;</strong> package, but you don&#39;t know that! :)</p>
-<p sourcefile="tutorial/attributes.md" sourcestartlinenumber="74" sourceendlinenumber="74">Let&#39;s see an example and test the HTTP Post <strong>&quot;Login&quot;</strong> action in the <strong>&quot;AccountController&quot;</strong>. It has these three attributes - <strong>&quot;HttpPost&quot;</strong>, <strong>&quot;AllowAnonymous&quot;</strong>, <strong>&quot;ValidateAntiForgeryToken&quot;</strong>. For the latter you can use the <strong>&quot;ContainingAttributeOfType&quot;</strong> method:</p>
-<pre sourcefile="tutorial/attributes.md" sourcestartlinenumber="76" sourceendlinenumber="89"><code class="lang-c#">[Fact]
+        .Instance()
+        .Calling(c =&gt; c.RemoveAlbumConfirmed(
+            With.No&lt;IMemoryCache&gt;(),
+            With.No&lt;int&gt;(),
+            With.No&lt;CancellationToken&gt;()))
+        .ShouldHave()
+        .ActionAttributes(attributes =&gt; attributes // &lt;---
+            .RestrictingForHttpMethod(HttpMethod.Post)
+            .ChangingActionNameTo(&quot;RemoveAlbum&quot;));
+</code></pre><p>Working like a charm! :)</p>
+<h2 id="custom-attributes">Custom attributes</h2>
+<p>Sometimes you will have custom attributes which are not available in the fluent testing API. For example, you may have noticed that there is no method to test the <strong>&quot;ValidateAntiForgeryTokenAttribute&quot;</strong>&quot;. Actually, it&#39;s in the <strong>&quot;ViewFeatures&quot;</strong> package, but you don&#39;t know that! :)</p>
+<p>Let&#39;s see an example and test the HTTP Post <strong>&quot;Login&quot;</strong> action in the <strong>&quot;AccountController&quot;</strong>. It has these three attributes - <strong>&quot;HttpPost&quot;</strong>, <strong>&quot;AllowAnonymous&quot;</strong>, <strong>&quot;ValidateAntiForgeryToken&quot;</strong>. For the latter you can use the <strong>&quot;ContainingAttributeOfType&quot;</strong> method:</p>
+<pre><code class="lang-c#">[Fact]
 public void LoginShouldHaveCorrectAttributes()
     =&gt; MyController&lt;AccountController&gt;
         .Instance()
@@ -135,20 +161,20 @@ public void LoginShouldHaveCorrectAttributes()
             .RestrictingForHttpMethod(HttpMethod.Post)
             .AllowingAnonymousRequests()
             .ContainingAttributeOfType&lt;ValidateAntiForgeryTokenAttribute&gt;()); // &lt;---
-</code></pre><p sourcefile="tutorial/attributes.md" sourcestartlinenumber="91" sourceendlinenumber="91">The action is still invoked in this test, so we need to provide a non-null value for the <strong>&quot;LoginViewModel&quot;</strong> parameter. A better approach for testing action attributes (without having to specify the parameters) will be available in the next major release of the library. :)</p>
-<p sourcefile="tutorial/attributes.md" sourcestartlinenumber="93" sourceendlinenumber="93">Sometimes you may want to test specific property values of the attribute. You can use the <strong>&quot;PassingFor&quot;</strong> method:</p>
-<pre sourcefile="tutorial/attributes.md" sourcestartlinenumber="95" sourceendlinenumber="104"><code class="lang-c#">[Fact]
+</code></pre><p>The action is still invoked in this test, so we need to provide a non-null value for the <strong>&quot;LoginViewModel&quot;</strong> parameter. A better approach for testing action attributes (without having to specify the parameters) will be available in the next major release of the library. :)</p>
+<p>Sometimes you may want to test specific property values of the attribute. You can use the <strong>&quot;PassingFor&quot;</strong> method:</p>
+<pre><code class="lang-c#">[Fact]
 public void StoreManagerControllerShouldHaveCorrectAttributes()
     =&gt; MyController&lt;StoreManagerController&gt;
         .Instance()
         .ShouldHave()
         .Attributes(attributes =&gt; attributes
             .SpecifyingArea(&quot;Admin&quot;)
-            .PassingFor&lt;AuthorizeAttribute&gt;(authorize =&gt; authorize.Policy == &quot;ManageStore&quot;));
-</code></pre><h2 id="section-summary" sourcefile="tutorial/attributes.md" sourcestartlinenumber="106" sourceendlinenumber="106">Section summary</h2>
-<p sourcefile="tutorial/attributes.md" sourcestartlinenumber="108" sourceendlinenumber="108">We saw how easy it is to assert and validate all kinds of controller and action attributes. But enough about them - in the next section we will cover thrown <a href="/tutorial/exceptions.html" sourcefile="tutorial/attributes.md" sourcestartlinenumber="108" sourceendlinenumber="108">Exceptions</a>.</p>
-
-            </article>
+            .PassingFor&lt;AuthorizeAttribute&gt;(authorize =&gt; authorize // &lt;---
+                .Policy == &quot;ManageStore&quot;));
+</code></pre><h2 id="section-summary">Section summary</h2>
+<p>We saw how easy it is to assert and validate all kinds of controller and action attributes. But enough about them - in the next section we will cover thrown <a href="/tutorial/exceptions.html">Exceptions</a>.</p>
+</article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
@@ -156,7 +182,7 @@ public void StoreManagerControllerShouldHaveCorrectAttributes()
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/tutorial/docs/_docfx/tutorial/attributes.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/tmollov/MyTested.AspNetCore.Mvc/blob/development/docs/_docfx/tutorial/attributes.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>

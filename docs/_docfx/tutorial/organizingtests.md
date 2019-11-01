@@ -10,10 +10,10 @@ This is the test style we used so far in the tutorial. For example, let's take a
 namespace MusicStore.Test.Controllers
 {
     using Microsoft.Extensions.Options;
-    using Mocks;
-    using Models;
     using Moq;
     using MusicStore.Controllers;
+    using MusicStore.Models;
+    using MusicStore.Test.Mocks;
     using MyTested.AspNetCore.Mvc;
     using System.Collections.Generic;
     using Xunit;
@@ -24,16 +24,14 @@ namespace MusicStore.Test.Controllers
         public void IndexShouldReturnViewWithGenres()
             => MyController<StoreController>
                 .Instance()
-                .WithDbContext(dbContext => dbContext
-                    .WithEntities(entities => entities.AddRange(
-                        new Genre { Name = "FirstGenre" },
-                        new Genre { Name = "SecondGenre" })))
+                .WithData(
+                    new Genre { Name = "FirstGenre" },
+                    new Genre { Name = "SecondGenre" })
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<List<Genre>>()
-                .Passing(model => model.Count == 2);
-
+                .View(result => result
+                    .WithModelOfType<List<Genre>>()
+                    .Passing(model => model.Count == 2));
         [Fact]
         public void BrowseShouldReturnNotFoundWithInvalidGenre()
             => MyController<StoreController>
@@ -48,14 +46,14 @@ namespace MusicStore.Test.Controllers
         public void BrowseShouldReturnCorrectViewModelWithValidGenre()
             => MyController<StoreController>
                 .Instance()
-                .WithServices(
+                .WithDependencies(
                     MockProvider.MusicStoreContext,
-                    Mock.Of<IOptions<AppSettings>>())
+                    From.Services<IOptions<AppSettings>>())
                 .Calling(c => c.Browse("Rap"))
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<Genre>()
-                .Passing(model => model.GenreId == 2);
+                .View(result => result
+                    .WithModelOfType<Genre>()
+                    .Passing(model => model.GenreId == 2));
     }
 }
 ```
@@ -71,10 +69,9 @@ public void IndexShouldReturnViewWithGenres()
     // Arrange
     var controller = MyController<StoreController>
         .Instance()
-        .WithDbContext(dbContext => dbContext
-            .WithEntities(entities => entities.AddRange(
-                new Genre { Name = "FirstGenre" },
-                new Genre { Name = "SecondGenre" })));
+        .WithData(
+            new Genre { Name = "FirstGenre" },
+            new Genre { Name = "SecondGenre" });
 
     // Act
     var execution = controller.Calling(c => c.Index());
@@ -82,9 +79,9 @@ public void IndexShouldReturnViewWithGenres()
     // Assert
     execution
         .ShouldReturn()
-        .View()
-        .WithModelOfType<List<Genre>>()
-        .Passing(model => model.Count == 2);
+        .View(result => result
+            .WithModelOfType<List<Genre>>()
+            .Passing(model => model.Count == 2));
 }
 ```
 
@@ -98,17 +95,16 @@ public void IndexShouldReturnViewWithGenres()
     => MyController<StoreController>
         // Arrange
         .Instance()
-        .WithDbContext(dbContext => dbContext
-            .WithEntities(entities => entities.AddRange(
-                new Genre { Name = "FirstGenre" },
-                new Genre { Name = "SecondGenre" })))
+        .WithData(
+            new Genre { Name = "FirstGenre" },
+            new Genre { Name = "SecondGenre" })
         // Act
         .Calling(c => c.Index())
         // Assert
         .ShouldReturn()
-        .View()
-        .WithModelOfType<List<Genre>>()
-        .Passing(model => model.Count == 2);
+        .View(result => result
+            .WithModelOfType<List<Genre>>()
+            .Passing(model => model.Count == 2));
 ```
 
 ## The inheriting style
@@ -132,15 +128,14 @@ namespace MusicStore.Test.Controllers
         [Fact]
         public void IndexShouldReturnViewWithGenres()
             => this
-                .WithDbContext(dbContext => dbContext
-                    .WithEntities(entities => entities.AddRange(
-                        new Genre { Name = "FirstGenre" },
-                        new Genre { Name = "SecondGenre" })))
+                .WithData(
+                    new Genre { Name = "FirstGenre" },
+                    new Genre { Name = "SecondGenre" })
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<List<Genre>>()
-                .Passing(model => model.Count == 2);
+                .View(result => result
+                    .WithModelOfType<List<Genre>>()
+                    .Passing(model => model.Count == 2));
 
         [Fact]
         public void BrowseShouldReturnNotFoundWithInvalidGenre()
@@ -154,14 +149,14 @@ namespace MusicStore.Test.Controllers
         [Fact]
         public void BrowseShouldReturnCorrectViewModelWithValidGenre()
             => this
-                .WithServices(
+                .WithDependencies(
                     MockProvider.MusicStoreContext,
                     Mock.Of<IOptions<AppSettings>>())
                 .Calling(c => c.Browse("Rap"))
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<Genre>()
-                .Passing(model => model.GenreId == 2);
+                .View(result => result
+                    .WithModelOfType<Genre>()
+                    .Passing(model => model.GenreId == 2));
     }
 }
 ```
@@ -180,20 +175,19 @@ namespace MusicStore.Test.Controllers
     using System.Collections.Generic;
     using Xunit;
 
-    public class StoreControllerTest : MyController<StoreController>
+    public class StoreControllerTest : MyController<StoreController> // <---
     {
         [Fact]
         public void IndexShouldReturnViewWithGenres()
             => Instance() // <---
-                .WithDbContext(dbContext => dbContext
-                    .WithEntities(entities => entities.AddRange(
-                        new Genre { Name = "FirstGenre" },
-                        new Genre { Name = "SecondGenre" })))
+                .WithData(
+                    new Genre { Name = "FirstGenre" },
+                    new Genre { Name = "SecondGenre" })
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<List<Genre>>()
-                .Passing(model => model.Count == 2);
+                .View(result => result
+                    .WithModelOfType<List<Genre>>()
+                    .Passing(model => model.Count == 2));
 
         [Fact]
         public void BrowseShouldReturnNotFoundWithInvalidGenre()
@@ -207,14 +201,14 @@ namespace MusicStore.Test.Controllers
         [Fact]
         public void BrowseShouldReturnCorrectViewModelWithValidGenre()
             => Instance() // <---
-                .WithServices(
+                .WithDependencies(
                     MockProvider.MusicStoreContext,
                     Mock.Of<IOptions<AppSettings>>())
                 .Calling(c => c.Browse("Rap"))
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<Genre>()
-                .Passing(model => model.GenreId == 2);
+                .View(result => result
+                    .WithModelOfType<Genre>()
+                    .Passing(model => model.GenreId == 2));
     }
 }
 ```
