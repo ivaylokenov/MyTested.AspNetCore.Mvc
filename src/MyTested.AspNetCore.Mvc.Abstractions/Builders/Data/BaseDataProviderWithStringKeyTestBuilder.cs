@@ -66,7 +66,7 @@
         }
 
         /// <inheritdoc />
-        public TDataProviderTestBuilder ContainingEntryOfType(string key,Type valueType)
+        public TDataProviderTestBuilder ContainingEntryOfType(string key, Type valueType)
         {
             this.ValidateContainingEntryOfType(key, valueType);
             return this.DataProviderTestBuilder;

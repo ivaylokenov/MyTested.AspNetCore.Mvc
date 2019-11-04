@@ -55,7 +55,6 @@
             Action<string, string, string> failedValidationAction, Type valueType)
             => ValidateValueOfType(name, dictionary.Values, failedValidationAction,valueType);
         
-
         public static void ValidateValueOfType<TValue>(
             string name,
             IDictionary<object, object> dictionary,
@@ -63,6 +62,7 @@
         {
             ValidateValueOfType<TValue>(name, dictionary.Values, failedValidationAction);
         }
+
         public static void ValidateValueOfType(
            string name,
            IDictionary<object, object> dictionary,

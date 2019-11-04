@@ -44,7 +44,8 @@
                         .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntryWithKey("invalid"))
+                        .MemoryCache(cache => cache
+                            .ContainingEntryWithKey("invalid"))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -59,7 +60,8 @@
                 .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
-                .MemoryCache(cache => cache.ContainingEntryWithValue("value"))
+                .MemoryCache(cache => cache
+                    .ContainingEntryWithValue("value"))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -75,7 +77,8 @@
                         .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntryWithValue("invalid"))
+                        .MemoryCache(cache => cache
+                            .ContainingEntryWithValue("invalid"))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -90,7 +93,8 @@
                 .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
-                .MemoryCache(cache => cache.ContainingEntryOfType<string>())
+                .MemoryCache(cache => cache
+                    .ContainingEntryOfType<string>())
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -103,7 +107,8 @@
                 .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
-                .MemoryCache(cache => cache.ContainingEntryOfType(typeof(string)))
+                .MemoryCache(cache => cache
+                    .ContainingEntryOfType(typeof(string)))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -119,7 +124,8 @@
                         .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntryOfType<int>())
+                        .MemoryCache(cache => cache
+                            .ContainingEntryOfType<int>())
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -137,7 +143,8 @@
                         .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntryOfType(typeof(int)))
+                        .MemoryCache(cache => cache
+                            .ContainingEntryOfType(typeof(int)))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -152,7 +159,8 @@
                 .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
-                .MemoryCache(cache => cache.ContainingEntryOfType<string>("test"))
+                .MemoryCache(cache => cache
+                    .ContainingEntryOfType<string>("test"))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -165,7 +173,8 @@
                 .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
-                .MemoryCache(cache => cache.ContainingEntryOfType("test",typeof(string)))
+                .MemoryCache(cache => cache
+                    .ContainingEntryOfType("test", typeof(string)))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -181,7 +190,8 @@
                         .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntryOfType<string>("invalid"))
+                        .MemoryCache(cache => cache
+                            .ContainingEntryOfType<string>("invalid"))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -199,7 +209,8 @@
                         .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntryOfType("invalid",typeof(string)))
+                        .MemoryCache(cache => cache
+                            .ContainingEntryOfType("invalid", typeof(string)))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -217,7 +228,8 @@
                         .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntryOfType<int>("test"))
+                        .MemoryCache(cache => cache
+                            .ContainingEntryOfType<int>("test"))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -235,7 +247,8 @@
                         .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntryOfType("test",typeof(int)))
+                        .MemoryCache(cache => cache
+                            .ContainingEntryOfType("test", typeof(int)))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -250,7 +263,8 @@
                 .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
-                .MemoryCache(cache => cache.ContainingEntry("test", "value"))
+                .MemoryCache(cache => cache
+                    .ContainingEntry("test", "value"))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -266,7 +280,8 @@
                         .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntry("invalid", "value"))
+                        .MemoryCache(cache => cache
+                            .ContainingEntry("invalid", "value"))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -284,7 +299,8 @@
                         .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntry("test", "invalid"))
+                        .MemoryCache(cache => cache
+                            .ContainingEntry("test", "invalid"))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -299,7 +315,8 @@
                 .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
-                .MemoryCache(cache => cache.ContainingEntry("test", "value", new MemoryCacheEntryOptions
+                .MemoryCache(cache => cache
+                    .ContainingEntry("test", "value", new MemoryCacheEntryOptions
                 {
                     AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1),
@@ -321,7 +338,8 @@
                         .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntry("test", "value", new MemoryCacheEntryOptions
+                        .MemoryCache(cache => cache
+                            .ContainingEntry("test", "value", new MemoryCacheEntryOptions
                         {
                             AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                             AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(2),
@@ -342,7 +360,8 @@
                 .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
-                .MemoryCache(cache => cache.ContainingEntries(new Dictionary<object, object>
+                .MemoryCache(cache => cache
+                    .ContainingEntries(new Dictionary<object, object>
                 {
                     ["test"] = "value",
                     ["another"] = "anotherValue"
@@ -362,7 +381,8 @@
                         .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntries(new Dictionary<object, object>
+                        .MemoryCache(cache => cache
+                            .ContainingEntries(new Dictionary<object, object>
                         {
                             ["test"] = "value",
                         }))
@@ -383,7 +403,8 @@
                         .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntries(new Dictionary<object, object>
+                        .MemoryCache(cache => cache
+                            .ContainingEntries(new Dictionary<object, object>
                         {
                             ["test"] = "value",
                             ["another"] = "anotherValue",
@@ -406,7 +427,8 @@
                         .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntries(new Dictionary<object, object>
+                        .MemoryCache(cache => cache
+                            .ContainingEntries(new Dictionary<object, object>
                         {
                             ["test"] = "value",
                             ["invalid"] = "anotherValue"
@@ -428,7 +450,8 @@
                         .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntries(new Dictionary<object, object>
+                        .MemoryCache(cache => cache
+                            .ContainingEntries(new Dictionary<object, object>
                         {
                             ["test"] = "value",
                             ["another"] = "invalid"

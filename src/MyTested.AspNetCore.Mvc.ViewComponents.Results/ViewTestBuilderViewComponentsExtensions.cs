@@ -1,10 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
+    using System;
     using Builders.Contracts.ViewComponentResults;
     using Builders.ViewComponentResults;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
-    using System;
     using Utilities;
 
     /// <summary>
