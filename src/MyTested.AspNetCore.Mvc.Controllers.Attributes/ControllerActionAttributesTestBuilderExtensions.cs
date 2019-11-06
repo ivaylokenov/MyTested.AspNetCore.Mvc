@@ -616,6 +616,41 @@
         }
 
         /// <summary>
+        /// Tests whether the collected attributes contain <see cref="AuthorizeAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="authorizeAttributeBuilder">Expected <see cref="AuthorizeAttribute"/> builder.</param>
+        /// <returns>The same attributes test builder.</returns>
+        public static TAttributesTestBuilder WithAuthorizeAttribute<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            Action<IAuthorizeAttributeTestBuilder> authorizeAttributeBuilder)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+        {
+            var actualBuilder = (BaseAttributesTestBuilder<TAttributesTestBuilder>)controllerActionAttributesTestBuilder;
+
+            actualBuilder.ContainingAttributeOfType<AuthorizeAttribute>();
+
+            actualBuilder.Validations.Add(attrs =>
+            {
+                var newAuthorizeAttributeTestBuilder = new AuthorizeAttributeTestBuilder(
+                    actualBuilder.TestContext,
+                    actualBuilder.ThrowNewAttributeAssertionException);
+
+                authorizeAttributeBuilder(newAuthorizeAttributeTestBuilder);
+
+                var expectedAttribute = newAuthorizeAttributeTestBuilder.GetAttribute();
+                var actualAttribute = actualBuilder.GetAttributeOfType<AuthorizeAttribute>(attrs);
+
+                var validations = newAuthorizeAttributeTestBuilder.GetAttributeValidations();
+                validations.ForEach(v => v(expectedAttribute, actualAttribute));
+            });
+
+            return actualBuilder.AttributesTestBuilder;
+        }
+
+        /// <summary>
         /// Tests whether the collected attributes contain <see cref="FormatFilterAttribute"/>.
         /// </summary>
         /// <param name="controllerActionAttributesTestBuilder">
