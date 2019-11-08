@@ -308,6 +308,13 @@
         {
         }
 
+        [Authorize(AuthenticationSchemes = "Cookies", Policy = "Admin")]
+        [HttpGet]
+        public IActionResult NormalActionWithAuthorizeAttribute()
+        {
+            return this.Ok();
+        }
+
         [Authorize(Roles = "Admin,Moderator")]
         [HttpGet]
         [HttpHead]
