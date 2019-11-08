@@ -1233,6 +1233,120 @@
         }
 
         [Fact]
+        public void WithAuthorizeAttributeShouldNotThrowExceptionWithCorrectAuthenticationScheme()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .WithAuthorizeAttribute(attr => attr
+                    .WithAuthenticationSchemes("Cookies")));
+        }
+
+        [Fact]
+        public void WithAuthorizeAttributeShouldThrowExceptionWithIncorrectAuthenticationScheme()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .WithAuthorizeAttribute(attr => attr
+                        .WithAuthenticationSchemes("JWTBearer")));
+            },
+            "When calling NormalActionWithAuthorizeAttribute action in MvcController expected action to have AuthorizeAttribute with 'JWTBearer' authentication schemes, but in fact found 'Cookies'.");
+        }
+
+        [Fact]
+        public void WithAuthorizeAttributeShouldThrowExceptionWithMultipleAuthenticationSchemes()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .WithAuthorizeAttribute(attr => attr
+                        .WithAuthenticationSchemes("JWTBearer, Cookies")));
+            },
+            "When calling NormalActionWithAuthorizeAttribute action in MvcController expected action to have AuthorizeAttribute with 'JWTBearer, Cookies' authentication schemes, but in fact found 'Cookies'.");
+        }
+
+        [Fact]
+        public void WithAuthorizeAttributeShouldThrowExceptionWithoutDefinedSchemes()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.EmptyActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .WithAuthorizeAttribute(attr => attr
+                        .WithAuthenticationSchemes("JWTBearer, Cookies")));
+            },
+            "When calling EmptyActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'JWTBearer, Cookies' authentication schemes, but in fact found ''.");
+        }
+
+        [Fact]
+        public void WithAuthorizeAttributeShouldNotThrowExceptionWithEmptyAuthenticationScheme()
+        {
+            MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .WithAuthorizeAttribute(attr => attr
+                        .WithAuthenticationSchemes(string.Empty)));
+        }
+
+        [Fact]
+        public void WithAuthorizeAttributeShouldNotThrowExceptionWithNullAuthenticationScheme()
+        {
+            MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .WithAuthorizeAttribute(attr => attr
+                        .WithAuthenticationSchemes(null)));
+        }
+
+        [Fact]
+        public void WithAuthorizeAttributeShouldNotThrowExceptionWithEmptyPolicyAndAlsoWithAuthenticationScheme()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .WithAuthorizeAttribute(attr => attr
+                    .WithPolicy(string.Empty)
+                    .AndAlso()
+                    .WithAuthenticationSchemes("Cookies")));
+        }
+
+        [Fact]
+        public void WithAuthorizeAttributeShouldNotThrowExceptionWithCorrectPolicy()
+        {
+            MyApplication.StartsFrom<AuthorizationStartup>();
+
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .WithAuthorizeAttribute(attr => attr
+                    .WithPolicy("Admin")));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
         public void AddingFormatShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<ApiController>
