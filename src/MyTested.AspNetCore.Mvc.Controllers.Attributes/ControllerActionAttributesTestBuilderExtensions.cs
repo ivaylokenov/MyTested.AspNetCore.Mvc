@@ -621,6 +621,18 @@
         /// <param name="controllerActionAttributesTestBuilder">
         /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
         /// </param>
+        /// <returns>The same attributes test builder.</returns>
+        public static TAttributesTestBuilder WithAuthorizeAttribute<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+            => controllerActionAttributesTestBuilder.ContainingAttributeOfType<AuthorizeAttribute>();
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="AuthorizeAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
         /// <param name="authorizeAttributeBuilder">Expected <see cref="AuthorizeAttribute"/> builder.</param>
         /// <returns>The same attributes test builder.</returns>
         public static TAttributesTestBuilder WithAuthorizeAttribute<TAttributesTestBuilder>(
