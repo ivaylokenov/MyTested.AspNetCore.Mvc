@@ -25,7 +25,7 @@
     using Services;
     using ActionFilters;
 
-    [Authorize(Roles = "Admin,Moderator")]
+    [Authorize(Roles = "Admin,Moderator", AuthenticationSchemes = "Cookies", Policy = "")]
     [FormatFilter]
     [ValidateAntiForgeryToken]
     [Route("/api/test")]
