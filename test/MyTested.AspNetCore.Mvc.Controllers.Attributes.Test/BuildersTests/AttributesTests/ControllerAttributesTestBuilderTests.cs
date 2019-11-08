@@ -1039,6 +1039,87 @@
         }
 
         [Fact]
+        public void WithAuthorizeAttributeShouldNotThrowExceptionWithCorrectAuthenticationScheme()
+        {
+            MyController<MvcController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .WithAuthorizeAttribute(attribute => attribute.WithAuthenticationSchemes("Cookies")));
+        }
+
+        [Fact]
+        public void WithAuthorizeAttributeShouldThrowExceptionWithIncorrectAuthenticationScheme()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .ShouldHave()
+                    .Attributes(attributes => attributes
+                        .WithAuthorizeAttribute(attribute => attribute.WithAuthenticationSchemes("JWTBearer")));
+            },
+            "When testing MvcController was expected to have AuthorizeAttribute with 'JWTBearer' authentication schemes, but in fact found 'Cookies'.");
+        }
+
+        [Fact]
+        public void WithAuthorizeAttributeShouldThrowExceptionWithMultipleAuthenticationSchemes()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .ShouldHave()
+                    .Attributes(attributes => attributes
+                        .WithAuthorizeAttribute(attribute => attribute.WithAuthenticationSchemes("Cookies, JWTBearer")));
+            },
+            "When testing MvcController was expected to have AuthorizeAttribute with 'Cookies, JWTBearer' authentication schemes, but in fact found 'Cookies'.");
+        }
+
+        [Fact]
+        public void WithAuthorizeAttributeShouldNotThrowExceptionWithEmptyAuthenticationScheme()
+        {
+            MyController<MvcController>
+                   .ShouldHave()
+                   .Attributes(attributes => attributes
+                       .WithAuthorizeAttribute(attribute => attribute.WithAuthenticationSchemes(string.Empty)));
+        }
+
+        [Fact]
+        public void WithAuthorizeAttributeShouldNotThrowExceptionWithNullAuthenticationScheme()
+        {
+            MyController<MvcController>
+                   .ShouldHave()
+                   .Attributes(attributes => attributes
+                       .WithAuthorizeAttribute(attribute => attribute.WithAuthenticationSchemes(null)));
+        }
+
+        [Fact]
+        public void WithAuthorizeAttributeShouldNotThrowExceptionWithCorrectAuthenticationSchemeAndAlsoWithEmptyPolicy()
+        {
+            MyController<MvcController>
+                   .ShouldHave()
+                   .Attributes(attributes => attributes
+                       .WithAuthorizeAttribute(attribute => attribute
+                                                                .WithAuthenticationSchemes("Cookies")
+                                                                .AndAlso()
+                                                                .WithPolicy(string.Empty)));
+        }
+
+        [Fact]
+        public void WithAuthorizeAttributeShouldThrowExceptionWithIncorrectAuthenticationSchemeAndAlsoWithEmptyPolicy()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .ShouldHave()
+                    .Attributes(attributes => attributes
+                    .WithAuthorizeAttribute(attribute => attribute
+                                                                .WithAuthenticationSchemes("Cookies, JWTBearer")
+                                                                .AndAlso()
+                                                                .WithPolicy(string.Empty)));
+            },
+            "When testing MvcController was expected to have AuthorizeAttribute with 'Cookies, JWTBearer' authentication schemes, but in fact found 'Cookies'.");
+        }
+
+        [Fact]
         public void AddingFormatShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<MvcController>

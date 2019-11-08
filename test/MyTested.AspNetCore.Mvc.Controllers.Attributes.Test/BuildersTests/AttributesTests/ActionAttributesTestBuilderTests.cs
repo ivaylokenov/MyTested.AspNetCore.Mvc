@@ -1331,6 +1331,24 @@
         }
 
         [Fact]
+        public void WithAuthorizeAttributeShouldThrowExceptionWithNotDefinedAuthenticationSchemeAndAlsoWithEmptyPolicy()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.EmptyActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .WithAuthorizeAttribute(attr => attr
+                        .WithAuthenticationSchemes("Cookies")
+                        .AndAlso()
+                        .WithPolicy(string.Empty)));
+            },
+            "When calling EmptyActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'Cookies' authentication schemes, but in fact found ''.");
+        }
+
+        [Fact]
         public void WithAuthorizeAttributeShouldNotThrowExceptionWithCorrectPolicy()
         {
             MyApplication.StartsFrom<AuthorizationStartup>();
