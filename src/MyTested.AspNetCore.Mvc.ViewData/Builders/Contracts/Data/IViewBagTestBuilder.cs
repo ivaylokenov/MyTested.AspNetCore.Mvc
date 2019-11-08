@@ -66,5 +66,20 @@
         /// <param name="entries">Dictionary of view bag entries.</param>
         /// <returns>The same <see cref="IAndViewBagTestBuilder"/>.</returns>
         IAndViewBagTestBuilder ContainingEntries(IDictionary<string, object> entries);
+
+
+        /// <summary>
+        /// Tests whether the view bag entry passes the given assertions.
+        /// </summary>
+        /// <param name="assertions">Action containing all assertions for the view bag entry.</param>
+        /// <returns>The same <see cref="IAndViewBagTestBuilder"/>.</returns>
+        IAndViewBagTestBuilder Passing(Action assertions);
+
+        /// <summary>
+        /// Tests whether the view bag entry passes the given predicate.
+        /// </summary>
+        /// <param name="predicate">Predicate testing the view bag entry.</param>
+        /// <returns>The same <see cref="IAndViewBagTestBuilder"/>.</returns>
+        IAndViewBagTestBuilder Passing(Func< bool> predicate);
     }
 }

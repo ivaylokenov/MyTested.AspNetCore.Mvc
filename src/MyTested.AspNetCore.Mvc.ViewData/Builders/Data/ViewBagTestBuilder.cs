@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Data
 {
+    using System;
     using System.Collections.Generic;
     using Contracts.Data;
     using Internal.TestContexts;
@@ -32,10 +33,23 @@
         /// <inheritdoc />
         public IViewBagTestBuilder AndAlso() => this;
 
+        /// <inheritdoc />
+        public IAndViewBagTestBuilder Passing(Action assertions)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public IAndViewBagTestBuilder Passing(Func<bool> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// When overridden in derived class provides a way to built the data provider as <see cref="IDictionary{TKey,TValue}"/>.
         /// </summary>
         /// <returns>Data provider as <see cref="IDictionary{TKey,TValue}"/></returns>
         protected override IDictionary<string, object> GetDataProvider() => this.testContext.GetViewData();
+
     }
 }
