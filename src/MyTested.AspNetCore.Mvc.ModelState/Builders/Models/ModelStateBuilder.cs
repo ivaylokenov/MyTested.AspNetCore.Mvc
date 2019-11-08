@@ -6,6 +6,7 @@
     using Contracts.Models;
     using Internal.TestContexts;
     using Utilities.Extensions;
+    using System;
 
     /// <summary>
     /// Used for building <see cref="ModelStateDictionary"/>
@@ -54,5 +55,17 @@
 
         private void AddError(string key, string errorMessage) 
             => this.ModelState.AddModelError(key, errorMessage);
+
+        /// <inheritdoc />
+        public IAndModelStateBuilder Passing(Action assertions)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public IAndModelStateBuilder Passing(Func<bool> predicate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
