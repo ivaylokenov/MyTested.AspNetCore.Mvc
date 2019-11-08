@@ -1044,7 +1044,7 @@
             MyController<MvcController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
-                    .WithAuthorizeAttribute(attribute => attribute.WithAuthenticationSchemes("Cookies")));
+                    .RestrictingForAuthorizedRequests(attribute => attribute.WithAuthenticationSchemes("Cookies")));
         }
 
         [Fact]
@@ -1055,7 +1055,7 @@
                 MyController<MvcController>
                     .ShouldHave()
                     .Attributes(attributes => attributes
-                        .WithAuthorizeAttribute(attribute => attribute.WithAuthenticationSchemes("JWTBearer")));
+                        .RestrictingForAuthorizedRequests(attribute => attribute.WithAuthenticationSchemes("JWTBearer")));
             },
             "When testing MvcController was expected to have AuthorizeAttribute with 'JWTBearer' authentication schemes, but in fact found 'Cookies'.");
         }
@@ -1068,7 +1068,7 @@
                 MyController<MvcController>
                     .ShouldHave()
                     .Attributes(attributes => attributes
-                        .WithAuthorizeAttribute(attribute => attribute.WithAuthenticationSchemes("Cookies, JWTBearer")));
+                        .RestrictingForAuthorizedRequests(attribute => attribute.WithAuthenticationSchemes("Cookies, JWTBearer")));
             },
             "When testing MvcController was expected to have AuthorizeAttribute with 'Cookies, JWTBearer' authentication schemes, but in fact found 'Cookies'.");
         }
@@ -1079,7 +1079,7 @@
             MyController<MvcController>
                    .ShouldHave()
                    .Attributes(attributes => attributes
-                       .WithAuthorizeAttribute(attribute => attribute.WithAuthenticationSchemes(string.Empty)));
+                       .RestrictingForAuthorizedRequests(attribute => attribute.WithAuthenticationSchemes(string.Empty)));
         }
 
         [Fact]
@@ -1088,7 +1088,7 @@
             MyController<MvcController>
                    .ShouldHave()
                    .Attributes(attributes => attributes
-                       .WithAuthorizeAttribute(attribute => attribute.WithAuthenticationSchemes(null)));
+                       .RestrictingForAuthorizedRequests(attribute => attribute.WithAuthenticationSchemes(null)));
         }
 
         [Fact]
@@ -1097,7 +1097,7 @@
             MyController<MvcController>
                    .ShouldHave()
                    .Attributes(attributes => attributes
-                       .WithAuthorizeAttribute(attribute => attribute
+                       .RestrictingForAuthorizedRequests(attribute => attribute
                                                                 .WithAuthenticationSchemes("Cookies")
                                                                 .AndAlso()
                                                                 .WithPolicy(string.Empty)));
@@ -1111,7 +1111,7 @@
                 MyController<MvcController>
                     .ShouldHave()
                     .Attributes(attributes => attributes
-                    .WithAuthorizeAttribute(attribute => attribute
+                    .RestrictingForAuthorizedRequests(attribute => attribute
                                                                 .WithAuthenticationSchemes("Cookies, JWTBearer")
                                                                 .AndAlso()
                                                                 .WithPolicy(string.Empty)));

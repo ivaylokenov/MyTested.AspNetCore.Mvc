@@ -623,7 +623,7 @@
         /// </param>
         /// <param name="authorizeAttributeBuilder">Expected <see cref="AuthorizeAttribute"/> builder.</param>
         /// <returns>The same attributes test builder.</returns>
-        public static TAttributesTestBuilder WithAuthorizeAttribute<TAttributesTestBuilder>(
+        public static TAttributesTestBuilder RestrictingForAuthorizedRequests<TAttributesTestBuilder>(
             this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
             Action<IAuthorizeAttributeTestBuilder> authorizeAttributeBuilder)
             where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>

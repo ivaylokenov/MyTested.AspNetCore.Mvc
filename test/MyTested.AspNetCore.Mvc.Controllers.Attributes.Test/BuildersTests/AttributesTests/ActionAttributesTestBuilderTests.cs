@@ -1240,7 +1240,7 @@
                 .Calling(c => c.NormalActionWithAuthorizeAttribute())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
-                    .WithAuthorizeAttribute(attr => attr
+                    .RestrictingForAuthorizedRequests(attr => attr
                     .WithAuthenticationSchemes("Cookies")));
         }
 
@@ -1254,7 +1254,7 @@
                     .Calling(c => c.NormalActionWithAuthorizeAttribute())
                     .ShouldHave()
                     .ActionAttributes(attributes => attributes
-                        .WithAuthorizeAttribute(attr => attr
+                        .RestrictingForAuthorizedRequests(attr => attr
                         .WithAuthenticationSchemes("JWTBearer")));
             },
             "When calling NormalActionWithAuthorizeAttribute action in MvcController expected action to have AuthorizeAttribute with 'JWTBearer' authentication schemes, but in fact found 'Cookies'.");
@@ -1270,7 +1270,7 @@
                     .Calling(c => c.NormalActionWithAuthorizeAttribute())
                     .ShouldHave()
                     .ActionAttributes(attributes => attributes
-                        .WithAuthorizeAttribute(attr => attr
+                        .RestrictingForAuthorizedRequests(attr => attr
                         .WithAuthenticationSchemes("JWTBearer, Cookies")));
             },
             "When calling NormalActionWithAuthorizeAttribute action in MvcController expected action to have AuthorizeAttribute with 'JWTBearer, Cookies' authentication schemes, but in fact found 'Cookies'.");
@@ -1286,7 +1286,7 @@
                     .Calling(c => c.EmptyActionWithAttributes())
                     .ShouldHave()
                     .ActionAttributes(attributes => attributes
-                        .WithAuthorizeAttribute(attr => attr
+                        .RestrictingForAuthorizedRequests(attr => attr
                         .WithAuthenticationSchemes("JWTBearer, Cookies")));
             },
             "When calling EmptyActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'JWTBearer, Cookies' authentication schemes, but in fact found ''.");
@@ -1300,7 +1300,7 @@
                     .Calling(c => c.NormalActionWithAuthorizeAttribute())
                     .ShouldHave()
                     .ActionAttributes(attributes => attributes
-                        .WithAuthorizeAttribute(attr => attr
+                        .RestrictingForAuthorizedRequests(attr => attr
                         .WithAuthenticationSchemes(string.Empty)));
         }
 
@@ -1312,7 +1312,7 @@
                     .Calling(c => c.NormalActionWithAuthorizeAttribute())
                     .ShouldHave()
                     .ActionAttributes(attributes => attributes
-                        .WithAuthorizeAttribute(attr => attr
+                        .RestrictingForAuthorizedRequests(attr => attr
                         .WithAuthenticationSchemes(null)));
         }
 
@@ -1324,7 +1324,7 @@
                 .Calling(c => c.NormalActionWithAuthorizeAttribute())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
-                    .WithAuthorizeAttribute(attr => attr
+                    .RestrictingForAuthorizedRequests(attr => attr
                     .WithPolicy(string.Empty)
                     .AndAlso()
                     .WithAuthenticationSchemes("Cookies")));
@@ -1340,7 +1340,7 @@
                     .Calling(c => c.EmptyActionWithAttributes())
                     .ShouldHave()
                     .ActionAttributes(attributes => attributes
-                        .WithAuthorizeAttribute(attr => attr
+                        .RestrictingForAuthorizedRequests(attr => attr
                         .WithAuthenticationSchemes("Cookies")
                         .AndAlso()
                         .WithPolicy(string.Empty)));
@@ -1358,7 +1358,7 @@
                 .Calling(c => c.NormalActionWithAuthorizeAttribute())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
-                    .WithAuthorizeAttribute(attr => attr
+                    .RestrictingForAuthorizedRequests(attr => attr
                     .WithPolicy("Admin")));
 
             MyApplication.StartsFrom<DefaultStartup>();
