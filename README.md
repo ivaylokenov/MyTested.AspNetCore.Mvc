@@ -59,6 +59,7 @@ Take a look around and...
 
 #### Featured in
 
+- [The official ASP.NET Core MVC documentation](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/testing?view=aspnetcore-3.0#additional-resources)
 - [The official ASP.NET Core MVC repository](https://github.com/aspnet/AspNetCore/tree/master/src/Mvc#aspnet-core-mvc)
 - [NuGet Package of the week in "The week in .NET – 6/28/2016"](https://devblogs.microsoft.com/dotnet/the-week-in-net-6282016/)
 - [Awesome .NET Core](https://github.com/thangchung/awesome-dotnet-core#testing)
