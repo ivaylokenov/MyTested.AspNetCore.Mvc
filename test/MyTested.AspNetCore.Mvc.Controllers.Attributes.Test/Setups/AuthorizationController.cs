@@ -3,7 +3,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize(AuthenticationSchemes = "Cookies", Policy = "")]
+    [Authorize(AuthenticationSchemes = "Cookies", Policy = "Admin")]
     public class AuthorizationController : Controller
     {
         public IActionResult Index() => this.View();
