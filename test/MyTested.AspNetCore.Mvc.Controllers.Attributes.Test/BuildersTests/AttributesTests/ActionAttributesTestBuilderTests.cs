@@ -1145,7 +1145,7 @@
         }
 
         [Fact]
-        public void WithAuthorizeAttributeShouldNotThrowExceptionWithCorrectAuthenticationScheme()
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithCorrectAuthenticationScheme()
         {
             MyController<AuthorizationController>
                 .Instance()
@@ -1157,7 +1157,7 @@
         }
 
         [Fact]
-        public void WithAuthorizeAttributeShouldThrowExceptionWithIncorrectAuthenticationScheme()
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithIncorrectAuthenticationScheme()
         {
             Test.AssertException<AttributeAssertionException>(() =>
             {
@@ -1173,7 +1173,7 @@
         }
 
         [Fact]
-        public void WithAuthorizeAttributeShouldThrowExceptionWithMultipleAuthenticationSchemes()
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithMultipleAuthenticationSchemes()
         {
             Test.AssertException<AttributeAssertionException>(() =>
             {
@@ -1189,7 +1189,7 @@
         }
 
         [Fact]
-        public void WithAuthorizeAttributeShouldThrowExceptionWithoutDefinedSchemes()
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithoutDefinedSchemes()
         {
             Test.AssertException<AttributeAssertionException>(() =>
             {
@@ -1205,7 +1205,7 @@
         }
 
         [Fact]
-        public void WithAuthorizeAttributeShouldNotThrowExceptionWithEmptyAuthenticationScheme()
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithEmptyAuthenticationScheme()
         {
             MyController<AuthorizationController>
                     .Instance()
@@ -1217,7 +1217,7 @@
         }
 
         [Fact]
-        public void WithAuthorizeAttributeShouldNotThrowExceptionWithNullAuthenticationScheme()
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithNullAuthenticationScheme()
         {
             MyController<AuthorizationController>
                     .Instance()
@@ -1229,7 +1229,7 @@
         }
 
         [Fact]
-        public void WithAuthorizeAttributeShouldThrowExceptionWithNotDefinedAuthenticationSchemeAndAlsoWithEmptyPolicy()
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithNotDefinedAuthenticationSchemeAndAlsoWithEmptyPolicy()
         {
             Test.AssertException<AttributeAssertionException>(() =>
             {
@@ -1247,7 +1247,7 @@
         }
 
         [Fact]
-        public void WithAuthorizeAttributeShouldNotThrowExceptionWithCorrectPolicy()
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithCorrectPolicy()
         {
             MyController<AuthorizationController>
                 .Instance()

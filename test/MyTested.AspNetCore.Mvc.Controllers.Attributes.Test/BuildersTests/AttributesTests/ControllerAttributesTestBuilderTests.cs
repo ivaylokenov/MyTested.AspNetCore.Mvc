@@ -952,7 +952,7 @@
         }
 
         [Fact]
-        public void WithAuthorizeAttributeShouldNotThrowExceptionWithCorrectAuthenticationScheme()
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithCorrectAuthenticationScheme()
         {
             MyController<AuthorizationController>
                 .ShouldHave()
@@ -962,7 +962,7 @@
         }
 
         [Fact]
-        public void WithAuthorizeAttributeShouldThrowExceptionWithIncorrectAuthenticationScheme()
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithIncorrectAuthenticationScheme()
         {
             Test.AssertException<AttributeAssertionException>(() =>
             {
@@ -976,7 +976,7 @@
         }
 
         [Fact]
-        public void WithAuthorizeAttributeShouldThrowExceptionWithMultipleAuthenticationSchemes()
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithMultipleAuthenticationSchemes()
         {
             Test.AssertException<AttributeAssertionException>(() =>
             {
@@ -990,7 +990,7 @@
         }
 
         [Fact]
-        public void WithAuthorizeAttributeShouldNotThrowExceptionWithEmptyAuthenticationScheme()
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithEmptyAuthenticationScheme()
         {
             MyController<AuthorizationController>
                 .ShouldHave()
@@ -1000,7 +1000,7 @@
         }
 
         [Fact]
-        public void WithAuthorizeAttributeShouldNotThrowExceptionWithNullAuthenticationScheme()
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithNullAuthenticationScheme()
         {
             MyController<AuthorizationController>
                 .ShouldHave()
@@ -1010,7 +1010,7 @@
         }
 
         [Fact]
-        public void WithAuthorizeAttributeShouldNotThrowExceptionWithCorrectAuthenticationSchemeAndAlsoWithEmptyPolicy()
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithCorrectAuthenticationSchemeAndAlsoWithCorrectPolicy()
         {
             MyController<AuthorizationController>
                 .ShouldHave()
@@ -1018,11 +1018,11 @@
                     .RestrictingForAuthorizedRequests(authorization => authorization
                         .WithAuthenticationSchemes("Cookies")
                         .AndAlso()
-                        .WithPolicy(string.Empty)));
+                        .WithPolicy("Admin")));
         }
 
         [Fact]
-        public void WithAuthorizeAttributeShouldThrowExceptionWithIncorrectAuthenticationSchemeAndAlsoWithEmptyPolicy()
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithIncorrectAuthenticationSchemeAndAlsoWithEmptyPolicy()
         {
             Test.AssertException<AttributeAssertionException>(() =>
             {
