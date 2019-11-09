@@ -556,21 +556,15 @@
         [Fact]
         public void WithTypeFilterShouldNotThrowExceptionWithCorrectAttribute()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<ApiController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .WithTypeFilter(typeof(MyActionFilterWithArgs)));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldThrowExceptionWithMissingAttribute()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -580,15 +574,11 @@
                             .WithTypeFilter(typeof(MyActionFilterWithArgs)));
                 },
                 "When testing AttributesController was expected to have TypeFilterAttribute, but in fact such was not found.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldThrowExceptionWithCorrectAttributeAndWrongImplementationType()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -598,29 +588,21 @@
                             .WithTypeFilter(typeof(MyOtherActionFilterWithArgs)));
                 },
                 "When testing ApiController was expected to have TypeFilterAttribute with 'MyOtherActionFilterWithArgs' type, but in fact found 'MyActionFilterWithArgs'.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldNotThrowExceptionWithCorrectImplementationType()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<ApiController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .WithTypeFilter(filter => filter
                         .OfType(typeof(MyActionFilterWithArgs))));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldThrowExceptionWithWrongImplementationType()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -631,15 +613,11 @@
                                 .OfType(typeof(MyOtherActionFilterWithArgs))));
                 },
                 "When testing ApiController was expected to have TypeFilterAttribute with 'MyOtherActionFilterWithArgs' type, but in fact found 'MyActionFilterWithArgs'.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldThrowExceptionWithCorrectAttributeAndWrongOrder()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -649,28 +627,20 @@
                             .WithTypeFilter(filter => filter.WithOrder(1)));
                 },
                 "When testing ApiController was expected to have TypeFilterAttribute with order of 1, but in fact found 2.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderForOrder()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<ApiController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .WithTypeFilter(filter => filter.WithOrder(2)));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldNotThrowExceptionWithCorrectAttributeImplementationTypeAndUsingBuilderForOrder()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<ApiController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
@@ -678,15 +648,11 @@
                         .OfType(typeof(MyActionFilterWithArgs))
                         .AndAlso()
                         .WithOrder(2)));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldThrowExceptionWithCorrectAttributeImplementationTypeAndUsingBuilderForOrderWithWrongOrder()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -699,15 +665,11 @@
                                 .WithOrder(1)));
                 },
                 "When testing ApiController was expected to have TypeFilterAttribute with order of 1, but in fact found 2.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldNotThrowExceptionWithCorrectAttributeImplementationTypeAndUsingBuilderForArguments()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<ApiController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
@@ -718,15 +680,11 @@
                         {
                             10
                         })));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldThrowExceptionWithCorrectAttributeImplementationTypeAndUsingBuilderForForArgumentsWithWrongArgs()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -742,15 +700,11 @@
                                 })));
                 },
                 "When testing ApiController was expected to have TypeFilterAttribute with argument with the provided value, but in fact such was not found.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldThrowExceptionWithCorrectAttributeAndWrongArgumentsValue()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -763,15 +717,11 @@
                             })));
                 },
                 "When testing ApiController was expected to have TypeFilterAttribute with argument with the provided value, but in fact such was not found.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderForArguments()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<ApiController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
@@ -779,28 +729,20 @@
                     {
                         10
                     })));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceFilterShouldNotThrowExceptionWithCorrectAttribute()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<ApiController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .WithServiceFilter(typeof(MyActionFilter)));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceFilterShouldThrowExceptionWithMissingAttribute()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -810,15 +752,11 @@
                             .WithServiceFilter(typeof(MyActionFilter)));
                 },
                 "When testing AttributesController was expected to have ServiceFilterAttribute, but in fact such was not found.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceFilterShouldThrowExceptionWithCorrectAttributeAndWrongServiceType()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -828,29 +766,21 @@
                             .WithServiceFilter(typeof(MyOtherActionFilter)));
                 },
                 "When testing ApiController was expected to have ServiceFilterAttribute with 'MyOtherActionFilter' type, but in fact found 'MyActionFilter'.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceFilterShouldNotThrowExceptionWithCorrectServiceFilterType()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<ApiController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .WithServiceFilter(filter => filter
                         .OfType(typeof(MyActionFilter))));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceFilterShouldThrowExceptionWithWrongServiceFilterType()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -861,15 +791,11 @@
                                 .OfType(typeof(MyOtherActionFilter))));
                 },
                 "When testing ApiController was expected to have ServiceFilterAttribute with 'MyOtherActionFilter' type, but in fact found 'MyActionFilter'.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceFilterShouldThrowExceptionWithCorrectAttributeAndWrongOrder()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -879,28 +805,20 @@
                             .WithServiceFilter(filter => filter.WithOrder(1)));
                 },
                 "When testing ApiController was expected to have ServiceFilterAttribute with order of 1, but in fact found 2.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceFilterShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderForOrder()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<ApiController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .WithServiceFilter(filter => filter.WithOrder(2)));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceFilterShouldNotThrowExceptionWithCorrectAttributeServiceTypeAndUsingBuilderForOrder()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<ApiController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
@@ -908,15 +826,11 @@
                         .OfType(typeof(MyActionFilter))
                         .AndAlso()
                         .WithOrder(2)));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceFilterShouldThrowExceptionWithCorrectAttributeServiceTypeAndUsingBuilderForOrderWithWrongOrder()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -929,8 +843,6 @@
                                 .WithOrder(1)));
                 },
                 "When testing ApiController was expected to have ServiceFilterAttribute with order of 1, but in fact found 2.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -1033,7 +945,8 @@
                 {
                     MyController<MvcController>
                         .ShouldHave()
-                        .Attributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedRoles: "Admin"));
+                        .Attributes(attributes => attributes
+                            .RestrictingForAuthorizedRequests(withAllowedRoles: "Admin"));
                 },
                 "When testing MvcController was expected to have AuthorizeAttribute with allowed 'Admin' roles, but in fact found 'Admin,Moderator'.");
         }
@@ -1041,10 +954,11 @@
         [Fact]
         public void WithAuthorizeAttributeShouldNotThrowExceptionWithCorrectAuthenticationScheme()
         {
-            MyController<MvcController>
+            MyController<AuthorizationController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
-                    .RestrictingForAuthorizedRequests(attribute => attribute.WithAuthenticationSchemes("Cookies")));
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithAuthenticationSchemes("Cookies")));
         }
 
         [Fact]
@@ -1052,12 +966,13 @@
         {
             Test.AssertException<AttributeAssertionException>(() =>
             {
-                MyController<MvcController>
+                MyController<AuthorizationController>
                     .ShouldHave()
                     .Attributes(attributes => attributes
-                        .RestrictingForAuthorizedRequests(attribute => attribute.WithAuthenticationSchemes("JWTBearer")));
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithAuthenticationSchemes("JWTBearer")));
             },
-            "When testing MvcController was expected to have AuthorizeAttribute with 'JWTBearer' authentication schemes, but in fact found 'Cookies'.");
+            "When testing AuthorizationController was expected to have AuthorizeAttribute with 'JWTBearer' authentication schemes, but in fact found 'Cookies'.");
         }
 
         [Fact]
@@ -1065,42 +980,45 @@
         {
             Test.AssertException<AttributeAssertionException>(() =>
             {
-                MyController<MvcController>
+                MyController<AuthorizationController>
                     .ShouldHave()
                     .Attributes(attributes => attributes
-                        .RestrictingForAuthorizedRequests(attribute => attribute.WithAuthenticationSchemes("Cookies, JWTBearer")));
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithAuthenticationSchemes("Cookies, JWTBearer")));
             },
-            "When testing MvcController was expected to have AuthorizeAttribute with 'Cookies, JWTBearer' authentication schemes, but in fact found 'Cookies'.");
+            "When testing AuthorizationController was expected to have AuthorizeAttribute with 'Cookies, JWTBearer' authentication schemes, but in fact found 'Cookies'.");
         }
 
         [Fact]
         public void WithAuthorizeAttributeShouldNotThrowExceptionWithEmptyAuthenticationScheme()
         {
-            MyController<MvcController>
-                   .ShouldHave()
-                   .Attributes(attributes => attributes
-                       .RestrictingForAuthorizedRequests(attribute => attribute.WithAuthenticationSchemes(string.Empty)));
+            MyController<AuthorizationController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithAuthenticationSchemes(string.Empty)));
         }
 
         [Fact]
         public void WithAuthorizeAttributeShouldNotThrowExceptionWithNullAuthenticationScheme()
         {
-            MyController<MvcController>
-                   .ShouldHave()
-                   .Attributes(attributes => attributes
-                       .RestrictingForAuthorizedRequests(attribute => attribute.WithAuthenticationSchemes(null)));
+            MyController<AuthorizationController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithAuthenticationSchemes(null)));
         }
 
         [Fact]
         public void WithAuthorizeAttributeShouldNotThrowExceptionWithCorrectAuthenticationSchemeAndAlsoWithEmptyPolicy()
         {
-            MyController<MvcController>
-                   .ShouldHave()
-                   .Attributes(attributes => attributes
-                       .RestrictingForAuthorizedRequests(attribute => attribute
-                                                                .WithAuthenticationSchemes("Cookies")
-                                                                .AndAlso()
-                                                                .WithPolicy(string.Empty)));
+            MyController<AuthorizationController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithAuthenticationSchemes("Cookies")
+                        .AndAlso()
+                        .WithPolicy(string.Empty)));
         }
 
         [Fact]
@@ -1108,15 +1026,15 @@
         {
             Test.AssertException<AttributeAssertionException>(() =>
             {
-                MyController<MvcController>
+                MyController<AuthorizationController>
                     .ShouldHave()
                     .Attributes(attributes => attributes
-                    .RestrictingForAuthorizedRequests(attribute => attribute
-                                                                .WithAuthenticationSchemes("Cookies, JWTBearer")
-                                                                .AndAlso()
-                                                                .WithPolicy(string.Empty)));
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithAuthenticationSchemes("Cookies, JWTBearer")
+                            .AndAlso()
+                            .WithPolicy(string.Empty)));
             },
-            "When testing MvcController was expected to have AuthorizeAttribute with 'Cookies, JWTBearer' authentication schemes, but in fact found 'Cookies'.");
+            "When testing AuthorizationController was expected to have AuthorizeAttribute with 'Cookies, JWTBearer' authentication schemes, but in fact found 'Cookies'.");
         }
 
         [Fact]

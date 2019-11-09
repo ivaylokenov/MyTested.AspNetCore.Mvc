@@ -25,7 +25,7 @@
     using Services;
     using ActionFilters;
 
-    [Authorize(Roles = "Admin,Moderator", AuthenticationSchemes = "Cookies", Policy = "")]
+    [Authorize(Roles = "Admin,Moderator")]
     [FormatFilter]
     [ValidateAntiForgeryToken]
     [Route("/api/test")]
@@ -306,13 +306,6 @@
         [HttpGet]
         public void EmptyActionWithAttributes()
         {
-        }
-
-        [Authorize(AuthenticationSchemes = "Cookies", Policy = "Admin")]
-        [HttpGet]
-        public IActionResult NormalActionWithAuthorizeAttribute()
-        {
-            return this.Ok();
         }
 
         [Authorize(Roles = "Admin,Moderator")]

@@ -13,6 +13,10 @@
             services.AddScoped<MyActionFilter>();
             services.AddScoped<MyActionFilterWithArgs>();
 
+            services.AddAuthorization(options =>
+                options.AddPolicy("Admin",
+                policy => policy.RequireRole("Admin", "Moderator")));
+
             base.ConfigureServices(services);
         }
     }
