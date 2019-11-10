@@ -69,7 +69,7 @@
             => this.ContainingEntryOfType(typeof(TValue));
 
         /// <inheritdoc />
-        public IAndMemoryCacheTestBuilder ContainingEntryOfType(object key,Type valueType)
+        public IAndMemoryCacheTestBuilder ContainingEntryOfType(object key, Type valueType)
         {
             var value = this.GetValue(key);
             var actualType = value.GetType();

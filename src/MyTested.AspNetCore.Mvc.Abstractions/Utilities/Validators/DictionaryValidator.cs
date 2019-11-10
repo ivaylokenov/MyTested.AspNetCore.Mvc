@@ -59,23 +59,21 @@
             string name,
             IDictionary<object, object> dictionary,
             Action<string, string, string> failedValidationAction)
-        {
-            ValidateValueOfType<TValue>(name, dictionary.Values, failedValidationAction);
-        }
-
+            => ValidateValueOfType<TValue>(name, dictionary.Values, failedValidationAction);
+        
         public static void ValidateValueOfType(
            string name,
            IDictionary<object, object> dictionary,
-           Action<string, string, string> failedValidationAction,Type valueType)
-        {
-            ValidateValueOfType(name, dictionary.Values, failedValidationAction, valueType);
-        }
-
+           Action<string, string, string> failedValidationAction,
+           Type valueType)
+            => ValidateValueOfType(name, dictionary.Values, failedValidationAction, valueType);
+        
         public static void ValidateStringKeyAndValueOfType(
             string name,
             IDictionary<string, object> dictionary,
             string key,
-            Action<string, string, string> failedValidationAction, Type valueType)
+            Action<string, string, string> failedValidationAction,
+            Type valueType)
         {
             var entryExists = dictionary.ContainsKey(key);
             var actualValue = entryExists ? dictionary[key] : null;
@@ -96,8 +94,6 @@
             string key,
             Action<string, string, string> failedValidationAction)
             => ValidateStringKeyAndValueOfType(name, dictionary, key, failedValidationAction, typeof(TValue));
-
-
 
         public static void ValidateValue<TDictionaryKey, TValue>(
             string name,
@@ -147,7 +143,8 @@
         private static void ValidateValueOfType(
           string name,
           ICollection<object> values,
-          Action<string, string, string> failedValidationAction,Type valueType)
+          Action<string, string, string> failedValidationAction,
+          Type valueType)
         {
             var entryOfSameType = values.FirstOrDefault(arg => arg.GetType() == valueType);
 

@@ -77,7 +77,6 @@
         /// <returns>The same <see cref="IAndJsonSerializerSettingsTestBuilder"/>.</returns>
         IAndJsonSerializerSettingsTestBuilder ContainingConverterOfType(Type jsonConverterType);
 
-
         /// <summary>
         /// Tests whether the <see cref="JsonSerializerSettings"/> contains
         /// the provided <see cref="JsonConverter"/> objects.

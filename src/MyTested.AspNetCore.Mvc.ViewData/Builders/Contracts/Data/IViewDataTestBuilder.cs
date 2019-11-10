@@ -44,7 +44,6 @@
         /// <returns>The same <see cref="IAndViewDataTestBuilder"/>.</returns>
         IAndViewDataTestBuilder ContainingEntryOfType<TValue>(string key);
 
-
         /// <summary>
         /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary"/> contains entry with value of the provided type and the given key.
         /// </summary>

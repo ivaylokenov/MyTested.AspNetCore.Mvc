@@ -51,7 +51,8 @@
         /// <param name="outputFromatterType"></param>
         public static void ValidateContainingOutputFormatterOfType(
             ObjectResult objectResult,
-            Action<string, string, string> failedValidationAction,Type outputFromatterType)
+            Action<string, string, string> failedValidationAction,
+            Type outputFromatterType)
         {
             var outputFormatters = objectResult.Formatters;
 

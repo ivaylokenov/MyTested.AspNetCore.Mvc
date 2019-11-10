@@ -240,7 +240,8 @@
         /// <param name="urlHelperType"></param>
         public static void ValidateUrlHelperOfType(
             dynamic actionResult,
-            Action<string, string, string> failedValidationAction,Type urlHelperType)
+            Action<string, string, string> failedValidationAction,
+            Type urlHelperType)
         {
             RuntimeBinderValidator.ValidateBinding(() =>
             {

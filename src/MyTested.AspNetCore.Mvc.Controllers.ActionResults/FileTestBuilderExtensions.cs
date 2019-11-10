@@ -132,7 +132,7 @@
         /// <param name="fileProviderType"></param>
         /// <returns>The same <see cref="IAndFileTestBuilder"/>.</returns>
         public static IAndFileTestBuilder WithFileProviderOfType(
-            this IFileTestBuilder fileTestBuilder,Type fileProviderType)
+            this IFileTestBuilder fileTestBuilder, Type fileProviderType)
         {
             var actualBuilder = GetFileTestBuilder<VirtualFileResult>(fileTestBuilder, FileProvider);
 
