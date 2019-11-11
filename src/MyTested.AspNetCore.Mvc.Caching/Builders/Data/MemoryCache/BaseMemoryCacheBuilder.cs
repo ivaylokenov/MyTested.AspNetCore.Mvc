@@ -16,6 +16,10 @@
         public BaseMemoryCacheBuilder(IServiceProvider services)
             => this.MemoryCache = services.GetRequiredService<IMemoryCache>();
 
+        /// <summary>
+        /// Gets the mocked <see cref="IMemoryCache"/>.
+        /// </summary>
+        /// <value>Built <see cref="IMemoryCache"/>.</value>
         protected IMemoryCache MemoryCache { get; private set; }
     }
 }
