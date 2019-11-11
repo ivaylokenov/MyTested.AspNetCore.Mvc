@@ -8,7 +8,7 @@
     using Data.MemoryCache;
     using Utilities.Extensions;
 
-    /// <inheritdoc />4
+    /// <inheritdoc />
     public class WithMemoryCacheBuilder : BaseMemoryCacheBuilder, IAndWithMemoryCacheBuilder
     {
         /// <summary>

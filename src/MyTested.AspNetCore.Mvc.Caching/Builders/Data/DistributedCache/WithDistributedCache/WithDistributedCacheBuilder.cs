@@ -1,54 +1,51 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Data
 {
     using System;
     using System.Collections.Generic;
     using Contracts.Data.DistributedCache;
     using Microsoft.Extensions.Caching.Distributed;
-    using Microsoft.Extensions.DependencyInjection;
+    using Builders.Data.DistributedCache;
     using Utilities.Extensions;
+    using Builders.Contracts.Data;
 
-    public class DistributedCacheBuilder : IAndDistributedCacheBuilder
+    public class WithDistributedCacheBuilder : BaseDistributedCacheBuilder, IAndWithDistributedCacheBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DistributedCacheBuilder"/> class.
+        /// Initializes a new instance of the <see cref="WithDistributedCacheBuilder"/> class.
         /// </summary>
         /// <param name="services"><see cref="IServiceProvider"/> providing the current <see cref="IDistributedCache"/>.</param>
-        public DistributedCacheBuilder(IServiceProvider services)
-            => this.DistributedCache = services.GetRequiredService<IDistributedCache>();
-
-        /// <summary>
-        /// Gets the mocked <see cref="IDistributedCache"/>.
-        /// </summary>
-        /// <value>Built <see cref="IDistributedCache"/>.</value>
-        protected IDistributedCache DistributedCache { get; private set; }
+        public WithDistributedCacheBuilder(IServiceProvider services)
+            : base(services)
+        {
+        }
 
         /// <inheritdoc />
-        public IAndDistributedCacheBuilder WithEntry(string key, byte[] value)
+        public IAndWithDistributedCacheBuilder WithEntry(string key, byte[] value)
         {
             this.DistributedCache.Set(key, value);
             return this;
         }
 
-        public IAndDistributedCacheBuilder WithEntry(string key, string value)
+        public IAndWithDistributedCacheBuilder WithEntry(string key, string value)
         {
             this.DistributedCache.SetString(key, value);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndDistributedCacheBuilder WithEntry(string key, byte[] value, DistributedCacheEntryOptions options)
+        public IAndWithDistributedCacheBuilder WithEntry(string key, byte[] value, DistributedCacheEntryOptions options)
         {
             this.DistributedCache.Set(key, value, options);
             return this;
         }
 
-        public IAndDistributedCacheBuilder WithEntry(string key, string value, DistributedCacheEntryOptions options)
+        public IAndWithDistributedCacheBuilder WithEntry(string key, string value, DistributedCacheEntryOptions options)
         {
             this.DistributedCache.SetString(key, value, options);
             return this;
         }
 
-        public IAndDistributedCacheBuilder WithEntry(Action<IDistributedCacheEntryKeyBuilder> distributedCacheEntryBuilder)
+        public IAndWithDistributedCacheBuilder WithEntry(Action<IDistributedCacheEntryKeyBuilder> distributedCacheEntryBuilder)
         {
             var newDistributedCacheEntryBuilder = new DistributedCacheEntryBuilder();
             distributedCacheEntryBuilder(newDistributedCacheEntryBuilder);
@@ -65,19 +62,19 @@
         }
 
         /// <inheritdoc />
-        public IAndDistributedCacheBuilder WithEntries(IDictionary<string, byte[]> entries)
+        public IAndWithDistributedCacheBuilder WithEntries(IDictionary<string, byte[]> entries)
         {
             entries.ForEach(e => this.WithEntry(e.Key, e.Value));
             return this;
         }
 
-        public IAndDistributedCacheBuilder WithEntries(IDictionary<string, string> entries)
+        public IAndWithDistributedCacheBuilder WithEntries(IDictionary<string, string> entries)
         {
             entries.ForEach(e => this.WithEntry(e.Key, e.Value));
             return this;
         }
 
         /// <inheritdoc />
-        public IDistributedCacheBuilder AndAlso() => this;
+        public IWithDistributedCacheBuilder AndAlso() => this;
     }
 }
