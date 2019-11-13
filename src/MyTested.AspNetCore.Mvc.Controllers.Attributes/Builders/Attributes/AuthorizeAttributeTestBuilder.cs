@@ -25,24 +25,27 @@
         /// <inheritdoc />
         public IAndAuthorizeAttributeTestBuilder WithPolicy(string policy)
         {
-            this.Attribute = new AuthorizeAttribute(policy)
+            if (!string.IsNullOrEmpty(policy))
             {
-                Roles = this.Attribute.Roles,
-                AuthenticationSchemes = this.Attribute.AuthenticationSchemes
-            };
-
-            this.Validations.Add((expected, actual) =>
-            {
-                var expectedPolicy = expected.Policy;
-                var actualPolicy = actual.Policy;
-
-                if (!string.Equals(expectedPolicy, actualPolicy, StringComparison.OrdinalIgnoreCase))
+                this.Attribute = new AuthorizeAttribute(policy)
                 {
-                    this.FailedValidationAction(
-                        $"{this.ExceptionMessagePrefix}'{expectedPolicy}' policy",
-                        $"in fact found '{actualPolicy}'");
-                }
-            });
+                    Roles = this.Attribute.Roles,
+                    AuthenticationSchemes = this.Attribute.AuthenticationSchemes
+                };
+
+                this.Validations.Add((expected, actual) =>
+                {
+                    var expectedPolicy = expected.Policy;
+                    var actualPolicy = actual.Policy;
+
+                    if (!string.Equals(expectedPolicy, actualPolicy, StringComparison.OrdinalIgnoreCase))
+                    {
+                        this.FailedValidationAction(
+                            $"{this.ExceptionMessagePrefix}'{expectedPolicy}' policy",
+                            $"in fact found '{actualPolicy}'");
+                    }
+                });
+            }
 
             return this;
         }
