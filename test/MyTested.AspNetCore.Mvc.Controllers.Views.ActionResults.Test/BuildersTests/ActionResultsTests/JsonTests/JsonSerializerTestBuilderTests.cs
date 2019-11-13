@@ -368,7 +368,7 @@
         }
 
         [Fact]
-        public void ContainingConverterOfTypeShouldNotThrowExceptionWithCorrectValue()
+        public void ContainingConverterOfTypeShouldNotThrowExceptionWithCorrectValueForGeneric()
         {
             var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
             var jsonConverter = new CustomJsonConverter();
@@ -382,6 +382,43 @@
                 .Json(json => json
                     .WithJsonSerializerSettings(s =>
                         s.ContainingConverterOfType<CustomJsonConverter>()));
+        }
+
+        [Fact]
+        public void ContainingConverterOfTypeShouldNotThrowExceptionWithCorrectValue()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+            var jsonConverter = new CustomJsonConverter();
+            jsonSerializerSettings.Converters.Add(jsonConverter);
+
+            MyController<MvcController>
+                .Instance()
+                .WithoutValidation()
+                .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                .ShouldReturn()
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.ContainingConverterOfType(typeof(CustomJsonConverter))));
+        }
+
+        [Fact]
+        public void ContainingConverterOfTypeShouldThrowExceptionWithIncorrectValueForGeneric()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .WithoutValidation()
+                        .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                        .ShouldReturn()
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.ContainingConverterOfType<CustomJsonConverter>()));
+                },
+                "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have converter of CustomJsonConverter type, but such was not found.");
         }
 
         [Fact]
@@ -399,7 +436,7 @@
                         .ShouldReturn()
                         .Json(json => json
                             .WithJsonSerializerSettings(s =>
-                                s.ContainingConverterOfType<CustomJsonConverter>()));
+                                s.ContainingConverterOfType(typeof(CustomJsonConverter))));
                 },
                 "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have converter of CustomJsonConverter type, but such was not found.");
         }

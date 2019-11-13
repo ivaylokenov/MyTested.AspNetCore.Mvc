@@ -140,6 +140,22 @@
         }
 
         /// <inheritdoc />
+        public IAndJsonSerializerSettingsTestBuilder ContainingConverterOfType(Type jsonConverterType)
+        {
+            this.validations.Add((expected, actual) =>
+            {
+                if (actual.Converters.All(c => Reflection.AreDifferentTypes(c.GetType(), jsonConverterType)))
+                {
+                    this.ThrowNewJsonResultAssertionException(
+                        $"converter of {jsonConverterType.Name} type",
+                        "such was not found");
+                }
+            });
+
+            return this;
+        }
+
+        /// <inheritdoc />
         public IAndJsonSerializerSettingsTestBuilder ContainingConverters(IEnumerable<JsonConverter> jsonConverters)
         {
             this.validations.Add((expected, actual) =>

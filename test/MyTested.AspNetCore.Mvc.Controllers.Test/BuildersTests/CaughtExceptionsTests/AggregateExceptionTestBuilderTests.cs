@@ -9,7 +9,7 @@
     public class AggregateExceptionTestBuilderTests
     {
         [Fact]
-        public void ContainingInnerExceptionOfTypeShouldNotThrowIfInnerExceptionIsCorrect()
+        public void ContainingInnerExceptionOfTypeGenericShouldNotThrowIfInnerExceptionIsCorrect()
         {
             MyController<MvcController>
                 .Instance()
@@ -20,7 +20,7 @@
         }
 
         [Fact]
-        public void ContainingInnerExceptionOfTypeShouldThrowIfInnerExceptionIsNotCorrect()
+        public void ContainingInnerExceptionOfGenericTypeShouldThrowIfInnerExceptionIsNotCorrect()
         {
             Test.AssertException<InvalidExceptionAssertionException>(
                 () =>
@@ -35,8 +35,36 @@
                 "When calling ActionWithAggregateException action in MvcController expected AggregateException to contain ArgumentException, but none was found.");
         }
 
+
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void ContainingInnerExceptionOfTypeShouldNotThrowIfInnerExceptionIsCorrect()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionWithAggregateException())
+                .ShouldThrow()
+                .AggregateException()
+                .ContainingInnerExceptionOfType(typeof(NullReferenceException));
+        }
+
+        [Fact]
+        public void ContainingInnerExceptionOfTypeShouldThrowIfInnerExceptionIsNotCorrect()
+        {
+            Test.AssertException<InvalidExceptionAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ActionWithAggregateException())
+                        .ShouldThrow()
+                        .AggregateException()
+                        .ContainingInnerExceptionOfType(typeof(ArgumentException));
+                },
+                "When calling ActionWithAggregateException action in MvcController expected AggregateException to contain ArgumentException, but none was found.");
+        }
+
+        [Fact]
+        public void AndAlsoShouldWorkCorrectlyForGeneric()
         {
             MyController<MvcController>
                 .Instance()
@@ -46,6 +74,20 @@
                 .ContainingInnerExceptionOfType<NullReferenceException>()
                 .AndAlso()
                 .ContainingInnerExceptionOfType<InvalidOperationException>();
+        }
+
+
+        [Fact]
+        public void AndAlsoShouldWorkCorrectly()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionWithAggregateException())
+                .ShouldThrow()
+                .AggregateException()
+                .ContainingInnerExceptionOfType(typeof(NullReferenceException))
+                .AndAlso()
+                .ContainingInnerExceptionOfType(typeof(InvalidOperationException));
         }
     }
 }
