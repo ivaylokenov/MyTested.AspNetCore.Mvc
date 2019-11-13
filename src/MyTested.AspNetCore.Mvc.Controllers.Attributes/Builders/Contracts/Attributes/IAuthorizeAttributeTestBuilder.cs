@@ -6,7 +6,7 @@
     public interface IAuthorizeAttributeTestBuilder
     {
         /// <summary>
-        /// Tests whether an <see cref="Microsoft.AspNetCore.Authorization.AuthorizeAttribute"/>
+        /// Tests whether a <see cref="Microsoft.AspNetCore.Authorization.AuthorizeAttribute"/>
         /// has the same <see cref="Microsoft.AspNetCore.Authorization.AuthorizeAttribute.Policy"/> value as the provided one.
         /// </summary>
         /// <param name="policy">Expected policy.</param>
@@ -14,7 +14,7 @@
         IAndAuthorizeAttributeTestBuilder WithPolicy(string policy);
 
         /// <summary>
-        /// Tests whether an <see cref="Microsoft.AspNetCore.Authorization.AuthorizeAttribute"/>
+        /// Tests whether a <see cref="Microsoft.AspNetCore.Authorization.AuthorizeAttribute"/>
         /// has the same <see cref="Microsoft.AspNetCore.Authorization.AuthorizeAttribute.AuthenticationSchemes"/> value as the provided one.
         /// </summary>
         /// <param name="authenticationSchemes">Expected authentication schemes.</param>
