@@ -47,14 +47,28 @@
         /// <inheritdoc />
         public TDataProviderTestBuilder ContainingEntryOfType<TValue>()
         {
-            this.ValidateContainingEntryOfType<TValue>();
+            this.ContainingEntryOfType(typeof(TValue));
+            return this.DataProviderTestBuilder;
+        }
+
+        /// <inheritdoc />
+        public TDataProviderTestBuilder ContainingEntryOfType(Type valueType)
+        {
+            this.ValidateContainingEntryOfType(valueType);
             return this.DataProviderTestBuilder;
         }
 
         /// <inheritdoc />
         public TDataProviderTestBuilder ContainingEntryOfType<TValue>(string key)
         {
-            this.ValidateContainingEntryOfType<TValue>(key);
+            this.ContainingEntryOfType(key,typeof(TValue));
+            return this.DataProviderTestBuilder;
+        }
+
+        /// <inheritdoc />
+        public TDataProviderTestBuilder ContainingEntryOfType(string key, Type valueType)
+        {
+            this.ValidateContainingEntryOfType(key, valueType);
             return this.DataProviderTestBuilder;
         }
 

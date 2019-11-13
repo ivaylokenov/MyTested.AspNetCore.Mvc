@@ -49,12 +49,43 @@
             ValidateValueOfType<TValue>(name, dictionary.Values, failedValidationAction);
         }
 
+        public static void ValidateValueOfType(
+            string name,
+            IDictionary<string, object> dictionary,
+            Action<string, string, string> failedValidationAction, Type valueType)
+            => ValidateValueOfType(name, dictionary.Values, failedValidationAction,valueType);
+        
         public static void ValidateValueOfType<TValue>(
             string name,
             IDictionary<object, object> dictionary,
             Action<string, string, string> failedValidationAction)
+            => ValidateValueOfType<TValue>(name, dictionary.Values, failedValidationAction);
+        
+        public static void ValidateValueOfType(
+           string name,
+           IDictionary<object, object> dictionary,
+           Action<string, string, string> failedValidationAction,
+           Type valueType)
+            => ValidateValueOfType(name, dictionary.Values, failedValidationAction, valueType);
+        
+        public static void ValidateStringKeyAndValueOfType(
+            string name,
+            IDictionary<string, object> dictionary,
+            string key,
+            Action<string, string, string> failedValidationAction,
+            Type valueType)
         {
-            ValidateValueOfType<TValue>(name, dictionary.Values, failedValidationAction);
+            var entryExists = dictionary.ContainsKey(key);
+            var actualValue = entryExists ? dictionary[key] : null;
+
+            var actualType = actualValue?.GetType();
+            if (!entryExists || Reflection.AreDifferentTypes(valueType, actualType))
+            {
+                failedValidationAction(
+                    name,
+                    $"to have entry with '{key}' key and value of {valueType.ToFriendlyTypeName()} type",
+                    $"{(entryExists ? $"in fact found {actualType.ToFriendlyTypeName()}" : "such was not found")}");
+            }
         }
 
         public static void ValidateStringKeyAndValueOfType<TValue>(
@@ -62,20 +93,7 @@
             IDictionary<string, object> dictionary,
             string key,
             Action<string, string, string> failedValidationAction)
-        {
-            var entryExists = dictionary.ContainsKey(key);
-            var actualValue = entryExists ? dictionary[key] : null;
-
-            var expectedType = typeof(TValue);
-            var actualType = actualValue?.GetType();
-            if (!entryExists || Reflection.AreDifferentTypes(expectedType, actualType))
-            {
-                failedValidationAction(
-                    name,
-                    $"to have entry with '{key}' key and value of {expectedType.ToFriendlyTypeName()} type",
-                    $"{(entryExists ? $"in fact found {actualType.ToFriendlyTypeName()}" : "such was not found")}");
-            }
-        }
+            => ValidateStringKeyAndValueOfType(name, dictionary, key, failedValidationAction, typeof(TValue));
 
         public static void ValidateValue<TDictionaryKey, TValue>(
             string name,
@@ -122,21 +140,27 @@
                 failedValidationAction));
         }
 
-        private static void ValidateValueOfType<TValue>(
-            string name,
-            ICollection<object> values,
-            Action<string, string, string> failedValidationAction)
+        private static void ValidateValueOfType(
+          string name,
+          ICollection<object> values,
+          Action<string, string, string> failedValidationAction,
+          Type valueType)
         {
-            var expectedType = typeof(TValue);
-            var entryOfSameType = values.FirstOrDefault(arg => arg.GetType() == expectedType);
+            var entryOfSameType = values.FirstOrDefault(arg => arg.GetType() == valueType);
 
             if (entryOfSameType == null)
             {
                 failedValidationAction(
                     name,
-                    $"to have at least one entry of {expectedType.ToFriendlyTypeName()} type",
+                    $"to have at least one entry of {valueType.ToFriendlyTypeName()} type",
                     "none was found");
             }
         }
+
+        private static void ValidateValueOfType<TValue>(
+            string name,
+            ICollection<object> values,
+            Action<string, string, string> failedValidationAction)
+            => ValidateValueOfType(name, values, failedValidationAction, typeof(TValue));
     }
 }

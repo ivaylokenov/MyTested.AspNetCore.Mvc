@@ -55,34 +55,40 @@
         }
 
         /// <inheritdoc />
-        public IAndMemoryCacheTestBuilder ContainingEntryOfType<TValue>()
+        public IAndMemoryCacheTestBuilder ContainingEntryOfType(Type valueType)
         {
-            DictionaryValidator.ValidateValueOfType<TValue>(
+            DictionaryValidator.ValidateValueOfType(
                 MemoryCacheName,
                 this.GetMemoryCacheAsDictionary(),
-                this.ThrowNewDataProviderAssertionException);
+                this.ThrowNewDataProviderAssertionException, valueType);
 
             return this;
         }
 
+        public IAndMemoryCacheTestBuilder ContainingEntryOfType<TValue>()
+            => this.ContainingEntryOfType(typeof(TValue));
+
         /// <inheritdoc />
-        public IAndMemoryCacheTestBuilder ContainingEntryOfType<TValue>(object key)
+        public IAndMemoryCacheTestBuilder ContainingEntryOfType(object key, Type valueType)
         {
             var value = this.GetValue(key);
-            var expectedType = typeof(TValue);
             var actualType = value.GetType();
 
-            if (Reflection.AreDifferentTypes(expectedType, actualType))
+            if (Reflection.AreDifferentTypes(valueType, actualType))
             {
                 this.ThrowNewDataProviderAssertionException(
                     MemoryCacheName,
-                    $"to have entry with the given key and value of {expectedType.ToFriendlyTypeName()} type",
+                    $"to have entry with the given key and value of {valueType.ToFriendlyTypeName()} type",
                     $"in fact found {actualType.ToFriendlyTypeName()}");
             }
 
             return this;
         }
 
+        /// <inheritdoc />
+        public IAndMemoryCacheTestBuilder ContainingEntryOfType<TValue>(object key)
+            => this.ContainingEntryOfType(key, typeof(TValue));
+        
         /// <inheritdoc />
         public IAndMemoryCacheTestBuilder ContainingEntry(object key, object value)
         {

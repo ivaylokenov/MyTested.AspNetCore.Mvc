@@ -1,5 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.CaughtExceptions
 {
+    using System;
+
     /// <summary>
     /// Used for testing expected <see cref="System.Exception"/>.
     /// </summary>
@@ -11,5 +13,11 @@
         /// <typeparam name="TException">Type of the expected <see cref="System.Exception"/>.</typeparam>
         /// <returns>The same <see cref="IAndExceptionTestBuilder"/>.</returns>
         IAndExceptionTestBuilder OfType<TException>();
+
+        /// <summary>
+        /// Tests whether certain type of <see cref="System.Exception"/> is thrown from the invoked method.
+        /// </summary>
+        /// <returns>The same <see cref="IAndExceptionTestBuilder"/>.</returns>
+        IAndExceptionTestBuilder OfType(Type exceptionType);
     }
 }
