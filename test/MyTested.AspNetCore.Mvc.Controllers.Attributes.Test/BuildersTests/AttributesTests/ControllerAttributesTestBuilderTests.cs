@@ -1038,6 +1038,92 @@
         }
 
         [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithCorrectPolicy()
+        {
+            MyController<AuthorizationController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithPolicy("Admin")));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithIncorrectPolicy()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<AuthorizationController>
+                    .ShouldHave()
+                    .Attributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithPolicy("MyPolicy")));
+            },
+            "When testing AuthorizationController was expected to have AuthorizeAttribute with 'MyPolicy' policy, but in fact found 'Admin'.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithoutDefinedPolicy()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .ShouldHave()
+                    .Attributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithPolicy("Admin")));
+            },
+            "When testing MvcController was expected to have AuthorizeAttribute with 'Admin' policy, but in fact found ''.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithEmptyPolicy()
+        {
+            MyController<AuthorizationController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithPolicy(string.Empty)));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithNullPolicy()
+        {
+            MyController<AuthorizationController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithPolicy(null)));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithCorrectAuthenticationSchemeAndAlsoWithPolicy()
+        {
+            MyController<AuthorizationController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithAuthenticationSchemes("Cookies")
+                        .AndAlso()
+                        .WithPolicy("Admin")));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithCorrectAuthenticationSchemeAndAlsoWithIncorrectPolicy()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<AuthorizationController>
+                    .ShouldHave()
+                    .Attributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithAuthenticationSchemes("Cookies")
+                            .AndAlso()
+                            .WithPolicy("MyPolicy")));
+            },
+            "When testing AuthorizationController was expected to have AuthorizeAttribute with 'MyPolicy' policy, but in fact found 'Admin'.");
+        }
+
+        [Fact]
         public void AddingFormatShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<MvcController>

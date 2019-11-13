@@ -1259,6 +1259,94 @@
         }
 
         [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithIncorrectPolicy()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithPolicy("MyPolicy")));
+            },
+            "When calling NormalActionWithAuthorizeAttribute action in AuthorizationController expected action to have AuthorizeAttribute with 'MyPolicy' policy, but in fact found 'Admin'.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithoutDefinedPolicy()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.EmptyActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithPolicy("MyPolicy")));
+            },
+            "When calling EmptyActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'MyPolicy' policy, but in fact found ''.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithEmptyPolicy()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.EmptyActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithPolicy(string.Empty)));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithNullPolicy()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.EmptyActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithPolicy(null)));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithAuthenticationSchemeAndAlsoWithPolicy()
+        {
+            MyController<AuthorizationController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithAuthenticationSchemes("Cookies")
+                        .AndAlso()
+                        .WithPolicy("Admin")));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithAuthenticationSchemeAndAlsoWithIncorrectPolicy()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithAuthenticationSchemes("Cookies")
+                            .AndAlso()
+                            .WithPolicy("MyPolicy")));
+            },
+            "When calling NormalActionWithAuthorizeAttribute action in AuthorizationController expected action to have AuthorizeAttribute with 'MyPolicy' policy, but in fact found 'Admin'.");
+        }
+
+        [Fact]
         public void AddingFormatShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<ApiController>
