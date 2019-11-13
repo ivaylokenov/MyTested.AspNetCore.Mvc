@@ -1010,19 +1010,19 @@
         }
 
         [Fact]
-        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithCorrectAuthenticationSchemeAndAlsoWithCorrectPolicy()
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithCorrectPolicyAndAlsoWithCorrectAuthenticationScheme()
         {
             MyController<AuthorizationController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .RestrictingForAuthorizedRequests(authorization => authorization
-                        .WithAuthenticationSchemes("Cookies")
+                        .WithPolicy("Admin")
                         .AndAlso()
-                        .WithPolicy("Admin")));
+                        .WithAuthenticationSchemes("Cookies")));
         }
 
         [Fact]
-        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithIncorrectAuthenticationSchemeAndAlsoWithEmptyPolicy()
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithWithEmptyPolicyAndAlsoIncorrectAuthenticationScheme()
         {
             Test.AssertException<AttributeAssertionException>(() =>
             {
@@ -1030,9 +1030,9 @@
                     .ShouldHave()
                     .Attributes(attributes => attributes
                         .RestrictingForAuthorizedRequests(authorization => authorization
-                            .WithAuthenticationSchemes("Cookies, JWTBearer")
+                            .WithPolicy(string.Empty)
                             .AndAlso()
-                            .WithPolicy(string.Empty)));
+                            .WithAuthenticationSchemes("Cookies, JWTBearer")));
             },
             "When testing AuthorizationController was expected to have AuthorizeAttribute with 'Cookies, JWTBearer' authentication schemes, but in fact found 'Cookies'.");
         }

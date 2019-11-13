@@ -1229,7 +1229,21 @@
         }
 
         [Fact]
-        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithNotDefinedAuthenticationSchemeAndAlsoWithEmptyPolicy()
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithEmptyPolicyAndAlsoWithCorrectAuthenticationScheme()
+        {
+            MyController<AuthorizationController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithPolicy(string.Empty)
+                        .AndAlso()
+                        .WithAuthenticationSchemes("Cookies")));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithEmptyPolicyAndAlsoWithNotDefinedAuthenticationScheme()
         {
             Test.AssertException<AttributeAssertionException>(() =>
             {
@@ -1239,9 +1253,9 @@
                     .ShouldHave()
                     .ActionAttributes(attributes => attributes
                         .RestrictingForAuthorizedRequests(authorization => authorization
-                            .WithAuthenticationSchemes("Cookies")
+                            .WithPolicy(string.Empty)
                             .AndAlso()
-                            .WithPolicy(string.Empty)));
+                            .WithAuthenticationSchemes("Cookies")));
             },
             "When calling EmptyActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'Cookies' authentication schemes, but in fact found ''.");
         }
