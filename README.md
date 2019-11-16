@@ -1,5 +1,13 @@
 <h1><img src="https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/logo.png" align="left" alt="MyTested.AspNetCore.Mvc" width="100">&nbsp; MyTested.AspNetCore.Mvc - Fluent Testing<br />&nbsp; Library for ASP.NET Core MVC</h1> 
 
+## Special Sponsors
+
+<p>
+  <a href="https://bellatrix.solutions/" target="_blank">
+    <img width="320px" src="https://user-images.githubusercontent.com/3391906/68993273-d4f5c700-087e-11ea-9b39-e173733fcbfb.png" alt=""The Ultimate Cross-Platform .NET Framework>
+  </a>
+</p>
+
 ## Gold Sponsors
 
 <table>
