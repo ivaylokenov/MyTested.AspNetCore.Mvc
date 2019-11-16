@@ -2,11 +2,17 @@
 
 ## Special Sponsors
 
-<p>
-  <a href="https://bellatrix.solutions/" target="_blank">
-    <img width="320px" src="https://user-images.githubusercontent.com/3391906/68993273-d4f5c700-087e-11ea-9b39-e173733fcbfb.png" alt=""The Ultimate Cross-Platform .NET Framework>
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="middle">
+          <a href="https://bellatrix.solutions/" target="_blank">
+    <img width="324px" src="https://user-images.githubusercontent.com/3391906/68993273-d4f5c700-087e-11ea-9b39-e173733fcbfb.png" alt=""The Ultimate Cross-Platform .NET Framework>
   </a>
-</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ## Gold Sponsors
 
