@@ -3,12 +3,12 @@
     /// <summary>
     /// Used for adding AndAlso() method to the <see cref="Microsoft.Extensions.Caching.Distributed.IDistributedCache"/> builder.
     /// </summary>
-    public interface IAndWithoutDistributedCache : IWithoutDistributedCache
+    public interface IAndWithoutDistributedCacheBuilder : IWithoutDistributedCacheBuilder
     {
         /// <summary>
         /// AndAlso method for better readability when building <see cref="Microsoft.Extensions.Caching.Distributed.IDistributedCache"/>.
         /// </summary>
         /// <returns></returns>
-        IWithoutDistributedCache AndAlso();
+        IWithoutDistributedCacheBuilder AndAlso();
     }
 }

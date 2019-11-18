@@ -80,7 +80,19 @@
         public Dictionary<string, byte[]> GetCacheAsDictionary()
             => this.cache.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Value);
 
-        public void Dispose()
+        public void RemoveKeys(IEnumerable<string> keys)
+        {
+            foreach (var key in keys)
+            {
+                this.Remove(key);
+            }
+        }
+
+        public void ClearCache()
             => this.cache.Clear();
+
+        public void Dispose()
+            => this.ClearCache();
+
     }
 }

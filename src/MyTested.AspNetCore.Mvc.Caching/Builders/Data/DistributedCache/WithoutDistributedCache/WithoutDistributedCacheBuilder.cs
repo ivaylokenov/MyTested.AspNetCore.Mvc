@@ -4,8 +4,9 @@
     using System.Collections.Generic;
     using Microsoft.Extensions.Caching.Distributed;
     using MyTested.AspNetCore.Mvc.Builders.Contracts.Data;
+    using MyTested.AspNetCore.Mvc.Utilities.Extensions;
 
-    public class WithoutDistributedCacheBuilder : BaseDistributedCacheBuilder, IAndWithoutDistributedCache
+    public class WithoutDistributedCacheBuilder : BaseDistributedCacheBuilder, IAndWithoutDistributedCacheBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="WithoutDistributedCacheBuilder"/> class.
@@ -17,30 +18,34 @@
         }
 
         /// <inheritdoc />
-        public IAndWithoutDistributedCache WithoutAllEntries()
+        public IAndWithoutDistributedCacheBuilder WithoutAllEntries()
         {
-            throw new NotImplementedException();
+            this.DistributedCache.AsDistributedCacheMock().ClearCache();
+            return this;
         }
 
         /// <inheritdoc />
-        public IAndWithoutDistributedCache WithoutEntries(IEnumerable<object> keys)
+        public IAndWithoutDistributedCacheBuilder WithoutEntries(IEnumerable<string> keys)
         {
-            throw new NotImplementedException();
+            this.DistributedCache.AsDistributedCacheMock().RemoveKeys(keys);
+            return this;
         }
 
         /// <inheritdoc />
-        public IAndWithoutDistributedCache WithoutEntries(params object[] keys)
+        public IAndWithoutDistributedCacheBuilder WithoutEntries(params string[] keys)
         {
-            throw new NotImplementedException();
+            this.DistributedCache.AsDistributedCacheMock().RemoveKeys(keys);
+            return this;
         }
 
         /// <inheritdoc />
-        public IAndWithoutDistributedCache WithoutEntry(object key)
+        public IAndWithoutDistributedCacheBuilder WithoutEntry(string key)
         {
-            throw new NotImplementedException();
+            this.DistributedCache.Remove(key);
+            return this;
         }
 
         /// <inheritdoc />
-        public IWithoutDistributedCache AndAlso() => this;
+        public IWithoutDistributedCacheBuilder AndAlso() => this;
     }
 }

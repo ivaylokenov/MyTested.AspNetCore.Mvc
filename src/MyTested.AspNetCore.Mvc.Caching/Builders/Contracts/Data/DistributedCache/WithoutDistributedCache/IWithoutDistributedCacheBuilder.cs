@@ -6,33 +6,33 @@
     /// <summary>
     /// Used for building mocked <see cref="IDistributedCache"/>.
     /// </summary>
-    public interface IWithoutDistributedCache
+    public interface IWithoutDistributedCacheBuilder
     {
         /// <summary>
         /// Remove cache entry to the mocked <see cref="IDistributedCache"/>.
         /// </summary>
         /// <param name="key">Key of the cache entry.</param>
-        /// <returns>The same <see cref="IAndWithoutDistributedCache"/>.</returns>
-        IAndWithoutDistributedCache WithoutEntry(object key);
+        /// <returns>The same <see cref="IAndWithoutDistributedCacheBuilder"/>.</returns>
+        IAndWithoutDistributedCacheBuilder WithoutEntry(string key);
 
         /// <summary>
         /// Remove cache entries to the mocked <see cref="IDistributedCache"/>.
         /// </summary>
         /// <param name="keys">Keys of the cache entries.</param>
-        /// <returns>The same <see cref="IAndWithoutDistributedCache"/>.</returns>
-        IAndWithoutDistributedCache WithoutEntries(IEnumerable<object> keys);
+        /// <returns>The same <see cref="IAndWithoutDistributedCacheBuilder"/>.</returns>
+        IAndWithoutDistributedCacheBuilder WithoutEntries(IEnumerable<string> keys);
 
         /// <summary>
         /// Remove cache params to the mocked <see cref="IDistributedCache"/>.
         /// </summary>
         /// <param name="keys">Keys of the cache entries.</param>
-        /// <returns>The same <see cref="IAndWithoutDistributedCache"/>.</returns>
-        IAndWithoutDistributedCache WithoutEntries(params object[] keys);
+        /// <returns>The same <see cref="IAndWithoutDistributedCacheBuilder"/>.</returns>
+        IAndWithoutDistributedCacheBuilder WithoutEntries(params string[] keys);
 
         /// <summary>
         /// Clear all entries persisted into the <see cref="IDistributedCache"/>.
         /// </summary>
-        /// <returns>The same <see cref="IAndWithoutDistributedCache"/>.</returns>
-        IAndWithoutDistributedCache WithoutAllEntries();
+        /// <returns>The same <see cref="IAndWithoutDistributedCacheBuilder"/>.</returns>
+        IAndWithoutDistributedCacheBuilder WithoutAllEntries();
     }
 }
