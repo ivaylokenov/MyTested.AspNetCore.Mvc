@@ -52,6 +52,11 @@ Additionally, funds donated via [Patreon](https://www.patreon.com/ivaylokenov) (
           <img width="148px" src="https://user-images.githubusercontent.com/3391906/66921689-637fea00-f02e-11e9-944a-b07c6f345a06.png">
         </a>
       </td>
+      <td align="center" valign="middle">
+          <a href="http://bit.ly/onebitsoftware" target="_blank">
+          <img width="148px" height="70px" src="https://user-images.githubusercontent.com/3391906/69410626-1a4d4500-0d14-11ea-905f-c1705b6364bf.png">
+        </a>
+      </td>
     </tr>
   </tbody>
 </table>
