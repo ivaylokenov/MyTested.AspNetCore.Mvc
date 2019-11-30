@@ -69,6 +69,7 @@
 
             TestCounter.SetLicenseData(
                 ServerTestConfiguration.Global.Licenses,
+                DateTime.UtcNow,
                 DateTime.ParseExact(TestFramework.ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
                 TestWebServer.TestAssemblyName);
 
