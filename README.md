@@ -396,7 +396,9 @@ MyMvc
 ```
 
 *Note: pipeline tests execute action filters.*
+
 *Note: pipeline tests does not run the server middleware configuration.*
+
 *Note: pipeline tests are available from version 3.0.0 onwards.*
 
 ### Attribute Declaration Tests
