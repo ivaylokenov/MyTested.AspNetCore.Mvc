@@ -99,15 +99,24 @@
         {
             var actualBuilder = (BaseTestBuilderWithResponseModel)builder;
 
-            actualBuilder.WithModelOfType<TModel>();
+            var modelType = typeof(TModel);
+            var anonymousModel = Reflection.IsAnonymousType(modelType);
 
-            var actualModel = actualBuilder.GetActualModel<TModel>();
+            if (!anonymousModel)
+            {
+                actualBuilder.WithModelOfType<TModel>();
+            }
+
+            var actualModel = anonymousModel 
+                ? actualBuilder.GetActualModel()
+                : actualBuilder.GetActualModel<TModel>();
+
             if (Reflection.AreNotDeeplyEqual(model, actualModel))
             {
                 throw new ResponseModelAssertionException(string.Format(
                     actualBuilder.ErrorMessageFormat,
                     actualBuilder.TestContext.ExceptionMessagePrefix,
-                    typeof(TModel).ToFriendlyTypeName()));
+                    modelType.ToFriendlyTypeName()));
             }
 
             actualBuilder.TestContext.Model = actualModel;

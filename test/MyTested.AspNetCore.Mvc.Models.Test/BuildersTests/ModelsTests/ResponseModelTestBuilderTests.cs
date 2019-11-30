@@ -139,6 +139,49 @@
         }
 
         [Fact]
+        public void WithAnonymousModelShouldNotThrowExceptionWithDeeplyEqualModels()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AnonymousResult())
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModel(new
+                    {
+                        Id = 1,
+                        Text = "test",
+                        Nested = new
+                        {
+                            IsTrue = true
+                        }
+                    }));
+        }
+
+        [Fact]
+        public void WithAnonymousModelShouldThrowExceptionWithDeeplyDifferentModels()
+        {
+            Test.AssertException<ResponseModelAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AnonymousResult())
+                        .ShouldReturn()
+                        .Ok(ok => ok
+                            .WithModel(new
+                            {
+                                Id = 1,
+                                Text = "test",
+                                Nested = new
+                                {
+                                    IsTrue = false
+                                }
+                            }));
+                },
+               "When calling AnonymousResult action in MvcController expected response model AnonymousType0<Int32, String, AnonymousType1<Boolean>> to be the given model, but in fact it was a different one.");
+        }
+
+        [Fact]
         public void WithNoResponseModelShouldNotThrowExceptionWhenNoResponseModel()
         {
             MyController<MvcController>

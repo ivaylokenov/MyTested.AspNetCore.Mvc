@@ -1130,6 +1130,19 @@
             return this.BadRequest();
         }
 
+        public IActionResult AnonymousResult()
+        {
+            return this.Ok(new 
+            { 
+                Id = 1, 
+                Text = "test",
+                Nested = new
+                {
+                    IsTrue = true
+                }
+            });
+        }
+
         public IActionResult WithService(IHttpContextAccessor httpContextAccessor)
         {
             if (httpContextAccessor == null)

@@ -445,7 +445,18 @@
                 return CollectionsAreDeeplyEqual(expected, actual, processedElements);
             }
 
-            if (expectedType != actualType
+            var expectedTypeIsAnonymous = IsAnonymousType(expectedType);
+            if (expectedTypeIsAnonymous)
+            {
+                var actualIsAnonymous = IsAnonymousType(actualType);
+                if (!actualIsAnonymous)
+                {
+                    return false;
+                }
+            }
+
+            if (!expectedTypeIsAnonymous
+                && expectedType != actualType
                 && !expectedType.IsAssignableFrom(actualType)
                 && !actualType.IsAssignableFrom(expectedType))
             {
@@ -463,7 +474,7 @@
                 return (bool)equalsOperator.Invoke(null, new[] { expected, actual });
             }
 
-            if (expectedType != objectType && !IsAnonymousType(expectedType))
+            if (expectedType != objectType && !expectedTypeIsAnonymous)
             {
                 var equalsMethod = expectedType.GetMethods().FirstOrDefault(m => m.Name == "Equals" && m.DeclaringType == expectedType);
                 if (equalsMethod != null)
