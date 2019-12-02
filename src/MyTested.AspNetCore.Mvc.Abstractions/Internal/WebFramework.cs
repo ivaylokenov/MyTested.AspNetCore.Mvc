@@ -224,7 +224,6 @@
             "Microsoft.AspNetCore.Mvc.Formatters.Json",
             "Microsoft.AspNetCore.Mvc.Formatters.Xml",
             "Microsoft.AspNetCore.Mvc.Localization",
-            "Microsoft.AspNetCore.Mvc.NewtonsoftJson",
             "Microsoft.AspNetCore.Mvc.Razor",
             "Microsoft.AspNetCore.Mvc.RazorPages",
             "Microsoft.AspNetCore.Mvc.TagHelpers"

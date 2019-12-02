@@ -1,10 +1,13 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
-    using Builders.Contracts.ActionResults.Json;
-    using Newtonsoft.Json;
     using System;
     using Builders.ActionResults.Json;
+    using Builders.Contracts.ActionResults.Json;
+    using Internal.Services;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Options;
+    using Newtonsoft.Json;
     using Utilities.Extensions;
 
     /// <summary>
@@ -58,7 +61,7 @@
             var actualBuilder = (JsonTestBuilder)jsonTestBuilder;
 
             var actualJsonSerializerSettings = actualBuilder.GetJsonResult().SerializerSettings as JsonSerializerSettings
-                ?? actualBuilder.GetServiceDefaultSerializerSettings()
+                ?? GetServiceDefaultSerializerSettings()
                 ?? new JsonSerializerSettings();
 
             var newJsonSerializerSettingsTestBuilder = new JsonSerializerSettingsTestBuilder(
@@ -73,6 +76,9 @@
             return actualBuilder;
         }
 
+        public static JsonSerializerSettings GetServiceDefaultSerializerSettings()
+            => TestServiceProvider.GetService<IOptions<MvcNewtonsoftJsonOptions>>()?.Value?.SerializerSettings;
+
         private static void PopulateFullJsonSerializerSettingsTestBuilder(
             this IJsonTestBuilder jsonTestBuilder,
             IJsonSerializerSettingsTestBuilder jsonSerializerSettingsTestBuilder,
@@ -81,7 +87,7 @@
             var actualBuilder = (JsonTestBuilder)jsonTestBuilder;
 
             jsonSerializerSettings = jsonSerializerSettings
-                 ?? actualBuilder.GetServiceDefaultSerializerSettings()
+                 ?? GetServiceDefaultSerializerSettings()
                  ?? new JsonSerializerSettings();
 
             jsonSerializerSettingsTestBuilder

@@ -30,8 +30,17 @@
   </PropertyGroup>
     
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-*" />
+  </ItemGroup>
+    
+  <ItemGroup>
     <None Include="../../LICENSE" Pack="true" PackagePath="" />
     <None Include="../../tools/nuget-logo.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\MyTested.AspNetCore.Mvc.Controllers.Views\MyTested.AspNetCore.Mvc.Controllers.Views.csproj" />
+    <ProjectReference Include="..\..\src\MyTested.AspNetCore.Mvc.Models\MyTested.AspNetCore.Mvc.Models.csproj" />
   </ItemGroup>
 
 </Project>

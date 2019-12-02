@@ -36,10 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-*" />
-  </ItemGroup>
-  
-  <ItemGroup>
     <None Include="../../LICENSE" Pack="true" PackagePath="" />
     <None Include="../../tools/nuget-logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
