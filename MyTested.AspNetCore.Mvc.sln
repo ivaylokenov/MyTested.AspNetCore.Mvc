@@ -233,6 +233,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{EF38
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTested.AspNetCore.Mvc.NewtonsoftJson", "plugins\MyTested.AspNetCore.Mvc.NewtonsoftJson\MyTested.AspNetCore.Mvc.NewtonsoftJson.csproj", "{37C701F0-D727-4E8B-B5CE-A8E412205518}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTested.AspNetCore.Mvc.NewtonsoftJson.Test", "test\MyTested.AspNetCore.Mvc.NewtonsoftJson.Test\MyTested.AspNetCore.Mvc.NewtonsoftJson.Test.csproj", "{21B31CB3-CD7C-4EFD-83D8-D986E5C5E302}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -651,6 +653,10 @@ Global
 		{37C701F0-D727-4E8B-B5CE-A8E412205518}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37C701F0-D727-4E8B-B5CE-A8E412205518}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37C701F0-D727-4E8B-B5CE-A8E412205518}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21B31CB3-CD7C-4EFD-83D8-D986E5C5E302}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21B31CB3-CD7C-4EFD-83D8-D986E5C5E302}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21B31CB3-CD7C-4EFD-83D8-D986E5C5E302}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21B31CB3-CD7C-4EFD-83D8-D986E5C5E302}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -767,6 +773,7 @@ Global
 		{FA139588-1E38-4242-BB71-7784010DFEE4} = {09353A03-2B0C-496B-8EB1-2CB6A22D758B}
 		{241D1E6E-6639-4D45-98A0-0BFA1F200C5A} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 		{37C701F0-D727-4E8B-B5CE-A8E412205518} = {EF386110-3D7B-4BDF-B403-8DC2AB8CF7BB}
+		{21B31CB3-CD7C-4EFD-83D8-D986E5C5E302} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {99A2DEDD-5195-4EE6-A546-B1CA54C5539F}

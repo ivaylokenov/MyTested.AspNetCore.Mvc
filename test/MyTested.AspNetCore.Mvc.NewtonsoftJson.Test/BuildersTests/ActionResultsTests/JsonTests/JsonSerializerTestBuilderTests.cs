@@ -1022,12 +1022,12 @@
         public void WithReferenceResolverOfTypeShouldNotThrowException()
         {
             MyController<MvcController>
-                        .Instance()
-                        .Calling(c => c.JsonWithSettingsAction())
-                        .ShouldReturn()
-                        .Json(json => json
-                            .WithJsonSerializerSettings(s =>
-                                s.WithReferenceResolverOfType(typeof(CustomJsonReferenceResolver))));
+                .Instance()
+                .Calling(c => c.JsonWithSettingsAction())
+                .ShouldReturn()
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithReferenceResolverOfType(typeof(CustomJsonReferenceResolver))));
         }
 
         [Fact]
