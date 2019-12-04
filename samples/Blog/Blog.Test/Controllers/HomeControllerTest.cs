@@ -9,7 +9,7 @@
     using Xunit;
 
     public class HomeControllerTest
-    {        
+    {
         [Theory]
         [InlineData(2, true, 2)]
         [InlineData(4, true, 3)]
