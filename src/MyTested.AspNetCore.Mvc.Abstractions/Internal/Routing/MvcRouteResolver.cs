@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.Controllers;
+    using Microsoft.AspNetCore.Mvc.Filters;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
@@ -26,8 +27,8 @@
         /// <param name="fullExecution">Indicates whether the full MVC pipeline will be executed or not.</param>
         /// <returns>Resolved route information.</returns>
         public static ResolvedRouteContext Resolve(
-            IServiceProvider services, 
-            IRouter router, 
+            IServiceProvider services,
+            IRouter router,
             RouteContext routeContext,
             bool fullExecution = false)
         {
@@ -53,7 +54,7 @@
                     ?.Exposed()
                     .Actions
                     ?? actionSelector.SelectCandidates(routeContext);
-                
+
                 actionDescriptor = actionSelector.SelectBestCandidate(
                     routeContext,
                     actions);
@@ -91,12 +92,21 @@
             }
             catch (Exception ex)
             {
-                return new ResolvedRouteContext($"exception was thrown when trying to bind the action arguments: '{ex.Unwrap().Message}'");
+                return new ResolvedRouteContext($"exception was thrown when trying to invoke the pipeline: '{ex.Unwrap().Message}'");
             }
 
             if (modelBindingActionInvoker.BoundActionArguments == null)
             {
-                return new ResolvedRouteContext("action could not be invoked because of the declared filters. You must set the request properties so that they will pass through the pipeline");
+                var filters = actionDescriptor
+                    .FilterDescriptors
+                    .OrderByDescending(f => f.Order)
+                    .Select(f => $"{f.Filter.GetName()} ({f.Scope.ToFilterScopeName()})");
+
+                var filtersMessage = filters != null && filters.Any()
+                    ? $"filters - {string.Join(", ", filters)}"
+                    : "filters";
+
+                return new ResolvedRouteContext($"action could not be invoked because of the declared {filtersMessage}. Either a filter is setting the response result before the action itself, or you must set the request properties so that they will pass through the pipeline");
             }
 
             return new ResolvedRouteContext(

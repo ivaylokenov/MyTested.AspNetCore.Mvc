@@ -36,7 +36,6 @@
         [Fact]
         public void DetailsShouldReturnNotFoundWhenInvalidArticleId()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Details(int.MaxValue))
                 .ShouldReturn()
                 .NotFound();
@@ -105,7 +104,6 @@
         [Fact]
         public void CreateGetShouldHaveRestrictionsForHttpGetOnlyAndAuthorizedUsersAndShouldReturnView()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Create())
                 .ShouldHave()
                 .ActionAttributes(attrs => attrs
@@ -118,7 +116,6 @@
         [Fact]
         public void CreatePostShouldHaveRestrictionsForHttpPostOnlyAndAuthorizedUsers()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Create(With.Empty<ArticleFormModel>()))
                 .ShouldHave()
                 .ActionAttributes(attrs => attrs
@@ -128,7 +125,6 @@
         [Fact]
         public void CreatePostShouldReturnViewWithSameModelWhenInvalidModelState()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Create(With.Default<ArticleFormModel>()))
                 .ShouldHave()
                 .InvalidModelState()
@@ -140,7 +136,6 @@
         [InlineData("Article Title", "Article Content")]
         public void CreatePostShouldSaveArticleSetTempDataMessageAndRedirectWhenValidModel(string title, string content)
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Create(new ArticleFormModel
                 {
                     Title = title,
@@ -168,7 +163,6 @@
         [Fact]
         public void EditGetShouldHaveRestrictionsForHttpGetOnlyAndAuthorizedUsers()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Edit(With.Empty<int>()))
                 .ShouldHave()
                 .ActionAttributes(attrs => attrs
@@ -178,7 +172,6 @@
         [Fact]
         public void EditGetShouldReturnNotFoundWhenInvalidId()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Edit(With.Any<int>()))
                 .ShouldReturn()
                 .NotFound();
@@ -210,7 +203,6 @@
         [Fact]
         public void EditPostShouldHaveRestrictionsForHttpPostOnlyAndAuthorizedUsers()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Edit(
                     With.Empty<int>(), 
                     With.Empty<ArticleFormModel>()))
@@ -222,7 +214,6 @@
         [Fact]
         public void EditPostShouldReturnNotFoundWhenInvalidId()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Edit(
                     With.Any<int>(),
                     With.Any<ArticleFormModel>()))
@@ -297,7 +288,6 @@
         [Fact]
         public void DeleteShouldHaveRestrictionsForAuthorizedUsers()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Delete(With.Empty<int>()))
                 .ShouldHave()
                 .ActionAttributes(attrs => attrs
@@ -306,7 +296,6 @@
         [Fact]
         public void DeleteShouldReturnNotFoundWhenInvalidId()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Delete(With.Any<int>()))
                 .ShouldReturn()
                 .NotFound();
@@ -336,7 +325,6 @@
         [Fact]
         public void ConfirmDeleteShouldHaveRestrictionsForAuthorizedUsers()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.ConfirmDelete(With.Empty<int>()))
                 .ShouldHave()
                 .ActionAttributes(attrs => attrs
@@ -345,7 +333,6 @@
         [Fact]
         public void ConfirmDeleteShouldReturnNotFoundWhenInvalidId()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.ConfirmDelete(With.Any<int>()))
                 .ShouldReturn()
                 .NotFound();
@@ -387,7 +374,6 @@
         [Fact]
         public void MineShouldHaveRestrictionsForAuthorizedUsers()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Mine())
                 .ShouldHave()
                 .ActionAttributes(attrs => attrs

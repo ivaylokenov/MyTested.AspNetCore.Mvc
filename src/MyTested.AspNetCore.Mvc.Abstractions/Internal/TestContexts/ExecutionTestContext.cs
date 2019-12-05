@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.TestContexts
 {
+    using Microsoft.AspNetCore.Mvc.Filters;
     using System.Collections.Generic;
 
     public class ExecutionTestContext

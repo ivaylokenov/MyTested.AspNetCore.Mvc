@@ -359,7 +359,7 @@
 
             Assert.False(routeInfo.IsResolved);
             Assert.Equal(
-                "action could not be invoked because of the declared filters. You must set the request properties so that they will pass through the pipeline",
+                "action could not be invoked because of the declared filters - ValidateAntiForgeryTokenAttribute (Action), UnsupportedContentTypeFilter (Global), SaveTempDataAttribute (Global), ControllerActionFilter (Controller). Either a filter is setting the response result before the action itself, or you must set the request properties so that they will pass through the pipeline",
                 routeInfo.UnresolvedError);
             Assert.Null(routeInfo.ControllerType);
             Assert.Null(routeInfo.ControllerName);

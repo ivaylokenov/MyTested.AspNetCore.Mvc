@@ -29,7 +29,7 @@
                         .ShouldMap("/Normal/AuthorizedAction")
                         .To<NormalController>(c => c.AuthorizedAction());
                 },
-                "Expected route '/Normal/AuthorizedAction' to match AuthorizedAction action in NormalController but exception was thrown when trying to bind the action arguments: 'No authenticationScheme was specified, and there was no DefaultChallengeScheme found. The default schemes can be set using either AddAuthentication(string defaultScheme) or AddAuthentication(Action<AuthenticationOptions> configureOptions).'.");
+                "Expected route '/Normal/AuthorizedAction' to match AuthorizedAction action in NormalController but exception was thrown when trying to invoke the pipeline: 'No authenticationScheme was specified, and there was no DefaultChallengeScheme found. The default schemes can be set using either AddAuthentication(string defaultScheme) or AddAuthentication(Action<AuthenticationOptions> configureOptions).'.");
         }
 
         [Fact]
@@ -77,7 +77,21 @@
                         .ShouldMap("/Normal/FiltersAction")
                         .To<NormalController>(c => c.FiltersAction());
                 },
-                "Expected route '/Normal/FiltersAction' to match FiltersAction action in NormalController but action could not be invoked because of the declared filters. You must set the request properties so that they will pass through the pipeline.");
+                "Expected route '/Normal/FiltersAction' to match FiltersAction action in NormalController but action could not be invoked because of the declared filters - ValidateAntiForgeryTokenAttribute (Action), UnsupportedContentTypeFilter (Global), SaveTempDataAttribute (Global), ControllerActionFilter (Controller). Either a filter is setting the response result before the action itself, or you must set the request properties so that they will pass through the pipeline.");
+        }
+
+        [Fact]
+        public void ShouldMapShouldExecuteCustomActionFiltersAndShouldValidateRoutes()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyPipeline
+                        .Configuration()
+                        .ShouldMap("/Normal/CustomFiltersAction?throw=true")
+                        .To<NormalController>(c => c.CustomFiltersAction());
+                },
+                "Expected route '/Normal/CustomFiltersAction' to match CustomFiltersAction action in NormalController but exception was thrown when trying to invoke the pipeline: 'Exception of type 'System.Exception' was thrown.'.");
         }
     }
 }

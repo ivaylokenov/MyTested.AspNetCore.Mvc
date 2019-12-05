@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Filters
 {
+    using System;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -7,14 +8,21 @@
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            // context.Result = new OkResult();
+            // change controller property to save state
+
+            var query = context.HttpContext.Request.Query;
+
+            if (query.ContainsKey("throw"))
+            {
+                throw new Exception();
+            }
+
+            if (query.ContainsKey("result"))
+            {
+                context.Result = new BadRequestResult();
+            }
             
             base.OnActionExecuting(context);
-        }
-
-        public override void OnActionExecuted(ActionExecutedContext context)
-        {
-            base.OnActionExecuted(context);
         }
     }
 }

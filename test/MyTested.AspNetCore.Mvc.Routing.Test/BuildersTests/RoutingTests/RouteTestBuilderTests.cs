@@ -780,6 +780,15 @@
         }
 
         [Fact]
+        public void ShouldMapShouldNotExecuteCustomActionFiltersAndShouldValidateJustRoutes()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap("/Normal/CustomFiltersAction?throw=true")
+                .To<NormalController>(c => c.CustomFiltersAction());
+        }
+
+        [Fact]
         public void ShouldMapShouldNotExecuteActionFiltersAndShouldValidateJustRoutesAndModelBinding()
         {
             MyRouting
