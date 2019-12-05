@@ -8,6 +8,14 @@
     public class MyPipeline : MyRouting
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="MyPipeline"/> class.
+        /// </summary>
+        public MyPipeline()
+            : base(fullExecution: true)
+        {
+        }
+
+        /// <summary>
         /// Starts a pipeline test.
         /// </summary>
         /// <returns>Test builder of <see cref="IRouteTestBuilder"/> type.</returns>

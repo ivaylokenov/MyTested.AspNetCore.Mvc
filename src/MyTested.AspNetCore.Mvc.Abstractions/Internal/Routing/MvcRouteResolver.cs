@@ -23,8 +23,13 @@
         /// <param name="services">Application services from which the route will be resolved.</param>
         /// <param name="router">IRouter to resolve route values.</param>
         /// <param name="routeContext">RouteContext to use for resolving the route values.</param>
+        /// <param name="fullExecution">Indicates whether the full MVC pipeline will be executed or not.</param>
         /// <returns>Resolved route information.</returns>
-        public static ResolvedRouteContext Resolve(IServiceProvider services, IRouter router, RouteContext routeContext)
+        public static ResolvedRouteContext Resolve(
+            IServiceProvider services, 
+            IRouter router, 
+            RouteContext routeContext,
+            bool fullExecution = false)
         {
             try
             {
@@ -62,6 +67,8 @@
             {
                 return new ResolvedRouteContext("action could not be matched");
             }
+
+            routeContext.HttpContext.Features.Set(new RouteTestingFeature(fullExecution));
 
             var actionContext = new ActionContext(routeContext.HttpContext, routeContext.RouteData, actionDescriptor);
 

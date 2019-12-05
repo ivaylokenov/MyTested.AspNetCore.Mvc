@@ -18,11 +18,12 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="MyRouting"/> class.
         /// </summary>
-        public MyRouting()
+        public MyRouting(bool fullExecution = false)
             : base(new RouteTestContext
             {
                 Router = TestApplication.Router,
-                Services = TestApplication.RoutingServices
+                Services = TestApplication.RoutingServices,
+                FullExecution = fullExecution
             })
         {
             if (ServerTestConfiguration.Global.GetGeneralConfiguration().NoStartup)

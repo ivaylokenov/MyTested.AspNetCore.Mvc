@@ -19,9 +19,6 @@
 
     public class ModelBindingActionInvokerFactory : IModelBindingActionInvokerFactory
     {
-        private static readonly TypeInfo RouteController = typeof(RouteControllerMock).GetTypeInfo();
-        private static readonly MethodInfo RouteAction = RouteController.GetDeclaredMethod(nameof(RouteControllerMock.ActionMock));
-
         private readonly ModelBindingActionInvokerCache modelBindingActionInvokerCache;
         private readonly IReadOnlyList<IValueProviderFactory> valueProviderFactories;
         private readonly int maxModelValidationErrors;
@@ -73,18 +70,11 @@
 
             dynamic exposedCacheEntry = new ExposedObject(cacheEntry);
 
-            Func<ControllerContext, object> controllerFactory = context => new RouteControllerMock();
-            Action<ControllerContext, object> controllerReleaser = (context, instance) => { };
+            Action<ControllerContext, object> controllerReleaser 
+                = (context, instance) => (instance as IDisposable)?.Dispose();
+
             Func<ControllerContext, object, Dictionary<string, object>, Task> controllerBinderDelegateFunc 
                 = (context, instance, arguments) => Task.CompletedTask;
-
-            var objectMethodExecutor = WebFramework.Internals.ObjectMethodExecutor
-                .Exposed()
-                .Create(RouteAction, RouteController);
-
-            var actionMethodExecutor = WebFramework.Internals.ActionMethodExecutor
-                .Exposed()
-                .GetExecutor(objectMethodExecutor);
 
             var controllerBinderDelegateType = WebFramework.Internals.ControllerBinderDelegate;
 
@@ -102,12 +92,19 @@
                 .Invoke(new object[]
                 {
                     exposedCacheEntry.CachedFilters,
-                    controllerFactory,
+                    exposedCacheEntry.ControllerFactory,
                     controllerReleaser,
                     controllerBinderDelegate,
-                    objectMethodExecutor.Object,
-                    actionMethodExecutor.Object
+                    exposedCacheEntry.ObjectMethodExecutor,
+                    exposedCacheEntry.ActionMethodExecutor
                 });
+
+            var fullExecution = actionContext
+                .HttpContext
+                .Features
+                .Get<RouteTestingFeature>()
+                ?.FullExecution
+                ?? false;
 
             return new ModelBindingActionInvoker(
                 this.logger,
@@ -117,7 +114,8 @@
                 controllerContext,
                 exposedCacheEntry,
                 cacheEntryMock,
-                filters); 
+                filters,
+                fullExecution); 
         }
     }
 }

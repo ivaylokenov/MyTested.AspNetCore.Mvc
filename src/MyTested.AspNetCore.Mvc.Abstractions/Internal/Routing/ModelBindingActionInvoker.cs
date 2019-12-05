@@ -19,7 +19,6 @@
 
         private readonly ControllerContext controllerContext;
         private readonly dynamic cacheEntry;
-        private readonly dynamic cacheEntryMock;
         private readonly object invoker;
 
         private Dictionary<string, object> arguments;
@@ -32,7 +31,8 @@
             ControllerContext controllerContext,
             dynamic cacheEntry,
             dynamic cacheEntryMock,
-            IFilterMetadata[] filters)
+            IFilterMetadata[] filters,
+            bool fullExecution)
         {
             CommonValidator.CheckForNullReference(cacheEntry, nameof(cacheEntry));
             CommonValidator.CheckForNullReference(cacheEntryMock, nameof(cacheEntryMock));
@@ -41,7 +41,18 @@
             this.controllerContext = controllerContext;
 
             this.cacheEntry = cacheEntry;
-            this.cacheEntryMock = cacheEntryMock;
+
+            var routeTestingActionFilter = new RouteTestingActionFilter();
+
+            if (!fullExecution)
+            {
+                filters = new[] { routeTestingActionFilter };
+            }
+            else
+            {
+                var mockedFilters = new List<IFilterMetadata>(filters) { routeTestingActionFilter };
+                filters = mockedFilters.ToArray();
+            }
 
             var invokerType = WebFramework.Internals.ControllerActionInvoker;
             var constructor = invokerType.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)[0];

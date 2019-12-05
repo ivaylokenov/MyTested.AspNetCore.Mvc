@@ -311,16 +311,16 @@
         }
 
         public ExpressionParsedRouteContext GetExpectedRouteInfo()
-        {
-            return this.expectedRouteInfo ??
+            => this.expectedRouteInfo ??
                    (this.expectedRouteInfo = RouteExpressionParser.Parse(this.actionCallExpression));
-        }
 
         public ResolvedRouteContext GetActualRouteInfo()
-        {
-            return this.actualRouteInfo ??
-                   (this.actualRouteInfo = MvcRouteResolver.Resolve(this.Services, this.Router, this.RouteContext));
-        }
+            => this.actualRouteInfo ??
+                   (this.actualRouteInfo = MvcRouteResolver.Resolve(
+                       this.Services, 
+                       this.Router, 
+                       this.RouteContext,
+                       this.TestContext.FullExecution));
 
         public void ThrowNewRouteAssertionException(string expected = null, string actual = null)
         {

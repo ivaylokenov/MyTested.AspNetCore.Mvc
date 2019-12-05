@@ -14,6 +14,8 @@
 
         public IServiceProvider Services { get; internal set; }
 
+        public bool FullExecution { get; internal set; }
+
         public RouteContext RouteContext
         {
             get
