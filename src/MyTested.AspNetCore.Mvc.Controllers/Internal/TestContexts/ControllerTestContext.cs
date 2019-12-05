@@ -8,10 +8,13 @@
     public class ControllerTestContext : ActionTestContext<ControllerContext>
     {
         public override string ExceptionMessagePrefix => $"When calling {this.MethodName} action in {this.Component.GetName()} expected";
+        
+        public override LambdaExpression RouteDataMethodCall => this.MethodCall;
 
         protected override ControllerContext DefaultComponentContext
             => ControllerContextMock.Default(this);
 
-        public override LambdaExpression RouteDataMethodCall => this.MethodCall;
+        protected override ControllerContext ExecutionComponentContext
+            => this.HttpContext.Features.Get<ExecutionTestContext>()?.ControllerContext;
     }
 }

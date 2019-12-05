@@ -13,7 +13,8 @@
     using Utilities.Extensions;
     using Utilities.Validators;
 
-    public abstract partial class BaseComponentBuilder<TComponent, TTestContext, TBuilder> : BaseTestBuilderWithComponentBuilder<TBuilder>
+    public abstract partial class BaseComponentBuilder<TComponent, TTestContext, TBuilder> 
+        : BaseTestBuilderWithComponentBuilder<TBuilder>
         where TComponent : class
         where TTestContext : ComponentTestContext
         where TBuilder : IBaseTestBuilder
@@ -72,15 +73,54 @@
             var component = this.TestContext.Component;
             if (component == null)
             {
+                component = this.TryExtractComponentFromExecution();
+
                 var explicitDependenciesAreSet = this.TestContext.AggregatedDependencies.Any();
                 if (explicitDependenciesAreSet)
                 {
+                    var executionComponent = component;
+
                     // Custom dependencies are set, try create instance with them.
                     component = Reflection.TryCreateInstance<TComponent>(this.TestContext.AggregatedDependencies);
+
+                    if (executionComponent != null)
+                    {
+                        // Copy the public properties from the execution component.
+                        executionComponent
+                            .GetType()
+                            .GetProperties()
+                            .Where(pr =>
+                            {
+                                var canReadAndCanWrite = pr.CanRead && pr.CanWrite;
+                                if (!canReadAndCanWrite)
+                                {
+                                    return false;
+                                }
+
+                                var getMethod = pr.GetMethod;
+                                if (getMethod == null || !getMethod.IsPublic)
+                                {
+                                    return false;
+                                }
+
+                                var setMethod = pr.SetMethod;
+                                if (setMethod == null || !setMethod.IsPublic)
+                                {
+                                    return false;
+                                }
+
+                                return true;
+                            })
+                            .ToList()
+                            .ForEach(pr => pr
+                                .SetValue(component, pr.GetValue(executionComponent)));
+
+                        this.SkipComponentActivation = true;
+                    }
                 }
-                else
+                else if (component == null)
                 {
-                    // No custom dependencies are set, try create instance with component factory.
+                    // No execution component, no custom dependencies set, try create instance with component factory.
                     component = this.TryCreateComponentWithFactory();
 
                     if (component != null)
@@ -131,10 +171,12 @@
                 throw new InvalidOperationException($"{typeof(TComponent).ToFriendlyTypeName()} is not recognized as a valid {this.ComponentName} type. Classes decorated with 'Non{this.ComponentName.CapitalizeAndJoin()}Attribute' are not considered as passable {this.ComponentName}s. Additionally, make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file in order to enable proper {this.ComponentName} discovery. If your type is still not recognized, you may manually add it in the application part manager by using the 'AddMvc().PartManager.ApplicationParts.Add(applicationPart))' method.");
             }
         }
-
+        
         protected abstract TComponent TryCreateComponentWithFactory();
 
         protected abstract void ActivateComponent();
+
+        protected virtual TComponent TryExtractComponentFromExecution() => null;
 
         private void PrepareComponent()
         {

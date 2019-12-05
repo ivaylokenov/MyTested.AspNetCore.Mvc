@@ -3,14 +3,18 @@
     using System;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
+    using Utilities.Extensions;
 
     public class CustomActionFilterAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            // change controller property to save state
-
             var query = context.HttpContext.Request.Query;
+
+            if (query.ContainsKey("controller"))
+            {
+                context.Controller.Exposed().Data = "ActionFilter";
+            }
 
             if (query.ContainsKey("throw"))
             {

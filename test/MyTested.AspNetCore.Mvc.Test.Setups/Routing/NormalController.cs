@@ -9,6 +9,8 @@
 
     public class NormalController : Controller
     {
+        public string Data { get; set; }
+
         public static void StaticCall()
         {
         }

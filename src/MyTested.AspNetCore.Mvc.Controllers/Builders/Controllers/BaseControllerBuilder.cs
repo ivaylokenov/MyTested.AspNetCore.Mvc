@@ -26,7 +26,7 @@
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
         protected BaseControllerBuilder(ControllerTestContext testContext) 
             : base(testContext)
-        => this.EnabledModelStateValidation = ServerTestConfiguration
+            => this.EnabledModelStateValidation = ServerTestConfiguration
                 .Global
                 .GetControllersConfiguration()
                 .ModelStateValidation;
@@ -60,5 +60,12 @@
                 ?.ForEach(a => a
                     .Exposed()
                     .Activate(this.TestContext.ComponentContext, this.TestContext.Component));
+
+        protected override TController TryExtractComponentFromExecution()
+            => this.TestContext
+                .HttpContext
+                .Features
+                .Get<ExecutionTestContext>()
+                ?.Controller as TController;
     }
 }
