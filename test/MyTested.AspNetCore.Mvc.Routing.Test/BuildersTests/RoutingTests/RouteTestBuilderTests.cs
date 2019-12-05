@@ -762,6 +762,15 @@
         }
 
         [Fact]
+        public void ShouldMapShouldNotExecuteAuthorizationFiltersAndShouldValidateJustRoutes()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap("/Normal/AuthorizedAction")
+                .To<NormalController>(c => c.AuthorizedAction());
+        }
+
+        [Fact]
         public void ShouldMapShouldNotExecuteActionFiltersAndShouldValidateJustRoutes()
         {
             MyRouting

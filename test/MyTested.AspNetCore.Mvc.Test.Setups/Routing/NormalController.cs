@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Routing
 {
     using System;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Routing;
@@ -54,7 +55,10 @@
 
         [HttpPost]
         public IActionResult UltimateModelBinding(ModelBindingModel model, [FromServices]IUrlHelperFactory urlHelper) => null;
-        
+
+        [Authorize]
+        public IActionResult AuthorizedAction() => null;
+
         [ValidateAntiForgeryToken]
         public IActionResult FiltersAction() => null;
 

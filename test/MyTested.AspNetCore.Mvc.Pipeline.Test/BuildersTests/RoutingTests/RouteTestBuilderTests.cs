@@ -8,6 +8,31 @@
     public class RouteTestBuilderTests
     {
         [Fact]
+        public void ShouldMapShouldExecuteAuthorizationFiltersAndShouldValidateJustRoutes()
+        {
+            MyPipeline
+                .Configuration()
+                .ShouldMap(request => request
+                    .WithLocation("/Normal/AuthorizedAction")
+                    .WithUser())
+                .To<NormalController>(c => c.AuthorizedAction());
+        }
+
+        [Fact]
+        public void ShouldMapShouldThrowExceptionIfAuthorizationFiltersAreNotSet()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyPipeline
+                        .Configuration()
+                        .ShouldMap("/Normal/AuthorizedAction")
+                        .To<NormalController>(c => c.AuthorizedAction());
+                },
+                "Expected route '/Normal/AuthorizedAction' to match AuthorizedAction action in NormalController but exception was thrown when trying to bind the action arguments: 'No authenticationScheme was specified, and there was no DefaultChallengeScheme found. The default schemes can be set using either AddAuthentication(string defaultScheme) or AddAuthentication(Action<AuthenticationOptions> configureOptions).'.");
+        }
+
+        [Fact]
         public void ShouldMapShouldExecuteActionFiltersAndShouldValidateRoutes()
         {
             MyPipeline
@@ -49,8 +74,7 @@
                 {
                     MyPipeline
                         .Configuration()
-                        .ShouldMap(request => request
-                            .WithLocation("/Normal/FiltersAction"))
+                        .ShouldMap("/Normal/FiltersAction")
                         .To<NormalController>(c => c.FiltersAction());
                 },
                 "Expected route '/Normal/FiltersAction' to match FiltersAction action in NormalController but action could not be invoked because of the declared filters. You must set the request properties so that they will pass through the pipeline.");
