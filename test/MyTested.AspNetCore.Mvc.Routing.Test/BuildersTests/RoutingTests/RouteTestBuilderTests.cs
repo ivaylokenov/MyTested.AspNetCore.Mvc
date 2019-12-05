@@ -762,6 +762,37 @@
         }
 
         [Fact]
+        public void ShouldMapShouldNotExecuteActionFiltersAndShouldValidateJustRoutes()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap("/Normal/FiltersAction")
+                .To<NormalController>(c => c.FiltersAction());
+        }
+
+        [Fact]
+        public void ShouldMapShouldNotExecuteActionFiltersAndShouldValidateJustRoutesAndModelBinding()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap(request => request
+                    .WithLocation("/Normal/FiltersActionWithModelBinding/1")
+                    .WithMethod(HttpMethod.Post)
+                    .WithJsonBody(new
+                    {
+                        Integer = 1,
+                        String = "Text"
+                    }))
+                .To<NormalController>(c => c.FiltersActionWithModelBinding(
+                    1,
+                    new RequestModel
+                    {
+                        Integer = 1,
+                        String = "Text"
+                    }));
+        }
+
+        [Fact]
         public void UltimateCrazyModelBindingTest()
         {
             MyRouting

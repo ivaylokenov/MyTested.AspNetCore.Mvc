@@ -1,8 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Routing
 {
+    using System;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Routing;
+    using Setups.Filters;
 
     public class NormalController : Controller
     {
@@ -55,6 +57,15 @@
         
         [ValidateAntiForgeryToken]
         public IActionResult FiltersAction() => null;
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult FiltersActionWithModelBinding(int id, [FromBody]RequestModel model) => null;
+
+        [CustomActionFilter]
+        public IActionResult CustomFiltersAction() => this.Ok();
+
+        public IActionResult ThrowableAction() => throw new Exception();
 
         public void VoidAction()
         {

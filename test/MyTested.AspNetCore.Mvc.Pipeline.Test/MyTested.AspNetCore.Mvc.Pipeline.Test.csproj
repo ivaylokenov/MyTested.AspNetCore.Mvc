@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\MyTested.AspNetCore.Mvc.Pipeline\MyTested.AspNetCore.Mvc.Pipeline.csproj" />
+    <ProjectReference Include="..\..\src\MyTested.AspNetCore.Mvc.ViewFeatures\MyTested.AspNetCore.Mvc.ViewFeatures.csproj" />
     <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Test.Setups\MyTested.AspNetCore.Mvc.Test.Setups.csproj" />
   </ItemGroup>
 

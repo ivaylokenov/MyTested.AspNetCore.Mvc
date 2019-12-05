@@ -10,6 +10,7 @@
     using Microsoft.AspNetCore.Mvc.Filters;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.Extensions.Logging;
+    using TestContexts;
     using Utilities.Extensions;
     using Utilities.Validators;
 
@@ -21,8 +22,6 @@
         private readonly dynamic cacheEntry;
         private readonly object invoker;
 
-        private Dictionary<string, object> arguments;
-
         public ModelBindingActionInvoker(
             ILogger logger,
             DiagnosticListener diagnosticListener,
@@ -30,66 +29,57 @@
             IActionResultTypeMapper mapper,
             ControllerContext controllerContext,
             dynamic cacheEntry,
-            dynamic cacheEntryMock,
             IFilterMetadata[] filters,
             bool fullExecution)
         {
             CommonValidator.CheckForNullReference(cacheEntry, nameof(cacheEntry));
-            CommonValidator.CheckForNullReference(cacheEntryMock, nameof(cacheEntryMock));
             CommonValidator.CheckForNullReference(controllerContext, nameof(controllerContext));
 
             this.controllerContext = controllerContext;
-
             this.cacheEntry = cacheEntry;
 
-            var routeTestingActionFilter = new RouteTestingActionFilter();
-
-            if (!fullExecution)
-            {
-                filters = new[] { routeTestingActionFilter };
-            }
-            else
-            {
-                var mockedFilters = new List<IFilterMetadata>(filters) { routeTestingActionFilter };
-                filters = mockedFilters.ToArray();
-            }
+            filters = this.PrepareFilters(filters, fullExecution);
 
             var invokerType = WebFramework.Internals.ControllerActionInvoker;
             var constructor = invokerType.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)[0];
-            this.invoker = constructor.Invoke(new object[] { logger, diagnosticListener, actionContextAccessor, mapper, controllerContext, cacheEntryMock, filters });
+            this.invoker = constructor.Invoke(new object[] { logger, diagnosticListener, actionContextAccessor, mapper, controllerContext, cacheEntry, filters });
         }
 
-        public IDictionary<string, object> BoundActionArguments => this.arguments;
+        public IDictionary<string, object> BoundActionArguments { get; private set; }
 
         public async Task InvokeAsync()
         {
             var exposedInvoker = this.invoker.Exposed();
 
-            // Invoke the filter pipeline and execute the fake action mock.
+            // Invoke the filter pipeline and execute the pipeline.
             await exposedInvoker.InvokeAsync();
 
             if (exposedInvoker._result.GetType() != RouteActionResultMockType)
             {
-                // Filters short-circuited the action pipeline. Do not perform model binding.
+                // Filters short-circuited the action pipeline. Do not set model bound arguments.
                 return;
             }
 
-            // Not initialized in the constructor because filters may
-            // short-circuit the request and tests will fail with wrong exception message.
-            this.arguments = new Dictionary<string, object>();
+            var executionTestContext = this.controllerContext
+                .HttpContext
+                .Features
+                .Get<ExecutionTestContext>();
 
-            var actionDescriptor = this.controllerContext.ActionDescriptor;
-            if (actionDescriptor.BoundProperties.Count == 0 &&
-                actionDescriptor.Parameters.Count == 0)
+            this.BoundActionArguments = executionTestContext.ActionArguments;
+        }
+
+        private IFilterMetadata[] PrepareFilters(IFilterMetadata[] filters, bool fullExecution)
+        {
+            var routeTestingActionFilter = new RouteTestingActionFilter();
+
+            if (!fullExecution)
             {
-                // No parameters on the real action. Do not perform model binding.
-                return;
+                return new[] { routeTestingActionFilter };
             }
-
-            // Invokes the model binding on the real action.
-            var controllerInstance = this.cacheEntry.ControllerFactory.Invoke(this.controllerContext);
-
-            await this.cacheEntry.ControllerBinderDelegate.DynamicInvoke(this.controllerContext, controllerInstance, this.arguments);
+            else
+            {
+                return new List<IFilterMetadata>(filters) { routeTestingActionFilter }.ToArray();
+            }
         }
     }
 }

@@ -5,7 +5,7 @@
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
 
-    internal class NullView : IView
+    public class NullView : IView
     {
         public static readonly NullView Instance = new NullView();
 

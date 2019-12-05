@@ -1,11 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Routing
 {
-    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-    using System.Reflection;
-    using System.Threading.Tasks;
     using Actions;
     using Contracts;
     using Microsoft.AspNetCore.Mvc;
@@ -14,8 +11,6 @@
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
-    using Utilities;
-    using Utilities.Extensions;
 
     public class ModelBindingActionInvokerFactory : IModelBindingActionInvokerFactory
     {
@@ -68,37 +63,6 @@
             var cacheEntry = cacheResult.Item1; // cacheEntry
             var filters = cacheResult.Item2; // filters
 
-            dynamic exposedCacheEntry = new ExposedObject(cacheEntry);
-
-            Action<ControllerContext, object> controllerReleaser 
-                = (context, instance) => (instance as IDisposable)?.Dispose();
-
-            Func<ControllerContext, object, Dictionary<string, object>, Task> controllerBinderDelegateFunc 
-                = (context, instance, arguments) => Task.CompletedTask;
-
-            var controllerBinderDelegateType = WebFramework.Internals.ControllerBinderDelegate;
-
-            var controllerBinderDelegate = typeof(DelegateExtensions)
-                .GetMethod(nameof(DelegateExtensions.ConvertTo))
-                .MakeGenericMethod(controllerBinderDelegateType)
-                .Invoke(null, new object[] { controllerBinderDelegateFunc });
-
-            var cacheEntryObject = cacheEntry as object;
-
-            var cacheEntryMock = cacheEntryObject
-                .GetType()
-                .GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance)
-                .First()
-                .Invoke(new object[]
-                {
-                    exposedCacheEntry.CachedFilters,
-                    exposedCacheEntry.ControllerFactory,
-                    controllerReleaser,
-                    controllerBinderDelegate,
-                    exposedCacheEntry.ObjectMethodExecutor,
-                    exposedCacheEntry.ActionMethodExecutor
-                });
-
             var fullExecution = actionContext
                 .HttpContext
                 .Features
@@ -112,8 +76,7 @@
                 this.actionContextAccessor,
                 this.mapper,
                 controllerContext,
-                exposedCacheEntry,
-                cacheEntryMock,
+                cacheEntry,
                 filters,
                 fullExecution); 
         }

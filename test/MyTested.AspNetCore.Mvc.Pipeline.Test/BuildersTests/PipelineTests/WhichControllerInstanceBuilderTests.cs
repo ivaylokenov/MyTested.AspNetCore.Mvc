@@ -8,7 +8,7 @@
         [Fact]
         public void WhichShouldResolveCorrectSyncAction()
         {
-            MyRouting
+            MyPipeline
                 .Configuration()
                 .ShouldMap("/Home/Contact/1")
                 .To<HomeController>(c => c.Contact(1))
@@ -23,7 +23,7 @@
         [Fact]
         public void WhichShouldResolveCorrectAsyncAction()
         {
-            MyRouting
+            MyPipeline
                 .Configuration()
                 .ShouldMap("/Home/AsyncMethod")
                 .To<HomeController>(c => c.AsyncMethod())
@@ -38,7 +38,7 @@
         [Fact]
         public void WhichShouldResolveCorrectEmptyAction()
         {
-            MyRouting
+            MyPipeline
                 .Configuration()
                 .ShouldMap("/Home/Empty")
                 .To<HomeController>(c => c.Empty())
@@ -49,7 +49,7 @@
         [Fact]
         public void WhichShouldResolveCorrectEmptyAsyncAction()
         {
-            MyRouting
+            MyPipeline
                 .Configuration()
                 .ShouldMap("/Home/EmptyTask")
                 .To<HomeController>(c => c.EmptyTask())
@@ -62,15 +62,12 @@
         {
             const string testData = "TestData";
 
-            MyRouting
+            MyPipeline
                 .Configuration()
                 .ShouldMap("/Home/AsyncMethod")
                 .To<HomeController>(c => c.AsyncMethod())
                 .Which()
-                .WithSetup(c =>
-                {
-                    c.Data = testData;
-                })
+                .WithSetup(c => c.Data = testData)
                 .ShouldReturn()
                 .Ok(ok => ok
                     .Passing(result => result
@@ -83,7 +80,7 @@
         {
             const string testData = "TestData";
 
-            MyRouting
+            MyPipeline
                 .Configuration()
                 .ShouldMap("/Home/AsyncMethod")
                 .To<HomeController>(c => c.AsyncMethod())
