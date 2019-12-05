@@ -23,7 +23,19 @@
         public static IWhichControllerInstanceBuilder<TController> Which<TController>(
             this IControllerRouteTestBuilder<TController> builder)
             where TController : class
-            => (IWhichControllerInstanceBuilder<TController>)builder.Which(null);
+            => builder.Which((TController)null);
+
+        public static IWhichControllerInstanceBuilder<TController> Which<TController>(
+            this IControllerRouteTestBuilder<TController> builder,
+            TController controller)
+            where TController : class
+            => builder.Which(() => controller);
+
+        public static IWhichControllerInstanceBuilder<TController> Which<TController>(
+            this IControllerRouteTestBuilder<TController> builder,
+            Func<TController> construction)
+            where TController : class
+            => (IWhichControllerInstanceBuilder<TController>)GetBuilder(builder, construction, null);
 
         /// <summary>
         /// Allows the route test to continue the assertion chain on the matched controller action.
@@ -36,6 +48,13 @@
             this IControllerRouteTestBuilder<TController> builder,
             Action<IWhichControllerInstanceBuilder<TController>> controllerInstanceBuilder)
             where TController : class
+            => GetBuilder(builder, () => null, controllerInstanceBuilder);
+
+        private static IActionResultTestBuilder<MethodResult> GetBuilder<TController>(
+            IControllerRouteTestBuilder<TController> builder,
+            Func<TController> construction,
+            Action<IWhichControllerInstanceBuilder<TController>> controllerInstanceBuilder)
+            where TController : class
         {
             var actualBuilder = (ControllerRouteTestBuilder<TController>)builder;
 
@@ -46,7 +65,7 @@
             {
                 HttpContext = routeContext.HttpContext,
                 RouteData = routeContext.RouteData,
-                ComponentConstructionDelegate = () => null,
+                ComponentConstructionDelegate = construction,
                 MethodCall = actionCall
             });
 
