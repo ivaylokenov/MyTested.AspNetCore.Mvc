@@ -8,6 +8,7 @@
     using System.Linq.Expressions;
     using System.Reflection;
     using System.Runtime.CompilerServices;
+    using Internal;
     using Microsoft.AspNetCore.Routing;
 
     /// <summary>
@@ -319,6 +320,33 @@
         /// <remarks>This method is used for the route testing. Since the ASP.NET Core MVC model binder creates new instances, circular references are not checked.</remarks>
         public static bool AreNotDeeplyEqual(object expected, object actual)
             => !AreDeeplyEqual(expected, actual);
+
+        /// <summary>
+        /// Copies the non-null property values from one object to another.
+        /// </summary>
+        /// <param name="source">Source object for the property values.</param>
+        /// <param name="destination">Destination object for the property values.</param>
+        public static void CopyProperties(object source, object destination)
+        {
+            var sourceType = source?.GetType();
+            var destinationType = destination?.GetType();
+
+            if (sourceType == null || destinationType == null || sourceType != destinationType)
+            {
+                throw new InvalidOperationException("Cannot copy properties from or to null objects, and when the object types are different.");
+            }
+
+            var properties = ObjectPropertyHelper.GetProperties(sourceType);
+
+            foreach (var property in properties.PropertyDelegates)
+            {
+                var originalValue = property.Getter(source);
+                if (originalValue != null)
+                {
+                    property.Setter(destination, originalValue);
+                }
+            }
+        }
 
         /// <summary>
         /// Creates a delegate from an object by providing MethodInfo filter.

@@ -9,14 +9,14 @@
         private static readonly ConcurrentDictionary<Type, ObjectPropertyHelper> ObjectPropertiesCache =
             new ConcurrentDictionary<Type, ObjectPropertyHelper>();
 
-        private IDictionary<string, ObjectPropertyDelegates> propertyDelegates;
+        private IEnumerable<ObjectPropertyDelegates> propertyDelegates;
 
         public ObjectPropertyHelper(Type type)
             : base(type)
         {
         }
 
-        public IDictionary<string, ObjectPropertyDelegates> PropertyDelegates
+        public IEnumerable<ObjectPropertyDelegates> PropertyDelegates
         {
             get
             {
@@ -38,13 +38,13 @@
 
         private void TryCreateObjectPropertyDelegates()
         {
-            this.propertyDelegates = new Dictionary<string, ObjectPropertyDelegates>();
+            var propertyDelegates = new List<ObjectPropertyDelegates>();
 
             foreach (var property in this.Properties)
             {
                 var name = property.Name;
 
-                if (property.GetMethod == null || property.SetMethod == null)
+                if (property.GetMethod?.IsPublic != true || property.SetMethod?.IsPublic != true)
                 {
                     continue;
                 }
@@ -52,8 +52,10 @@
                 var getter = MakeFastPropertyGetter<object>(property);
                 var setter = MakeFastPropertySetter(property);
 
-                this.propertyDelegates[name] = new ObjectPropertyDelegates(getter, setter);
+                propertyDelegates.Add(new ObjectPropertyDelegates(getter, setter));
             }
+
+            this.propertyDelegates = propertyDelegates;
         }
 
         public class ObjectPropertyDelegates

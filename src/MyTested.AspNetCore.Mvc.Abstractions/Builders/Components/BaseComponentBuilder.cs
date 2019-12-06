@@ -86,34 +86,7 @@
                     if (executionComponent != null)
                     {
                         // Copy the public properties from the execution component to the newly created instance.
-                        executionComponent
-                            .GetType()
-                            .GetProperties()
-                            .Where(pr =>
-                            {
-                                var canReadAndCanWrite = pr.CanRead && pr.CanWrite;
-                                if (!canReadAndCanWrite)
-                                {
-                                    return false;
-                                }
-
-                                var getMethod = pr.GetMethod;
-                                if (getMethod == null || !getMethod.IsPublic)
-                                {
-                                    return false;
-                                }
-
-                                var setMethod = pr.SetMethod;
-                                if (setMethod == null || !setMethod.IsPublic)
-                                {
-                                    return false;
-                                }
-
-                                return true;
-                            })
-                            .ToList()
-                            .ForEach(pr => pr
-                                .SetValue(component, pr.GetValue(executionComponent)));
+                        Reflection.CopyProperties(executionComponent, component);
 
                         this.SkipComponentActivation = true;
                     }
