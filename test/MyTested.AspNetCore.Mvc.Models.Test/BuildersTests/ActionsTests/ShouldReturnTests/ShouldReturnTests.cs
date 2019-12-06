@@ -502,6 +502,50 @@
         }
 
         [Fact]
+        public void ActionResultOfTShouldBeProperlyRecognizedWithActualActionResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(0))
+                .ShouldReturn()
+                .BadRequest();
+        }
+
+        [Fact]
+        public void ActionResultOfTShouldBeProperlyRecognizedWithModelOfGenericType()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(1))
+                .ShouldReturn()
+                .ResultOfType<ResponseModel>();
+        }
+
+        [Fact]
+        public void ActionResultOfTShouldBeProperlyRecognizedWithModelOfType()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(1))
+                .ShouldReturn()
+                .ResultOfType(typeof(ResponseModel));
+        }
+
+        [Fact]
+        public void ActionResultOfTShouldBeProperlyRecognizedWithModel()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(1))
+                .ShouldReturn()
+                .Result(new ResponseModel 
+                { 
+                    IntegerValue = 1, 
+                    StringValue = "Test" 
+                });
+        }
+
+        [Fact]
         public void WithShouldWorkCorrectly()
         {
             MyController<MvcController>

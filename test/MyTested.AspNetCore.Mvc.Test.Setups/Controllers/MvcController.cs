@@ -1153,6 +1153,16 @@
             return this.Ok();
         }
 
+        public ActionResult<ResponseModel> ActionResultOfT(int id)
+        {
+            if (id == 0)
+            {
+                return this.BadRequest();
+            }
+
+            return this.ResponseModel.First();
+        }
+
         private void ThrowNewNullReferenceException()
         {
             throw new NullReferenceException("Test exception message");
