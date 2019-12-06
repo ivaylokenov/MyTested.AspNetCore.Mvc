@@ -254,5 +254,101 @@
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
+
+        [Fact]
+        public void WhichShouldNotResolveActionFilterLogicWithExplicitControllerInstance()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services => services
+                    .AddTransient<IInjectedService, InjectedService>());
+
+            var injectedService = new InjectedService();
+
+            MyPipeline
+                .Configuration()
+                .ShouldMap("/Pipeline/FilterAction?controller=true")
+                .To<PipelineController>(c => c.FilterAction())
+                .Which(new PipelineController(injectedService))
+                .ShouldPassForThe<PipelineController>(controller =>
+                {
+                    Assert.Same(injectedService, controller.Service);
+                    Assert.Null(controller.Data);
+                });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WhichShouldNotResolveControllerFilterLogicWithExplicitControllerInstance()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services => services
+                    .AddTransient<IInjectedService, InjectedService>());
+
+            var injectedService = new InjectedService();
+
+            MyPipeline
+                .Configuration()
+                .ShouldMap("/Pipeline/Action?controller=true")
+                .To<PipelineController>(c => c.Action())
+                .Which(new PipelineController(injectedService))
+                .ShouldPassForThe<PipelineController>(controller =>
+                {
+                    Assert.Same(injectedService, controller.Service);
+                    Assert.Null(controller.Data);
+                });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WhichShouldNotResolveActionFilterLogicWithControllerConstructionFunction()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services => services
+                    .AddTransient<IInjectedService, InjectedService>());
+
+            var injectedService = new InjectedService();
+
+            MyPipeline
+                .Configuration()
+                .ShouldMap("/Pipeline/FilterAction?controller=true")
+                .To<PipelineController>(c => c.FilterAction())
+                .Which(() => new PipelineController(injectedService))
+                .ShouldPassForThe<PipelineController>(controller =>
+                {
+                    Assert.Same(injectedService, controller.Service);
+                    Assert.Null(controller.Data);
+                });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WhichShouldNotResolveControllerFilterLogicWithControllerConstructionFunction()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services => services
+                    .AddTransient<IInjectedService, InjectedService>());
+
+            var injectedService = new InjectedService();
+
+            MyPipeline
+                .Configuration()
+                .ShouldMap("/Pipeline/Action?controller=true")
+                .To<PipelineController>(c => c.Action())
+                .Which(() => new PipelineController(injectedService))
+                .ShouldPassForThe<PipelineController>(controller =>
+                {
+                    Assert.Same(injectedService, controller.Service);
+                    Assert.Null(controller.Data);
+                });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
     }
 }

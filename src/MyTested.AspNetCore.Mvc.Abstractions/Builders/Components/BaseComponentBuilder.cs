@@ -85,7 +85,7 @@
 
                     if (executionComponent != null)
                     {
-                        // Copy the public properties from the execution component.
+                        // Copy the public properties from the execution component to the newly created instance.
                         executionComponent
                             .GetType()
                             .GetProperties()
@@ -120,7 +120,7 @@
                 }
                 else if (component == null)
                 {
-                    // No execution component, no custom dependencies set, try create instance with component factory.
+                    // No execution component, no custom dependencies set, try create instance with the component factory.
                     component = this.TryCreateComponentWithFactory();
 
                     if (component != null)
