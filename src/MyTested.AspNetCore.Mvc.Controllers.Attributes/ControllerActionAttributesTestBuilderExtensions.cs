@@ -381,6 +381,90 @@
         }
 
         /// <summary>
+        /// Tests whether the collected attributes contain <see cref="ProducesResponseTypeAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="withType">Expected type.</param>
+        /// <returns>The same attributes test builder.</returns>
+        public static TAttributesTestBuilder SpecifyingResponseProduction<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            Type withType)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+            => controllerActionAttributesTestBuilder
+                .SpecifyingResponseProduction(responseProduction => responseProduction.OfType(withType));
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="ProducesResponseTypeAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="withStatusCode">Expected status code.</param>
+        /// <returns>The same attributes test builder.</returns>
+        public static TAttributesTestBuilder SpecifyingResponseProduction<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            int withStatusCode)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+            => controllerActionAttributesTestBuilder
+                .SpecifyingResponseProduction(responseProduction => responseProduction.WithStatusCode(withStatusCode));
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="ProducesResponseTypeAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="withType">Expected type.</param>
+        /// <param name="withStatusCode">Expected status code.</param>
+        /// <returns>The same attributes test builder.</returns>
+        public static TAttributesTestBuilder SpecifyingResponseProduction<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            Type withType,
+            int withStatusCode)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+            => controllerActionAttributesTestBuilder
+                .SpecifyingResponseProduction(responseProduction => responseProduction
+                    .OfType(withType)
+                    .WithStatusCode(withStatusCode));
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="ProducesResponseTypeAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="producesResponseTypeAttributeBuilder">Expected <see cref="ProducesResponseTypeAttributeTestBuilder"/> builder.</param>
+        /// <returns>The same attributes test builder.</returns>
+        public static TAttributesTestBuilder SpecifyingResponseProduction<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            Action<IProducesResponseTypeAttributeTestBuilder> producesResponseTypeAttributeBuilder)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+        {
+            var actualBuilder = (BaseAttributesTestBuilder<TAttributesTestBuilder>)controllerActionAttributesTestBuilder;
+
+            actualBuilder.ContainingAttributeOfType<ProducesResponseTypeAttribute>();
+
+            actualBuilder.Validations.Add(attrs =>
+            {
+                var newProducesResponseTypeAttributeTestBuilder = new ProducesResponseTypeAttributeTestBuilder(
+                    actualBuilder.TestContext,
+                    actualBuilder.ThrowNewAttributeAssertionException);
+
+                producesResponseTypeAttributeBuilder(newProducesResponseTypeAttributeTestBuilder);
+
+                var expectedProducesResponseTypeAttribute = newProducesResponseTypeAttributeTestBuilder.GetAttribute();
+                var actualProducesResponseTypeAttribute = actualBuilder.GetAttributeOfType<ProducesResponseTypeAttribute>(attrs);
+
+                var validations = newProducesResponseTypeAttributeTestBuilder.GetAttributeValidations();
+                validations.ForEach(v => v(expectedProducesResponseTypeAttribute, actualProducesResponseTypeAttribute));
+            });
+
+            return actualBuilder.AttributesTestBuilder;
+        }
+
+        /// <summary>
         /// Tests whether the collected attributes contain <see cref="MiddlewareFilterAttribute"/>.
         /// </summary>
         /// <param name="controllerActionAttributesTestBuilder">
