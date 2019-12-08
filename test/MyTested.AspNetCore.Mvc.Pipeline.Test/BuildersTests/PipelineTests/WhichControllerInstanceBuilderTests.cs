@@ -1,7 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.PipelineTests
 {
+    using System.Linq;
+    using Exceptions;
     using Microsoft.Extensions.DependencyInjection;
-    using MyTested.AspNetCore.Mvc.Exceptions;
     using Setups;
     using Setups.Pipeline;
     using Setups.Routing;
@@ -489,6 +490,76 @@
                     Assert.True(controller.HttpContext.Request.Headers.ContainsKey(contextTestKey));
                     Assert.True(controller.TempData.ContainsKey(contextTestKey));
                     Assert.True(controller.User.Identity.Name == contextTestKey);
+                });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WhichShouldOverrideActionFilterValues()
+        {
+            MyApplication
+                      .StartsFrom<DefaultStartup>()
+                      .WithServices(services => services
+                          .AddTransient<IInjectedService, InjectedService>());
+
+            const string contextTestKey = "ControllerFilter";
+            const string contextTestValue = "Context Value";
+
+            MyPipeline
+                .Configuration()
+                .ShouldMap("/Pipeline/Action?controller=true")
+                .To<PipelineController>(c => c.Action())
+                .Which()
+                .WithRouteData(new { ControllerFilter = contextTestValue })
+                .WithControllerContext(context => context.ActionDescriptor.Properties[contextTestKey] = contextTestValue)
+                .WithActionContext(context => context.ModelState.Clear())
+                .ShouldReturn()
+                .Ok()
+                .AndAlso()
+                .ShouldPassForThe<PipelineController>(controller =>
+                {
+                    Assert.Equal(contextTestKey, controller.Data);
+                    Assert.True(controller.RouteData.Values.ContainsKey(contextTestKey));
+                    Assert.Equal(contextTestValue, controller.RouteData.Values[contextTestKey]);
+                    Assert.True(controller.ControllerContext.ActionDescriptor.Properties.ContainsKey(contextTestKey));
+                    Assert.Equal(contextTestValue, controller.ControllerContext.ActionDescriptor.Properties[contextTestKey]);
+                    Assert.Empty(controller.ModelState);
+                });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WhichShouldOverrideActionFilterValuesInInnerBuilder()
+        {
+            MyApplication
+                      .StartsFrom<DefaultStartup>()
+                      .WithServices(services => services
+                          .AddTransient<IInjectedService, InjectedService>());
+
+            const string contextTestKey = "ControllerFilter";
+            const string contextTestValue = "Context Value";
+
+            MyPipeline
+                .Configuration()
+                .ShouldMap("/Pipeline/Action?controller=true")
+                .To<PipelineController>(c => c.Action())
+                .Which(controller => controller
+                    .WithRouteData(new { ControllerFilter = contextTestValue })
+                    .WithControllerContext(context => context.ActionDescriptor.Properties[contextTestKey] = contextTestValue)
+                    .WithActionContext(context => context.ModelState.Clear()))
+                .ShouldReturn()
+                .Ok()
+                .AndAlso()
+                .ShouldPassForThe<PipelineController>(controller =>
+                {
+                    Assert.Equal(contextTestKey, controller.Data);
+                    Assert.True(controller.RouteData.Values.ContainsKey(contextTestKey));
+                    Assert.Equal(contextTestValue, controller.RouteData.Values[contextTestKey]);
+                    Assert.True(controller.ControllerContext.ActionDescriptor.Properties.ContainsKey(contextTestKey));
+                    Assert.Equal(contextTestValue, controller.ControllerContext.ActionDescriptor.Properties[contextTestKey]);
+                    Assert.Empty(controller.ModelState);
                 });
 
             MyApplication.StartsFrom<DefaultStartup>();

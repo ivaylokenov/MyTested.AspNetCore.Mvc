@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Routing;
-
-namespace MyTested.AspNetCore.Mvc.Utilities.Extensions
+﻿namespace MyTested.AspNetCore.Mvc.Utilities.Extensions
 {
+    using Microsoft.AspNetCore.Routing;
+
     public static class RouteDataExtensions
     {
         public static void AddFrom(this RouteData originalRouteData, RouteData routeData)

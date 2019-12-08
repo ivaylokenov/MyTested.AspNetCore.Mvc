@@ -23,9 +23,9 @@
         {
             this.Data = "ControllerFilter";
 
-            context.RouteData.Values.Add("ControllerFilter", "Route Value");
-            context.ActionDescriptor.Properties.Add("ControllerFilter", "Descriptor Value");
-            context.ModelState.AddModelError("ControllerFilter", "Model State Value");
+            context.RouteData.Values.Add(this.Data, "Route Value");
+            context.ActionDescriptor.Properties.Add(this.Data, "Descriptor Value");
+            context.ModelState.AddModelError(this.Data, "Model State Value");
             context.HttpContext.Features.Set(this);
         }
     }
