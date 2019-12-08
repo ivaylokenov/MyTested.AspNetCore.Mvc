@@ -309,7 +309,7 @@
         /// <param name="actual">Actual object.</param>
         /// <returns>True or false.</returns>
         public static bool AreDeeplyEqual(object expected, object actual)
-            => AreDeeplyEqual(expected, actual, new ConditionalWeakTable<object, object>());
+            => AreDeeplyEqual(expected, actual, new ConditionalWeakTable<object, object>(), new DeepEqualResult(null, null));
 
         /// <summary>
         /// Checks whether two objects are not deeply equal by reflecting all their public properties recursively. Resolves successfully value and reference types, overridden Equals method, custom == operator, IComparable, nested objects and collection properties.
@@ -435,16 +435,22 @@
                 .FirstOrDefault();
         }
 
-        private static bool AreDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
+        private static bool AreDeeplyEqual(
+            object expected, 
+            object actual, 
+            ConditionalWeakTable<object, object> processedElements,
+            DeepEqualResult result)
         {
+            result.ApplyValues(expected, actual);
+
             if (expected == null && actual == null)
             {
-                return true;
+                return result.Success;
             }
 
             if (expected == null || actual == null)
             {
-                return false;
+                return result.Failure;
             }
 
             var expectedType = expected.GetType();
@@ -453,7 +459,7 @@
             {
                 if (processedElements.TryGetValue(expected, out _))
                 {
-                    return true;
+                    return result.Success;
                 }
 
                 processedElements.Add(expected, expected);
@@ -465,12 +471,12 @@
             if ((expectedType == objectType && actualType != objectType)
                 || (actualType == objectType && expectedType != objectType))
             {
-                return false;
+                return result.Failure;
             }
 
             if (expected is IEnumerable && expectedType != typeof(string))
             {
-                return CollectionsAreDeeplyEqual(expected, actual, processedElements);
+                return CollectionsAreDeeplyEqual(expected, actual, processedElements, result);
             }
 
             var expectedTypeIsAnonymous = IsAnonymousType(expectedType);
@@ -479,7 +485,7 @@
                 var actualIsAnonymous = IsAnonymousType(actualType);
                 if (!actualIsAnonymous)
                 {
-                    return false;
+                    return result.Failure;
                 }
             }
 
@@ -488,18 +494,24 @@
                 && !expectedType.IsAssignableFrom(actualType)
                 && !actualType.IsAssignableFrom(expectedType))
             {
-                return false;
+                return result.Failure;
             }
 
             if (expectedType.GetTypeInfo().IsPrimitive || expectedType.GetTypeInfo().IsEnum)
             {
                 return expected.ToString() == actual.ToString();
             }
-
+            
             var equalsOperator = expectedType.GetMethods().FirstOrDefault(m => m.Name == "op_Equality");
             if (equalsOperator != null)
             {
-                return (bool)equalsOperator.Invoke(null, new[] { expected, actual });
+                var equalsOperatorResult = (bool)equalsOperator.Invoke(null, new[] { expected, actual });
+                if (!equalsOperatorResult)
+                {
+                    result.ApplyPath("== (Equality Operator)");
+                }
+
+                return equalsOperatorResult;
             }
 
             if (expectedType != objectType && !expectedTypeIsAnonymous)
@@ -507,16 +519,22 @@
                 var equalsMethod = expectedType.GetMethods().FirstOrDefault(m => m.Name == "Equals" && m.DeclaringType == expectedType);
                 if (equalsMethod != null)
                 {
-                    return (bool)equalsMethod.Invoke(expected, new[] { actual });
+                    var equalsMethodResult = (bool)equalsMethod.Invoke(expected, new[] { actual });
+                    if (!equalsMethodResult)
+                    {
+                        result.ApplyPath("Equals()");
+                    }
+
+                    return equalsMethodResult;
                 }
             }
 
-            if (ComparablesAreDeeplyEqual(expected, actual))
+            if (ComparablesAreDeeplyEqual(expected, actual, result))
             {
-                return true;
+                return result.Success;
             }
 
-            if (!ObjectPropertiesAreDeeplyEqual(expected, actual, processedElements))
+            if (!ObjectPropertiesAreDeeplyEqual(expected, actual, processedElements, result))
             {
                 return false;
             }
@@ -524,57 +542,80 @@
             return true;
         }
 
-        private static bool AreNotDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
-            => !AreDeeplyEqual(expected, actual, processedElements);
+        private static bool AreNotDeeplyEqual(
+            object expected, 
+            object actual, 
+            ConditionalWeakTable<object, object> processedElements,
+            DeepEqualResult result)
+            => !AreDeeplyEqual(expected, actual, processedElements, result);
 
-        private static bool CollectionsAreDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
+        private static bool CollectionsAreDeeplyEqual(
+            object expected, 
+            object actual, 
+            ConditionalWeakTable<object, object> processedElements,
+            DeepEqualResult result)
         {
             var expectedAsEnumerable = (IEnumerable)expected;
             if (!(actual is IEnumerable actualAsEnumerable))
             {
-                return false;
+                return result.Failure;
             }
 
             var listOfExpectedValues = expectedAsEnumerable.Cast<object>().ToList();
             var listOfActualValues = actualAsEnumerable.Cast<object>().ToList();
 
-            if (listOfExpectedValues.Count != listOfActualValues.Count)
+            var listOfExpectedValuesCount = listOfExpectedValues.Count;
+            var listOfActualValuesCount = listOfActualValues.Count;
+
+            if (listOfExpectedValuesCount != listOfActualValuesCount)
             {
-                return false;
+                return result
+                    .ApplyPath(nameof(listOfExpectedValues.Count))
+                    .ApplyValues(listOfExpectedValuesCount, listOfActualValuesCount)
+                    .Failure;
             }
 
-            var collectionIsNotEqual = listOfExpectedValues
-                .Where((t, i) => AreNotDeeplyEqual(t, listOfActualValues[i], processedElements))
-                .Any();
-
-            if (collectionIsNotEqual)
+            for (int i = 0; i < listOfExpectedValues.Count; i++)
             {
-                return false;
+                if (AreNotDeeplyEqual(listOfExpectedValues[i], listOfActualValues[i], processedElements, result))
+                {
+                    return result
+                        .ApplyPath($"[{i}]")
+                        .Failure;
+                }
             }
 
-            return true;
+            return result.Success;
         }
 
-        private static bool ComparablesAreDeeplyEqual(object expected, object actual)
+        private static bool ComparablesAreDeeplyEqual(object expected, object actual, DeepEqualResult result)
         {
             if (expected is IComparable expectedAsComparable)
             {
                 if (expectedAsComparable.CompareTo(actual) == 0)
                 {
-                    return true;
+                    return result.Success;
                 }
             }
 
             if (ObjectImplementsIComparable(expected) && ObjectImplementsIComparable(actual))
             {
-                var method = expected.GetType().GetMethod("CompareTo");
+                var methodName = "CompareTo";
+
+                var method = expected.GetType().GetMethod(methodName);
                 if (method != null)
                 {
-                    return (int)method.Invoke(expected, new[] { actual }) == 0;
+                    var compareToResult = (int)method.Invoke(expected, new[] { actual }) == 0;
+                    if (!compareToResult)
+                    {
+                        result.ApplyPath($"{methodName}()");
+                    }
+
+                    return compareToResult;
                 }
             }
 
-            return false;
+            return result.Failure;
         }
 
         private static bool ObjectImplementsIComparable(object obj)
@@ -582,7 +623,11 @@
                 .GetInterfaces()
                 .FirstOrDefault(i => i.Name.StartsWith("IComparable")) != null;
 
-        private static bool ObjectPropertiesAreDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
+        private static bool ObjectPropertiesAreDeeplyEqual(
+            object expected, 
+            object actual, 
+            ConditionalWeakTable<object, object> processedElements,
+            DeepEqualResult result)
         {
             // Using RouteValueDictionary because it caches internally property getters as delegates.
             // It is better not to implement own cache, because these object types may be used
@@ -595,31 +640,65 @@
                 var expectedPropertyValue = expectedProperties[key];
                 var actualPropertyValue = actualProperties[key];
 
+                result.ApplyPath(key);
+
                 if (expectedPropertyValue is IEnumerable && expectedPropertyValue.GetType() != typeof(string))
                 {
-                    if (!CollectionsAreDeeplyEqual(expectedPropertyValue, actualPropertyValue, processedElements))
+                    if (!CollectionsAreDeeplyEqual(
+                        expectedPropertyValue, 
+                        actualPropertyValue, 
+                        processedElements,
+                        result))
                     {
-                        return false;
+                        return result.Failure;
                     }
                 }
 
-                var propertiesAreDifferent = AreNotDeeplyEqual(expectedPropertyValue, actualPropertyValue, processedElements);
+                var propertiesAreDifferent = AreNotDeeplyEqual(
+                    expectedPropertyValue, 
+                    actualPropertyValue, 
+                    processedElements,
+                    result);
+
                 if (propertiesAreDifferent)
                 {
-                    return false;
+                    return result.Failure;
                 }
             }
 
-            return true;
+            return result.Success;
         }
 
         public class DeepEqualResult
         {
-            private DeepEqualResult(bool areEqual) => this.AreEqual = areEqual;
+            private readonly ICollection<string> expectedPathParts;
+            private readonly ICollection<string> actualPathParts;
 
-            public static DeepEqualResult Success { get; } = new DeepEqualResult(true);
+            public DeepEqualResult(string initialExpectedName, string initialActualName)
+            {
+                this.expectedPathParts = new List<string> { initialExpectedName };
+                this.actualPathParts = new List<string> { initialActualName };
+            }
 
-            public bool AreEqual { get; }
+            public bool Result { get; private set; } = true;
+
+            public DeepEqualResult Success
+            {
+                get
+                {
+                    this.Result = true;
+                    return this;
+                }
+            }
+
+            public DeepEqualResult Failure
+            {
+                get
+                {
+                    this.Result = false;
+                    return this;
+                }
+            }
 
             public string ErrorPath { get; private set; }
 
@@ -627,15 +706,28 @@
 
             public object ActualValue { get; private set; }
 
-            public static DeepEqualResult Failure(string errorPath, object expected, object actual) 
-                => new DeepEqualResult(false)
-                {
-                    ErrorPath = errorPath,
-                    ExpectedValue = expected,
-                    ActualValue = actual
-                };
+            public DeepEqualResult ApplyPath(string path)
+            {
+                this.expectedPathParts.Add(path);
+                this.actualPathParts.Add(path);
+                return this;
+            }
 
-            public static implicit operator bool(DeepEqualResult result) => result.AreEqual;
+            public DeepEqualResult ApplyPath(string expectedPath, string actualPath)
+            {
+                this.expectedPathParts.Add(expectedPath);
+                this.actualPathParts.Add(actualPath);
+                return this;
+            }
+
+            public DeepEqualResult ApplyValues(object expected, object actual)
+            {
+                this.ExpectedValue = expected;
+                this.ActualValue = actual;
+                return this;
+            }
+
+            public static implicit operator bool(DeepEqualResult deepEqualResult) => deepEqualResult.Result;
         }
 
         private static class New<T>

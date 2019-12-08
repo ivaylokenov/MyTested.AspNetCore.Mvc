@@ -10,9 +10,7 @@
     {
         /// <inheritdoc />
         public IAndViewTestBuilder View()
-        {
-            return this.View(null);
-        }
+            => this.View(null);
 
         /// <inheritdoc />
         public IAndViewTestBuilder View(string viewName)
