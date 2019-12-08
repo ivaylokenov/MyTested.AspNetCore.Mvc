@@ -406,17 +406,22 @@
                    .WithServices(services => services
                        .AddTransient<IInjectedService, InjectedService>());
 
-            const string contextTestValue = "ControllerContext";
+            const string contextTestKey = "ControllerContext";
+            const string contextTestValue = "Context Value";
 
             MyPipeline
                 .Configuration()
                 .ShouldMap("/Pipeline/Action?controller=true")
                 .To<PipelineController>(c => c.Action())
                 .Which()
-                .WithControllerContext(context => context.RouteData.Values.Add(contextTestValue, "Context Value"))
-                .WithActionContext(context => context.ModelState.AddModelError(contextTestValue, "Context Value"))
+                .WithHttpContext(context => context.Features.Set(new AnotherInjectedService()))
+                .WithHttpRequest(request => request.WithHeader(contextTestKey, contextTestValue))
+                .WithUser(user => user.WithUsername(contextTestKey))
+                .WithRouteData(new { Id = contextTestKey })
+                .WithControllerContext(context => context.RouteData.Values.Add(contextTestKey, contextTestValue))
+                .WithActionContext(context => context.ModelState.AddModelError(contextTestKey, contextTestValue))
+                .WithTempData(tempData => tempData.WithEntry(contextTestKey, contextTestValue))
                 .WithSetup(controller => controller.HttpContext.Features.Set(new InjectedService()))
-                .WithRouteData(new { Id = contextTestValue })
                 .ShouldReturn()
                 .Ok()
                 .AndAlso()
@@ -425,13 +430,17 @@
                     const string testValue = "ControllerFilter";
                     Assert.Equal(testValue, controller.Data);
                     Assert.True(controller.RouteData.Values.ContainsKey(testValue));
-                    Assert.True(controller.RouteData.Values.ContainsKey(contextTestValue));
+                    Assert.True(controller.RouteData.Values.ContainsKey(contextTestKey));
                     Assert.True(controller.RouteData.Values.ContainsKey("Id"));
                     Assert.True(controller.ControllerContext.ActionDescriptor.Properties.ContainsKey(testValue));
                     Assert.True(controller.ModelState.ContainsKey(testValue));
-                    Assert.True(controller.ModelState.ContainsKey(contextTestValue));
+                    Assert.True(controller.ModelState.ContainsKey(contextTestKey));
                     Assert.NotNull(controller.HttpContext.Features.Get<PipelineController>());
                     Assert.NotNull(controller.HttpContext.Features.Get<InjectedService>());
+                    Assert.NotNull(controller.HttpContext.Features.Get<AnotherInjectedService>());
+                    Assert.True(controller.HttpContext.Request.Headers.ContainsKey(contextTestKey));
+                    Assert.True(controller.TempData.ContainsKey(contextTestKey));
+                    Assert.True(controller.User.Identity.Name == contextTestKey);
                 });
 
             MyApplication.StartsFrom<DefaultStartup>();
@@ -445,17 +454,22 @@
                    .WithServices(services => services
                        .AddTransient<IInjectedService, InjectedService>());
 
-            const string contextTestValue = "ControllerContext";
+            const string contextTestKey = "ControllerContext";
+            const string contextTestValue = "Context Value";
 
             MyPipeline
                 .Configuration()
                 .ShouldMap("/Pipeline/Action?controller=true")
                 .To<PipelineController>(c => c.Action())
                 .Which(controller => controller
-                    .WithControllerContext(context => context.RouteData.Values.Add(contextTestValue, "Context Value"))
-                    .WithActionContext(context => context.ModelState.AddModelError(contextTestValue, "Context Value"))
-                    .WithSetup(controller => controller.HttpContext.Features.Set(new InjectedService()))
-                    .WithRouteData(new { Id = contextTestValue }))
+                    .WithHttpContext(context => context.Features.Set(new AnotherInjectedService()))
+                    .WithHttpRequest(request => request.WithHeader(contextTestKey, contextTestValue))
+                    .WithUser(user => user.WithUsername(contextTestKey))
+                    .WithRouteData(new { Id = contextTestKey })
+                    .WithControllerContext(context => context.RouteData.Values.Add(contextTestKey, contextTestValue))
+                    .WithActionContext(context => context.ModelState.AddModelError(contextTestKey, contextTestValue))
+                    .WithTempData(tempData => tempData.WithEntry(contextTestKey, contextTestValue))
+                    .WithSetup(controller => controller.HttpContext.Features.Set(new InjectedService())))
                 .ShouldReturn()
                 .Ok()
                 .AndAlso()
@@ -464,13 +478,17 @@
                     const string testValue = "ControllerFilter";
                     Assert.Equal(testValue, controller.Data);
                     Assert.True(controller.RouteData.Values.ContainsKey(testValue));
-                    Assert.True(controller.RouteData.Values.ContainsKey(contextTestValue));
+                    Assert.True(controller.RouteData.Values.ContainsKey(contextTestKey));
                     Assert.True(controller.RouteData.Values.ContainsKey("Id"));
                     Assert.True(controller.ControllerContext.ActionDescriptor.Properties.ContainsKey(testValue));
                     Assert.True(controller.ModelState.ContainsKey(testValue));
-                    Assert.True(controller.ModelState.ContainsKey(contextTestValue));
+                    Assert.True(controller.ModelState.ContainsKey(contextTestKey));
                     Assert.NotNull(controller.HttpContext.Features.Get<PipelineController>());
                     Assert.NotNull(controller.HttpContext.Features.Get<InjectedService>());
+                    Assert.NotNull(controller.HttpContext.Features.Get<AnotherInjectedService>());
+                    Assert.True(controller.HttpContext.Request.Headers.ContainsKey(contextTestKey));
+                    Assert.True(controller.TempData.ContainsKey(contextTestKey));
+                    Assert.True(controller.User.Identity.Name == contextTestKey);
                 });
 
             MyApplication.StartsFrom<DefaultStartup>();
