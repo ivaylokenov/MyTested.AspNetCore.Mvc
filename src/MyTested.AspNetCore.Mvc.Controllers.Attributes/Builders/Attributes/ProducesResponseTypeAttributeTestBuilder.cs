@@ -32,7 +32,7 @@
                 var expectedType = expected.Type;
                 var actualType = actual.Type;
 
-                if (Reflection.AreDifferentTypes(expected, actual))
+                if (Reflection.AreDifferentTypes(expectedType, actualType))
                 {
                     this.FailedValidationAction(
                         $"{this.ExceptionMessagePrefix}'{expectedType.ToFriendlyTypeName()}' type",
