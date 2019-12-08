@@ -45,9 +45,13 @@
 
                 if (testContext.RouteDataMethodCall != null)
                 {
+                    var originalRouteData = testContext.RouteData;
+
                     testContext.RouteData = RouteExpressionParser.ResolveRouteData(
                         TestApplication.Router,
                         testContext.RouteDataMethodCall);
+
+                    testContext.RouteData.AddFrom(originalRouteData);
                 }
 
                 if (testContext.RouteData == null)

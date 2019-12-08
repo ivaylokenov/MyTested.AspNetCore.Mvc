@@ -25,7 +25,12 @@
             {
                 context.Result = new BadRequestResult();
             }
-            
+
+            context.RouteData.Values.Add("ActionFilter", "Route Value");
+            context.ActionDescriptor.Properties.Add("ActionFilter", "Descriptor Value");
+            context.ModelState.AddModelError("ActionFilter", "Model State Value");
+            context.HttpContext.Features.Set(context.Controller);
+
             base.OnActionExecuting(context);
         }
     }

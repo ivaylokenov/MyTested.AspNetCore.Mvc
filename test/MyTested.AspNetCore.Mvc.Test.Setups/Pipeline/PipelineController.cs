@@ -22,6 +22,11 @@
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             this.Data = "ControllerFilter";
+
+            context.RouteData.Values.Add("ControllerFilter", "Route Value");
+            context.ActionDescriptor.Properties.Add("ControllerFilter", "Descriptor Value");
+            context.ModelState.AddModelError("ControllerFilter", "Model State Value");
+            context.HttpContext.Features.Set(this);
         }
     }
 }
