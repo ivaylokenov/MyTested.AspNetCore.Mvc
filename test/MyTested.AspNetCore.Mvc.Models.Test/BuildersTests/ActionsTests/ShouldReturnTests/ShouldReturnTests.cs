@@ -327,8 +327,9 @@
                 .Instance()
                 .Calling(c => c.GenericActionWithCollection())
                 .ShouldReturn()
-                .ResultOfType(typeof(ICollection<>))
-                .Passing(c => c.Count == 2);
+                .ResultOfType(
+                    typeof(ICollection<>), 
+                    result => result.Passing(c => c.Count == 2));
         }
 
         [Fact]
@@ -338,8 +339,8 @@
                 .Instance()
                 .Calling(c => c.GenericActionWithCollection())
                 .ShouldReturn()
-                .ResultOfType<ICollection<ResponseModel>>()
-                .Passing(c => c.Count == 2);
+                .ResultOfType<ICollection<ResponseModel>>(result => result
+                    .Passing(c => c.Count == 2));
         }
 
         [Fact]
@@ -382,8 +383,8 @@
                         .Instance()
                         .Calling(c => c.GenericActionWithCollection())
                         .ShouldReturn()
-                        .ResultOfType<ICollection<ResponseModel>>()
-                        .Passing(c => c.Count == 1);
+                        .ResultOfType<ICollection<ResponseModel>>(result => result
+                            .Passing(c => c.Count == 1));
                 }, 
                 "When calling GenericActionWithCollection action in MvcController expected response model ICollection<ResponseModel> to pass the given predicate, but it failed.");
         }
@@ -502,6 +503,57 @@
         }
 
         [Fact]
+        public void AnonymousResultShouldBeProperlyRecognizedWithObjectType()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AnonymousOkResult())
+                .ShouldReturn()
+                .ResultOfType<object>();
+        }
+
+        [Fact]
+        public void AnonymousResultShouldBeProperlyRecognized()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AnonymousResult())
+                .ShouldReturn()
+                .Result(new
+                {
+                    Id = 1,
+                    Text = "test",
+                    Nested = new
+                    {
+                        IsTrue = true
+                    }
+                });
+        }
+
+        [Fact]
+        public void AnonymousResultShouldBeProperlyRecognizedAndShouldThrowException()
+        {
+            Test.AssertException<ResponseModelAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AnonymousResult())
+                        .ShouldReturn()
+                        .Result(new
+                        {
+                            Id = 1,
+                            Text = "test",
+                            Nested = new
+                            {
+                                IsTrue = false
+                            }
+                        });
+                },
+                "When calling AnonymousResult action in MvcController expected the response model to be the given model, but in fact it was a different one.");
+        }
+
+        [Fact]
         public void ActionResultOfTShouldBeProperlyRecognizedWithActualActionResult()
         {
             MyController<MvcController>
@@ -542,6 +594,24 @@
                 { 
                     IntegerValue = 1, 
                     StringValue = "Test" 
+                });
+        }
+
+        [Fact]
+        public void ActionResultOfTShouldBeProperlyRecognizedWithAnonymousModel()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfAnonymousType())
+                .ShouldReturn()
+                .Result(new
+                {
+                    Id = 1,
+                    Text = "test",
+                    Nested = new
+                    {
+                        IsTrue = true
+                    }
                 });
         }
 

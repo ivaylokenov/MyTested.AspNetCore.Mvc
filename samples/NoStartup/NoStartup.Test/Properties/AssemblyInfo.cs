@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 
 [assembly: ComVisible(false)]
 
-[assembly: Guid("d28e4019-dc88-452d-8aef-46799ab32b45")]
+[assembly: ApplicationPart("NoStartup.Controllers")]

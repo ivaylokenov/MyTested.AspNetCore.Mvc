@@ -1130,7 +1130,20 @@
             return this.BadRequest();
         }
 
-        public IActionResult AnonymousResult()
+        public object AnonymousResult()
+        {
+            return new
+            {
+                Id = 1,
+                Text = "test",
+                Nested = new
+                {
+                    IsTrue = true
+                }
+            };
+        }
+
+        public IActionResult AnonymousOkResult()
         {
             return this.Ok(new 
             { 
@@ -1161,6 +1174,19 @@
             }
 
             return this.ResponseModel.First();
+        }
+
+        public ActionResult<object> ActionResultOfAnonymousType()
+        {
+            return new
+            {
+                Id = 1,
+                Text = "test",
+                Nested = new
+                {
+                    IsTrue = true
+                }
+            };
         }
 
         private void ThrowNewNullReferenceException()

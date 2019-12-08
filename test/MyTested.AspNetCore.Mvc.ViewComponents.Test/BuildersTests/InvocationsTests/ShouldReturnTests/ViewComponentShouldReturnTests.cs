@@ -71,8 +71,8 @@
             MyViewComponent<NormalComponent>
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
-                .ResultOfType<ContentViewComponentResult>()
-                .Passing(c => c.Content == "Test");
+                .ResultOfType<ContentViewComponentResult>(result => result
+                    .Passing(c => c.Content == "Test"));
         }
 
         [Fact]
@@ -112,8 +112,8 @@
                     MyViewComponent<NormalComponent>
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
-                        .ResultOfType<ContentViewComponentResult>()
-                        .Passing(c => c.Content == "Incorrect");
+                        .ResultOfType<ContentViewComponentResult>(result => result
+                            .Passing(c => c.Content == "Incorrect"));
                 },
                 "When invoking NormalComponent expected response model ContentViewComponentResult to pass the given predicate, but it failed.");
         }

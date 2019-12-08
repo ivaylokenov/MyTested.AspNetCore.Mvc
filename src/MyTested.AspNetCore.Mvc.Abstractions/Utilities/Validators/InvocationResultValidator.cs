@@ -80,7 +80,10 @@
 
         public static void ValidateInvocationResult<TResult>(ComponentTestContext testContext, TResult model)
         {
-            ValidateInvocationResultType<TResult>(testContext);
+            if (!Reflection.IsAnonymousType(typeof(TResult)))
+            {
+                ValidateInvocationResultType<TResult>(testContext);
+            }
 
             if (Reflection.AreNotDeeplyEqual(model, testContext.MethodResult))
             {

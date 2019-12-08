@@ -143,7 +143,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.AnonymousResult())
+                .Calling(c => c.AnonymousOkResult())
                 .ShouldReturn()
                 .Ok(ok => ok
                     .WithModel(new
@@ -165,7 +165,7 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.AnonymousResult())
+                        .Calling(c => c.AnonymousOkResult())
                         .ShouldReturn()
                         .Ok(ok => ok
                             .WithModel(new
@@ -178,7 +178,7 @@
                                 }
                             }));
                 },
-               "When calling AnonymousResult action in MvcController expected response model AnonymousType0<Int32, String, AnonymousType1<Boolean>> to be the given model, but in fact it was a different one.");
+               "When calling AnonymousOkResult action in MvcController expected response model AnonymousType0<Int32, String, AnonymousType1<Boolean>> to be the given model, but in fact it was a different one.");
         }
 
         [Fact]
