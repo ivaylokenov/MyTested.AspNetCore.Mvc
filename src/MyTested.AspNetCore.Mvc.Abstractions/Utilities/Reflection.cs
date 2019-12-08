@@ -8,6 +8,7 @@
     using System.Linq.Expressions;
     using System.Reflection;
     using System.Runtime.CompilerServices;
+    using Extensions;
     using Internal;
     using Microsoft.AspNetCore.Routing;
 
@@ -311,6 +312,16 @@
         public static bool AreDeeplyEqual(object expected, object actual)
             => AreDeeplyEqual(expected, actual, new ConditionalWeakTable<object, object>(), new DeepEqualResult(null, null));
 
+        public static bool AreDeeplyEqual(object expected, object actual, out DeepEqualResult result)
+        {
+            var expectedTypeName = expected?.GetType().ToFriendlyTypeName();
+            var actualTypeName = actual?.GetType().ToFriendlyTypeName();
+
+            result = new DeepEqualResult(expectedTypeName, actualTypeName);
+
+            return AreDeeplyEqual(expected, actual, new ConditionalWeakTable<object, object>(), result);
+        }
+
         /// <summary>
         /// Checks whether two objects are not deeply equal by reflecting all their public properties recursively. Resolves successfully value and reference types, overridden Equals method, custom == operator, IComparable, nested objects and collection properties.
         /// </summary>
@@ -474,7 +485,9 @@
                 return result.Failure;
             }
 
-            if (expected is IEnumerable && expectedType != typeof(string))
+            var stringType = typeof(string);
+
+            if (expected is IEnumerable && expectedType != stringType)
             {
                 return CollectionsAreDeeplyEqual(expected, actual, processedElements, result);
             }
@@ -499,19 +512,23 @@
 
             if (expectedType.GetTypeInfo().IsPrimitive || expectedType.GetTypeInfo().IsEnum)
             {
-                return expected.ToString() == actual.ToString();
+                return expected.ToString() == actual.ToString()
+                    ? result.Success
+                    : result.Failure;
             }
             
             var equalsOperator = expectedType.GetMethods().FirstOrDefault(m => m.Name == "op_Equality");
             if (equalsOperator != null)
             {
                 var equalsOperatorResult = (bool)equalsOperator.Invoke(null, new[] { expected, actual });
-                if (!equalsOperatorResult)
+                if (!equalsOperatorResult && expectedType != stringType)
                 {
-                    result.ApplyPath("== (Equality Operator)");
+                    result.PushPath("== (Equality Operator)");
                 }
 
-                return equalsOperatorResult;
+                return equalsOperatorResult
+                    ? result.Success
+                    : result.Failure;
             }
 
             if (expectedType != objectType && !expectedTypeIsAnonymous)
@@ -522,7 +539,7 @@
                     var equalsMethodResult = (bool)equalsMethod.Invoke(expected, new[] { actual });
                     if (!equalsMethodResult)
                     {
-                        result.ApplyPath("Equals()");
+                        result.PushPath("Equals()");
                     }
 
                     return equalsMethodResult;
@@ -570,19 +587,33 @@
             if (listOfExpectedValuesCount != listOfActualValuesCount)
             {
                 return result
-                    .ApplyPath(nameof(listOfExpectedValues.Count))
+                    .PushPath(nameof(listOfExpectedValues.Count))
                     .ApplyValues(listOfExpectedValuesCount, listOfActualValuesCount)
                     .Failure;
             }
 
             for (int i = 0; i < listOfExpectedValues.Count; i++)
             {
-                if (AreNotDeeplyEqual(listOfExpectedValues[i], listOfActualValues[i], processedElements, result))
+                var expectedValue = listOfExpectedValues[i];
+                var actualValue = listOfActualValues[i];
+
+                var collectionIsDictionary = expected is IDictionary;
+
+                if (collectionIsDictionary)
                 {
-                    return result
-                        .ApplyPath($"[{i}]")
-                        .Failure;
+                    result.PushPath($"[{expectedValue.AsDynamic().Key}]");
                 }
+                else
+                {
+                    result.PushPath($"[{i}]");
+                }
+
+                if (AreNotDeeplyEqual(expectedValue, actualValue, processedElements, result))
+                {
+                    return result.Failure;
+                }
+
+                result.PopPath();
             }
 
             return result.Success;
@@ -608,7 +639,7 @@
                     var compareToResult = (int)method.Invoke(expected, new[] { actual }) == 0;
                     if (!compareToResult)
                     {
-                        result.ApplyPath($"{methodName}()");
+                        result.PushPath($"{methodName}()");
                     }
 
                     return compareToResult;
@@ -640,7 +671,7 @@
                 var expectedPropertyValue = expectedProperties[key];
                 var actualPropertyValue = actualProperties[key];
 
-                result.ApplyPath(key);
+                result.PushPath(key);
 
                 if (expectedPropertyValue is IEnumerable && expectedPropertyValue.GetType() != typeof(string))
                 {
@@ -664,6 +695,8 @@
                 {
                     return result.Failure;
                 }
+
+                result.PopPath();
             }
 
             return result.Success;
@@ -671,13 +704,16 @@
 
         public class DeepEqualResult
         {
-            private readonly ICollection<string> expectedPathParts;
-            private readonly ICollection<string> actualPathParts;
+            private readonly Stack<string> expectedPathParts;
+            private readonly Stack<string> actualPathParts;
 
             public DeepEqualResult(string initialExpectedName, string initialActualName)
             {
-                this.expectedPathParts = new List<string> { initialExpectedName };
-                this.actualPathParts = new List<string> { initialActualName };
+                this.expectedPathParts = new Stack<string>();
+                this.actualPathParts = new Stack<string>();
+
+                this.expectedPathParts.Push(initialExpectedName ?? initialActualName);
+                this.actualPathParts.Push(initialActualName ?? initialExpectedName);
             }
 
             public bool Result { get; private set; } = true;
@@ -700,23 +736,28 @@
                 }
             }
 
-            public string ErrorPath { get; private set; }
-
             public object ExpectedValue { get; private set; }
 
             public object ActualValue { get; private set; }
 
-            public DeepEqualResult ApplyPath(string path)
+            public DeepEqualResult PushPath(string path)
             {
-                this.expectedPathParts.Add(path);
-                this.actualPathParts.Add(path);
+                this.expectedPathParts.Push(path);
+                this.actualPathParts.Push(path);
                 return this;
             }
 
-            public DeepEqualResult ApplyPath(string expectedPath, string actualPath)
+            public DeepEqualResult PushPath(string expectedPath, string actualPath)
             {
-                this.expectedPathParts.Add(expectedPath);
-                this.actualPathParts.Add(actualPath);
+                this.expectedPathParts.Push(expectedPath);
+                this.actualPathParts.Push(actualPath);
+                return this;
+            }
+
+            public DeepEqualResult PopPath()
+            {
+                this.expectedPathParts.Pop();
+                this.actualPathParts.Pop();
                 return this;
             }
 
@@ -725,6 +766,34 @@
                 this.ExpectedValue = expected;
                 this.ActualValue = actual;
                 return this;
+            }
+
+            public override string ToString()
+            {
+                if (this.Result)
+                {
+                    return "Objects are deeply equal.";
+                }
+
+                var pathMessage = string.Empty;
+                if (expectedPathParts.Count == 1)
+                {
+                    var expectedType = this.expectedPathParts.First();
+                    var actualType = this.actualPathParts.First();
+
+                    if (expectedType != actualType)
+                    {
+                        return $"Expected a value of {expectedType} type, but in fact it was {actualType}.";
+                    }
+                }
+                else
+                {
+                    var expectedPath = string.Join(".", this.expectedPathParts.Reverse()).Replace(".[", "[");
+
+                    pathMessage = $"Difference occurs at '{expectedPath}'. ";
+                }
+
+                return $"{pathMessage}Expected a value of {this.ExpectedValue.GetErrorMessageName()}, but in fact it was {this.ActualValue.GetErrorMessageName()}.";
             }
 
             public static implicit operator bool(DeepEqualResult deepEqualResult) => deepEqualResult.Result;
