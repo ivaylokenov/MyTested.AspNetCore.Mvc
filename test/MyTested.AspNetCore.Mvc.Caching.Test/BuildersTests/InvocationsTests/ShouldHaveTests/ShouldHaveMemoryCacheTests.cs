@@ -169,7 +169,7 @@
                         .ShouldReturn()
                         .View();
                 },
-                "When invoking MemoryCacheValuesComponent expected memory cache to have entry with the given value, but in fact it was different.");
+                "When invoking MemoryCacheValuesComponent expected memory cache to have entry with the given value, but in fact it was different. Expected a value of 'invalid', but in fact it was 'value'.");
         }
 
         [Fact]
@@ -236,7 +236,7 @@
                         .ShouldReturn()
                         .View();
                 },
-                "When invoking MemoryCacheValuesComponent expected memory cache to have entry with the given value, but in fact it was different.");
+                "When invoking MemoryCacheValuesComponent expected memory cache to have entry with the given value, but in fact it was different. Expected a value of 'invalid', but in fact it was 'value'.");
         }
 
         [Fact]
@@ -262,7 +262,7 @@
                         .ShouldReturn()
                         .View();
                 },
-                "When invoking MemoryCacheValuesComponent expected memory cache to have entry with the given options, but in fact they were different.");
+                "When invoking MemoryCacheValuesComponent expected memory cache to have entry with the given options, but in fact they were different. Difference occurs at 'MemoryCacheEntryOptions.AbsoluteExpiration.== (Equality Operator)'. Expected a value of '1/1/2017 1:01:01 AM +00:00', but in fact it was '1/1/2016 1:01:01 AM +00:00'.");
         }
 
         [Fact]
@@ -288,7 +288,7 @@
                         .ShouldReturn()
                         .View();
                 },
-                "When invoking MemoryCacheValuesComponent expected memory cache to have entry with the given options, but in fact they were different.");
+                "When invoking MemoryCacheValuesComponent expected memory cache to have entry with the given options, but in fact they were different. Difference occurs at 'MemoryCacheEntryOptions.AbsoluteExpirationRelativeToNow.== (Equality Operator)'. Expected a value of '00:02:00', but in fact it was '00:01:00'.");
         }
 
         [Fact]
@@ -314,7 +314,7 @@
                         .ShouldReturn()
                         .View();
                 },
-                "When invoking MemoryCacheValuesComponent expected memory cache to have entry with the given options, but in fact they were different.");
+                "When invoking MemoryCacheValuesComponent expected memory cache to have entry with the given options, but in fact they were different. Difference occurs at 'MemoryCacheEntryOptions.Priority'. Expected a value of 'Low', but in fact it was 'High'.");
         }
 
         [Fact]
@@ -340,7 +340,7 @@
                         .ShouldReturn()
                         .View();
                 },
-                "When invoking MemoryCacheValuesComponent expected memory cache to have entry with the given options, but in fact they were different.");
+                "When invoking MemoryCacheValuesComponent expected memory cache to have entry with the given options, but in fact they were different. Difference occurs at 'MemoryCacheEntryOptions.SlidingExpiration.== (Equality Operator)'. Expected a value of '00:01:00', but in fact it was '00:05:00'.");
         }
 
         [Fact]
@@ -400,7 +400,7 @@
                         .ShouldReturn()
                         .View();
                 },
-                "When invoking MemoryCacheValuesComponent expected memory cache to have entry with the given value, but in fact it was different.");
+                "When invoking MemoryCacheValuesComponent expected memory cache to have entry with the given value, but in fact it was different. Expected a value of 'invalid', but in fact it was 'value'.");
         }
 
         [Fact]
@@ -514,7 +514,7 @@
                         .ShouldReturn()
                         .View();
                 },
-                "When invoking MemoryCacheValuesComponent expected memory cache to have entry with 'test' key and the given value, but in fact it was different.");
+                "When invoking MemoryCacheValuesComponent expected memory cache to have entry with 'test' key and the given value, but in fact it was different. Expected a value of 'invalid', but in fact it was 'value'.");
         }
 
         [Fact]

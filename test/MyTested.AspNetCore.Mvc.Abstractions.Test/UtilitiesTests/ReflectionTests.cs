@@ -972,65 +972,65 @@
         public void AreDeeplyEqualShouldReportCorrectlyWithPrimitiveAndStructTypes()
         {
             Assert.False(Reflection.AreDeeplyEqual(1, 0, out var result));
-            Assert.Equal("Expected a value of '1', but in fact it was '0'.", result.ToString());
+            Assert.Equal("Expected a value of '1', but in fact it was '0'", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(1, null, out result));
-            Assert.Equal("Expected a value of '1', but in fact it was null.", result.ToString());
+            Assert.Equal("Expected a value of '1', but in fact it was null", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(null, 1, out result));
-            Assert.Equal("Expected a value of null, but in fact it was '1'.", result.ToString());
+            Assert.Equal("Expected a value of null, but in fact it was '1'", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual("test1", "test2", out result));
-            Assert.Equal("Expected a value of 'test1', but in fact it was 'test2'.", result.ToString());
+            Assert.Equal("Expected a value of 'test1', but in fact it was 'test2'", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(1, "1", out result));
-            Assert.Equal("Expected a value of Int32 type, but in fact it was String.", result.ToString());
+            Assert.Equal("Expected a value of Int32 type, but in fact it was String", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(new DateTime(2015, 10, 19), new DateTime(2015, 10, 20), out result));
-            Assert.Equal("Difference occurs at 'DateTime.== (Equality Operator)'. Expected a value of '10/19/2015 12:00:00 AM', but in fact it was '10/20/2015 12:00:00 AM'.", result.ToString());
+            Assert.Equal("Difference occurs at 'DateTime.== (Equality Operator)'. Expected a value of '10/19/2015 12:00:00 AM', but in fact it was '10/20/2015 12:00:00 AM'", result.ToString());
         }
 
         [Fact]
         public void AreDeeplyEqualShouldReportCorrectlyWithEnumerations()
         {
             Assert.False(Reflection.AreDeeplyEqual(DateTimeKind.Local, DateTimeKind.Utc, out var result));
-            Assert.Equal("Expected a value of 'Local', but in fact it was 'Utc'.", result.ToString());
+            Assert.Equal("Expected a value of 'Local', but in fact it was 'Utc'", result.ToString());
         }
 
         [Fact]
         public void AreDeeplyEqualShouldReportCorrectlyWithNormalObjects()
         {
             Assert.False(Reflection.AreDeeplyEqual(new object(), "test", out var result));
-            Assert.Equal("Expected a value of Object type, but in fact it was String.", result.ToString());
+            Assert.Equal("Expected a value of Object type, but in fact it was String", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(new object(), AttributeTargets.All, out result));
-            Assert.Equal("Expected a value of Object type, but in fact it was AttributeTargets.", result.ToString());
+            Assert.Equal("Expected a value of Object type, but in fact it was AttributeTargets", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(AttributeTargets.All, new object(), out result));
-            Assert.Equal("Expected a value of AttributeTargets type, but in fact it was Object.", result.ToString());
+            Assert.Equal("Expected a value of AttributeTargets type, but in fact it was Object", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(DateTime.Now, "test", out result));
-            Assert.Equal("Expected a value of DateTime type, but in fact it was String.", result.ToString());
+            Assert.Equal("Expected a value of DateTime type, but in fact it was String", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual("test", DateTime.Now, out result));
-            Assert.Equal("Expected a value of String type, but in fact it was DateTime.", result.ToString());
+            Assert.Equal("Expected a value of String type, but in fact it was DateTime", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(true, new object(), out result));
-            Assert.Equal("Expected a value of Boolean type, but in fact it was Object.", result.ToString());
+            Assert.Equal("Expected a value of Boolean type, but in fact it was Object", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual("test", new object(), out result));
-            Assert.Equal("Expected a value of String type, but in fact it was Object.", result.ToString());
+            Assert.Equal("Expected a value of String type, but in fact it was Object", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(new object(), true, out result));
-            Assert.Equal("Expected a value of Object type, but in fact it was Boolean.", result.ToString());
+            Assert.Equal("Expected a value of Object type, but in fact it was Boolean", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(new { Integer = 1, String = "Test", Nested = new byte[] { 1, 2, 3 } }, new { Integer = 1, String = "Test", Nested = new byte[] { 1, 2, 4 } }, out result));
-            Assert.Equal("Difference occurs at 'AnonymousType2<Int32, String, Byte[]>.Nested[2]'. Expected a value of '3', but in fact it was '4'.", result.ToString());
+            Assert.Equal("Difference occurs at 'AnonymousType2<Int32, String, Byte[]>.Nested[2]'. Expected a value of '3', but in fact it was '4'", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(new RequestModel { Integer = 2 }, new RequestModel { Integer = 1 }, out result));
-            Assert.Equal("Difference occurs at 'RequestModel.Integer'. Expected a value of '2', but in fact it was '1'.", result.ToString());
+            Assert.Equal("Difference occurs at 'RequestModel.Integer'. Expected a value of '2', but in fact it was '1'", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(new object(), new RequestModel { Integer = 1 }, out result));
-            Assert.Equal("Expected a value of Object type, but in fact it was RequestModel.", result.ToString());
+            Assert.Equal("Expected a value of Object type, but in fact it was RequestModel", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(new RequestModel { Integer = 2 }, new object(), out result));
-            Assert.Equal("Expected a value of RequestModel type, but in fact it was Object.", result.ToString());
+            Assert.Equal("Expected a value of RequestModel type, but in fact it was Object", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(new RequestModel { Integer = 2, NonRequiredString = "test" }, new RequestModel { Integer = 1 }, out result));
-            Assert.Equal("Difference occurs at 'RequestModel.Integer'. Expected a value of '2', but in fact it was '1'.", result.ToString());
+            Assert.Equal("Difference occurs at 'RequestModel.Integer'. Expected a value of '2', but in fact it was '1'", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(new GenericComparableModel { Integer = 1, String = "test" }, new GenericComparableModel { Integer = 2, String = "test" }, out result));
-            Assert.Equal("Difference occurs at 'GenericComparableModel.CompareTo().Integer'. Expected a value of '1', but in fact it was '2'.", result.ToString());
+            Assert.Equal("Difference occurs at 'GenericComparableModel.CompareTo().Integer'. Expected a value of '1', but in fact it was '2'", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(new ComparableModel { Integer = 1, String = "test" }, new ComparableModel { Integer = 2, String = "test" }, out result));
-            Assert.Equal("Difference occurs at 'ComparableModel.CompareTo().Integer'. Expected a value of '1', but in fact it was '2'.", result.ToString());
+            Assert.Equal("Difference occurs at 'ComparableModel.CompareTo().Integer'. Expected a value of '1', but in fact it was '2'", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(new EqualsModel { Integer = 1, String = "test" }, new EqualsModel { Integer = 2, String = "test" }, out result));
-            Assert.Equal("Difference occurs at 'EqualsModel.Equals()'.", result.ToString());
+            Assert.Equal("Difference occurs at 'EqualsModel.Equals()'", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(new EqualityOperatorModel { Integer = 1, String = "test" }, new EqualityOperatorModel { Integer = 2, String = "test" }, out result));
-            Assert.Equal("Difference occurs at 'EqualityOperatorModel.== (Equality Operator)'.", result.ToString());
+            Assert.Equal("Difference occurs at 'EqualityOperatorModel.== (Equality Operator)'", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(new ComparableModel { Integer = 1, String = "test" }, new RequestModel(), out result));
-            Assert.Equal("Expected a value of ComparableModel type, but in fact it was RequestModel.", result.ToString());
+            Assert.Equal("Expected a value of ComparableModel type, but in fact it was RequestModel", result.ToString());
         }
 
         [Fact]
@@ -1040,7 +1040,7 @@
             var secondObject = new NestedModel { Integer = 2, String = "Text" };
 
             Assert.False(Reflection.AreDeeplyEqual(firstObject, secondObject, out var result));
-            Assert.Equal("Difference occurs at 'NestedModel.Integer'. Expected a value of '1', but in fact it was '2'.", result.ToString());
+            Assert.Equal("Difference occurs at 'NestedModel.Integer'. Expected a value of '1', but in fact it was '2'", result.ToString());
 
             Assert.False(Reflection.AreDeeplyEqual(
                 new NestedModel
@@ -1058,17 +1058,17 @@
                     Nested = new NestedModel { Integer = 2, String = "test1", Nested = new NestedModel { Integer = 3, String = "test3" } }
                 }, out result));
 
-            Assert.Equal("Difference occurs at 'NestedModel.Nested.String'. Expected a value of 'test2', but in fact it was 'test1'.", result.ToString());
+            Assert.Equal("Difference occurs at 'NestedModel.Nested.String'. Expected a value of 'test2', but in fact it was 'test1'", result.ToString());
         }
 
         [Fact]
         public void AreDeeplyEqualShouldReportCorrectlyWithCollections()
         {
             Assert.False(Reflection.AreDeeplyEqual(new List<int> { 1, 2, 3, 4 }, new[] { 1, 2, 3 }, out var result));
-            Assert.Equal("Difference occurs at 'List<Int32>.Count'. Expected a value of '4', but in fact it was '3'.", result.ToString());
+            Assert.Equal("Difference occurs at 'List<Int32>.Count'. Expected a value of '4', but in fact it was '3'", result.ToString());
 
             Assert.False(Reflection.AreDeeplyEqual(new List<int> { 1, 2, 3, 4 }, new[] { 1, 2, 3, 5 }, out result));
-            Assert.Equal("Difference occurs at 'List<Int32>[3]'. Expected a value of '4', but in fact it was '5'.", result.ToString());
+            Assert.Equal("Difference occurs at 'List<Int32>[3]'. Expected a value of '4', but in fact it was '5'", result.ToString());
 
             Assert.False(Reflection.AreDeeplyEqual(
                 new NestedCollection
@@ -1108,7 +1108,7 @@
                     }
                 }, out result));
 
-            Assert.Equal("Difference occurs at 'NestedCollection.Nested[1].Nested.Nested.Integer'. Expected a value of '3', but in fact it was '5'.", result.ToString());
+            Assert.Equal("Difference occurs at 'NestedCollection.Nested[1].Nested.Nested.Integer'. Expected a value of '3', but in fact it was '5'", result.ToString());
 
             Assert.False(Reflection.AreDeeplyEqual(
                 new List<NestedModel>
@@ -1138,7 +1138,7 @@
                     }
                 }, out result));
 
-            Assert.Equal("Difference occurs at 'List<NestedModel>[0].Nested.Nested.String'. Expected a value of 'test4', but in fact it was 'test3'.", result.ToString());
+            Assert.Equal("Difference occurs at 'List<NestedModel>[0].Nested.Nested.String'. Expected a value of 'test4', but in fact it was 'test3'", result.ToString());
         }
 
         [Fact]
@@ -1157,7 +1157,7 @@
             };
 
             Assert.False(Reflection.AreDeeplyEqual(firstDictionary, secondDictionary, out var result));
-            Assert.Equal("Difference occurs at 'Dictionary<String, String>[AnotherKey].Value'. Expected a value of 'Value', but in fact it was 'AnotherValue'.", result.ToString());
+            Assert.Equal("Difference occurs at 'Dictionary<String, String>[AnotherKey].Value'. Expected a value of 'Value', but in fact it was 'AnotherValue'", result.ToString());
 
             var firstDictionaryWithObject = new Dictionary<string, NestedModel>
             {
@@ -1172,7 +1172,7 @@
             };
 
             Assert.False(Reflection.AreDeeplyEqual(firstDictionaryWithObject, secondDictionaryWithObject, out result));
-            Assert.Equal("Difference occurs at 'Dictionary<String, NestedModel>[Key].Value.Enum'. Expected a value of 'ConstantWithCustomValue', but in fact it was 'DefaultConstant'.", result.ToString());
+            Assert.Equal("Difference occurs at 'Dictionary<String, NestedModel>[Key].Value.Enum'. Expected a value of 'ConstantWithCustomValue', but in fact it was 'DefaultConstant'", result.ToString());
         }
 
         [Fact]
