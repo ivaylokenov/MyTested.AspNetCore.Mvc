@@ -62,7 +62,7 @@
                         .View("SomeView")
                         .WithModel(new ResponseModel { IntegerValue = 11 });
                 },
-                "When invoking ViewResultComponent expected response model ResponseModel to be the given model, but in fact it was a different one.");
+                "When invoking ViewResultComponent expected response model ResponseModel to be the given model, but in fact it was a different one. Difference occurs at 'ResponseModel.IntegerValue'. Expected a value of '11', but in fact it was '10'.");
         }
 
         [Fact]

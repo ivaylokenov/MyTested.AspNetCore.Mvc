@@ -180,7 +180,7 @@
                         .ShouldReturn()
                         .Result("Incorrect");
                 },
-                "When invoking StringComponent expected the response model to be the given model, but in fact it was a different one.");
+                "When invoking StringComponent expected the response model to be the given model, but in fact it was a different one. Expected a value of 'Incorrect', but in fact it was 'TestString'.");
         }
         
         [Fact]
