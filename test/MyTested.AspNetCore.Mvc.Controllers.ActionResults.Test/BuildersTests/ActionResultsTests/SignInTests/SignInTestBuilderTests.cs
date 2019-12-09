@@ -32,7 +32,7 @@
                         .SignIn(signIn => signIn
                             .WithAuthenticationScheme(AuthenticationScheme.Digest));
                 },
-                $"When calling SignInWithEmptyAuthenticationPropertiesAndScheme action in MvcController expected sign in result authentication scheme to be 'Digest', but instead received 'Basic'.");
+                "When calling SignInWithEmptyAuthenticationPropertiesAndScheme action in MvcController expected sign in result authentication scheme to be 'Digest', but instead received 'Basic'.");
         }
 
         [Fact]
@@ -63,7 +63,7 @@
                         .SignIn(signIn => signIn
                             .WithAuthenticationProperties(authenticationProperties));
                 },
-                $"When calling SignInWithAuthenticationPropertiesAndScheme action in MvcController expected sign in result authentication properties to be the same as the provided one, but instead received different result.");
+                "When calling SignInWithAuthenticationPropertiesAndScheme action in MvcController expected sign in result authentication properties to be the same as the provided one, but instead received different result. Difference occurs at 'AuthenticationProperties.Items[.refresh].Value'. Expected a value of 'False', but in fact it was 'True'.");
         }
 
         [Fact]
@@ -103,7 +103,7 @@
                         .SignIn(signIn => signIn
                             .Passing(si => si.AuthenticationScheme == AuthenticationScheme.Digest));
                 },
-                $"When calling SignInWithAuthenticationPropertiesAndScheme action in MvcController expected the SignInResult to pass the given predicate, but it failed.");
+                "When calling SignInWithAuthenticationPropertiesAndScheme action in MvcController expected the SignInResult to pass the given predicate, but it failed.");
         }
 
         [Fact]
