@@ -171,8 +171,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autofac.AssemblyInit.Test",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{7BEC9808-8650-4322-BCC6-1D7D91B53678}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication.Core", "samples\Configuration\WebApplication.Core\WebApplication.Core.csproj", "{41D54FAD-53BB-48AE-8D1D-10AB382321B8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication.Services", "samples\Configuration\WebApplication.Services\WebApplication.Services.csproj", "{285B7341-5273-450A-B3A6-0E4EC49BDDB6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication.Controllers", "samples\Configuration\WebApplication.Controllers\WebApplication.Controllers.csproj", "{6428D0E8-D35B-4A95-BC6F-8EA21638B7D7}"
@@ -231,9 +229,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyTested.AspNetCore.Mvc.Pip
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{EF386110-3D7B-4BDF-B403-8DC2AB8CF7BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTested.AspNetCore.Mvc.NewtonsoftJson", "plugins\MyTested.AspNetCore.Mvc.NewtonsoftJson\MyTested.AspNetCore.Mvc.NewtonsoftJson.csproj", "{37C701F0-D727-4E8B-B5CE-A8E412205518}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyTested.AspNetCore.Mvc.NewtonsoftJson", "plugins\MyTested.AspNetCore.Mvc.NewtonsoftJson\MyTested.AspNetCore.Mvc.NewtonsoftJson.csproj", "{37C701F0-D727-4E8B-B5CE-A8E412205518}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTested.AspNetCore.Mvc.NewtonsoftJson.Test", "test\MyTested.AspNetCore.Mvc.NewtonsoftJson.Test\MyTested.AspNetCore.Mvc.NewtonsoftJson.Test.csproj", "{21B31CB3-CD7C-4EFD-83D8-D986E5C5E302}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyTested.AspNetCore.Mvc.NewtonsoftJson.Test", "test\MyTested.AspNetCore.Mvc.NewtonsoftJson.Test\MyTested.AspNetCore.Mvc.NewtonsoftJson.Test.csproj", "{21B31CB3-CD7C-4EFD-83D8-D986E5C5E302}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication", "samples\Configuration\WebApplication\WebApplication.csproj", "{25649D8E-C12B-492E-8778-9638B0C4B31C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -533,10 +533,6 @@ Global
 		{1306269D-D300-4BB2-BF21-CB02C6746D2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1306269D-D300-4BB2-BF21-CB02C6746D2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1306269D-D300-4BB2-BF21-CB02C6746D2D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{41D54FAD-53BB-48AE-8D1D-10AB382321B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{41D54FAD-53BB-48AE-8D1D-10AB382321B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{41D54FAD-53BB-48AE-8D1D-10AB382321B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{41D54FAD-53BB-48AE-8D1D-10AB382321B8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{285B7341-5273-450A-B3A6-0E4EC49BDDB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{285B7341-5273-450A-B3A6-0E4EC49BDDB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{285B7341-5273-450A-B3A6-0E4EC49BDDB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -657,6 +653,10 @@ Global
 		{21B31CB3-CD7C-4EFD-83D8-D986E5C5E302}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21B31CB3-CD7C-4EFD-83D8-D986E5C5E302}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21B31CB3-CD7C-4EFD-83D8-D986E5C5E302}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25649D8E-C12B-492E-8778-9638B0C4B31C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25649D8E-C12B-492E-8778-9638B0C4B31C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25649D8E-C12B-492E-8778-9638B0C4B31C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25649D8E-C12B-492E-8778-9638B0C4B31C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -743,7 +743,6 @@ Global
 		{FFC31FCA-7DA5-44CA-A731-780510AEF4C0} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 		{1306269D-D300-4BB2-BF21-CB02C6746D2D} = {B360A756-DCBE-48F4-9456-636172435724}
 		{7BEC9808-8650-4322-BCC6-1D7D91B53678} = {88CC5098-E49F-4AA4-B964-1C2BF4ECA3C3}
-		{41D54FAD-53BB-48AE-8D1D-10AB382321B8} = {7BEC9808-8650-4322-BCC6-1D7D91B53678}
 		{285B7341-5273-450A-B3A6-0E4EC49BDDB6} = {7BEC9808-8650-4322-BCC6-1D7D91B53678}
 		{6428D0E8-D35B-4A95-BC6F-8EA21638B7D7} = {7BEC9808-8650-4322-BCC6-1D7D91B53678}
 		{B9BBB806-06EA-4546-B3F7-D60DC5CEC748} = {7BEC9808-8650-4322-BCC6-1D7D91B53678}
@@ -774,6 +773,7 @@ Global
 		{241D1E6E-6639-4D45-98A0-0BFA1F200C5A} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 		{37C701F0-D727-4E8B-B5CE-A8E412205518} = {EF386110-3D7B-4BDF-B403-8DC2AB8CF7BB}
 		{21B31CB3-CD7C-4EFD-83D8-D986E5C5E302} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
+		{25649D8E-C12B-492E-8778-9638B0C4B31C} = {7BEC9808-8650-4322-BCC6-1D7D91B53678}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {99A2DEDD-5195-4EE6-A546-B1CA54C5539F}
