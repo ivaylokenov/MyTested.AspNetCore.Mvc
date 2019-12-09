@@ -679,7 +679,7 @@
                         .ShouldHave()
                         .HttpResponse(response => response.WithJsonBody(new RequestModel { Integer = 2, RequiredString = "Text" }));
                 },
-                "When calling CustomResponseAction action in MvcController expected HTTP response body to be the given object, but in fact it was different.");
+                "When calling CustomResponseAction action in MvcController expected HTTP response body to be the given object, but in fact it was different. Difference occurs at 'RequestModel.Integer'. Expected a value of '2', but in fact it was '1'.");
         }
 
         [Fact]
@@ -727,7 +727,7 @@
                         .ShouldHave()
                         .HttpResponse(response => response.WithJsonBody(new RequestModel { Integer = 2, RequiredString = "Text" }));
                 },
-                "When invoking HttpResponseComponent expected HTTP response body to be the given object, but in fact it was different.");
+                "When invoking HttpResponseComponent expected HTTP response body to be the given object, but in fact it was different. Difference occurs at 'RequestModel.Integer'. Expected a value of '2', but in fact it was '1'.");
         }
     }
 }
