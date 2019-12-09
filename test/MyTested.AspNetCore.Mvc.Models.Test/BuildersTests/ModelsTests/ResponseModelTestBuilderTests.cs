@@ -135,7 +135,7 @@
                         .Ok(ok => ok
                             .WithModel(another));
                 },
-                "When calling OkResultWithResponse action in MvcController expected response model List<ResponseModel> to be the given model, but in fact it was a different one.");
+                "When calling OkResultWithResponse action in MvcController expected response model List<ResponseModel> to be the given model, but in fact it was a different one. Difference occurs at 'List<ResponseModel>.Count'. Expected a value of '3', but in fact it was '2'.");
         }
 
         [Fact]
@@ -178,7 +178,7 @@
                                 }
                             }));
                 },
-               "When calling AnonymousOkResult action in MvcController expected response model AnonymousType0<Int32, String, AnonymousType1<Boolean>> to be the given model, but in fact it was a different one.");
+               "When calling AnonymousOkResult action in MvcController expected response model AnonymousType<Int32, String, AnonymousType<Boolean>> to be the given model, but in fact it was a different one. Difference occurs at 'AnonymousType<Int32, String, AnonymousType<Boolean>>.Nested.IsTrue'. Expected a value of 'False', but in fact it was 'True'.");
         }
 
         [Fact]

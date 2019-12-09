@@ -550,7 +550,7 @@
                             }
                         });
                 },
-                "When calling AnonymousResult action in MvcController expected the response model to be the given model, but in fact it was a different one.");
+                "When calling AnonymousResult action in MvcController expected the response model to be the given model, but in fact it was a different one. Difference occurs at 'AnonymousType<Int32, String, AnonymousType<Boolean>>.Nested.IsTrue'. Expected a value of 'False', but in fact it was 'True'.");
         }
 
         [Fact]
