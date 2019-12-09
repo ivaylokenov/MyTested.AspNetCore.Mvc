@@ -47,7 +47,7 @@
         {
             if (this.Result)
             {
-                return "Objects are deeply equal.";
+                return "Objects are deeply equal";
             }
 
             var singlePathPart = expectedPathParts.Count == 1;

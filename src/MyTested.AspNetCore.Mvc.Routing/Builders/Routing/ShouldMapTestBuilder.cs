@@ -109,10 +109,10 @@
                 routeValue = actualInfo.RouteData.Values[key];
             }
 
-            var invalid = false;
             var valueIsString = value is string || routeValue is string;
             DeepEqualityResult result = null;
 
+            bool invalid;
             if (valueIsString)
             {
                 invalid = value.ToString() != routeValue.ToString();
@@ -126,7 +126,7 @@
             {
                 this.ThrowNewRouteAssertionException(
                     $"contain route value with '{key}' key and the provided value",
-                    $"the value was different{(valueIsString ? $" - {routeValue}." : $". {result}")}");
+                    $"the value was different{(valueIsString ? $" - {routeValue}" : $". {result}")}");
             }
 
             return this;

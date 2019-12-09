@@ -143,7 +143,7 @@
                         .ShouldMap("/Home/Contact/1")
                         .ToRouteValue("id", 2);
                 },
-                "Expected route '/Home/Contact/1' to contain route value with 'id' key and the provided value but the value was different.");
+                "Expected route '/Home/Contact/1' to contain route value with 'id' key and the provided value but the value was different. Expected a value of '2', but in fact it was '1'.");
         }
 
         [Fact]
@@ -191,7 +191,7 @@
                         .ShouldMap("/Home/Contact/1")
                         .ToRouteValues(new { controller = "Home", action = "Index", id = 1 });
                 },
-                "Expected route '/Home/Contact/1' to contain route value with 'action' key and the provided value but the value was different.");
+                "Expected route '/Home/Contact/1' to contain route value with 'action' key and the provided value but the value was different - Contact.");
         }
 
         [Fact]
@@ -279,7 +279,7 @@
                         .ShouldMap("/Test")
                         .ToDataToken("random", 2);
                 },
-                "Expected route '/Test' to contain data token with 'random' key and the provided value but the value was different.");
+                "Expected route '/Test' to contain data token with 'random' key and the provided value but the value was different. Expected a value of Int32 type, but in fact it was String.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -327,7 +327,7 @@
                         .ShouldMap("/Test")
                         .ToDataTokens(new { random = "value", another = "invalid" });
                 },
-                "Expected route '/Test' to contain data token with 'another' key and the provided value but the value was different.");
+                "Expected route '/Test' to contain data token with 'another' key and the provided value but the value was different. Expected a value of 'invalid', but in fact it was 'token'.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
