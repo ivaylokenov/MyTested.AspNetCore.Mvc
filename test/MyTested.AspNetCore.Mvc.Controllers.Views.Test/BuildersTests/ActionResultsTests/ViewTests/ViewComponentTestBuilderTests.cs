@@ -217,7 +217,7 @@
                         .ViewComponent(viewComponent => viewComponent
                             .WithModel(new object()));
                 },
-                "When calling CustomViewComponentResultWithViewData action in MvcController expected response model Object to be the given model, but in fact it was a different one.");
+                "When calling CustomViewComponentResultWithViewData action in MvcController expected response model Object to be the given model, but in fact it was a different one. Expected a value of Object type, but in fact it was List<ResponseModel>.");
         }
 
         [Fact]

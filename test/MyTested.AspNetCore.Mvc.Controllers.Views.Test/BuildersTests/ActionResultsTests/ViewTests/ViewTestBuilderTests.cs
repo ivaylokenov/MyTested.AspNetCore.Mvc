@@ -71,7 +71,7 @@
                         .View(view => view
                             .WithModel(model));
                 },
-                "When calling IndexView action in MvcController expected response model List<ResponseModel> to be the given model, but in fact it was a different one.");
+                "When calling IndexView action in MvcController expected response model List<ResponseModel> to be the given model, but in fact it was a different one. Difference occurs at 'List<ResponseModel>[0].IntegerValue'. Expected a value of '2147483647', but in fact it was '1'.");
         }
 
         [Fact]
@@ -305,7 +305,7 @@
                         .PartialView(partialView => partialView
                             .WithModel(model));
                 },
-                "When calling IndexPartialView action in MvcController expected response model List<ResponseModel> to be the given model, but in fact it was a different one.");
+                "When calling IndexPartialView action in MvcController expected response model List<ResponseModel> to be the given model, but in fact it was a different one. Difference occurs at 'List<ResponseModel>[0].IntegerValue'. Expected a value of '2147483647', but in fact it was '1'.");
         }
 
         [Fact]
@@ -571,7 +571,7 @@
                         .PartialView(partialView => partialView
                             .WithModel(new object()));
                 },
-                "When calling CustomPartialViewResultWithViewData action in MvcController expected response model Object to be the given model, but in fact it was a different one.");
+                "When calling CustomPartialViewResultWithViewData action in MvcController expected response model Object to be the given model, but in fact it was a different one. Expected a value of Object type, but in fact it was List<ResponseModel>.");
         }
 
         [Fact]
