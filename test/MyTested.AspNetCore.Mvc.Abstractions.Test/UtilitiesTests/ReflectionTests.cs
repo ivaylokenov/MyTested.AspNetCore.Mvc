@@ -1012,7 +1012,7 @@
             Assert.False(Reflection.AreDeeplyEqual(new object(), true, out result));
             Assert.Equal("Expected a value of Object type, but in fact it was Boolean", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(new { Integer = 1, String = "Test", Nested = new byte[] { 1, 2, 3 } }, new { Integer = 1, String = "Test", Nested = new byte[] { 1, 2, 4 } }, out result));
-            Assert.Equal("Difference occurs at 'AnonymousType2<Int32, String, Byte[]>.Nested[2]'. Expected a value of '3', but in fact it was '4'", result.ToString());
+            Assert.Equal("Difference occurs at 'AnonymousType<Int32, String, Byte[]>.Nested[2]'. Expected a value of '3', but in fact it was '4'", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(new RequestModel { Integer = 2 }, new RequestModel { Integer = 1 }, out result));
             Assert.Equal("Difference occurs at 'RequestModel.Integer'. Expected a value of '2', but in fact it was '1'", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(new object(), new RequestModel { Integer = 1 }, out result));

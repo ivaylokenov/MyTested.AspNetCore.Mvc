@@ -200,6 +200,14 @@
 
                 var genericArgumentNames = type.GetGenericArguments().Select(ga => ga.ToFriendlyTypeName());
                 var friendlyGenericName = type.Name.Split('`')[0].Replace(anonymousTypePrefix, string.Empty);
+
+                var anonymousName = "AnonymousType";
+
+                if (friendlyGenericName.StartsWith(anonymousName))
+                {
+                    friendlyGenericName = friendlyGenericName.Remove(anonymousName.Length);
+                }
+
                 var joinedGenericArgumentNames = string.Join(", ", genericArgumentNames);
 
                 return $"{friendlyGenericName}<{joinedGenericArgumentNames}>";
