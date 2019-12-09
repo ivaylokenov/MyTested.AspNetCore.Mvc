@@ -1,7 +1,7 @@
-﻿namespace Test.Core.MissingWebSdk
+﻿namespace Test.MissingWebSdk
 {
     using Microsoft.Extensions.Configuration;
-    using WebApplication.Core;
+    using WebApplication;
 
     public class TestStartup : Startup
     {

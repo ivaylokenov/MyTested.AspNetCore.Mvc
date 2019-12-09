@@ -1,4 +1,4 @@
-﻿namespace Test.Core.MissingWebSdk
+﻿namespace Test.MissingWebSdk
 {
     using System;
     using MyTested.AspNetCore.Mvc;

@@ -1,4 +1,4 @@
-namespace Test.Core.MissingAppPackage
+namespace Test.MissingAppPackage
 {
     using System;
     using MyTested.AspNetCore.Mvc;
