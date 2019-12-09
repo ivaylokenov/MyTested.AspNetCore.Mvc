@@ -440,6 +440,280 @@
         }
 
         [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectStatusCode()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingResponseProduction(200));
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithMissingAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingResponseProduction(200));
+                },
+                "When testing MvcController was expected to have ProducesResponseTypeAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithIncorrectStatusCode()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingResponseProduction(404));
+                },
+                "When testing ApiController was expected to have ProducesResponseTypeAttribute with '404' status code, but in fact found '200'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeType()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingResponseProduction(typeof(ResponseModel)));
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithIncorrectAttributeType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingResponseProduction(typeof(RequestModel)));
+                },
+                "When testing ApiController was expected to have ProducesResponseTypeAttribute with 'RequestModel' type, but in fact found 'ResponseModel'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithMissingAttributeWithType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingResponseProduction(typeof(ResponseModel)));
+                },
+                "When testing MvcController was expected to have ProducesResponseTypeAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndStatusCode()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingResponseProduction(typeof(ResponseModel), 200));
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithCorrectAttributeTypeAndWrongStatusCode()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingResponseProduction(typeof(ResponseModel), 404));
+                },
+                "When testing ApiController was expected to have ProducesResponseTypeAttribute with '404' status code, but in fact found '200'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithWrongAttributeTypeAndCorrectStatusCode()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingResponseProduction(typeof(RequestModel), 200));
+                },
+                "When testing ApiController was expected to have ProducesResponseTypeAttribute with 'RequestModel' type, but in fact found 'ResponseModel'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithWrongAttributeTypeAndWrongStatusCode()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingResponseProduction(typeof(RequestModel), 404));
+                },
+                "When testing ApiController was expected to have ProducesResponseTypeAttribute with 'RequestModel' type, but in fact found 'ResponseModel'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithMissingAttributeWithTypeAndStatusCode()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingResponseProduction(typeof(ResponseModel), 200));
+                },
+                "When testing MvcController was expected to have ProducesResponseTypeAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeStatusCodeUsingBuilder()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingResponseProduction(responseProduction => responseProduction
+                        .WithStatusCode(200)));
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithWrongAttributeStatusCodeUsingBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingResponseProduction(responseProduction => responseProduction
+                                .WithStatusCode(404)));
+                },
+                "When testing ApiController was expected to have ProducesResponseTypeAttribute with '404' status code, but in fact found '200'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithMissingAttributeWithStatusCodeUsingBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingResponseProduction(responseProduction => responseProduction
+                                .WithStatusCode(200)));
+                },
+                "When testing MvcController was expected to have ProducesResponseTypeAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeTypeUsingBuilder()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingResponseProduction(responseProduction => responseProduction
+                        .OfType(typeof(ResponseModel))));
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithMissingAttributeUsingBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingResponseProduction(responseProduction => responseProduction
+                                .OfType(typeof(ResponseModel))));
+                },
+                "When testing MvcController was expected to have ProducesResponseTypeAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithWrongAttributeTypeUsingBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingResponseProduction(responseProduction => responseProduction
+                                .OfType(typeof(RequestModel))));
+                },
+                "When testing ApiController was expected to have ProducesResponseTypeAttribute with 'RequestModel' type, but in fact found 'ResponseModel'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndStatusCodeUsingBuilder()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingResponseProduction(responseProduction => responseProduction
+                        .WithStatusCode(200)
+                        .OfType(typeof(ResponseModel))));
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithIncorrectAttributeTypeAndStatusCodeUsingBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingResponseProduction(responseProduction => responseProduction
+                                .WithStatusCode(200)
+                                .OfType(typeof(RequestModel))));
+                },
+                "When testing ApiController was expected to have ProducesResponseTypeAttribute with 'RequestModel' type, but in fact found 'ResponseModel'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithCorrectAttributeTypeAndWrongStatusCodeUsingBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingResponseProduction(responseProduction => responseProduction
+                                .WithStatusCode(404)
+                                .OfType(typeof(ResponseModel))));
+                },
+                "When testing ApiController was expected to have ProducesResponseTypeAttribute with '404' status code, but in fact found '200'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndAlsoWithStatusCodeUsingBuilder()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingResponseProduction(responseProduction => responseProduction
+                        .WithStatusCode(200)
+                        .AndAlso()
+                        .OfType(typeof(ResponseModel))));
+        }
+
+        [Fact]
         public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttribute()
         {
             MyController<ApiController>
