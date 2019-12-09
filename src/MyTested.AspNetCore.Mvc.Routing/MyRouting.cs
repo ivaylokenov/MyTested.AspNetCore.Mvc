@@ -9,7 +9,8 @@
     using Internal.TestContexts;
 
     /// <summary>
-    /// Provides methods to specify an ASP.NET Core MVC route test case.
+    /// Provides methods to specify an ASP.NET Core MVC route test case. 
+    /// This assertion chain does not execute the filters pipeline.
     /// </summary>
     public class MyRouting : RouteTestBuilder
     {
@@ -17,6 +18,7 @@
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MyRouting"/> class.
+        /// This assertion chain does not execute the filters pipeline.
         /// </summary>
         public MyRouting(bool fullExecution = false)
             : base(new RouteTestContext
@@ -33,7 +35,7 @@
         }
 
         /// <summary>
-        /// Starts a route test.
+        /// Starts a route test. This assertion chain does not execute the filters pipeline.
         /// </summary>
         /// <returns>Test builder of <see cref="IRouteTestBuilder"/> type.</returns>
         public static IRouteTestBuilder Configuration() => new MyRouting();
