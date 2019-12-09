@@ -111,12 +111,13 @@
                 ? actualBuilder.GetActualModel()
                 : actualBuilder.GetActualModel<TModel>();
 
-            if (Reflection.AreNotDeeplyEqual(model, actualModel))
+            if (Reflection.AreNotDeeplyEqual(model, actualModel, out var result))
             {
                 throw new ResponseModelAssertionException(string.Format(
                     actualBuilder.ErrorMessageFormat,
                     actualBuilder.TestContext.ExceptionMessagePrefix,
-                    modelType.ToFriendlyTypeName()));
+                    modelType.ToFriendlyTypeName(),
+                    result));
             }
 
             actualBuilder.TestContext.Model = actualModel;

@@ -85,9 +85,9 @@
                 ValidateInvocationResultType<TResult>(testContext);
             }
 
-            if (Reflection.AreNotDeeplyEqual(model, testContext.MethodResult))
+            if (Reflection.AreNotDeeplyEqual(model, testContext.MethodResult, out var result))
             {
-                throw ResponseModelAssertionException.From(testContext.ExceptionMessagePrefix);
+                throw ResponseModelAssertionException.From(testContext.ExceptionMessagePrefix, result);
             }
 
             testContext.Model = model;

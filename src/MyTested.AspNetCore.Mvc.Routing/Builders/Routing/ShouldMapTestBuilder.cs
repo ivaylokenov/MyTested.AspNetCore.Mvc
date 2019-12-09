@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
     using Contracts.Routing;
     using Exceptions;
+    using Internal;
     using Internal.Routing;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Routing;
@@ -108,21 +109,24 @@
                 routeValue = actualInfo.RouteData.Values[key];
             }
 
-            bool invalid;
-            if (value is string || routeValue is string)
+            var invalid = false;
+            var valueIsString = value is string || routeValue is string;
+            DeepEqualityResult result = null;
+
+            if (valueIsString)
             {
                 invalid = value.ToString() != routeValue.ToString();
             }
             else
             {
-                invalid = Reflection.AreNotDeeplyEqual(value, routeValue);
+                invalid = Reflection.AreNotDeeplyEqual(value, routeValue, out result);
             }
 
             if (invalid)
             {
                 this.ThrowNewRouteAssertionException(
                     $"contain route value with '{key}' key and the provided value",
-                    "the value was different");
+                    $"the value was different{(valueIsString ? $" - {routeValue}." : $". {result}")}");
             }
 
             return this;
@@ -177,11 +181,11 @@
             var actualInfo = this.GetActualRouteInfo();
             var routeValue = actualInfo.RouteData.DataTokens[key];
 
-            if (Reflection.AreNotDeeplyEqual(value, routeValue))
+            if (Reflection.AreNotDeeplyEqual(value, routeValue, out var result))
             {
                 this.ThrowNewRouteAssertionException(
                     $"contain data token with '{key}' key and the provided value",
-                    $"the value was different");
+                    $"the value was different. {result}");
             }
 
             return this;

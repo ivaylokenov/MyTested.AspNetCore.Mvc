@@ -42,11 +42,11 @@
         {
             this.validations.Add((expected, actual) =>
             {
-                if (Reflection.AreNotDeeplyEqual(expected.Value, actual.Value))
+                if (Reflection.AreNotDeeplyEqual(expected.Value, actual.Value, out var result))
                 {
                     this.ThrowNewDataProviderAssertionException(
                         $"to have entry with '{this.MemoryCacheEntry.Key}' key and the given value",
-                        "in fact it was different");
+                        $"in fact it was different. {result}");
                 }
             });
 

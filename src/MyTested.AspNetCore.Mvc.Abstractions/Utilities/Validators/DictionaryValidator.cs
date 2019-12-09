@@ -1,9 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Utilities.Validators
 {
-    using Extensions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Extensions;
+    using Internal;
 
     public static class DictionaryValidator
     {
@@ -32,12 +33,13 @@
             var entryExists = dictionary.ContainsKey(key);
             var actualValue = entryExists ? dictionary[key] : null;
 
-            if (!entryExists || Reflection.AreNotDeeplyEqual(value, actualValue))
+            DeepEqualityResult result = null;
+            if (!entryExists || Reflection.AreNotDeeplyEqual(value, actualValue, out result))
             {
                 failedValidationAction(
                     name,
                     $"to have entry with '{key}' key and the provided value",
-                    $"{(entryExists ? "the value was different" : "such was not found")}");
+                    $"{(entryExists ? $"the value was different. {result}" : "such was not found")}");
             }
         }
 

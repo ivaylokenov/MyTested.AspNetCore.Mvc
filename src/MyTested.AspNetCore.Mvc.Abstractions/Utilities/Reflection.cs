@@ -310,8 +310,15 @@
         /// <param name="actual">Actual object.</param>
         /// <returns>True or false.</returns>
         public static bool AreDeeplyEqual(object expected, object actual)
-            => AreDeeplyEqual(expected, actual, new ConditionalWeakTable<object, object>(), new DeepEqualityResult(null, null));
+            => AreDeeplyEqual(expected, actual, out _);
 
+        /// <summary>
+        /// Checks whether two objects are deeply equal by reflecting all their public properties recursively. Resolves successfully value and reference types, overridden Equals method, custom == operator, IComparable, nested objects and collection properties.
+        /// </summary>
+        /// <param name="expected">Expected object.</param>
+        /// <param name="actual">Actual object.</param>
+        /// <param name="result">Result object containing differences between the two objects.</param>
+        /// <returns>True or false.</returns>
         public static bool AreDeeplyEqual(object expected, object actual, out DeepEqualityResult result)
         {
             var expectedTypeName = expected?.GetType().ToFriendlyTypeName();
@@ -330,7 +337,18 @@
         /// <returns>True or false.</returns>
         /// <remarks>This method is used for the route testing. Since the ASP.NET Core MVC model binder creates new instances, circular references are not checked.</remarks>
         public static bool AreNotDeeplyEqual(object expected, object actual)
-            => !AreDeeplyEqual(expected, actual);
+            => AreNotDeeplyEqual(expected, actual, out _);
+
+        /// <summary>
+        /// Checks whether two objects are not deeply equal by reflecting all their public properties recursively. Resolves successfully value and reference types, overridden Equals method, custom == operator, IComparable, nested objects and collection properties.
+        /// </summary>
+        /// <param name="expected">Expected object.</param>
+        /// <param name="actual">Actual object.</param>
+        /// <param name="result">Result object containing differences between the two objects.</param>
+        /// <returns>True or false.</returns>
+        /// <remarks>This method is used for the route testing. Since the ASP.NET Core MVC model binder creates new instances, circular references are not checked.</remarks>
+        public static bool AreNotDeeplyEqual(object expected, object actual, out DeepEqualityResult result)
+            => !AreDeeplyEqual(expected, actual, out result);
 
         /// <summary>
         /// Copies the non-null property values from one object to another.
@@ -407,6 +425,14 @@
 
         public static MethodInfo GetNonPublicMethod(Type type, string name)
             => type.GetMethod(name, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+
+        private static bool IsDateTimeRelated(this Type type)
+            => type == typeof(DateTime)
+            || type == typeof(DateTime?)
+            || type == typeof(TimeSpan)
+            || type == typeof(TimeSpan?)
+            || type == typeof(DateTimeOffset)
+            || type == typeof(DateTimeOffset?);
 
         private static ConstructorInfo GetConstructorByUnorderedParameters(this Type type, IEnumerable<Type> types)
         {
@@ -524,7 +550,7 @@
                 if (!equalsOperatorResult && expectedType != stringType)
                 {
                     result.PushPath("== (Equality Operator)");
-                    if (expectedType != typeof(DateTime))
+                    if (!expectedType.IsDateTimeRelated())
                     {
                         result.ClearValues();
                     }
@@ -708,118 +734,6 @@
             }
 
             return result.Success;
-        }
-
-        public class DeepEqualityResult
-        {
-            private readonly Stack<string> expectedPathParts;
-            private readonly Stack<string> actualPathParts;
-
-            public DeepEqualityResult(string initialExpectedName, string initialActualName)
-            {
-                this.expectedPathParts = new Stack<string>();
-                this.actualPathParts = new Stack<string>();
-
-                this.expectedPathParts.Push(initialExpectedName ?? initialActualName);
-                this.actualPathParts.Push(initialActualName ?? initialExpectedName);
-            }
-
-            public bool Result { get; private set; } = true;
-
-            public DeepEqualityResult Success
-            {
-                get
-                {
-                    this.Result = true;
-                    return this;
-                }
-            }
-
-            public DeepEqualityResult Failure
-            {
-                get
-                {
-                    this.Result = false;
-                    return this;
-                }
-            }
-
-            public object ExpectedValue { get; private set; }
-
-            public object ActualValue { get; private set; }
-
-            public DeepEqualityResult PushPath(string path)
-            {
-                this.expectedPathParts.Push(path);
-                this.actualPathParts.Push(path);
-                return this;
-            }
-
-            public DeepEqualityResult PushPath(string expectedPath, string actualPath)
-            {
-                this.expectedPathParts.Push(expectedPath);
-                this.actualPathParts.Push(actualPath);
-                return this;
-            }
-
-            public DeepEqualityResult PopPath()
-            {
-                this.expectedPathParts.Pop();
-                this.actualPathParts.Pop();
-                return this;
-            }
-
-            public DeepEqualityResult ApplyValues(object expected, object actual)
-            {
-                this.ExpectedValue = expected;
-                this.ActualValue = actual;
-                return this;
-            }
-
-            public DeepEqualityResult ClearValues()
-            {
-                this.ExpectedValue = null;
-                this.ActualValue = null;
-                return this;
-            }
-
-            public override string ToString()
-            {
-                if (this.Result)
-                {
-                    return "Objects are deeply equal.";
-                }
-
-                var singlePathPart = expectedPathParts.Count == 1;
-                var pathMessage = string.Empty;
-
-                if (singlePathPart)
-                {
-                    var expectedType = this.expectedPathParts.First();
-                    var actualType = this.actualPathParts.First();
-
-                    if (expectedType != actualType)
-                    {
-                        return $"Expected a value of {expectedType} type, but in fact it was {actualType}.";
-                    }
-                }
-                else
-                {
-                    var expectedPath = string.Join(".", this.expectedPathParts.Reverse()).Replace(".[", "[");
-
-                    pathMessage = $"Difference occurs at '{expectedPath}'.";
-                }
-
-                var valuesMessage = string.Empty;
-                if (singlePathPart || (this.ExpectedValue != null && this.ActualValue != null))
-                {
-                    valuesMessage = $"{(pathMessage.Length > 0 ? " " : string.Empty)}Expected a value of {this.ExpectedValue.GetErrorMessageName()}, but in fact it was {this.ActualValue.GetErrorMessageName()}.";
-                }
-
-                return $"{pathMessage}{valuesMessage}";
-            }
-
-            public static implicit operator bool(DeepEqualityResult deepEqualResult) => deepEqualResult.Result;
         }
 
         private static class New<T>

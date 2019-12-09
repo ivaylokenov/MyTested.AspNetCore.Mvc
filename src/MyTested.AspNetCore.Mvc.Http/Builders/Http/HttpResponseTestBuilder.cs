@@ -87,12 +87,12 @@
         {
             var parsedBody = FormattersHelper.ReadFromStream<TBody>(this.httpResponse.Body, contentType, encoding);
 
-            if (Reflection.AreNotDeeplyEqual(body, parsedBody))
+            if (Reflection.AreNotDeeplyEqual(body, parsedBody, out var result))
             {
                 this.ThrowNewHttpResponseAssertionException(
                     "body",
                     "to be the given object",
-                    "in fact it was different");
+                    $"in fact it was different. {result}");
             }
 
             return this.WithContentType(contentType);

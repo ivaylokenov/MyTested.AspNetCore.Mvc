@@ -48,11 +48,11 @@
         {
             this.validations.Add(actual =>
             {
-                if (Reflection.AreNotDeeplyEqual(value, actual))
+                if (Reflection.AreNotDeeplyEqual(value, actual, out var result))
                 {
                     this.ThrowNewDataProviderAssertionException(
                         $"to have entry with '{this.entryKey}' key and the given value",
-                        "the value was different");
+                        $"the value was different. {result}");
                 }
             });
 
