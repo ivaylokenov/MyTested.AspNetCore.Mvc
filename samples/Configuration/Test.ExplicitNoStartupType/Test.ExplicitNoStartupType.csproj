@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\MyTested.AspNetCore.Mvc\MyTested.AspNetCore.Mvc.csproj" />
-    <ProjectReference Include="..\WebApplication.Core\WebApplication.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
