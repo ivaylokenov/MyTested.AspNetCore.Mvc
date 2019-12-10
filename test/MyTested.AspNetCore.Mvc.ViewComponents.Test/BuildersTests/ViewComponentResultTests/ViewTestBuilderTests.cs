@@ -16,8 +16,8 @@
             MyViewComponent<ViewResultComponent>
                 .InvokedWith(c => c.Invoke("All"))
                 .ShouldReturn()
-                .View("SomeView")
-                .WithModel(new ResponseModel { IntegerValue = 10 });
+                .View(view => view
+                    .WithModel(new ResponseModel { IntegerValue = 10 }));
         }
 
         [Fact]
@@ -29,8 +29,8 @@
                     MyViewComponent<ViewResultComponent>
                         .InvokedWith(c => c.Invoke("All"))
                         .ShouldReturn()
-                        .View("SomeView")
-                        .WithModel(TestObjectFactory.GetListOfResponseModels());
+                        .View(view => view
+                            .WithModel(TestObjectFactory.GetListOfResponseModels()));
                 },
                 "When invoking ViewResultComponent expected response model to be of List<ResponseModel> type, but instead received ResponseModel.");
         }
@@ -44,8 +44,8 @@
                     MyViewComponent<ViewResultComponent>
                         .InvokedWith(c => c.Invoke("All"))
                         .ShouldReturn()
-                        .View("SomeView")
-                        .WithModel((string)null);
+                        .View(view => view
+                            .WithModel((string)null));
                 },
                 "When invoking ViewResultComponent expected response model to be of String type, but instead received ResponseModel.");
         }
@@ -59,8 +59,8 @@
                     MyViewComponent<ViewResultComponent>
                         .InvokedWith(c => c.Invoke("All"))
                         .ShouldReturn()
-                        .View("SomeView")
-                        .WithModel(new ResponseModel { IntegerValue = 11 });
+                        .View(view => view
+                            .WithModel(new ResponseModel { IntegerValue = 11 }));
                 },
                 "When invoking ViewResultComponent expected response model ResponseModel to be the given model, but in fact it was a different one. Difference occurs at 'ResponseModel.IntegerValue'. Expected a value of '11', but in fact it was '10'.");
         }
@@ -71,17 +71,56 @@
             MyViewComponent<ViewResultComponent>
                 .InvokedWith(c => c.Invoke("All"))
                 .ShouldReturn()
-                .View("SomeView")
-                .WithModelOfType<ResponseModel>();
+                .View(view => view
+                    .WithModelOfType<ResponseModel>());
         }
-        
+
         [Fact]
-        public void AndProvideTheActionResultShouldWorkCorrectlyWithPartial()
+        public void PassingWithActionShouldWorkCorrectly()
+        {
+            MyViewComponent<ViewResultComponent>
+                .InvokedWith(c => c.Invoke("custom"))
+                .ShouldReturn()
+                .View(result => result
+                    .Passing(view =>
+                    {
+                        Assert.Equal("Custom", view.ViewName);
+                    }));
+        }
+
+        [Fact]
+        public void PassingWithPredicateShouldWorkCorrectly()
+        {
+            MyViewComponent<ViewResultComponent>
+                .InvokedWith(c => c.Invoke("custom"))
+                .ShouldReturn()
+                .View(result => result
+                    .Passing(view => view.ViewName == "Custom"));
+        }
+
+        [Fact]
+        public void PassingWithPredicateShouldThrowExceptionWithInvalidAssertions()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyViewComponent<ViewResultComponent>
+                        .InvokedWith(c => c.Invoke("custom"))
+                        .ShouldReturn()
+                        .View(result => result
+                            .Passing(view => view
+                                .ViewName == "Invalid"));
+                },
+                "When invoking ViewResultComponent expected the ViewViewComponentResult to pass the given predicate, but it failed.");
+        }
+
+        [Fact]
+        public void AndAlsoShouldWorkCorrectlyWithViewComponentResult()
         {
             MyViewComponent<ViewResultComponent>
                 .InvokedWith(c => c.Invoke("All"))
                 .ShouldReturn()
-                .View("SomeView")
+                .View()
                 .AndAlso()
                 .ShouldPassForThe<IViewComponentResult>(actionResult =>
                 {

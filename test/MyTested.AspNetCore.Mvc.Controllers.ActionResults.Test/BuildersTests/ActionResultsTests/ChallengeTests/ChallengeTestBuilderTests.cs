@@ -142,7 +142,6 @@
                     .ContainingAuthenticationScheme(AuthenticationScheme.NTLM));
         }
 
-
         [Fact]
         public void PassingShouldCorrectlyRunItsAssertionFunction()
         {

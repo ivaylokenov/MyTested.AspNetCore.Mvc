@@ -13,6 +13,47 @@
     {
         /// <summary>
         /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ViewComponents.ViewViewComponentResult"/>
+        /// has the default view name.
+        /// </summary>
+        /// <param name="viewTestBuilder">
+        /// Instance of <see cref="IViewTestBuilder"/> type.
+        /// </param>
+        /// <returns>The same <see cref="IAndViewTestBuilder"/>.</returns>
+        public static IAndViewTestBuilder WithDefaultName(
+            this IViewTestBuilder viewTestBuilder)
+            => viewTestBuilder
+                .WithName(null);
+
+        /// <summary>
+        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ViewComponents.ViewViewComponentResult"/>
+        /// has the same view name as the provided one.
+        /// </summary>
+        /// <param name="viewTestBuilder">
+        /// Instance of <see cref="IViewTestBuilder"/> type.
+        /// </param>
+        /// <param name="viewName">Expected view name.</param>
+        /// <returns>The same <see cref="IAndViewTestBuilder"/>.</returns>
+        public static IAndViewTestBuilder WithName(
+            this IViewTestBuilder viewTestBuilder,
+            string viewName)
+        {
+            var actualBuilder = GetActualBuilder(viewTestBuilder);
+
+            var actualViewName = actualBuilder.ViewResult.ViewName;
+
+            if (viewName != actualViewName)
+            {
+                throw ViewViewComponentResultAssertionException.ForNameEquality(
+                    actualBuilder.TestContext.ExceptionMessagePrefix,
+                    viewName,
+                    actualViewName);
+            }
+
+            return actualBuilder;
+        }
+
+        /// <summary>
+        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ViewComponents.ViewViewComponentResult"/>
         /// has the same <see cref="IViewEngine"/> as the provided one.
         /// </summary>
         /// <param name="viewTestBuilder">

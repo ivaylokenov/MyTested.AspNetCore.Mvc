@@ -31,9 +31,9 @@
                         })))
                 .InvokedWith(c => c.Invoke(1))
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<CustomModel>()
-                .Passing(m => m.Name == "Test");
+                .View(view => view
+                    .WithModelOfType<CustomModel>()
+                    .Passing(m => m.Name == "Test"));
 
             MyViewComponent<FindDataComponent>
                 .Instance()
@@ -45,9 +45,9 @@
                     })))
                 .InvokedWith(c => c.Invoke(1))
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<CustomModel>()
-                .Passing(m => m.Name == "Test");
+                .View(view => view
+                    .WithModelOfType<CustomModel>()
+                    .Passing(m => m.Name == "Test"));
 
             MyViewComponent<FindDataComponent>
                 .Instance()
@@ -92,9 +92,9 @@
                         })))
                 .InvokedWith(c => c.Invoke(1))
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<CustomModel>()
-                .Passing(m => m.Name == "Test");
+                .View(view => view
+                    .WithModelOfType<CustomModel>()
+                    .Passing(m => m.Name == "Test"));
 
             MyViewComponent<FindDataComponent>
                 .Instance()
