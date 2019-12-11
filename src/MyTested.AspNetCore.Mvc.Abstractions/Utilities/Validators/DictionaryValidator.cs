@@ -72,10 +72,12 @@
             var actualType = actualValue?.GetType();
             if (!entryExists || Reflection.AreDifferentTypes(expectedType, actualType))
             {
+                var (expectedTypeName, actualTypeName) = (expectedType, actualType).GetTypeComparisonNames();
+
                 failedValidationAction(
                     name,
-                    $"to have entry with '{key}' key and value of {expectedType.ToFriendlyTypeName()} type",
-                    $"{(entryExists ? $"in fact found {actualType.ToFriendlyTypeName()}" : "such was not found")}");
+                    $"to have entry with '{key}' key and value of {expectedTypeName} type",
+                    $"{(entryExists ? $"in fact found {actualTypeName}" : "such was not found")}");
             }
         }
 

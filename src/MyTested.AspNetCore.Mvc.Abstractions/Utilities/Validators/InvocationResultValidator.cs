@@ -3,6 +3,7 @@
     using System;
     using System.Reflection;
     using Exceptions;
+    using Extensions;
     using Internal.TestContexts;
 
     public static class InvocationResultValidator
@@ -65,10 +66,12 @@
 
             if (invalid)
             {
+                var (expectedTypeName, actualTypeName) = (typeOfExpectedReturnValue, typeOfResult).GetTypeComparisonNames();
+
                 ThrowNewInvocationResultAssertionException(
                     testContext,
-                    typeOfExpectedReturnValue.ToFriendlyTypeName(),
-                    typeOfResult.ToFriendlyTypeName());
+                    expectedTypeName,
+                    actualTypeName);
             }
         }
 

@@ -191,13 +191,11 @@
                 return "null";
             }
 
-            var typeName = useFullName ? type.FullName : type.Name;
-
             return useFullName
                 ? FullFriendlyTypeNames
-                    .GetOrAdd(type, _ => GetFriendlyTypeName(type, typeName))
+                    .GetOrAdd(type, _ => GetFriendlyTypeName(type, true))
                 : FriendlyTypeNames
-                    .GetOrAdd(type, _ => GetFriendlyTypeName(type, typeName));
+                    .GetOrAdd(type, _ => GetFriendlyTypeName(type, false));
         }
 
         public static T TryFastCreateInstance<T>()
@@ -315,10 +313,7 @@
         /// <returns>True or false.</returns>
         public static bool AreDeeplyEqual(object expected, object actual, out DeepEqualityResult result)
         {
-            var expectedTypeName = expected?.GetType().ToFriendlyTypeName();
-            var actualTypeName = actual?.GetType().ToFriendlyTypeName();
-
-            result = new DeepEqualityResult(expectedTypeName, actualTypeName);
+            result = new DeepEqualityResult(expected?.GetType(), actual?.GetType());
 
             return AreDeeplyEqual(expected, actual, new ConditionalWeakTable<object, object>(), result);
         }
@@ -727,16 +722,25 @@
             return result.Success;
         }
 
-        private static string GetFriendlyTypeName(Type type, string typeName)
+        private static string GetFriendlyTypeName(Type type, bool useFullName)
         {
             const string anonymousTypePrefix = "<>f__";
+
+            var typeName = useFullName 
+                ? type?.FullName ?? type?.Name
+                : type?.Name;
+
+            if (typeName == null)
+            {
+                throw new InvalidOperationException("Type name cannot be null.");
+            }
 
             if (!type.GetTypeInfo().IsGenericType)
             {
                 return typeName.Replace(anonymousTypePrefix, string.Empty);
             }
 
-            var genericArgumentNames = type.GetGenericArguments().Select(ga => ga.ToFriendlyTypeName());
+            var genericArgumentNames = type.GetGenericArguments().Select(ga => ga.ToFriendlyTypeName(useFullName));
             var friendlyGenericName = typeName.Split('`')[0].Replace(anonymousTypePrefix, string.Empty);
 
             var anonymousName = "AnonymousType";

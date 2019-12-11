@@ -3,15 +3,25 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Utilities;
     using Utilities.Extensions;
 
     public class DeepEqualityResult
     {
+        private readonly Type expectedType;
+        private readonly Type actualType;
+
         private readonly Stack<string> expectedPathParts;
         private readonly Stack<string> actualPathParts;
 
-        public DeepEqualityResult(string initialExpectedName, string initialActualName)
+        public DeepEqualityResult(Type expected, Type actual)
         {
+            this.expectedType = expected;
+            this.actualType = actual;
+
+            var initialExpectedName = expectedType?.ToFriendlyTypeName();
+            var initialActualName = actualType?.ToFriendlyTypeName();
+
             this.expectedPathParts = new Stack<string>();
             this.actualPathParts = new Stack<string>();
 
@@ -55,12 +65,11 @@
 
             if (singlePathPart)
             {
-                var expectedType = this.expectedPathParts.First();
-                var actualType = this.actualPathParts.First();
-
-                if (expectedType != actualType)
+                if (this.expectedType != null && this.actualType != null && expectedType != actualType)
                 {
-                    return $"Expected a value of {expectedType} type, but in fact it was {actualType}";
+                    var (expectedTypeName, actualTypeName) = (this.expectedType, this.actualType).GetTypeComparisonNames();
+
+                    return $"Expected a value of {expectedTypeName} type, but in fact it was {actualTypeName}";
                 }
             }
             else

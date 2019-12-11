@@ -5,6 +5,7 @@
     using Exceptions;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Utilities;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Contains extension methods for <see cref="IViewTestBuilder" />.
@@ -98,10 +99,13 @@
             if (actualViewEngineType == null
                 || Reflection.AreDifferentTypes(expectedViewEngineType, actualViewEngineType))
             {
+                var (expectedViewEngineTypeName, actualViewEngineTypeName) = 
+                    (expectedViewEngineType, actualViewEngineType).GetTypeComparisonNames();
+
                 throw ViewViewComponentResultAssertionException.ForViewEngineType(
                     actualBuilder.TestContext.ExceptionMessagePrefix,
-                    expectedViewEngineType.ToFriendlyTypeName(),
-                    actualViewEngineType.ToFriendlyTypeName());
+                    expectedViewEngineTypeName,
+                    actualViewEngineTypeName);
             }
 
             return actualBuilder;

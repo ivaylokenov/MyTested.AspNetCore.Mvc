@@ -36,7 +36,7 @@
                         .View(view => view
                             .WithModel(TestObjectFactory.GetListOfResponseModels()));
                 },
-                "When calling DefaultView action in MvcController expected response model to be of List<ResponseModel> type, but instead received null.");
+                "When calling DefaultView action in MvcController expected response model to be List<ResponseModel>, but instead received null.");
         }
 
         [Fact]
@@ -52,7 +52,7 @@
                         .View(view => view
                             .WithModel((string)null));
                 },
-                "When calling IndexView action in MvcController expected response model to be of String type, but instead received List<ResponseModel>.");
+                "When calling IndexView action in MvcController expected response model to be String, but instead received List<ResponseModel>.");
         }
 
         [Fact]
@@ -270,7 +270,7 @@
                         .PartialView(partialView => partialView
                             .WithModel(TestObjectFactory.GetListOfResponseModels()));
                 },
-                "When calling DefaultPartialView action in MvcController expected response model to be of List<ResponseModel> type, but instead received null.");
+                "When calling DefaultPartialView action in MvcController expected response model to be List<ResponseModel>, but instead received null.");
         }
 
         [Fact]
@@ -286,7 +286,7 @@
                         .PartialView(partialView => partialView
                             .WithModel((string)null));
                 },
-                "When calling IndexPartialView action in MvcController expected response model to be of String type, but instead received List<ResponseModel>.");
+                "When calling IndexPartialView action in MvcController expected response model to be String, but instead received List<ResponseModel>.");
         }
 
         [Fact]

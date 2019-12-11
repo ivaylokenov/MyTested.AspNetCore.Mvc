@@ -1,16 +1,16 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Json
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
     using Builders.Base;
     using Contracts.ActionResults.Json;
     using Exceptions;
     using Internal.TestContexts;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
     using Utilities;
     using Utilities.Extensions;
     using Utilities.Validators;
@@ -302,11 +302,16 @@
         {
             this.validations.Add((expected, actual) =>
             {
-                if (Reflection.AreDifferentTypes(equalityComparerType, actual.EqualityComparer?.GetType()))
+                var actualEqualityComparerType = actual.EqualityComparer?.GetType();
+
+                if (Reflection.AreDifferentTypes(equalityComparerType, actualEqualityComparerType))
                 {
+                    var (expectedEqualityComparerTypeName, actualEqualityComparerTypeName) = 
+                        (equalityComparerType, actualEqualityComparerType).GetTypeComparisonNames();
+
                     this.ThrowNewJsonResultAssertionException(
-                        $"equality comparer of {equalityComparerType.ToFriendlyTypeName()} type",
-                        $"in fact found {actual.EqualityComparer.GetName()}");
+                        $"equality comparer of {expectedEqualityComparerTypeName} type",
+                        $"in fact found {actualEqualityComparerTypeName}");
                 }
             });
 
@@ -515,11 +520,15 @@
             this.validations.Add((expected, actual) =>
             {
                 var actualReferenceResolverType = actual.ReferenceResolverProvider()?.GetType();
+
                 if (Reflection.AreDifferentTypes(referenceResolverType, actualReferenceResolverType))
                 {
+                    var (expectedReferenceResolverTypeName, actualReferenceResolverTypeName) = 
+                        (referenceResolverType, actualReferenceResolverType).GetTypeComparisonNames();
+
                     this.ThrowNewJsonResultAssertionException(
-                        $"reference resolver of {referenceResolverType.ToFriendlyTypeName()} type",
-                        $"in fact found {actualReferenceResolverType.ToFriendlyTypeName()}");
+                        $"reference resolver of {expectedReferenceResolverTypeName} type",
+                        $"in fact found {actualReferenceResolverTypeName}");
                 }
             });
 
@@ -570,11 +579,15 @@
             this.validations.Add((expected, actual) =>
             {
                 var actualTraceWriterType = actual.TraceWriter?.GetType();
+
                 if (Reflection.AreDifferentTypes(traceWriterType, actualTraceWriterType))
                 {
+                    var (expectedTraceWriterTypeName, actualTraceWriterTypeName) = 
+                        (traceWriterType, actualTraceWriterType).GetTypeComparisonNames();
+
                     this.ThrowNewJsonResultAssertionException(
-                        $"trace writer of {traceWriterType.ToFriendlyTypeName()} type",
-                        $"in fact found {actualTraceWriterType.ToFriendlyTypeName()}");
+                        $"trace writer of {expectedTraceWriterTypeName} type",
+                        $"in fact found {actualTraceWriterTypeName}");
                 }
             });
 
@@ -608,11 +621,15 @@
             this.validations.Add((expected, actual) =>
             {
                 var actualSerializationBinderType = actual.SerializationBinder?.GetType();
+
                 if (Reflection.AreDifferentTypes(serializationBinderType, actualSerializationBinderType))
                 {
+                    var (expectedSerializationBinderTypeName, actualSerializationBinderTypeName) = 
+                        (serializationBinderType, actualSerializationBinderType).GetTypeComparisonNames();
+
                     this.ThrowNewJsonResultAssertionException(
-                        $"serialization binder of {serializationBinderType.ToFriendlyTypeName()} type",
-                        $"in fact found {actualSerializationBinderType.ToFriendlyTypeName()}");
+                        $"serialization binder of {expectedSerializationBinderTypeName} type",
+                        $"in fact found {actualSerializationBinderTypeName}");
                 }
             });
 

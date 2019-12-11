@@ -74,10 +74,12 @@
 
             if (Reflection.AreDifferentTypes(expectedType, actualType))
             {
+                var (expectedTypeName, actualTypeName) = (expectedType, actualType).GetTypeComparisonNames();
+
                 this.ThrowNewDataProviderAssertionException(
                     MemoryCacheName,
-                    $"to have entry with the given key and value of {expectedType.ToFriendlyTypeName()} type",
-                    $"in fact found {actualType.ToFriendlyTypeName()}");
+                    $"to have entry with the given key and value of {expectedTypeName} type",
+                    $"in fact found {actualTypeName}");
             }
 
             return this;

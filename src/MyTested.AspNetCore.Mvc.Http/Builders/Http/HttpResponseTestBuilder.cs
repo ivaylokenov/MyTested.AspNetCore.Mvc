@@ -72,7 +72,7 @@
                 this.ThrowNewHttpResponseAssertionException(
                     "body",
                     $"to be of {typeof(TBody).ToFriendlyTypeName()} type when using '{contentType}'",
-                    $"in fact it was not");
+                    "in fact it was not");
             }
 
             return this.WithContentType(contentType);

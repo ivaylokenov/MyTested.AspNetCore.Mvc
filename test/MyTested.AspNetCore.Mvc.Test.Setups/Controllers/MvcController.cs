@@ -758,6 +758,19 @@
             return new ObjectResult(this.ResponseModel.ToList());
         }
 
+        public IActionResult OkResultWithRepeatedName()
+        {
+            return this.Ok(new CustomActionResult());
+        }
+
+        public IActionResult OkResultWithRepeatedCollectionName()
+        {
+            return this.Ok(new List<CustomActionResult>
+            {
+                new CustomActionResult()
+            });
+        }
+
         public IActionResult BadRequestAction()
         {
             return this.BadRequest();

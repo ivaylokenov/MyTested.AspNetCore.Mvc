@@ -8,6 +8,7 @@
     using Utilities;
     using Utilities.Validators;
     using Exceptions;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing data provider entry.
@@ -69,9 +70,11 @@
 
                 if (Reflection.AreDifferentTypes(expectedType, actualType))
                 {
+                    var (expectedTypeName, actualTypeName) = (expectedType, actualType).GetTypeComparisonNames();
+
                     this.ThrowNewDataProviderAssertionException(
-                        $"to have entry with '{this.entryKey}' key and value of '{expectedType.ToFriendlyTypeName()}' type",
-                        $"in fact found '{actualType.ToFriendlyTypeName()}'");
+                        $"to have entry with '{this.entryKey}' key and value of '{expectedTypeName}' type",
+                        $"in fact found '{actualTypeName}'");
                 }
             });
 

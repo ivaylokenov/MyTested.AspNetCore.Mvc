@@ -9,6 +9,7 @@
     using Exceptions;
     using System;
     using Utilities;
+    using Utilities.Extensions;
     using Utilities.Validators;
 
     /// <summary>
@@ -71,14 +72,16 @@
             var modelIsAssignable = Reflection.AreAssignable(
                     expectedModelType,
                     actualModelType);
-
+            
             if (!modelIsAssignable)
             {
+                var (expectedModelName, actualModelName) = (expectedModelType, actualModelType).GetTypeComparisonNames();
+
                 throw new ResponseModelAssertionException(string.Format(
                     actualBuilder.OfTypeErrorMessageFormat,
                     actualBuilder.TestContext.ExceptionMessagePrefix,
-                    typeof(TModel).ToFriendlyTypeName(),
-                    actualModelType.ToFriendlyTypeName()));
+                    expectedModelName,
+                    actualModelName));
             }
 
             actualBuilder.TestContext.Model = actualBuilder.GetActualModel<TModel>();

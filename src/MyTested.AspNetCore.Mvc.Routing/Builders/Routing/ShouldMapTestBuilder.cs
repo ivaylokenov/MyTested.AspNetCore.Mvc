@@ -233,9 +233,12 @@
 
             if (Reflection.AreDifferentTypes(expectedControllerType, actualControllerType))
             {
+                var (expectedControllerTypeName, actualControllerTypeName) = 
+                    (expectedControllerType, actualControllerType).GetTypeComparisonNames();
+
                 this.ThrowNewRouteAssertionException(
-                    $"match {expectedControllerType.ToFriendlyTypeName()}",
-                    $"in fact matched {actualControllerType.ToFriendlyTypeName()}");
+                    $"match {expectedControllerTypeName}",
+                    $"in fact matched {actualControllerTypeName}");
             }
 
             return this;
@@ -290,9 +293,11 @@
 
             if (Reflection.AreDifferentTypes(expectedControllerType, actualControllerType))
             {
+                var (expectedControllerTypeName, actualControllerTypeName) = (expectedControllerType, actualControllerType).GetTypeComparisonNames();
+
                 this.ThrowNewRouteAssertionException(actual: string.Format(
                     "instead matched {0}",
-                    actualControllerType.ToFriendlyTypeName()));
+                    actualControllerTypeName));
             }
 
             if (expectedRouteValues.Action != actualRouteValues.Action)
@@ -315,16 +320,15 @@
         }
 
         public ExpressionParsedRouteContext GetExpectedRouteInfo()
-            => this.expectedRouteInfo ??
-                   (this.expectedRouteInfo = RouteExpressionParser.Parse(this.actionCallExpression));
+            => this.expectedRouteInfo ??= RouteExpressionParser.Parse(this.actionCallExpression);
 
         public ResolvedRouteContext GetActualRouteInfo()
-            => this.actualRouteInfo ??
-                   (this.actualRouteInfo = MvcRouteResolver.Resolve(
-                       this.Services, 
-                       this.Router, 
-                       this.RouteContext,
-                       this.TestContext.FullExecution));
+            => this.actualRouteInfo ??= MvcRouteResolver
+                .Resolve(
+                    this.Services, 
+                    this.Router, 
+                    this.RouteContext,
+                    this.TestContext.FullExecution);
 
         public void ThrowNewRouteAssertionException(string expected = null, string actual = null)
         {

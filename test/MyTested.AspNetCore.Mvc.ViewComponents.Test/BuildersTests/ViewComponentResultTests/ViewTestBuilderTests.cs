@@ -32,7 +32,7 @@
                         .View(view => view
                             .WithModel(TestObjectFactory.GetListOfResponseModels()));
                 },
-                "When invoking ViewResultComponent expected response model to be of List<ResponseModel> type, but instead received ResponseModel.");
+                "When invoking ViewResultComponent expected response model to be List<ResponseModel>, but instead received ResponseModel.");
         }
 
         [Fact]
@@ -47,7 +47,7 @@
                         .View(view => view
                             .WithModel((string)null));
                 },
-                "When invoking ViewResultComponent expected response model to be of String type, but instead received ResponseModel.");
+                "When invoking ViewResultComponent expected response model to be String, but instead received ResponseModel.");
         }
 
         [Fact]

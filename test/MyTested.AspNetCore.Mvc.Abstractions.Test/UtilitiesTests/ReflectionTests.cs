@@ -319,7 +319,7 @@
         {
             var name = new { Int = 1, String = "Test" }.GetType().ToFriendlyTypeName(true);
             Assert.StartsWith("AnonymousType", name);
-            Assert.EndsWith("<Int32, String>", name);
+            Assert.EndsWith("<System.Int32, System.String>", name);
         }
 
         [Fact]
@@ -368,14 +368,14 @@
         public void ToFriendlyTypeNameShouldReturnProperNameWhenTypeIsGenericWithOneArgumentWithFullName()
         {
             var name = typeof(List<int>).ToFriendlyTypeName(true);
-            Assert.Equal("System.Collections.Generic.List<Int32>", name);
+            Assert.Equal("System.Collections.Generic.List<System.Int32>", name);
         }
 
         [Fact]
         public void ToFriendlyTypeNameShouldReturnProperNameWhenTypeIsGenericWithMoreThanOneArgumentsWithFullName()
         {
             var name = typeof(Dictionary<string, int>).ToFriendlyTypeName(true);
-            Assert.Equal("System.Collections.Generic.Dictionary<String, Int32>", name);
+            Assert.Equal("System.Collections.Generic.Dictionary<System.String, System.Int32>", name);
         }
 
         [Fact]
