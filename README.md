@@ -1,5 +1,19 @@
 <h1><img src="https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/logo.png" align="left" alt="MyTested.AspNetCore.Mvc" width="100">&nbsp; MyTested.AspNetCore.Mvc - Fluent Testing<br />&nbsp; Library for ASP.NET Core MVC</h1> 
 
+## Special Sponsors
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="middle">
+          <a href="http://bit.ly/bellatrixsolutions" target="_blank">
+    <img width="323px" src="https://user-images.githubusercontent.com/3391906/68993273-d4f5c700-087e-11ea-9b39-e173733fcbfb.png" alt=""The Ultimate Cross-Platform .NET Framework>
+  </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 ## Gold Sponsors
 
 <table>
@@ -18,6 +32,11 @@
       <td align="center" valign="middle">
           <a href="http://noblehire.io?utm_medium=social&utm_source=projects&utm_campaign=platform-leads-knv" target="_blank">
           <img width="148px" src="https://user-images.githubusercontent.com/3391906/66921689-637fea00-f02e-11e9-944a-b07c6f345a06.png">
+        </a>
+      </td>
+      <td align="center" valign="middle">
+          <a href="http://bit.ly/onebitsoftware" target="_blank">
+          <img width="148px" height="70px" src="https://user-images.githubusercontent.com/3391906/69410626-1a4d4500-0d14-11ea-905f-c1705b6364bf.png">
         </a>
       </td>
     </tr>
