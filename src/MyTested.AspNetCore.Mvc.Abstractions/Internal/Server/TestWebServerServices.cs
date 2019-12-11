@@ -4,7 +4,6 @@
     using System.Diagnostics;
     using Configuration;
     using Logging;
-    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Hosting.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;

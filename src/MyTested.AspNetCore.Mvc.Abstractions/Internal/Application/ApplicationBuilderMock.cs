@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Internal.Routing;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
@@ -13,6 +12,7 @@
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Options;
+    using Routing;
     using Utilities;
     using Utilities.Extensions;
 
@@ -26,7 +26,7 @@
 
         private readonly IList<Func<RequestDelegate, RequestDelegate>> components = new List<Func<RequestDelegate, RequestDelegate>>();
 
-        private bool endpointsEnabled = false;
+        private bool endpointsEnabled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationBuilderMock"/> class.
@@ -161,7 +161,7 @@
             {
                 var routeEndpoints = new Dictionary<string, RouteEndpoint>();
 
-                var allRouteEndpoints = endpointDataSource
+                endpointDataSource
                     .Endpoints
                     .OfType<RouteEndpoint>()
                     .Where(route => route.Metadata.All(m => 
@@ -223,12 +223,7 @@
                 }
             }
 
-            var routes = routeBuilder.Routes;
-
-            for (int i = 0; i < routes.Count; i++)
-            {
-                this.Routes.Add(routes[i]);
-            }
+            routeBuilder.Routes.ForEach(route => this.Routes.Add(route));
         }
 
         private void ExtractLegacyRoutes(Func<RequestDelegate, RequestDelegate> middleware)

@@ -8,18 +8,7 @@
     {
         private static IWebHostEnvironment environment;
 
-        internal static IWebHostEnvironment Environment
-        {
-            get
-            {
-                if (environment == null)
-                {
-                    environment = PrepareEnvironment();
-                }
-
-                return environment;
-            }
-        }
+        internal static IWebHostEnvironment Environment => environment ??= PrepareEnvironment();
 
         internal static string ApplicationName
             => ServerTestConfiguration.General.ApplicationName ?? WebAssemblyName ?? TestAssemblyName;

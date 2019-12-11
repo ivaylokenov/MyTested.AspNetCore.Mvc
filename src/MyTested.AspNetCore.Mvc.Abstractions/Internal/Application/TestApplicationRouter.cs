@@ -55,9 +55,9 @@
             if (!routeBuilderRoutes[0].GetType().Name.StartsWith(nameof(Attribute)))
             {
                 var createAttributeMegaRouteMethod = attributeRoutingType.GetMethod("CreateAttributeMegaRoute");
-                var router = (IRouter)createAttributeMegaRouteMethod.Invoke(null, new[] { serviceProvider });
+                var attributeRouter = (IRouter)createAttributeMegaRouteMethod?.Invoke(null, new object[] { serviceProvider });
 
-                routeBuilderRoutes.Insert(0, router);
+                routeBuilderRoutes.Insert(0, attributeRouter);
             }
 
             router = routeBuilder.Build();
