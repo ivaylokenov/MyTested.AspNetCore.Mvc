@@ -10,24 +10,8 @@
     /// <summary>
     /// Used for building mocked <see cref="ClaimsPrincipal"/>.
     /// </summary>
-    public class WithClaimsPrincipalBuilder : BaseUserBuilder, IAndWithClaimsPrincipalBuilder
+    public class WithClaimsPrincipalBuilder : BaseClaimsPrincipalUserBuilder, IAndWithClaimsPrincipalBuilder
     {
-        private readonly ICollection<ClaimsIdentity> identities;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WithClaimsPrincipalBuilder"/> class.
-        /// </summary>
-        public WithClaimsPrincipalBuilder()
-            => this.identities = new List<ClaimsIdentity>();
-
-        /// <summary>
-        /// Static constructor for creating default authenticated claims principal with "TestId" identifier and "TestUser" username.
-        /// </summary>
-        /// <returns>Authenticated <see cref="ClaimsPrincipal"/>.</returns>
-        /// <value>Result of type <see cref="ClaimsPrincipal"/>.</value>
-        public static ClaimsPrincipal DefaultAuthenticated { get; } 
-            = new ClaimsPrincipal(CreateAuthenticatedClaimsIdentity());
-
         /// <inheritdoc />
         public IAndWithClaimsPrincipalBuilder WithNameType(string nameType)
         {
@@ -111,7 +95,7 @@
                 claimsIdentity = new ClaimsIdentity(identity);
             }
 
-            this.identities.Add(claimsIdentity);
+            base.AddIdentity(claimsIdentity);
             return this;
         }
 
@@ -120,21 +104,12 @@
         {
             var newClaimsIdentityBuilder = new WithClaimsIdentityBuilder();
             claimsIdentityBuilder(newClaimsIdentityBuilder);
-            this.identities.Add(newClaimsIdentityBuilder.GetClaimsIdentity());
+
+            base.AddIdentity(newClaimsIdentityBuilder.GetClaimsIdentity());
             return this;
         }
 
         /// <inheritdoc />
         public IWithClaimsPrincipalBuilder AndAlso() => this;
-
-        public ClaimsPrincipal GetClaimsPrincipal()
-        {
-            var claimIdentities = this.identities.Reverse().ToList();
-            claimIdentities.Add(this.GetAuthenticatedClaimsIdentity());
-
-            var claimsPrincipal = new ClaimsPrincipal(claimIdentities);
-            
-            return claimsPrincipal;
-        }
     }
 }

@@ -74,7 +74,7 @@
         /// Creates new authenticated claims identity by using the accumulated claims and authentication type.
         /// </summary>
         /// <returns>Mock of <see cref="ClaimsIdentity"/>.</returns>
-        protected ClaimsIdentity GetAuthenticatedClaimsIdentity() 
+        protected ClaimsIdentity GetAuthenticatedClaimsIdentity()
             => CreateAuthenticatedClaimsIdentity(
                 this.claims,
                 this.authenticationType,
@@ -97,50 +97,70 @@
         /// Sets identifier claim to the built <see cref="ClaimsIdentity"/>.
         /// </summary>
         /// <param name="identifier">Value of the identifier claim - <see cref="ClaimTypes.NameIdentifier"/>.</param>
-        protected void AddIdentifier(string identifier) 
+        protected void AddIdentifier(string identifier)
             => this.AddClaim(ClaimTypes.NameIdentifier, identifier);
 
         /// <summary>
         /// Sets username claims to the built <see cref="ClaimsIdentity"/>.
         /// </summary>
         /// <param name="username">Value of the username claim. Default claim type is <see cref="ClaimTypes.Name"/>.</param>
-        protected void AddUsername(string username) 
+        protected void AddUsername(string username)
             => this.AddClaim(this.nameType, username);
 
         /// <summary>
         /// Adds claim to the built <see cref="ClaimsIdentity"/>.
         /// </summary>
         /// <param name="claim">The <see cref="Claim"/> to add.</param>
-        protected void AddClaim(Claim claim) 
+        protected void AddClaim(Claim claim)
             => this.claims.Add(claim);
 
         /// <summary>
         /// Adds claims to the built <see cref="ClaimsIdentity"/>.
         /// </summary>
         /// <param name="claims">Collection of <see cref="Claim"/> to add.</param>
-        protected void AddClaims(IEnumerable<Claim> claims) 
+        protected void AddClaims(IEnumerable<Claim> claims)
             => claims.ForEach(this.AddClaim);
 
         /// <summary>
         /// Adds authentication type to the built <see cref="ClaimsIdentity"/>.
         /// </summary>
         /// <param name="authenticationType">Authentication type to add. Default is "Passport".</param>
-        protected void AddAuthenticationType(string authenticationType) 
+        protected void AddAuthenticationType(string authenticationType)
             => this.authenticationType = authenticationType;
 
         /// <summary>
         /// Adds role to the built <see cref="ClaimsIdentity"/>.
         /// </summary>
         /// <param name="role">Value of the role claim. Default claim type is <see cref="ClaimTypes.Role"/>.</param>
-        protected void AddRole(string role) 
+        protected void AddRole(string role)
             => this.AddClaim(this.roleType, role);
 
         /// <summary>
         /// Adds roles to the built <see cref="ClaimsIdentity"/>.
         /// </summary>
         /// <param name="roles">Collection of roles to add.</param>
-        protected void AddRoles(IEnumerable<string> roles) 
+        protected void AddRoles(IEnumerable<string> roles)
             => roles.ForEach(this.AddRole);
+
+        protected void RemoveClaim(Claim claim)
+        {
+            if (this.claims.Contains(claim))
+                this.claims.Remove(claim);
+        }
+
+        protected void RemoveClaim(string type, string value)
+        {
+            var claimsToRemove =
+                this.claims.Where(x => x.Type.Equals(type) && x.Value.Equals(value));
+
+            claimsToRemove.ForEach(claim => this.claims.Remove(claim));
+        }
+
+        protected void RemoveRole(string role)
+            => this.RemoveClaim(this.roleType, role);
+
+        protected void RemoveUsername(string username)
+            => this.RemoveClaim(this.nameType, username);
 
         /// <summary>
         /// Adds claim to the built <see cref="ClaimsIdentity"/>.

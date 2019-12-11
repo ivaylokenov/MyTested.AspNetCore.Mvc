@@ -145,7 +145,7 @@
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            actualBuilder.HttpContext.User = WithClaimsPrincipalBuilder.DefaultAuthenticated;
+            actualBuilder.HttpContext.User = BaseClaimsPrincipalUserBuilder.DefaultAuthenticated;
 
             return actualBuilder.Builder;
         }
