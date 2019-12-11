@@ -229,8 +229,6 @@
             "Microsoft.AspNetCore.Mvc.TagHelpers"
         };
 
-        internal static string AspNetCoreMetaPackageName => AspNetCoreMvcLibraries.First();
-
         internal static IEnumerable<string> AspNetCoreMvcCommonLibraries => AspNetCoreMvcLibraries.Take(5);
     }
 }

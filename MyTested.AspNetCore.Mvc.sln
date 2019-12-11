@@ -227,6 +227,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyTested.AspNetCore.Mvc.New
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication", "samples\Configuration\WebApplication\WebApplication.csproj", "{25649D8E-C12B-492E-8778-9638B0C4B31C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.MultipleEntryPoints", "samples\Configuration\Test.MultipleEntryPoints\Test.MultipleEntryPoints.csproj", "{840C7C04-90CC-4F0F-BDF9-0D97D399BA3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "samples\Configuration\Common\Common.csproj", "{AC971EBF-48A1-47C1-B61F-CF97FCE4F48C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -633,6 +637,14 @@ Global
 		{25649D8E-C12B-492E-8778-9638B0C4B31C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25649D8E-C12B-492E-8778-9638B0C4B31C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25649D8E-C12B-492E-8778-9638B0C4B31C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{840C7C04-90CC-4F0F-BDF9-0D97D399BA3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{840C7C04-90CC-4F0F-BDF9-0D97D399BA3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{840C7C04-90CC-4F0F-BDF9-0D97D399BA3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{840C7C04-90CC-4F0F-BDF9-0D97D399BA3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC971EBF-48A1-47C1-B61F-CF97FCE4F48C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC971EBF-48A1-47C1-B61F-CF97FCE4F48C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC971EBF-48A1-47C1-B61F-CF97FCE4F48C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC971EBF-48A1-47C1-B61F-CF97FCE4F48C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -746,6 +758,8 @@ Global
 		{37C701F0-D727-4E8B-B5CE-A8E412205518} = {EF386110-3D7B-4BDF-B403-8DC2AB8CF7BB}
 		{21B31CB3-CD7C-4EFD-83D8-D986E5C5E302} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 		{25649D8E-C12B-492E-8778-9638B0C4B31C} = {7BEC9808-8650-4322-BCC6-1D7D91B53678}
+		{840C7C04-90CC-4F0F-BDF9-0D97D399BA3F} = {7BEC9808-8650-4322-BCC6-1D7D91B53678}
+		{AC971EBF-48A1-47C1-B61F-CF97FCE4F48C} = {7BEC9808-8650-4322-BCC6-1D7D91B53678}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {99A2DEDD-5195-4EE6-A546-B1CA54C5539F}

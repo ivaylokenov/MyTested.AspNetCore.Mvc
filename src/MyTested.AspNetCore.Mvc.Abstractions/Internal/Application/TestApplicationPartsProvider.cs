@@ -37,7 +37,7 @@
 
                 if (applicationPartManager.ApplicationParts.All(a => a.Name != baseStartupTypeAssemblyName))
                 {
-                    throw new InvalidOperationException($"Web application {baseStartupTypeAssemblyName} could not be loaded correctly. Make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file. Additionally, if your web project references the '{WebFramework.AspNetCoreMetaPackageName}' package, you need to reference it in your test project too.");
+                    throw new InvalidOperationException($"Web application {baseStartupTypeAssemblyName} could not be loaded in the application part manager by convention. You need to set it manually by providing your web project's name in the test configuration's '{GeneralTestConfiguration.PrefixKey}:{GeneralTestConfiguration.WebAssemblyNameKey}' section ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default).");
                 }
 
                 if (ServerTestConfiguration.General.AutomaticApplicationParts)

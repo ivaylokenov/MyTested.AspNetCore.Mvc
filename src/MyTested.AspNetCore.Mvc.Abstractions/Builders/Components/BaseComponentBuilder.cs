@@ -6,6 +6,7 @@
     using Contracts.Base;
     using Exceptions;
     using Internal;
+    using Internal.Configuration;
     using Internal.Http;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Http;
@@ -141,7 +142,7 @@
         {
             if (!this.IsValidComponent)
             {
-                throw new InvalidOperationException($"{typeof(TComponent).ToFriendlyTypeName()} is not recognized as a valid {this.ComponentName} type. Classes decorated with 'Non{this.ComponentName.CapitalizeAndJoin()}Attribute' are not considered as passable {this.ComponentName}s. Additionally, make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file in order to enable proper {this.ComponentName} discovery. If your type is still not recognized, you may manually add it in the application part manager by using the 'AddMvc().PartManager.ApplicationParts.Add(applicationPart))' method.");
+                throw new InvalidOperationException($"{typeof(TComponent).ToFriendlyTypeName()} is not recognized as a valid {this.ComponentName} type. Classes decorated with 'Non{this.ComponentName.CapitalizeAndJoin()}Attribute' are not considered as passable {this.ComponentName}s. To enable proper {this.ComponentName} discovery, the test framework tries to load your web application by convention. If such is not found, you will need to set it manually by providing your web project's name in the test configuration's '{GeneralTestConfiguration.PrefixKey}:{GeneralTestConfiguration.WebAssemblyNameKey}' section ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default). If your {this.ComponentName} type is still not recognized, you may add it by hand in the application part manager by using the 'AddControllers().PartManager.ApplicationParts.Add(applicationPart))' or 'AddControllersWithViews().PartManager.ApplicationParts.Add(applicationPart))' methods.");
             }
         }
         
