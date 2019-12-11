@@ -293,6 +293,13 @@
         }
 
         [Fact]
+        public void ToFriendlyTypeNameShouldReturnTheOriginalNameWhenTypeIsNotGenericWithFullName()
+        {
+            var name = typeof(object).ToFriendlyTypeName(true);
+            Assert.Equal("System.Object", name);
+        }
+
+        [Fact]
         public void ToFriendlyTypeNameShouldReturnProperNameWhenTypeIsAnonymous()
         {
             var name = new { }.GetType().ToFriendlyTypeName();
@@ -303,6 +310,14 @@
         public void ToFriendlyTypeNameShouldReturnProperNameWhenTypeIsAnonymousWithGeneric()
         {
             var name = new { Int = 1, String = "Test" }.GetType().ToFriendlyTypeName();
+            Assert.StartsWith("AnonymousType", name);
+            Assert.EndsWith("<Int32, String>", name);
+        }
+
+        [Fact]
+        public void ToFriendlyTypeNameShouldReturnProperNameWhenTypeIsAnonymousWithGenericWithFullName()
+        {
+            var name = new { Int = 1, String = "Test" }.GetType().ToFriendlyTypeName(true);
             Assert.StartsWith("AnonymousType", name);
             Assert.EndsWith("<Int32, String>", name);
         }
@@ -333,6 +348,34 @@
         {
             var name = typeof(Dictionary<string, int>).ToFriendlyTypeName();
             Assert.Equal("Dictionary<String, Int32>", name);
+        }
+
+        [Fact]
+        public void ToFriendlyTypeNameShouldReturnProperNameWhenTypeIsGenericWithoutArgumentsWithFullName()
+        {
+            var name = typeof(List<>).ToFriendlyTypeName(true);
+            Assert.Equal("System.Collections.Generic.List<T>", name);
+        }
+
+        [Fact]
+        public void ToFriendlyTypeNameShouldReturnProperNameWhenTypeIsGenericWithoutMoreThanOneArgumentsWithFullName()
+        {
+            var name = typeof(Dictionary<,>).ToFriendlyTypeName(true);
+            Assert.Equal("System.Collections.Generic.Dictionary<TKey, TValue>", name);
+        }
+
+        [Fact]
+        public void ToFriendlyTypeNameShouldReturnProperNameWhenTypeIsGenericWithOneArgumentWithFullName()
+        {
+            var name = typeof(List<int>).ToFriendlyTypeName(true);
+            Assert.Equal("System.Collections.Generic.List<Int32>", name);
+        }
+
+        [Fact]
+        public void ToFriendlyTypeNameShouldReturnProperNameWhenTypeIsGenericWithMoreThanOneArgumentsWithFullName()
+        {
+            var name = typeof(Dictionary<string, int>).ToFriendlyTypeName(true);
+            Assert.Equal("System.Collections.Generic.Dictionary<String, Int32>", name);
         }
 
         [Fact]

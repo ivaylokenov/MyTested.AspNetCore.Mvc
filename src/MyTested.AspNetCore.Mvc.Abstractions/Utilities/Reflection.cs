@@ -21,6 +21,7 @@
         private static readonly ConcurrentDictionary<Type, IEnumerable<object>> TypeAttributesCache = new ConcurrentDictionary<Type, IEnumerable<object>>();
         private static readonly ConcurrentDictionary<MethodInfo, IEnumerable<object>> MethodAttributesCache = new ConcurrentDictionary<MethodInfo, IEnumerable<object>>();
         private static readonly ConcurrentDictionary<Type, string> FriendlyTypeNames = new ConcurrentDictionary<Type, string>();
+        private static readonly ConcurrentDictionary<Type, string> FullFriendlyTypeNames = new ConcurrentDictionary<Type, string>();
 
         /// <summary>
         /// Checks whether two objects have the same types.
@@ -170,7 +171,7 @@
             var dataParam = Expression.Parameter(typeof(object), "data");
             var firstConvert = Expression.Convert(dataParam, data.GetType());
             var secondConvert = Expression.Convert(firstConvert, type);
-            var body = Expression.Block(new Expression[] { secondConvert });
+            var body = Expression.Block(secondConvert);
 
             var run = Expression.Lambda(body, dataParam).Compile();
             var ret = run.DynamicInvoke(data);
@@ -181,37 +182,22 @@
         /// Transforms generic type name to friendly one, showing generic type arguments.
         /// </summary>
         /// <param name="type">Type which name will be transformed.</param>
+        /// <param name="useFullName">Indicates whether the type name should be full ot not.</param>
         /// <returns>Transformed name as string.</returns>
-        public static string ToFriendlyTypeName(this Type type)
+        public static string ToFriendlyTypeName(this Type type, bool useFullName = false)
         {
             if (type == null)
             {
                 return "null";
             }
 
-            return FriendlyTypeNames.GetOrAdd(type, _ =>
-            {
-                const string anonymousTypePrefix = "<>f__";
+            var typeName = useFullName ? type.FullName : type.Name;
 
-                if (!type.GetTypeInfo().IsGenericType)
-                {
-                    return type.Name.Replace(anonymousTypePrefix, string.Empty);
-                }
-
-                var genericArgumentNames = type.GetGenericArguments().Select(ga => ga.ToFriendlyTypeName());
-                var friendlyGenericName = type.Name.Split('`')[0].Replace(anonymousTypePrefix, string.Empty);
-
-                var anonymousName = "AnonymousType";
-
-                if (friendlyGenericName.StartsWith(anonymousName))
-                {
-                    friendlyGenericName = friendlyGenericName.Remove(anonymousName.Length);
-                }
-
-                var joinedGenericArgumentNames = string.Join(", ", genericArgumentNames);
-
-                return $"{friendlyGenericName}<{joinedGenericArgumentNames}>";
-            });
+            return useFullName
+                ? FullFriendlyTypeNames
+                    .GetOrAdd(type, _ => GetFriendlyTypeName(type, typeName))
+                : FriendlyTypeNames
+                    .GetOrAdd(type, _ => GetFriendlyTypeName(type, typeName));
         }
 
         public static T TryFastCreateInstance<T>()
@@ -245,7 +231,7 @@
 
             try
             {
-                constructorParameters = constructorParameters ?? new Dictionary<Type, object>();
+                constructorParameters ??= new Dictionary<Type, object>();
                 instance = Activator.CreateInstance(type, constructorParameters.Select(p => p.Value).ToArray()) as T;
             }
             catch (Exception)
@@ -428,7 +414,7 @@
             return typeInfo.IsDefined(typeof(CompilerGeneratedAttribute), false)
                 && typeInfo.IsGenericType
                 && (type.Name.Contains("AnonymousType") || type.Name.Contains("AnonType"))
-                && (typeInfo.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
+                && typeInfo.Attributes.HasFlag(TypeAttributes.NotPublic);
         }
 
         public static MethodInfo GetNonPublicMethod(Type type, string name)
@@ -641,14 +627,11 @@
 
                 var collectionIsDictionary = expected is IDictionary;
 
-                if (collectionIsDictionary)
-                {
-                    result.PushPath($"[{expectedValue.AsDynamic().Key}]");
-                }
-                else
-                {
-                    result.PushPath($"[{i}]");
-                }
+                var indexPath = collectionIsDictionary
+                    ? $"[{expectedValue.AsDynamic().Key}]"
+                    : $"[{i}]";
+
+                result.PushPath(indexPath);
 
                 if (AreNotDeeplyEqual(expectedValue, actualValue, processedElements, result))
                 {
@@ -742,6 +725,30 @@
             }
 
             return result.Success;
+        }
+
+        private static string GetFriendlyTypeName(Type type, string typeName)
+        {
+            const string anonymousTypePrefix = "<>f__";
+
+            if (!type.GetTypeInfo().IsGenericType)
+            {
+                return typeName.Replace(anonymousTypePrefix, string.Empty);
+            }
+
+            var genericArgumentNames = type.GetGenericArguments().Select(ga => ga.ToFriendlyTypeName());
+            var friendlyGenericName = typeName.Split('`')[0].Replace(anonymousTypePrefix, string.Empty);
+
+            var anonymousName = "AnonymousType";
+
+            if (friendlyGenericName.StartsWith(anonymousName))
+            {
+                friendlyGenericName = friendlyGenericName.Remove(anonymousName.Length);
+            }
+
+            var joinedGenericArgumentNames = string.Join(", ", genericArgumentNames);
+
+            return $"{friendlyGenericName}<{joinedGenericArgumentNames}>";
         }
 
         private static class New<T>
