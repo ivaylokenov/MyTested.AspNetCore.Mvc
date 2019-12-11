@@ -552,6 +552,254 @@
         }
 
         [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeAndStatusCode()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingResponseProduction(200));
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithMissingAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.Ok())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(200));
+                },
+                "When calling Ok action in MvcController expected action to have ProducesResponseTypeAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithCorrectAttributeAndWrongStatusCode()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(404));
+                },
+                "When calling Post action in ApiController expected action to have ProducesResponseTypeAttribute with '404' status code, but in fact found '200'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeType()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingResponseProduction(typeof(RequestModel)));
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithMissingAttributeWithType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.Ok())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(typeof(RequestModel)));
+                },
+                "When calling Ok action in MvcController expected action to have ProducesResponseTypeAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithCorrectAttributeAndWrongType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(typeof(ResponseModel)));
+                },
+                "When calling Post action in ApiController expected action to have ProducesResponseTypeAttribute with 'ResponseModel' type, but in fact found 'RequestModel'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndCorrectStatusCode()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingResponseProduction(typeof(RequestModel), 200));
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithMissingAttributeWithTypeAndCorrectStatusCode()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.Ok())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(typeof(RequestModel), 200));
+                },
+                "When calling Ok action in MvcController expected action to have ProducesResponseTypeAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithCorrectAttributeTypeAndWrongStatusCode()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(typeof(RequestModel), 404));
+                },
+                "When calling Post action in ApiController expected action to have ProducesResponseTypeAttribute with '404' status code, but in fact found '200'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithIncorrectAttributeTypeAndCorrectStatusCode()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(typeof(ResponseModel), 200));
+                },
+                "When calling Post action in ApiController expected action to have ProducesResponseTypeAttribute with 'ResponseModel' type, but in fact found 'RequestModel'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeAndStatusCodeUsingBuilder()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingResponseProduction(responseProduction => responseProduction
+                        .WithStatusCode(200)));
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithCorrectAttributeAndWrongStatusCodeUsingBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(responseProduction => responseProduction
+                                .WithStatusCode(404)));
+                },
+                "When calling Post action in ApiController expected action to have ProducesResponseTypeAttribute with '404' status code, but in fact found '200'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeTypeUsingBuilder()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingResponseProduction(responseProduction => responseProduction
+                        .OfType(typeof(RequestModel))));
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithCorrectAttributeAndWrongTypeUsingBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(responseProduction => responseProduction
+                                .OfType(typeof(ResponseModel))));
+                },
+                "When calling Post action in ApiController expected action to have ProducesResponseTypeAttribute with 'ResponseModel' type, but in fact found 'RequestModel'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndStatusCodeUsingBuilder()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingResponseProduction(responseProduction => responseProduction
+                        .WithStatusCode(200)
+                        .OfType(typeof(RequestModel))));
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithWrongAttributeTypeAndStatusCodeUsingBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(responseProduction => responseProduction
+                                .WithStatusCode(200)
+                                .OfType(typeof(ResponseModel))));
+                },
+                "When calling Post action in ApiController expected action to have ProducesResponseTypeAttribute with 'ResponseModel' type, but in fact found 'RequestModel'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndAlsoWithStatusCodeUsingBuilder()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingResponseProduction(responseProduction => responseProduction
+                        .WithStatusCode(200)
+                        .AndAlso()
+                        .OfType(typeof(RequestModel))));
+        }
+
+        [Fact]
         public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttribute()
         {
             MyController<MvcController>
