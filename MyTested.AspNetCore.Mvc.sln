@@ -227,9 +227,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyTested.AspNetCore.Mvc.New
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication", "samples\Configuration\WebApplication\WebApplication.csproj", "{25649D8E-C12B-492E-8778-9638B0C4B31C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.MultipleEntryPoints", "samples\Configuration\Test.MultipleEntryPoints\Test.MultipleEntryPoints.csproj", "{840C7C04-90CC-4F0F-BDF9-0D97D399BA3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.MultipleEntryPoints", "samples\Configuration\Test.MultipleEntryPoints\Test.MultipleEntryPoints.csproj", "{840C7C04-90CC-4F0F-BDF9-0D97D399BA3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "samples\Configuration\Common\Common.csproj", "{AC971EBF-48A1-47C1-B61F-CF97FCE4F48C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "samples\Configuration\Common\Common.csproj", "{AC971EBF-48A1-47C1-B61F-CF97FCE4F48C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

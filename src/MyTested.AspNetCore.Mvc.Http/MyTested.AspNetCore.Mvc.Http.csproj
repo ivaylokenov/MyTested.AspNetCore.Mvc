@@ -4,7 +4,7 @@
     <Description>My Tested ASP.NET Core MVC HTTP components.</Description>
     <Copyright>2015-2019 Ivaylo Kenov</Copyright>
     <AssemblyTitle>MyTested.AspNetCore.Mvc.Http</AssemblyTitle>
-    <VersionPrefix>3.0.0</VersionPrefix>
+    <VersionPrefix>3.0.1</VersionPrefix>
     <Authors>Ivaylo Kenov</Authors>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
