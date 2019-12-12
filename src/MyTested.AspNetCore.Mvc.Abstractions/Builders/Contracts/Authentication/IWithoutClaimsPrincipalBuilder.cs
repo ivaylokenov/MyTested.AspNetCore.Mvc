@@ -5,6 +5,8 @@
     public interface IWithoutClaimsPrincipalBuilder
     {
         IAndWithoutClaimsPrincipalBuilder WithoutRole(string role);
+        
+        IAndWithoutClaimsPrincipalBuilder WithoutUsername(string username);
 
         IAndWithoutClaimsPrincipalBuilder WithoutClaim(string type, string value);
 
