@@ -151,7 +151,7 @@
         protected void RemoveClaim(string type, string value)
         {
             var claimsToRemove =
-                this.claims.Where(x => x.Type.Equals(type) && x.Value.Equals(value));
+                this.claims.Where(x => x.Type.Equals(type) && x.Value.Equals(value)).ToList();
 
             claimsToRemove.ForEach(claim => this.claims.Remove(claim));
         }

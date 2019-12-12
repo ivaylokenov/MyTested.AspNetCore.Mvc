@@ -5,6 +5,11 @@
 
     public class WithoutClaimsPrincipalBuilder : BaseClaimsPrincipalUserBuilder, IAndWithoutClaimsPrincipalBuilder
     {
+        public WithoutClaimsPrincipalBuilder(ClaimsPrincipal principal)
+        {
+            base.AddClaims(principal.Claims);
+        }
+
         public IAndWithoutClaimsPrincipalBuilder WithoutClaim(string type, string value)
         {
             base.RemoveClaim(type, value);
@@ -22,18 +27,6 @@
         public IAndWithoutClaimsPrincipalBuilder WithoutRole(string role)
         {
             base.RemoveRole(role);
-
-            return this;
-        }
-
-        public IAndWithoutClaimsPrincipalBuilder WithoutUser()
-        {
-            return this;
-        }
-
-        public IAndWithoutClaimsPrincipalBuilder WithoutUsername(string username)
-        {
-            base.RemoveUsername(username);
 
             return this;
         }

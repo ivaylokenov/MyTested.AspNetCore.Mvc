@@ -1,13 +1,32 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
+    using System;
+    using System.Security.Claims;
     using MyTested.AspNetCore.Mvc.Builders.Authentication;
     using MyTested.AspNetCore.Mvc.Builders.Base;
     using MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication;
     using MyTested.AspNetCore.Mvc.Builders.Contracts.Base;
-    using System;
 
     public static class ComponentBuilderAuthenticationWithoutExtensions
     {
+        public static TBuilder WithoutUser<TBuilder>(
+            this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
+            string claimType, string value)
+            where TBuilder : IBaseTestBuilder
+            => builder.WithoutUser(user => user.WithoutClaim(claimType, value));
+
+        public static TBuilder WithoutUser<TBuilder>(
+            this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
+            Claim claim)
+            where TBuilder : IBaseTestBuilder
+            => builder.WithoutUser(user => user.WithoutClaim(claim));
+
+        public static TBuilder WithoutUser<TBuilder>(
+            this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
+            string role)
+            where TBuilder : IBaseTestBuilder
+            => builder.WithoutUser(user => user.WithoutRole(role));
+
         public static TBuilder WithoutUser<TBuilder>(
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
             Action<IWithoutClaimsPrincipalBuilder> userBuilder)
@@ -15,9 +34,9 @@
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            var newUserBuilder = new WithoutClaimsPrincipalBuilder();
+            var newUserBuilder = new WithoutClaimsPrincipalBuilder(actualBuilder.HttpContext.User);
             userBuilder(newUserBuilder);
-            actualBuilder.HttpContext.User = newUserBuilder.GetClaimsPrincipal();
+            actualBuilder.HttpContext.User = newUserBuilder.GetClaimsPrincipalBasedOnClaimsOnly();
 
             return actualBuilder.Builder;
         }

@@ -27,7 +27,7 @@
                     Assert.Equal("MyUsername", claim.Value);
                 });
         }
-        
+
         [Fact]
         public void WithRoleTypeShouldOverrideDefaultClaimType()
         {
@@ -69,7 +69,7 @@
                     .WithIdentifier("TestingId"))
                 .ShouldPassForThe<MvcController>(controller =>
                 {
-                        var claim = controller.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+                    var claim = controller.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
 
                     Assert.NotNull(claim);
                     Assert.Equal("TestingId", claim.Value);
@@ -126,7 +126,7 @@
                     Assert.Equal("MySecondValue", secondClaim.Value);
                 });
         }
-        
+
         [Fact]
         public void WithClaimsAsEnumerableShouldSetCorrectClaim()
         {
@@ -277,6 +277,56 @@
                     Assert.Contains("ThirdRole", userRoleClaims);
                     Assert.Contains("ListRole", userRoleClaims);
                     Assert.Contains("AnotherListRole", userRoleClaims);
+                });
+        }
+
+        [Fact]
+        public void WithoutClaimShouldRemoveTheCorrectClaimOnly()
+        {
+            MyController<MvcController>
+                .Instance()
+                .WithUser(user => user
+                    .WithNameType("CustomUsername"))
+                .WithoutUser(user => user.WithoutClaim("CustomUsername", "TestUser"))
+                .ShouldPassForThe<MvcController>(controller =>
+                {
+                    var claimToBeDeleted = controller.User.Claims.FirstOrDefault(c => c.Type == "CustomUsername");
+
+                    Assert.Null(claimToBeDeleted);
+                });
+        }
+
+        [Fact(Skip = "Trying to find out why certain property is set.")]
+        public void WithoutClaimByProvidingClaimsDirectlyShouldRemoveTheCorrectClaimOnly()
+        { 
+            var claim = 
+                new Claim("CustomUsername", "TestUser", "string", "issuer","OGissuer", 
+                new ClaimsIdentity("Password", "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"));
+
+            MyController<MvcController>
+                .Instance()
+                .WithUser(user => user.WithClaim(claim))
+                .WithoutUser(user => user.WithoutClaim(claim))
+                .ShouldPassForThe<MvcController>(controller =>
+                {
+                    var claimToBeDeleted = controller.User.Claims.FirstOrDefault(c => c.Type == claim.Type);
+
+                    Assert.Null(claimToBeDeleted);
+                });
+        }
+
+        [Fact]
+        public void WithoutRoleShouldRemoveTheCorrectRole()
+        {
+            MyController<MvcController>
+                .Instance()
+                .WithUser(user => user.InRole("randomRole"))
+                .WithoutUser(user => user.WithoutRole("randomRole"))
+                .ShouldPassForThe<MvcController>(controller =>
+                {
+                    var claimToBeDeleted = controller.User.Claims.FirstOrDefault(c => c.Type == "randomRole");
+
+                    Assert.Null(claimToBeDeleted);
                 });
         }
     }

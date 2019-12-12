@@ -25,6 +25,13 @@
             return claimsPrincipal;
         }
 
+        public ClaimsPrincipal GetClaimsPrincipalBasedOnClaimsOnly()
+        {
+            var claimsPrincipal = new ClaimsPrincipal(this.GetAuthenticatedClaimsIdentity());
+
+            return claimsPrincipal;
+        }
+
         /// <summary>
         /// Static constructor for creating default authenticated claims principal with "TestId" identifier and "TestUser" username.
         /// </summary>
@@ -36,6 +43,14 @@
         protected void AddIdentity(ClaimsIdentity identity)
         {
             this._identities.Add(identity);
+        }
+
+        protected void AddIdentities(IEnumerable<ClaimsIdentity> identities)
+        {
+            foreach (var identity in identities)
+            {
+                this.AddIdentity(identity);
+            }
         }
     }
 }
