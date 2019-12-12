@@ -106,9 +106,9 @@
         /// <summary>
         /// Tests whether <see cref="HttpResponse.ContentLength"/> is the same as the provided one.
         /// </summary>
-        /// <param name="contentLenght">Expected content length.</param>
+        /// <param name="contentLength">Expected content length.</param>
         /// <returns>The same <see cref="IAndHttpResponseTestBuilder"/> test builder.</returns>
-        IAndHttpResponseTestBuilder WithContentLength(long? contentLenght);
+        IAndHttpResponseTestBuilder WithContentLength(long? contentLength);
 
         /// <summary>
         /// Tests whether <see cref="HttpResponse.ContentType"/> is the same as the provided one.

@@ -70,7 +70,7 @@
             => this.WithContentTypes(new List<string>(otherContentTypes) { contentType });
 
         /// <inheritdoc />
-        public IAndProducesAttributeTestBuilder WithType(Type type)
+        public IAndProducesAttributeTestBuilder OfType(Type type)
         {
             this.Attribute.Type = type;
             this.Validations.Add((expected, actual) =>

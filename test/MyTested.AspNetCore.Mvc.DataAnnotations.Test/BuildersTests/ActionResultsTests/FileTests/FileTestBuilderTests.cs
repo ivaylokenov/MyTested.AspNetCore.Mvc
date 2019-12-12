@@ -54,7 +54,7 @@
         }
 
         [Fact]
-        public void WithFileProviderOfTypeShouldNotThrowExceptionWithValidFileProvider()
+        public void WithFileProviderOfTypeShouldNotThrowExceptionWithValidFileProviderForGeneric()
         {
             MyController<MvcController>
                 .Instance()
@@ -66,7 +66,19 @@
         }
 
         [Fact]
-        public void WithFileProviderOfTypeShouldThrowExceptionWithInvalidFileProvider()
+        public void WithFileProviderOfTypeShouldNotThrowExceptionWithValidFileProvider()
+        {
+            MyController<MvcController>
+                .Instance()
+                .WithoutValidation()
+                .Calling(c => c.FileWithFileProvider(null))
+                .ShouldReturn()
+                .File(file => file
+                    .WithFileProviderOfType(typeof(CustomFileProvider)));
+        }
+
+        [Fact]
+        public void WithFileProviderOfTypeShouldThrowExceptionWithInvalidFileProviderForGeneric()
         {
             Test.AssertException<FileResultAssertionException>(
                 () =>
@@ -83,7 +95,24 @@
         }
 
         [Fact]
-        public void WithFileProviderOfTypeShouldNotThrowExceptionWithNullFileProvider()
+        public void WithFileProviderOfTypeShouldThrowExceptionWithInvalidFileProvider()
+        {
+            Test.AssertException<FileResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .WithoutValidation()
+                        .Calling(c => c.FileWithFileProvider(null))
+                        .ShouldReturn()
+                        .File(file => file
+                            .WithFileProviderOfType(typeof(IFileProvider)));
+                },
+                "When calling FileWithFileProvider action in MvcController expected file result provider to be of IFileProvider type, but instead received CustomFileProvider.");
+        }
+
+        [Fact]
+        public void WithFileProviderOfTypeShouldNotThrowExceptionWithNullFileProviderForGeneric()
         {
             Test.AssertException<FileResultAssertionException>(
                 () =>
@@ -95,6 +124,23 @@
                         .ShouldReturn()
                         .File(file => file
                             .WithFileProviderOfType<CustomFileProvider>());
+                },
+                "When calling FileWithNullProvider action in MvcController expected file result provider to be of CustomFileProvider type, but instead received null.");
+        }
+
+        [Fact]
+        public void WithFileProviderOfTypeShouldNotThrowExceptionWithNullFileProvider()
+        {
+            Test.AssertException<FileResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .WithoutValidation()
+                        .Calling(c => c.FileWithNullProvider())
+                        .ShouldReturn()
+                        .File(file => file
+                            .WithFileProviderOfType(typeof(CustomFileProvider)));
                 },
                 "When calling FileWithNullProvider action in MvcController expected file result provider to be of CustomFileProvider type, but instead received null.");
         }

@@ -1,9 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.InvocationsTests.ShouldReturnTests
 {
+    using Exceptions;
     using Setups;
     using Setups.ViewComponents;
     using Xunit;
-    using Exceptions;
 
     public class ViewComponentShouldReturnNullOrDefaultTests
     {
@@ -15,7 +15,7 @@
                 .ShouldReturn()
                 .Null();
         }
-        
+
         [Fact]
         public void ShouldReturnNullShouldThrowExceptionWhenReturnValueNotNull()
         {

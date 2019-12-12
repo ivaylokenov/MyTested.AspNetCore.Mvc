@@ -1,5 +1,19 @@
 <h1><img src="https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/logo.png" align="left" alt="MyTested.AspNetCore.Mvc" width="100">&nbsp; MyTested.AspNetCore.Mvc - Fluent Testing<br />&nbsp; Library for ASP.NET Core MVC</h1> 
 
+## Special Sponsors
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="middle">
+          <a href="http://bit.ly/bellatrixsolutions" target="_blank">
+    <img width="323px" src="https://user-images.githubusercontent.com/3391906/68993273-d4f5c700-087e-11ea-9b39-e173733fcbfb.png" alt=""The Ultimate Cross-Platform .NET Framework>
+  </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 ## Gold Sponsors
 
 <table>
@@ -10,13 +24,28 @@
           <img width="148px" src="https://softuni.org/platform/assets/icons/logo.svg">
         </a>
       </td>
+	    <td align="center" valign="middle">
+        <a href="http://bit.ly/30xsnsC" target="_blank">
+          <img width="148px" src="https://user-images.githubusercontent.com/3391906/65251792-dd848800-daef-11e9-8857-637a48048cda.png">
+        </a>
+      </td>
+      <td align="center" valign="middle">
+          <a href="http://noblehire.io?utm_medium=social&utm_source=projects&utm_campaign=platform-leads-knv" target="_blank">
+          <img width="148px" src="https://user-images.githubusercontent.com/3391906/66921689-637fea00-f02e-11e9-944a-b07c6f345a06.png">
+        </a>
+      </td>
+      <td align="center" valign="middle">
+          <a href="http://bit.ly/onebitsoftware" target="_blank">
+          <img width="148px" height="70px" src="https://user-images.githubusercontent.com/3391906/69410626-1a4d4500-0d14-11ea-905f-c1705b6364bf.png">
+        </a>
+      </td>
     </tr>
   </tbody>
 </table>
 
 ## Project Description
 
-**MyTested.AspNetCore.Mvc** is a strongly-typed unit testing library providing an easy fluent interface to test the [ASP.NET Core MVC](https://github.com/aspnet/AspNetCore) framework. It is testing framework agnostic so that you can combine it with a test runner of your choice (e.g. [xUnit](https://github.com/xunit/xunit), [NUnit](https://github.com/nunit/nunit), etc.). 
+**MyTested.AspNetCore.Mvc** is a strongly-typed unit testing library providing an easy fluent interface to test the [ASP.NET Core](https://github.com/aspnet/AspNetCore) framework, perfectly suitable for both MVC and API scenarios. It is testing framework agnostic so that you can combine it with a test runner of your choice (e.g. [xUnit](https://github.com/xunit/xunit), [NUnit](https://github.com/nunit/nunit), etc.). 
 
 *Windows:* [![Build status](https://ci.appveyor.com/api/projects/status/3xlag3a7f87bg4on?svg=true)](https://ci.appveyor.com/project/ivaylokenov/mytested-aspnetcore-mvc)
 
@@ -49,6 +78,7 @@ Take a look around and...
 
 #### Featured in
 
+- [The official ASP.NET Core MVC documentation](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/testing?view=aspnetcore-3.0#additional-resources)
 - [The official ASP.NET Core MVC repository](https://github.com/aspnet/AspNetCore/tree/master/src/Mvc#aspnet-core-mvc)
 - [NuGet Package of the week in "The week in .NET – 6/28/2016"](https://devblogs.microsoft.com/dotnet/the-week-in-net-6282016/)
 - [Awesome .NET Core](https://github.com/thangchung/awesome-dotnet-core#testing)
@@ -64,12 +94,14 @@ Take a look around and...
 - One-time donation via cryptocurrencies:
   - BTC (Bitcoin) - 3P49XMiGXxqR2Dq1HdqHpkCa6UD848rpBU 
   - BCH (Bitcoin Cash) - qqgyjlvmuydf6gtfhfdypyw2u8utmc3uqg4nwma3y4
-  - ETC (Ethereum) - 0x2bc55e4b1B9b296B751738631CD24b2f701E588F
+  - ETH (Ethereum) - 0x2bc55e4b1B9b296B751738631CD24b2f701E588F
   - LTC (Litecoin) - MQ1GJum1QuqAuUsc6LarE3Z6TQQJ3rJwsA
 
 #### What's the difference between Patreon and OpenCollective?
 
-Funds donated via both platforms are used for development and marketing purposes. Funds donated via OpenCollective are managed with transparent expenses. Your name/logo will receive proper recognition and exposure by donating on either platform.
+Funds donated via both platforms are used for development and marketing purposes. Funds donated via [OpenCollective](https://opencollective.com/mytestedaspnet) are managed with transparent expenses. Your name/logo will receive proper recognition and exposure by donating on either platform.
+
+Additionally, funds donated via [Patreon](https://www.patreon.com/ivaylokenov) (see the stretch goals) give me the freedom to add more features to the free `Lite` edition of the library.
 
 ## Quick Start
 
@@ -156,7 +188,7 @@ namespace MyApp.Tests.Controllers
                 .Controller<HomeController>()
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .View();
+                .Ok();
     }
 }
 ```
@@ -231,7 +263,7 @@ MyController<MyMvcController>
             .Passing(cacheModel => cacheModel.Id == 1)))
     .AndAlso()
     .ShouldReturn()
-    .View(result => result
+    .Ok(result => result
         .WithModelOfType<MyResponseModel>());
 
 // Instantiates controller with the registered global services,
@@ -261,7 +293,7 @@ MyController<MyMvcController>
         .ContainingEntryWithKey(ControllerConstants.SuccessMessage))
     .AndAlso()
     .ShouldReturn()
-    .Redirect(redirect => redirect
+    .Redirect(result => result
         .To<AnotherController>(c => c.AnotherAction()));
 ```
 
@@ -282,7 +314,7 @@ MyController<MyMvcController>
             From.Services<IYetAnotherService>())) // Provides a global service.
     .Calling(c => c.MyAction())
     .ShouldReturn()
-    .View();
+    .Accepted();
     
 // Instantiates controller with the provided service mocks,
 // and tests for view result.
@@ -488,7 +520,7 @@ MyMvc
             
     // Assert
     .ShouldReturn()
-    .Redirect(redirect => redirect
+    .Redirect(result => result
         .To<AnotherController>(c => c.AnotherAction(
             With.No<MyDataContext>(),
             id)));
@@ -507,7 +539,7 @@ var call = controller.Calling(c => c.MyAction(id));
 // Assert
 call
     .ShouldReturn()
-    .View(view => view
+    .Json(result => result
         .WithModelOfType<MyModel>()
         .Passing(model => model.Id == id));
 ```
@@ -566,7 +598,7 @@ MyMvc
             .WithPath("/")))
     .AndAlso()
     .ShouldReturn()
-    .Ok();
+    .BadRequest();
 ```
 
 ## Package Installation

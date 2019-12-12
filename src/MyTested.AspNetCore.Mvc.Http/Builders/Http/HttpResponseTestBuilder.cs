@@ -125,14 +125,14 @@
             => this.WithBody(jsonBody, ContentType.ApplicationJson, encoding);
 
         /// <inheritdoc />
-        public IAndHttpResponseTestBuilder WithContentLength(long? contentLenght)
+        public IAndHttpResponseTestBuilder WithContentLength(long? contentLength)
         {
             var actualContentLength = this.httpResponse.ContentLength;
-            if (contentLenght != actualContentLength)
+            if (contentLength != actualContentLength)
             {
                 this.ThrowNewHttpResponseAssertionException(
                     "content length",
-                    $"to be {contentLenght.GetErrorMessageName(includeQuotes: false)}",
+                    $"to be {contentLength.GetErrorMessageName(includeQuotes: false)}",
                     $"instead received {actualContentLength.GetErrorMessageName(includeQuotes: false)}");
             }
 

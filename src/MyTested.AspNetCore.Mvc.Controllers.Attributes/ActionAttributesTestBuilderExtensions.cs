@@ -24,7 +24,21 @@
         /// </param>
         /// <param name="actionName">Expected overridden name of the action.</param>
         /// <returns>The same <see cref="IAndActionAttributesTestBuilder"/>.</returns>
+        [Obsolete("This method will be removed in the next major version, please use SpecifyingActionName")]
         public static IAndActionAttributesTestBuilder ChangingActionNameTo(
+            this IActionAttributesTestBuilder actionAttributesTestBuilder,
+            string actionName)
+            => SpecifyingActionName(actionAttributesTestBuilder, actionName);
+
+        /// <summary>
+        /// Tests whether the action attributes contain <see cref="ActionNameAttribute"/>.
+        /// </summary>
+        /// <param name="actionAttributesTestBuilder">
+        /// Instance of <see cref="IActionAttributesTestBuilder"/> type.
+        /// </param>
+        /// <param name="actionName">Expected overridden name of the action.</param>
+        /// <returns>The same <see cref="IAndActionAttributesTestBuilder"/>.</returns>
+        public static IAndActionAttributesTestBuilder SpecifyingActionName(
             this IActionAttributesTestBuilder actionAttributesTestBuilder,
             string actionName)
         {

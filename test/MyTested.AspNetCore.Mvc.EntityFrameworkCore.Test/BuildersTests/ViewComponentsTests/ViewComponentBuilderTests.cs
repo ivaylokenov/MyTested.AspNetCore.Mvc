@@ -10,7 +10,7 @@
     public class ViewComponentBuilderTests
     {
         [Fact]
-        public void WithEntitesShouldSetupDbContext()
+        public void WithEntitiesShouldSetupDbContext()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()

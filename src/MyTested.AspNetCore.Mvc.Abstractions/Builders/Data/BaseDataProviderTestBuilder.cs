@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Data
 {
+    using System;
     using System.Collections.Generic;
     using Base;
     using Exceptions;
@@ -82,8 +83,17 @@
         /// <summary>
         /// Validates whether the data provider contains entry value with the given type.
         /// </summary>
+        protected void ValidateContainingEntryOfType(Type valueType)  
+            => DictionaryValidator.ValidateValueOfType(
+                this.DataProviderName,
+                this.DataProvider,
+                this.ThrowNewDataProviderAssertionException,valueType);
+
+        /// <summary>
+        /// Validates whether the data provider contains entry value with the given type.
+        /// </summary>
         /// <typeparam name="TValue">Type of the value.</typeparam>
-        protected void ValidateContainingEntryOfType<TValue>() 
+        protected void ValidateContainingEntryOfType<TValue>()
             => DictionaryValidator.ValidateValueOfType<TValue>(
                 this.DataProviderName,
                 this.DataProvider,
@@ -100,6 +110,18 @@
                 this.DataProvider,
                 key,
                 this.ThrowNewDataProviderAssertionException);
+
+        /// <summary>
+        /// Validates whether the data provider contains entry value with the given type and corresponding key.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="valueType"></param>
+        protected void ValidateContainingEntryOfType(string key, Type valueType)
+            => DictionaryValidator.ValidateStringKeyAndValueOfType(
+                this.DataProviderName,
+                this.DataProvider,
+                key,
+                this.ThrowNewDataProviderAssertionException,valueType);
 
         /// <summary>
         /// Validates whether the data provider contains entry with the given key and corresponding value.

@@ -35,7 +35,7 @@
         }
         
         [Fact]
-        public void WithValidShouldThrowExceptionWithInvorrectValue()
+        public void WithValidShouldThrowExceptionWithIncorrectValue()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
@@ -72,7 +72,7 @@
         }
 
         [Fact]
-        public void WithAbsoluteExpirationShouldThrowExceptionWithInvorrectValue()
+        public void WithAbsoluteExpirationShouldThrowExceptionWithIncorrectValue()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
@@ -109,7 +109,7 @@
         }
 
         [Fact]
-        public void WithAbsoluteExpirationRelativeToNowShouldThrowExceptionWithInvorrectValue()
+        public void WithAbsoluteExpirationRelativeToNowShouldThrowExceptionWithIncorrectValue()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
@@ -146,7 +146,7 @@
         }
 
         [Fact]
-        public void WithPriorityShouldThrowExceptionWithInvorrectValue()
+        public void WithPriorityShouldThrowExceptionWithIncorrectValue()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
@@ -183,7 +183,7 @@
         }
 
         [Fact]
-        public void WithSlidingExpirationShouldThrowExceptionWithInvorrectValue()
+        public void WithSlidingExpirationShouldThrowExceptionWithIncorrectValue()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>

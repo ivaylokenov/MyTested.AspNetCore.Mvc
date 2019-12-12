@@ -4,6 +4,7 @@
     using Setups;
     using Setups.ViewComponents;
     using Xunit;
+    using Xunit.Sdk;
 
     public class ViewComponentShouldReturnHtmlContentTests
     {
@@ -23,6 +24,36 @@
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .HtmlContent("<input type='button' />");
+        }
+
+        [Fact]
+        public void ShouldReturnContentShouldThrowExceptionWithEmptyContent()
+        {
+            Test.AssertException<ContentViewComponentResultAssertionException>(
+                () =>
+                {
+                    MyViewComponent<HtmlContentComponent>
+                        .Instance()
+                        .InvokedWith(c => c.Invoke())
+                        .ShouldReturn()
+                        .HtmlContent(string.Empty);
+                },
+                "When invoking HtmlContentComponent expected content result to contain '', but instead received '<input type='button' />'.");
+        }
+
+        [Fact]
+        public void ShouldReturnContentShouldThrowExceptionWithNull()
+        {
+            Test.AssertException<ContentViewComponentResultAssertionException>(
+                () =>
+                {
+                    MyViewComponent<HtmlContentComponent>
+                        .Instance()
+                        .InvokedWith(c => c.Invoke())
+                        .ShouldReturn()
+                        .HtmlContent(htmlContent: null);
+                },
+                "When invoking HtmlContentComponent expected content result to contain '', but instead received '<input type='button' />'.");
         }
 
         [Fact]
@@ -86,6 +117,23 @@
                 {
                     Assert.StartsWith("<input ", content);
                 });
+        }
+
+        [Fact]
+        public void ShouldReturnContentWithAssertionsShouldThrowExceptionWithInvalidPredicate()
+        {
+            Assert.Throws<StartsWithException>(
+            () =>
+            {
+                MyViewComponent<HtmlContentComponent>
+                    .Instance()
+                    .InvokedWith(c => c.Invoke())
+                    .ShouldReturn()
+                    .HtmlContent(content =>
+                    {
+                        Assert.StartsWith("<button ", content);
+                    });
+            });
         }
     }
 }

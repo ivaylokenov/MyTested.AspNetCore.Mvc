@@ -10,5 +10,9 @@
         bool TryGetCacheEntry(object key, out ICacheEntry value);
 
         IDictionary<object, object> GetCacheAsDictionary();
+
+        void RemoveKeys(IEnumerable<object> keys);
+
+        void ClearCache();
     }
 }

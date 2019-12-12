@@ -23,11 +23,10 @@
         }
 
         /// <inheritdoc />
-        public IAndExceptionTestBuilder OfType<TException>()
+        public IAndExceptionTestBuilder OfType(Type exceptionType)
         {
-            var expectedExceptionType = typeof(TException);
             var actualExceptionType = this.TestContext.CaughtException.GetType();
-            if (Reflection.AreDifferentTypes(expectedExceptionType, actualExceptionType))
+            if (Reflection.AreDifferentTypes(exceptionType, actualExceptionType))
             {
                 var (expectedExceptionName, actualExceptionName) =
                     (expectedExceptionType, actualExceptionType).GetTypeComparisonNames();
@@ -41,6 +40,10 @@
 
             return this;
         }
+
+        /// <inheritdoc />
+        public IAndExceptionTestBuilder OfType<TException>()
+            => OfType(typeof(TException));
 
         /// <inheritdoc />
         public IExceptionMessageTestBuilder WithMessage()

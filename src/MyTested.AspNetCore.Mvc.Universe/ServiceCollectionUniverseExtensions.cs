@@ -21,6 +21,7 @@
                 .AddControllersWithViewsTesting()
                 .ReplaceDbContext()
                 .ReplaceMemoryCache()
+                .ReplaceDistributedCache()
                 .ReplaceSession();
 
             return serviceCollection;

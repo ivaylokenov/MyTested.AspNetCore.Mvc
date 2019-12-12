@@ -72,6 +72,13 @@
 
         /// <summary>
         /// Tests whether the <see cref="JsonSerializerSettings"/> contains
+        /// <see cref="JsonConverter"/> of the provided type.
+        /// </summary>
+        /// <returns>The same <see cref="IAndJsonSerializerSettingsTestBuilder"/>.</returns>
+        IAndJsonSerializerSettingsTestBuilder ContainingConverterOfType(Type jsonConverterType);
+
+        /// <summary>
+        /// Tests whether the <see cref="JsonSerializerSettings"/> contains
         /// the provided <see cref="JsonConverter"/> objects.
         /// </summary>
         /// <param name="jsonConverters">Collection of <see cref="JsonConverter"/>.</param>

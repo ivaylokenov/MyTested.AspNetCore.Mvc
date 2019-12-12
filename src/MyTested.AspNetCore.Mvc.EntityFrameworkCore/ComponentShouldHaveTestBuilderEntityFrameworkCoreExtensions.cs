@@ -23,12 +23,12 @@
         /// <returns>The same component should have test builder.</returns>
         public static TBuilder Data<TBuilder>(
             this IBaseTestBuilderWithComponentShouldHaveTestBuilder<TBuilder> builder,
-            Action<IDbContextTestBuilder> dbContextTestBuilder)
+            Action<IWithDbContextTestBuilder> dbContextTestBuilder)
             where TBuilder : IBaseTestBuilder
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            dbContextTestBuilder(new DbContextTestBuilder(actualBuilder.TestContext));
+            dbContextTestBuilder(new WithDbContextTestBuilder(actualBuilder.TestContext));
             
             return actualBuilder.Builder;
         }

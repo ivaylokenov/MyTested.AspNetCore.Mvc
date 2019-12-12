@@ -1,5 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ViewComponentsTests
 {
+    using System;
+    using System.Reflection;
     using Builders.Base;
     using Builders.Contracts.Base;
     using Builders.Contracts.Invocations;
@@ -11,8 +13,6 @@
     using Setups;
     using Setups.Models;
     using Setups.ViewComponents;
-    using System;
-    using System.Reflection;
     using Xunit;
 
     public class ViewComponentBuilderTests
@@ -102,7 +102,7 @@
                     Assert.Equal("Invoke", viewComponent.ViewComponentContext.ViewComponentDescriptor.MethodInfo.Name);
                 });
         }
-        
+
         [Fact]
         public void UnresolvedRouteValuesShouldHaveFriendlyException()
         {
@@ -291,6 +291,24 @@
                     MyViewComponent<NonViewComponent>.Instance();
                 },
                 "NonViewComponent is not recognized as a valid view component type. Classes decorated with 'NonViewComponentAttribute' are not considered as passable view components. To enable proper view component discovery, the test framework tries to load your web application by convention. If such is not found, you will need to set it manually by providing your web project's name in the test configuration's 'General:WebAssemblyName' section ('testsettings.json' file by default). If your view component type is still not recognized, you may add it by hand in the application part manager by using the 'AddControllers().PartManager.ApplicationParts.Add(applicationPart))' or 'AddControllersWithViews().PartManager.ApplicationParts.Add(applicationPart))' methods.");
+        }
+
+        [Fact]
+        public void AndAlsoShouldWorkCorrectly()
+        {
+            MyViewComponent<NormalComponent>
+                .Instance()
+                .WithViewComponentContext(viewComponentContext =>
+                {
+                    viewComponentContext.ViewContext.RouteData.Values.Add("testkey", "testvalue");
+                })
+                .AndAlso()
+                .ShouldPassForThe<NormalComponent>(viewComponent =>
+                {
+                    Assert.NotNull(viewComponent);
+                    Assert.NotNull(viewComponent.ViewComponentContext);
+                    Assert.True(viewComponent.ViewComponentContext.ViewContext.RouteData.Values.ContainsKey("testkey"));
+                });
         }
 
         private void CheckViewComponentResultTestBuilder<TInvocationResult>(

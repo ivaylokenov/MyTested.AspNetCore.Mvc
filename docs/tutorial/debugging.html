@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
   <head>
@@ -7,13 +7,13 @@
     <title>Debugging Failed Tests </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Debugging Failed Tests ">
-    <meta name="generator" content="docfx 2.6.3.0">
+    <meta name="generator" content="docfx 2.45.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
     <link rel="stylesheet" href="../styles/main.css">
-    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:navrel" content="">
     <meta property="docfx:tocrel" content="toc.html">
     <meta property="docfx:rel" content="../">
     <meta property="og:title" content="Flexible and asynchronous testing framework for ASP.NET Core MVC">
@@ -30,7 +30,7 @@
     <meta property="twitter:url" content="https://mytestedasp.net/">
     <meta property="twitter:image" content="https://mytestedasp.net/Content/Images/logosocial.jpg">
   </head>
-  <body data-spy="scroll" data-target="#affix">
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
@@ -75,30 +75,28 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-              <h1 id="debugging-failed-tests" sourcefile="tutorial/debugging.md" sourcestartlinenumber="1" sourceendlinenumber="1">Debugging Failed Tests</h1>
-              
-<p sourcefile="tutorial/debugging.md" sourcestartlinenumber="3" sourceendlinenumber="3">In this section we will learn how easy is to debug failing tests.</p>
-<h2 id="friendly-error-messages" sourcefile="tutorial/debugging.md" sourcestartlinenumber="5" sourceendlinenumber="5">Friendly error messages</h2>
-<p sourcefile="tutorial/debugging.md" sourcestartlinenumber="7" sourceendlinenumber="7">Let&#39;s see how nice and friendly error message My Tested ASP.NET Core MVC provides on a failed test. Go to the <strong>&quot;ManageControllerTest&quot;</strong> and change the redirect action:</p>
-<pre sourcefile="tutorial/debugging.md" sourcestartlinenumber="9" sourceendlinenumber="11"><code class="lang-c#">.ToAction(nameof(ManageController.LinkLogin))
-</code></pre><p sourcefile="tutorial/debugging.md" sourcestartlinenumber="13" sourceendlinenumber="13">Run the test, and you will see a detailed error message showing exactly what has failed:</p>
-<pre sourcefile="tutorial/debugging.md" sourcestartlinenumber="15" sourceendlinenumber="17"><code class="lang-text">When calling RemoveLogin action in ManageController expected redirect result to have &#39;LinkLogin&#39; action name, but instead received &#39;ManageLogins&#39;.
-</code></pre><p sourcefile="tutorial/debugging.md" sourcestartlinenumber="19" sourceendlinenumber="19">We can see in the above message that the redirect action is actually <strong>&quot;ManageLogins&quot;</strong> so let&#39;s return that value and try something else. Change the <strong>&quot;Message&quot;</strong> route value property to <strong>&quot;Error&quot;</strong>:</p>
-<pre sourcefile="tutorial/debugging.md" sourcestartlinenumber="21" sourceendlinenumber="24"><code class="lang-c#">.ToAction(nameof(ManageController.ManageLogins))
-.ContainingRouteValues(new { Error = ManageController.ManageMessageId.Error });
-</code></pre><p sourcefile="tutorial/debugging.md" sourcestartlinenumber="26" sourceendlinenumber="26">Run the test again, and you should see:</p>
-<pre sourcefile="tutorial/debugging.md" sourcestartlinenumber="28" sourceendlinenumber="30"><code class="lang-text">When calling RemoveLogin action in ManageController expected redirect result route values to have entry with &#39;Error&#39; key and the provided value, but such was not found.
-</code></pre><p sourcefile="tutorial/debugging.md" sourcestartlinenumber="32" sourceendlinenumber="32">The library tells us that there is no <strong>&quot;Error&quot;</strong> key in the redirect route value dictionary. Now bring back the <strong>&quot;Message&quot;</strong> key to make the test pass again.</p>
-<h2 id="debugging-the-failing-action" sourcefile="tutorial/debugging.md" sourcestartlinenumber="34" sourceendlinenumber="34">Debugging the failing action</h2>
-<p sourcefile="tutorial/debugging.md" sourcestartlinenumber="36" sourceendlinenumber="36">If the provided error messages are not enough to diagnose why the test fails, you can always use the good old C# debugger. Put a breakpoint in the action method:</p>
-<p sourcefile="tutorial/debugging.md" sourcestartlinenumber="38" sourceendlinenumber="38"><img src="/images/tutorial/actiondebugging.jpg" alt="Debugging actions"></p>
-<p sourcefile="tutorial/debugging.md" sourcestartlinenumber="40" sourceendlinenumber="40">Then click with the right mouse button on the failing test and select <strong>&quot;Debug Selected Tests&quot;</strong>:</p>
-<p sourcefile="tutorial/debugging.md" sourcestartlinenumber="42" sourceendlinenumber="42"><img src="/images/tutorial/debugselectedtests.jpg" alt="Debug through the test explorer"></p>
-<p sourcefile="tutorial/debugging.md" sourcestartlinenumber="44" sourceendlinenumber="44">You know the drill from here on! :)</p>
-<h2 id="section-summary" sourcefile="tutorial/debugging.md" sourcestartlinenumber="46" sourceendlinenumber="46">Section summary</h2>
-<p sourcefile="tutorial/debugging.md" sourcestartlinenumber="48" sourceendlinenumber="48">In this section we learned how helpful and developer-friendly is My Tested ASP.NET Core MVC with failed tests. Later in the tutorial we will also see how easy it is to debug with the <strong>&quot;ShouldPassFor&quot;</strong> method. But enough about failures and errors. Let&#39;s dive into the <a href="/tutorial/controllers.html" sourcefile="tutorial/debugging.md" sourcestartlinenumber="48" sourceendlinenumber="48">Controllers</a> testing!</p>
+<h1 id="debugging-failed-tests">Debugging Failed Tests</h1>
 
-            </article>
+<p>In this section we will learn how easy is to debug failing tests.</p>
+<h2 id="friendly-error-messages">Friendly error messages</h2>
+<p>Let&#39;s see what nice and friendly error message My Tested ASP.NET Core MVC provides on a failed test. Go to the <strong>&quot;ManageControllerTest&quot;</strong> and change the redirect action:</p>
+<pre><code class="lang-c#">.ToAction(nameof(ManageController.LinkLogin));
+</code></pre><p>Run the test, and you will see a detailed error message showing exactly what has failed:</p>
+<pre><code class="lang-text">When calling RemoveLogin action in ManageController expected redirect result to have &#39;LinkLogin&#39; action name, but instead received &#39;ManageLogins&#39;.
+</code></pre><p>We can see in the above message that the redirect action is actually <strong>&quot;ManageLogins&quot;</strong> so let&#39;s return that value and try something else. Change the <strong>&quot;Message&quot;</strong> route value property to <strong>&quot;Error&quot;</strong>:</p>
+<pre><code class="lang-c#">.ContainingRouteValues(new { Error = ManageController.ManageMessageId.Error }));
+</code></pre><p>Run the test again, and you should see:</p>
+<pre><code class="lang-text">When calling RemoveLogin action in ManageController expected redirect result route values to have entry with &#39;Error&#39; key and the provided value, but such was not found.
+</code></pre><p>The library tells us that there is no <strong>&quot;Error&quot;</strong> key in the redirect route value dictionary. Now bring back the <strong>&quot;Message&quot;</strong> key to make the test pass again.</p>
+<h2 id="debugging-the-failing-action">Debugging the failing action</h2>
+<p>If the provided error messages are not enough to diagnose why the test fails, you can always use the good old C# debugger. Put a breakpoint in the action method:</p>
+<p><img src="/images/tutorial/actiondebugging.jpg" alt="Debugging actions"></p>
+<p>Then click with the right mouse button on the failing test and select <strong>&quot;Debug Selected Tests&quot;</strong>:</p>
+<p><img src="/images/tutorial/debugselectedtests.jpg" alt="Debug through the test explorer"></p>
+<p>You know the drill from here on! :)</p>
+<h2 id="section-summary">Section summary</h2>
+<p>In this section we learned how helpful and developer-friendly is My Tested ASP.NET Core MVC with failed tests. Later in the tutorial we will also see how easy it is to debug with the <strong>&quot;ShouldPassForThe&quot;</strong> generic method. But enough about failures and errors. Let&#39;s dive into the <a href="/tutorial/controllers.html">Controllers</a> testing!</p>
+</article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
@@ -106,7 +104,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/tutorial/docs/_docfx/tutorial/debugging.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/tmollov/MyTested.AspNetCore.Mvc/blob/development/docs/_docfx/tutorial/debugging.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>

@@ -1,8 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
 {
+    using System;
+    using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Plugins;
-    using System;
     using Xunit;
 
     public class ViewDataTestPluginTests
@@ -33,7 +34,6 @@
 
             testPlugin.DefaultServiceRegistrationDelegate(serviceCollection);
 
-            Assert.True(serviceCollection.Count == 157);
-        }
+            Assert.True(serviceCollection.Count == 157);        }
     }
 }

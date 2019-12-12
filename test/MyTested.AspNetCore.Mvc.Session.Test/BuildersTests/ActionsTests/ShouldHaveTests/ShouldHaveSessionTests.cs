@@ -11,14 +11,7 @@
         [Fact]
         public void NoSessionShouldNotThrowExceptionWithNoEntries()
         {
-            MyApplication
-                .StartsFrom<DefaultStartup>()
-                .WithServices(services =>
-                {
-                    services.AddMemoryCache();
-                    services.AddDistributedMemoryCache();
-                    services.AddSession();
-                });
+            this.SetDefaultSession();
 
             MyController<MvcController>
                 .Instance()
@@ -35,14 +28,7 @@
         [Fact]
         public void NoSessionShouldThrowExceptionWithEntries()
         {
-            MyApplication
-                .StartsFrom<DefaultStartup>()
-                .WithServices(services =>
-                {
-                    services.AddMemoryCache();
-                    services.AddDistributedMemoryCache();
-                    services.AddSession();
-                });
+            this.SetDefaultSession();
 
             Test.AssertException<DataProviderAssertionException>(
                 () =>
@@ -64,14 +50,7 @@
         [Fact]
         public void SessionWithNoNumberShouldNotThrowExceptionWithAnyEntries()
         {
-            MyApplication
-                .StartsFrom<DefaultStartup>()
-                .WithServices(services =>
-                {
-                    services.AddMemoryCache();
-                    services.AddDistributedMemoryCache();
-                    services.AddSession();
-                });
+            this.SetDefaultSession();
 
             MyController<MvcController>
                 .Instance()
@@ -88,14 +67,7 @@
         [Fact]
         public void SessionWithNoNumberShouldThrowExceptionWithNoEntries()
         {
-            MyApplication
-                .StartsFrom<DefaultStartup>()
-                .WithServices(services =>
-                {
-                    services.AddMemoryCache();
-                    services.AddDistributedMemoryCache();
-                    services.AddSession();
-                });
+            this.SetDefaultSession();
 
             Test.AssertException<DataProviderAssertionException>(
                 () =>
@@ -117,14 +89,7 @@
         [Fact]
         public void SessionWithNumberShouldNotThrowExceptionWithCorrectEntries()
         {
-            MyApplication
-                .StartsFrom<DefaultStartup>()
-                .WithServices(services =>
-                {
-                    services.AddMemoryCache();
-                    services.AddDistributedMemoryCache();
-                    services.AddSession();
-                });
+            this.SetDefaultSession();
 
             MyController<MvcController>
                 .Instance()
@@ -141,14 +106,7 @@
         [Fact]
         public void SessionWithNumberShouldThrowExceptionWithInvalidEntries()
         {
-            MyApplication
-                .StartsFrom<DefaultStartup>()
-                .WithServices(services =>
-                {
-                    services.AddMemoryCache();
-                    services.AddDistributedMemoryCache();
-                    services.AddSession();
-                });
+            this.SetDefaultSession();
 
             Test.AssertException<DataProviderAssertionException>(
                 () =>
@@ -170,14 +128,7 @@
         [Fact]
         public void SessionWithNumberShouldThrowExceptionWithInvalidManyEntries()
         {
-            MyApplication
-                .StartsFrom<DefaultStartup>()
-                .WithServices(services =>
-                {
-                    services.AddMemoryCache();
-                    services.AddDistributedMemoryCache();
-                    services.AddSession();
-                });
+            this.SetDefaultSession();
 
             Test.AssertException<DataProviderAssertionException>(
                 () =>
@@ -199,14 +150,7 @@
         [Fact]
         public void SessionWithBuilderShouldWorkCorrectly()
         {
-            MyApplication
-                .StartsFrom<DefaultStartup>()
-                .WithServices(services =>
-                {
-                    services.AddMemoryCache();
-                    services.AddDistributedMemoryCache();
-                    services.AddSession();
-                });
+            this.SetDefaultSession();
 
             MyController<MvcController>
                 .Instance()
@@ -219,6 +163,18 @@
                 .Ok();
 
             MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        private void SetDefaultSession()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
         }
     }
 }

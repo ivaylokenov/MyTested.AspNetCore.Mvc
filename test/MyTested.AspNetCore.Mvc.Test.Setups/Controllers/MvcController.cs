@@ -15,12 +15,15 @@
     using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.Caching.Distributed;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.FileProviders;
     using Microsoft.Net.Http.Headers;
     using Models;
+    using Pipelines;
     using Newtonsoft.Json;
     using Services;
+    using ActionFilters;
 
     [Authorize(Roles = "Admin,Moderator")]
     [FormatFilter]
@@ -328,6 +331,9 @@
             VaryByQueryKeys = new[] { "FirstQuery", "SecondQuery" },
             NoStore = true,
             Order = 2)]
+        [MiddlewareFilter(typeof(MyPipeline), Order = 2)]
+        [ServiceFilter(typeof(MyActionFilter), Order = 2)]
+        [TypeFilter(typeof(MyActionFilterWithArgs), Order = 2, Arguments = new object[] { 10 })]
         public IActionResult VariousAttributesAction()
         {
             return this.Ok();
@@ -1008,6 +1014,19 @@
             return this.Ok();
         }
 
+        public IActionResult DistributedCacheAction()
+        {
+            var distributedCache = this.HttpContext.RequestServices.GetService<IDistributedCache>();
+
+            var cacheValue = distributedCache.Get("test");
+            if (cacheValue?.SequenceEqual(new byte[] { 127, 127, 127 }) ?? false)
+            {
+                return this.Ok();
+            }
+
+            return this.BadRequest();
+        }
+
         public IActionResult MemoryCacheAction()
         {
             var memoryCache = this.HttpContext.RequestServices.GetService<IMemoryCache>();
@@ -1066,6 +1085,45 @@
                 Integer = intValue.Value,
                 Byte = byteValue
             });
+        }
+
+        public IActionResult AddDistributedCacheActionWithStringValueEntries()
+        {
+            var distributedCache = this.HttpContext.RequestServices.GetService<IDistributedCache>();
+            distributedCache.SetString("test", "testValue", new DistributedCacheEntryOptions
+            { 
+                AbsoluteExpiration = new DateTimeOffset(new DateTime(2020, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1),
+                SlidingExpiration = TimeSpan.FromMinutes(5)
+            });
+
+            distributedCache.SetString("another", "anotherValue");
+
+            return this.Ok();
+        }
+
+        public IActionResult AddDistributedCacheAction()
+        {
+            var distributedCache = this.HttpContext.RequestServices.GetService<IDistributedCache>();
+            distributedCache.Set("test", new byte[] { 127, 127, 127 }, new DistributedCacheEntryOptions
+            { 
+                AbsoluteExpiration = new DateTimeOffset(new DateTime(2020, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1),
+                SlidingExpiration = TimeSpan.FromMinutes(5)
+            });
+
+            distributedCache.Set("another", new byte[] { 4, 20 });
+
+            return this.Ok();
+        }
+
+        public async Task<IActionResult> AddDistributedCacheActionAsync()
+        {
+            var distributedCache = this.HttpContext.RequestServices.GetService<IDistributedCache>();
+
+            await distributedCache.SetAsync("test", new byte[] { 127, 127, 127});
+
+            return this.Ok();
         }
 
         public IActionResult AddMemoryCacheAction()
@@ -1141,6 +1199,16 @@
             }
 
             return this.BadRequest();
+        }
+
+        public IActionResult GetSessionKeys()
+        {
+            return this.Ok(this.HttpContext.Session.Keys.ToList());
+        }
+
+        public IActionResult GetSessionKeysCount()
+        {
+            return this.Ok(this.HttpContext.Session.Keys.Count());
         }
 
         public object AnonymousResult()
