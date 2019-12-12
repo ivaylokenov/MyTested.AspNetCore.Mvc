@@ -8,7 +8,7 @@
     {
         public const string TestFrameworkName = "MyTested.AspNetCore.Mvc";
         public const string ReleaseDate = "2019-12-12";
-        public const string VersionPrefix = "3.0";
+        public const string VersionPrefix = "3.1";
 
         internal static void EnsureCorrectVersion(DependencyContext dependencyContext)
         {

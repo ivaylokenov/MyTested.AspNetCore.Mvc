@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>ApplicationParts.Web</AssemblyName>
     <UserSecretsId>aspnet-ApplicationParts.Web-c273a372-79ef-490d-b0e1-a7fb8f2dacc7</UserSecretsId>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

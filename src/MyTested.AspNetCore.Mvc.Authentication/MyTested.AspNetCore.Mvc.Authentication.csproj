@@ -6,7 +6,7 @@
     <AssemblyTitle>MyTested.AspNetCore.Mvc.Authentication</AssemblyTitle>
     <VersionPrefix>3.0.1</VersionPrefix>
     <Authors>Ivaylo Kenov</Authors>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
