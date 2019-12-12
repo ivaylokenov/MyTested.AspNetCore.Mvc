@@ -89,8 +89,9 @@
             MyViewComponent<ViewResultComponent>
                 .InvokedWith(c => c.Invoke("Test"))
                 .ShouldReturn()
-                .View("SomeView")
-                .WithViewEngineOfType(typeof(CompositeViewEngine));
+                .View(view => view
+                    .WithName("SomeView")
+                    .WithViewEngineOfType(typeof(CompositeViewEngine)));
         }
 
         [Fact]
@@ -124,8 +125,8 @@
             MyViewComponent<ViewEngineComponent>
                 .InvokedWith(c => c.Invoke(new CustomViewEngine()))
                 .ShouldReturn()
-                .View()
-                .WithViewEngineOfType(typeof(CustomViewEngine));
+                .View(view => view
+                    .WithViewEngineOfType(typeof(CustomViewEngine)));
         }
 
         [Fact]
@@ -152,8 +153,8 @@
                     MyViewComponent<ViewEngineComponent>
                         .InvokedWith(c => c.Invoke(new CustomViewEngine()))
                         .ShouldReturn()
-                        .View()
-                        .WithViewEngineOfType(typeof(IViewEngine));
+                        .View(view => view
+                            .WithViewEngineOfType(typeof(IViewEngine)));
                 },
                 "When invoking ViewEngineComponent expected view result ViewEngine to be of IViewEngine type, but instead received CustomViewEngine.");
         }
@@ -182,8 +183,8 @@
                     MyViewComponent<ViewResultComponent>
                         .InvokedWith(c => c.Invoke(null))
                         .ShouldReturn()
-                        .View()
-                        .WithViewEngineOfType(typeof(CustomViewEngine));
+                        .View(view => view
+                            .WithViewEngineOfType(typeof(CustomViewEngine)));
                 },
                 "When invoking ViewResultComponent expected view result ViewEngine to be of CustomViewEngine type, but instead received CompositeViewEngine.");
         }
@@ -207,10 +208,11 @@
             MyViewComponent<ViewResultComponent>
                 .InvokedWith(c => c.Invoke("All"))
                 .ShouldReturn()
-                .View("SomeView")
-                .WithViewEngineOfType(typeof(CompositeViewEngine))
-                .AndAlso()
-                .WithModelOfType(typeof(ResponseModel));
+                .View(view => view
+                    .WithName("SomeView")
+                    .WithViewEngineOfType(typeof(CompositeViewEngine))
+                    .AndAlso()
+                    .WithModelOfType(typeof(ResponseModel)));
         }
     }
 }

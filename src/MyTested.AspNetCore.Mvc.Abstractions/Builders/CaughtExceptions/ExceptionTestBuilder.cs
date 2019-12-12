@@ -29,7 +29,7 @@
             if (Reflection.AreDifferentTypes(exceptionType, actualExceptionType))
             {
                 var (expectedExceptionName, actualExceptionName) =
-                    (expectedExceptionType, actualExceptionType).GetTypeComparisonNames();
+                    (exceptionType, actualExceptionType).GetTypeComparisonNames();
 
                 throw new InvalidExceptionAssertionException(string.Format(
                     "{0} {1}, but instead received {2}.",

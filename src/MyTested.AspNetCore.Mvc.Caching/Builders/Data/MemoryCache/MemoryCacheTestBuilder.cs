@@ -69,12 +69,12 @@
             => this.ContainingEntryOfType(typeof(TValue));
 
         /// <inheritdoc />
-        public IAndMemoryCacheTestBuilder ContainingEntryOfType(object key, Type valueType)
+        public IAndMemoryCacheTestBuilder ContainingEntryOfType(object key, Type expectedType)
         {
             var value = this.GetValue(key);
             var actualType = value.GetType();
 
-            if (Reflection.AreDifferentTypes(valueType, actualType))
+            if (Reflection.AreDifferentTypes(expectedType, actualType))
             {
                 var (expectedTypeName, actualTypeName) = (expectedType, actualType).GetTypeComparisonNames();
 

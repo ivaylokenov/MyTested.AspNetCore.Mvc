@@ -103,7 +103,8 @@
         /// <param name="viewEngineType"></param>
         /// <returns>The same <see cref="IAndViewTestBuilder"/>.</returns>
         public static IAndViewTestBuilder WithViewEngineOfType(
-            this IViewTestBuilder viewTestBuilder,Type viewEngineType)
+            this IViewTestBuilder viewTestBuilder, 
+            Type viewEngineType)
         {
             var actualBuilder = GetActualBuilder(viewTestBuilder);
 
@@ -113,7 +114,7 @@
                 || Reflection.AreDifferentTypes(viewEngineType, actualViewEngineType))
             {
                 var (expectedViewEngineTypeName, actualViewEngineTypeName) = 
-                    (expectedViewEngineType, actualViewEngineType).GetTypeComparisonNames();
+                    (viewEngineType, actualViewEngineType).GetTypeComparisonNames();
 
                 throw ViewViewComponentResultAssertionException.ForViewEngineType(
                     actualBuilder.TestContext.ExceptionMessagePrefix,

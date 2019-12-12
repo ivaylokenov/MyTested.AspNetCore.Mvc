@@ -46,10 +46,8 @@
         public static void ValidateValueOfType<TValue>(
             string name,
             IDictionary<string, object> dictionary,
-            Action<string, string, string> failedValidationAction)
-        {
-            ValidateValueOfType<TValue>(name, dictionary.Values, failedValidationAction);
-        }
+            Action<string, string, string> failedValidationAction) 
+            => ValidateValueOfType<TValue>(name, dictionary.Values, failedValidationAction);
 
         public static void ValidateValueOfType(
             string name,
@@ -67,21 +65,22 @@
            string name,
            IDictionary<object, object> dictionary,
            Action<string, string, string> failedValidationAction,
-           Type valueType)
-            => ValidateValueOfType(name, dictionary.Values, failedValidationAction, valueType);
+           Type expectedType)
+            => ValidateValueOfType(name, dictionary.Values, failedValidationAction, expectedType);
         
         public static void ValidateStringKeyAndValueOfType(
             string name,
             IDictionary<string, object> dictionary,
             string key,
             Action<string, string, string> failedValidationAction,
-            Type valueType)
+            Type expectedType)
         {
             var entryExists = dictionary.ContainsKey(key);
-            var actualValue = entryExists ? dictionary[key] : null;
 
+            var actualValue = entryExists ? dictionary[key] : null;
             var actualType = actualValue?.GetType();
-            if (!entryExists || Reflection.AreDifferentTypes(valueType, actualType))
+
+            if (!entryExists || Reflection.AreDifferentTypes(expectedType, actualType))
             {
                 var (expectedTypeName, actualTypeName) = (expectedType, actualType).GetTypeComparisonNames();
 
@@ -148,15 +147,15 @@
           string name,
           ICollection<object> values,
           Action<string, string, string> failedValidationAction,
-          Type valueType)
+          Type expectedType)
         {
-            var entryOfSameType = values.FirstOrDefault(arg => arg.GetType() == valueType);
+            var entryOfSameType = values.FirstOrDefault(arg => arg.GetType() == expectedType);
 
             if (entryOfSameType == null)
             {
                 failedValidationAction(
                     name,
-                    $"to have at least one entry of {valueType.ToFriendlyTypeName()} type",
+                    $"to have at least one entry of {expectedType.ToFriendlyTypeName()} type",
                     "none was found");
             }
         }
