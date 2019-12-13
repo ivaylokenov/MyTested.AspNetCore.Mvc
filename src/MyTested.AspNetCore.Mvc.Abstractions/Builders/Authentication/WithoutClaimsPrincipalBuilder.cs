@@ -31,6 +31,13 @@
             return this;
         }
 
+        public IAndWithoutClaimsPrincipalBuilder WithoutUsername(string username)
+        {
+            base.RemoveUsername(username);
+
+            return this;
+        }
+
         public IWithoutClaimsPrincipalBuilder AndAlso()
             => this;
     }
