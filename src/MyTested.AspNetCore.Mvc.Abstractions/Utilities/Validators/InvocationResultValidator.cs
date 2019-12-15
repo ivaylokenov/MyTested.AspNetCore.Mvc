@@ -3,6 +3,7 @@
     using System;
     using System.Reflection;
     using Exceptions;
+    using Extensions;
     using Internal.TestContexts;
 
     public static class InvocationResultValidator
@@ -65,10 +66,12 @@
 
             if (invalid)
             {
+                var (expectedTypeName, actualTypeName) = (typeOfExpectedReturnValue, typeOfResult).GetTypeComparisonNames();
+
                 ThrowNewInvocationResultAssertionException(
                     testContext,
-                    typeOfExpectedReturnValue.ToFriendlyTypeName(),
-                    typeOfResult.ToFriendlyTypeName());
+                    expectedTypeName,
+                    actualTypeName);
             }
         }
 
@@ -80,11 +83,14 @@
 
         public static void ValidateInvocationResult<TResult>(ComponentTestContext testContext, TResult model)
         {
-            ValidateInvocationResultType<TResult>(testContext);
-
-            if (Reflection.AreNotDeeplyEqual(model, testContext.MethodResult))
+            if (!Reflection.IsAnonymousType(typeof(TResult)))
             {
-                throw ResponseModelAssertionException.From(testContext.ExceptionMessagePrefix);
+                ValidateInvocationResultType<TResult>(testContext);
+            }
+
+            if (Reflection.AreNotDeeplyEqual(model, testContext.MethodResult, out var result))
+            {
+                throw ResponseModelAssertionException.From(testContext.ExceptionMessagePrefix, result);
             }
 
             testContext.Model = model;

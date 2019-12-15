@@ -490,26 +490,28 @@
         [Fact]
         public void WithoutDataThrowsExceptionWhenNullIsProvided()
         {
-            Test.AssertException<ArgumentNullException>(() =>
-            {
-                MyApplication
-                .StartsFrom<TestStartup>()
-                .WithServices(services => services.AddDbContext<CustomDbContext>());
-
-                var model = new CustomModel
+            Test.AssertException<ArgumentNullException>(
+                () =>
                 {
-                    Id = 1,
-                    Name = "Test"
-                };
+                    MyApplication
+                    .StartsFrom<TestStartup>()
+                    .WithServices(services => services.AddDbContext<CustomDbContext>());
 
-                MyController<DbContextController>
-                    .Instance()
-                    .WithData(model)
-                    .WithoutData(default(List<object>))
-                    .Calling(c => c.Get(model.Id))
-                    .ShouldReturn()
-                    .NotFound();
-            }, "Value cannot be null.\r\nParameter name: entities");
+                    var model = new CustomModel
+                    {
+                        Id = 1,
+                        Name = "Test"
+                    };
+
+                    MyController<DbContextController>
+                        .Instance()
+                        .WithData(model)
+                        .WithoutData(default(List<object>))
+                        .Calling(c => c.Get(model.Id))
+                        .ShouldReturn()
+                        .NotFound();
+                }, 
+                "Value cannot be null. (Parameter 'entities')");
         }
 
         [Fact]
@@ -581,7 +583,7 @@
                 .ShouldReturn()
                 .Ok(ok => ok
                     .WithModelOfType<List<CustomModel>>()
-                    .Passing(mdls => mdls.Count == 1));
+                    .Passing(model => model.Count == 1));
         }
 
         [Fact]

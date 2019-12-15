@@ -10,7 +10,9 @@
     using Internal.TestContexts;
 
     /// <summary>
-    /// Provides methods to specify an ASP.NET Core MVC controller test case.
+    /// Provides methods to specify an ASP.NET Core MVC controller test case. 
+    /// This assertion chain validates the controller as an atomic unit - it does not 
+    /// execute server requests, middleware, routing, filters, or application responses.
     /// </summary>
     /// <typeparam name="TController">Type of ASP.NET Core MVC controller to test.</typeparam>
     public class MyController<TController> : ControllerBuilder<TController>
@@ -20,6 +22,8 @@
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MyController{TController}"/> class.
+        /// This assertion chain validates the controller as an atomic unit - it does not 
+        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         public MyController()
             : this((TController)null)
@@ -28,6 +32,8 @@
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MyController{TController}"/> class.
+        /// This assertion chain validates the controller as an atomic unit - it does not 
+        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         /// <param name="controller">Instance of the ASP.NET Core MVC controller to test.</param>
         public MyController(TController controller)
@@ -37,6 +43,8 @@
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MyController{TController}"/> class.
+        /// This assertion chain validates the controller as an atomic unit - it does not 
+        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         /// <param name="construction">Construction function returning the instantiated controller.</param>
         public MyController(Func<TController> construction)
@@ -46,6 +54,8 @@
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MyController{TController}"/> class.
+        /// This assertion chain validates the controller as an atomic unit - it does not 
+        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         /// <param name="controllerInstanceBuilder">Builder for creating the controller instance.</param>
         public MyController(Action<IControllerInstanceBuilder<TController>> controllerInstanceBuilder)
@@ -54,6 +64,8 @@
 
         /// <summary>
         /// Starts a controller test.
+        /// This assertion chain validates the controller as an atomic unit - it does not 
+        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
         public static IControllerBuilder<TController> Instance() 
@@ -61,6 +73,8 @@
 
         /// <summary>
         /// Starts a controller test.
+        /// This assertion chain validates the controller as an atomic unit - it does not 
+        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         /// <param name="controller">Instance of the ASP.NET Core MVC controller to test.</param>
         /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
@@ -69,6 +83,8 @@
 
         /// <summary>
         /// Starts a controller test.
+        /// This assertion chain validates the controller as an atomic unit - it does not 
+        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         /// <param name="construction">Construction function returning the instantiated controller.</param>
         /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
@@ -77,6 +93,8 @@
 
         /// <summary>
         /// Starts a controller test.
+        /// This assertion chain validates the controller as an atomic unit - it does not 
+        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         /// <param name="controllerInstanceBuilder">Builder for creating the controller instance.</param>
         /// <returns>Test builder of <see cref="IControllerActionCallBuilder{TController}"/> type.</returns>
@@ -85,6 +103,8 @@
 
         /// <summary>
         /// Indicates which action should be invoked and tested.
+        /// This assertion chain validates the controller action as an atomic unit - it does not 
+        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         /// <typeparam name="TActionResult">Type of result from action.</typeparam>
         /// <param name="actionCall">Method call expression indicating invoked action.</param>
@@ -95,6 +115,8 @@
 
         /// <summary>
         /// Indicates which action should be invoked and tested.
+        /// This assertion chain validates the controller action as an atomic unit - it does not 
+        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         /// <typeparam name="TActionResult">Type of result from action.</typeparam>
         /// <param name="actionCall">Method call expression indicating invoked asynchronous action.</param>
@@ -105,6 +127,8 @@
 
         /// <summary>
         /// Indicates which action should be invoked and tested.
+        /// This assertion chain validates the controller action as an atomic unit - it does not 
+        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         /// <param name="actionCall">Method call expression indicating invoked void action.</param>
         /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/> type.</returns>
@@ -114,6 +138,8 @@
 
         /// <summary>
         /// Indicates which action should be invoked and tested.
+        /// This assertion chain validates the controller action as an atomic unit - it does not 
+        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         /// <param name="actionCall">Method call expression indicating invoked asynchronous void action.</param>
         /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/> type.</returns>

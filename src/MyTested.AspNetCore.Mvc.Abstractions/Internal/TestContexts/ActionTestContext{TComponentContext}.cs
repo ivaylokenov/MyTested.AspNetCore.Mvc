@@ -47,7 +47,7 @@
             {
                 if (this.componentContext == null)
                 {
-                    this.componentContext = this.DefaultComponentContext;
+                    this.componentContext = this.ExecutionComponentContext ?? this.DefaultComponentContext;
                     if (!this.componentContext.RouteData.Values.Any())
                     {
                         this.componentContext.RouteData = this.RouteData ?? this.componentContext.RouteData;
@@ -69,5 +69,7 @@
         public Action<TComponentContext> ComponentContextPreparationDelegate { get; set; }
 
         protected abstract TComponentContext DefaultComponentContext { get; }
+
+        protected virtual TComponentContext ExecutionComponentContext => null;
     }
 }

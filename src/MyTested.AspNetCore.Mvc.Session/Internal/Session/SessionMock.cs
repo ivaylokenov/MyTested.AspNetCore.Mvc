@@ -25,9 +25,9 @@
 
         public void Clear() => this.session.Clear();
 
-        public Task CommitAsync(CancellationToken cancellationToken = default(CancellationToken)) => Task.CompletedTask;
+        public Task CommitAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
 
-        public Task LoadAsync(CancellationToken cancellationToken = default(CancellationToken)) => Task.CompletedTask;
+        public Task LoadAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
 
         public void Remove(string key)
         {

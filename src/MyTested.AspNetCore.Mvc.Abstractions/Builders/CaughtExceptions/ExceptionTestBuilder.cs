@@ -6,6 +6,7 @@
     using Exceptions;
     using Internal.TestContexts;
     using Utilities;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing expected exceptions.
@@ -27,11 +28,14 @@
             var actualExceptionType = this.TestContext.CaughtException.GetType();
             if (Reflection.AreDifferentTypes(exceptionType, actualExceptionType))
             {
+                var (expectedExceptionName, actualExceptionName) =
+                    (exceptionType, actualExceptionType).GetTypeComparisonNames();
+
                 throw new InvalidExceptionAssertionException(string.Format(
                     "{0} {1}, but instead received {2}.",
                     this.TestContext.ExceptionMessagePrefix,
-                    exceptionType.ToFriendlyTypeName(),
-                    actualExceptionType.ToFriendlyTypeName()));
+                    expectedExceptionName,
+                    actualExceptionName));
             }
 
             return this;
@@ -41,6 +45,7 @@
         public IAndExceptionTestBuilder OfType<TException>()
             => OfType(typeof(TException));
 
+        /// <inheritdoc />
         public IExceptionMessageTestBuilder WithMessage()
         {
             return new ExceptionMessageTestBuilder(

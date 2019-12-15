@@ -3,30 +3,18 @@
     using System;
     using Configuration;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Hosting.Internal;
-    
+
     public static partial class TestWebServer
     {
-        private static IHostingEnvironment environment;
+        private static IWebHostEnvironment environment;
 
-        internal static IHostingEnvironment Environment
-        {
-            get
-            {
-                if (environment == null)
-                {
-                    environment = PrepareEnvironment();
-                }
-
-                return environment;
-            }
-        }
+        internal static IWebHostEnvironment Environment => environment ??= PrepareEnvironment();
 
         internal static string ApplicationName
             => ServerTestConfiguration.General.ApplicationName ?? WebAssemblyName ?? TestAssemblyName;
         
-        private static IHostingEnvironment PrepareEnvironment()
-            => new HostingEnvironment
+        private static IWebHostEnvironment PrepareEnvironment()
+            => new TestHostEnvironment
             {
                 ApplicationName = ApplicationName,
                 EnvironmentName = ServerTestConfiguration.General.EnvironmentName,

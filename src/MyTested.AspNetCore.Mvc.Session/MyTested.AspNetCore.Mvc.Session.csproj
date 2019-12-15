@@ -4,9 +4,9 @@
     <Description>My Tested ASP.NET Core MVC session middleware components.</Description>
     <Copyright>2015-2019 Ivaylo Kenov</Copyright>
     <AssemblyTitle>MyTested.AspNetCore.Mvc.Session</AssemblyTitle>
-    <VersionPrefix>2.2.0</VersionPrefix>
+    <VersionPrefix>3.1.0</VersionPrefix>
     <Authors>Ivaylo Kenov</Authors>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -16,7 +16,7 @@
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <PackageId>MyTested.AspNetCore.Mvc.Session</PackageId>
     <PackageTags>aspnetcore;aspnetcoremvc;testing;unit;tests;fluent;testing;framework;asp;net;core;mvc;test;mymvc;mytested</PackageTags>
-    <PackageIconUrl>https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/nuget-logo.png</PackageIconUrl>
+    <PackageIcon>nuget-logo.png</PackageIcon>
     <PackageProjectUrl>https://mytestedasp.net/</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -33,11 +33,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.*" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="../../LICENSE" Pack="true" PackagePath="" />
+    <None Include="../../tools/nuget-logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>

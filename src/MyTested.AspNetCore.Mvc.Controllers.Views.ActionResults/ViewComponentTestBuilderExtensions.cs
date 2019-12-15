@@ -7,6 +7,7 @@
     using Exceptions;
     using Microsoft.AspNetCore.Routing;
     using Utilities;
+    using Utilities.Extensions;
     using Utilities.Validators;
 
     /// <summary>
@@ -68,11 +69,14 @@
 
             if (viewComponentType != actualViewComponentType)
             {
+                var (expectedViewComponentName, actualViewComponentName) = 
+                    (viewComponentType, actualViewComponentType).GetTypeComparisonNames();
+
                 throw ViewResultAssertionException.ForNameEquality(
                     actualBuilder.TestContext.ExceptionMessagePrefix,
                     "view component",
-                    viewComponentType.ToFriendlyTypeName(),
-                    actualViewComponentType.ToFriendlyTypeName());
+                    expectedViewComponentName,
+                    actualViewComponentName);
             }
 
             return actualBuilder;

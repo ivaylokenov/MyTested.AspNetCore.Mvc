@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.2;net461</TargetFrameworks>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>ApplicationParts.Web</AssemblyName>
     <UserSecretsId>aspnet-ApplicationParts.Web-c273a372-79ef-490d-b0e1-a7fb8f2dacc7</UserSecretsId>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -18,39 +18,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.*" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.*" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.2.*" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.*" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="2.2.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.*" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.*" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.2.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.*" />
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.*" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.6">
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.4" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.*" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="2.2.*" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.*" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.*" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.2.*" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.*" />
-  </ItemGroup>
-
-  <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish" Condition=" '$(IsCrossTargetingBuild)' != 'true' ">
-    <Exec Command="npm install" />
-    <Exec Command="bower install" />
-    <Exec Command="gulp clean" />
-    <Exec Command="gulp min" />
-  </Target>
-
-  <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
   </ItemGroup>
 
 </Project>
