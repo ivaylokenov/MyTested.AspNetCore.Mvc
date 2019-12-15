@@ -49,7 +49,7 @@ test_script:
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Lite.Test/MyTested.AspNetCore.Mvc.Lite.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Models.Test/MyTested.AspNetCore.Mvc.Models.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.ModelState.Test/MyTested.AspNetCore.Mvc.ModelState.Test.csproj" --configuration Release --no-build
-- cmd: dotnet test "test/MyTested.AspNetCore.Mvc.NewtonsoftJson.Test/MyTested.AspNetCore.Mvc.NewtonsoftJson.Test" --configuration Release --no-build
+- cmd: dotnet test "test/MyTested.AspNetCore.Mvc.NewtonsoftJson.Test/MyTested.AspNetCore.Mvc.NewtonsoftJson.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Options.Test/MyTested.AspNetCore.Mvc.Options.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Pipeline.Test/MyTested.AspNetCore.Mvc.Pipeline.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Routing.Test/MyTested.AspNetCore.Mvc.Routing.Test.csproj" --configuration Release --no-build
