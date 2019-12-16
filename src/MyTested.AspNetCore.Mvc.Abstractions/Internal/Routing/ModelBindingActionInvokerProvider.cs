@@ -9,10 +9,8 @@
     {
         private readonly IModelBindingActionInvokerFactory actionInvokerFactory;
 
-        public ModelBindingActionInvokerProvider(IModelBindingActionInvokerFactory actionInvokerFactory)
-        {
-            this.actionInvokerFactory = actionInvokerFactory;
-        }
+        public ModelBindingActionInvokerProvider(IModelBindingActionInvokerFactory actionInvokerFactory) 
+            => this.actionInvokerFactory = actionInvokerFactory;
 
         public int Order => int.MaxValue;
         
@@ -31,7 +29,7 @@
         
         public void OnProvidersExecuted(ActionInvokerProviderContext context)
         {
-            // intentionally does nothing
+            // Intentionally does nothing.
         }
     }
 }

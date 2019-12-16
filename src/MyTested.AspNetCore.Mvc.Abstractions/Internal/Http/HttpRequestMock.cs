@@ -1,12 +1,12 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Http
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
-    using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.Extensions.Primitives;
     using Utilities.Validators;
 
@@ -146,49 +146,39 @@
         /// </summary>
         /// <param name="cancellationToken">Cancellation token for the asynchronous operation.</param>
         /// <returns>Task of form collection.</returns>
-        public override Task<IFormCollection> ReadFormAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.formFeature.ReadFormAsync(cancellationToken);
-        }
+        public override Task<IFormCollection> ReadFormAsync(CancellationToken cancellationToken = default) 
+            => this.formFeature.ReadFormAsync(cancellationToken);
 
         /// <summary>
         /// Adds cookie value to the mocked HTTP request.
         /// </summary>
         /// <param name="name">Name of the cookie.</param>
         /// <param name="value">Value of the cookie.</param>
-        public void AddCookie(string name, string value)
-        {
-            this.cookieValues[name] = value;
-        }
+        public void AddCookie(string name, string value) 
+            => this.cookieValues[name] = value;
 
         /// <summary>
         /// Adds form field value to the mocked HTTP request.
         /// </summary>
         /// <param name="name">Name of the form field.</param>
         /// <param name="value">Value of the form field.</param>
-        public void AddFormField(string name, string value)
-        {
-            this.formValues.Add(name, value);
-        }
+        public void AddFormField(string name, string value) 
+            => this.formValues.Add(name, value);
 
         /// <summary>
         /// Adds form file value to the mocked HTTP request.
         /// </summary>
         /// <param name="file">Form file to add.</param>
-        public void AddFormFile(IFormFile file)
-        {
-            this.formFiles.Add(file);
-        }
+        public void AddFormFile(IFormFile file) 
+            => this.formFiles.Add(file);
 
         /// <summary>
         /// Adds query string value to the mocked HTTP request.
         /// </summary>
         /// <param name="name">Name of the query.</param>
         /// <param name="value">Value of the query.</param>
-        public void AddQueryValue(string name, string value)
-        {
-            this.queryValues.Add(name, value);
-        }
+        public void AddQueryValue(string name, string value) 
+            => this.queryValues.Add(name, value);
 
         /// <summary>
         /// Initializes and prepares the mocked HTTP request.
@@ -197,7 +187,7 @@
         public HttpRequest Initialize()
         {
             this.Form = new FormCollection(this.formValues, this.formFiles);
-            this.Cookies = new RequestCookieCollection(this.cookieValues);
+            this.Cookies = (IRequestCookieCollection)Activator.CreateInstance(WebFramework.Internals.RequestCookieCollection, this.cookieValues);
             this.Query = new QueryCollection(this.queryValues);
             this.formFeature = new FormFeature(this.Form);
 

@@ -16,6 +16,7 @@
         private string methodName;
         private MethodInfo method;
         private LambdaExpression methodCall;
+        private object methodResult;
         private IEnumerable<object> methodAttributes;
         private object model;
         
@@ -93,7 +94,15 @@
             }
         }
 
-        public object MethodResult { get; set; }
+        public object MethodResult
+        { 
+            get => this.methodResult;
+
+            set
+            {
+                this.methodResult = this.ConvertMethodResult(value);
+            }
+        }
 
         public IEnumerable<object> MethodAttributes
         {
@@ -150,5 +159,7 @@
             this.MethodResult = invocationTestContext.MethodResult;
             this.CaughtException = invocationTestContext.CaughtException;
         }
+
+        protected virtual object ConvertMethodResult(object methodResult) => methodResult;
     }
 }

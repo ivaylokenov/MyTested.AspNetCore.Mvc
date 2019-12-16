@@ -3,21 +3,23 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Internal;
-    using Internal.Services;
     using Internal.Caching;
-    using Microsoft.Extensions.DependencyInjection;
+    using Internal.Contracts;
+    using Internal.Services;
+    using Microsoft.Extensions.Caching.Distributed;
     using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.DependencyInjection;
+    using Setups;
     using Setups.Common;
     using Setups.Controllers;
     using Setups.Startups;
-    using Xunit;
     using Setups.ViewComponents;
-    using Setups;
+    using Xunit;
 
     public class ServicesTests
     {
         [Fact]
-        public void MockMemoryCacheShouldBeRegistedWithAddedCaching()
+        public void MockMemoryCacheShouldBeRegisteredWithAddedCaching()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -217,6 +219,113 @@
                 .ConfigureAwait(false)
                 .GetAwaiter()
                 .GetResult();
+        }
+
+        [Fact]
+        public void MockDistributedCacheShouldBeRegisteredWithAddedCaching()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services => services.AddDistributedMemoryCache());
+
+            Assert.IsAssignableFrom<DistributedCacheMock>(TestServiceProvider.GetService<IDistributedCache>());
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void MockDistributedCacheShouldBeDifferentForEveryCallSynchronously()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services => services.AddDistributedMemoryCache());
+
+            // second call should not have cache entries
+            MyController<MvcController>
+                .Instance()
+                .WithDistributedCache(cache => cache.WithEntry("test", new byte[] { 127, 127,127 }))
+                .Calling(c => c.DistributedCacheAction())
+                .ShouldReturn()
+                .Ok();
+
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.DistributedCacheAction())
+                .ShouldReturn()
+                .BadRequest();
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void MockDistributedCacheShouldBeSameForEveryCallSynchronouslyWithCachedControllerBuilder()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services => services.AddDistributedMemoryCache());
+
+            var controller = new MyController<MvcController>();
+
+            // second call should not have cache entries
+            controller
+                .WithDistributedCache(cache => cache.WithEntry("test", new byte[] { 127, 127,127 }))
+                .Calling(c => c.DistributedCacheAction())
+                .ShouldReturn()
+                .Ok();
+
+            controller
+                .WithDistributedCache(cache => cache.WithEntry(string.Empty, new byte[] { }))
+                .Calling(c => c.DistributedCacheAction())
+                .ShouldReturn()
+                .Ok();
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void DefaultConfigurationShouldSetMockDistributedCache()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services => services.AddDistributedMemoryCache());
+
+            var distributedCache = TestServiceProvider.GetService<IDistributedCache>();
+
+            Assert.NotNull(distributedCache);
+            Assert.IsAssignableFrom<DistributedCacheMock>(distributedCache);
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void CustomDistributedCacheShouldOverrideTheMockOne()
+        {
+            MyApplication.StartsFrom<CachingDataStartup>();
+
+            var distributedCache = TestServiceProvider.GetService<IDistributedCache>();
+
+            Assert.NotNull(distributedCache);
+            Assert.IsAssignableFrom<CustomDistributedCache>(distributedCache);
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void ExplicitMockDistributedCacheShouldOverrideIt()
+        {
+            MyApplication
+                .StartsFrom<DataStartup>()
+                .WithServices(services =>
+                {
+                    services.ReplaceDistributedCache();
+                });
+
+            var distributedCache = TestServiceProvider.GetService<IDistributedCache>();
+
+            Assert.NotNull(distributedCache);
+            Assert.IsAssignableFrom<DistributedCacheMock>(distributedCache);
+
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

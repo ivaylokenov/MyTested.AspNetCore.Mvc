@@ -109,7 +109,7 @@
         }
 
         [Fact]
-        public void ToUrlPassingShouldNotThrowExceptionWithValidaAssertions()
+        public void ToUrlPassingShouldNotThrowExceptionWithValidAssertions()
         {
             MyController<MvcController>
                 .Instance()
@@ -381,7 +381,7 @@
                         .Redirect(redirect => redirect
                             .ContainingRouteValue("id", 2));
                 },
-                "When calling RedirectToActionResult action in MvcController expected redirect result route values to have entry with 'id' key and the provided value, but the value was different.");
+                "When calling RedirectToActionResult action in MvcController expected redirect result route values to have entry with 'id' key and the provided value, but the value was different. Expected a value of '2', but in fact it was '1'.");
         }
 
         [Fact]

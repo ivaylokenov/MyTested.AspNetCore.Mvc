@@ -7,7 +7,6 @@
     using Internal.Caching;
     using Internal.Contracts;
     using Internal.Services;
-    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Utilities.Extensions;
@@ -27,7 +26,7 @@
         {
             CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
 
-            var mvcServicesAdded = serviceCollection.Any(s => s.ServiceType == typeof(MvcMarkerService));
+            var mvcServicesAdded = serviceCollection.Any(s => s.ServiceType == WebFramework.Internals.MvcMarkerService);
             if (!mvcServicesAdded)
             {
                 throw new InvalidOperationException($"Unable to find the required services. Make sure you register the '{TestFramework.TestFrameworkName}' testing infrastructure services after the web application ones.");

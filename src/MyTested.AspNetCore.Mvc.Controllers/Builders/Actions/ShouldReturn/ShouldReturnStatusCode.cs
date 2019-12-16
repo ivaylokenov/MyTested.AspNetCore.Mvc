@@ -30,7 +30,7 @@
 
         private IAndStatusCodeTestBuilder GetStatusCodeTestBuilder()
         {
-            if (this.ActionResult is StatusCodeResult)
+            if (this.ObjectActionResult is StatusCodeResult)
             {
                 InvocationResultValidator.ValidateInvocationResultType<StatusCodeResult>(this.TestContext);
                 return new StatusCodeTestBuilder<StatusCodeResult>(this.TestContext);

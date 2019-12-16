@@ -77,12 +77,10 @@
             => this.WithJsonBody(jsonBody, DefaultEncoding);
 
         /// <inheritdoc />
-        public IAndHttpRequestBuilder WithJsonBody(string jsonBody, Encoding encoding)
-        {
-            return this
+        public IAndHttpRequestBuilder WithJsonBody(string jsonBody, Encoding encoding) 
+            => this
                 .WithContentType(this.request.ContentType ?? ContentType.ApplicationJson)
                 .WithStringBody(jsonBody, encoding);
-        }
 
         /// <inheritdoc />
         public IAndHttpRequestBuilder WithJsonBody(object jsonBody)

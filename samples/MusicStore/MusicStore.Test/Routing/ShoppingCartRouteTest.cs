@@ -32,8 +32,7 @@
                 .Routing()
                 .ShouldMap(request => request
                     .WithMethod(HttpMethod.Post)
-                    .WithLocation("/ShoppingCart/RemoveFromCart/1")
-                    .WithAntiForgeryToken())
+                    .WithLocation("/ShoppingCart/RemoveFromCart/1"))
                 .To<ShoppingCartController>(c => c.RemoveFromCart(1, With.Any<CancellationToken>()));
         }
     }

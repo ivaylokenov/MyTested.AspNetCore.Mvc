@@ -387,7 +387,7 @@
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
                 .BadRequest(badRequest => badRequest
-                    .ContainingOutputFormatterOfType<JsonOutputFormatter>());
+                    .ContainingOutputFormatterOfType<NewtonsoftJsonOutputFormatter>());
         }
 
         [Fact]

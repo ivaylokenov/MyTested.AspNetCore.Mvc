@@ -38,7 +38,7 @@
             TModel model)
             => shouldReturnTestBuilder
                 .View(view => view
-                    .WithName(null)
+                    .WithDefaultName()
                     .WithModel(model));
 
         /// <summary>

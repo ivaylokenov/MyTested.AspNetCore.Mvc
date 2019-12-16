@@ -72,7 +72,7 @@
                 this.ThrowNewHttpResponseAssertionException(
                     "body",
                     $"to be of {typeof(TBody).ToFriendlyTypeName()} type when using '{contentType}'",
-                    $"in fact it was not");
+                    "in fact it was not");
             }
 
             return this.WithContentType(contentType);
@@ -87,12 +87,12 @@
         {
             var parsedBody = FormattersHelper.ReadFromStream<TBody>(this.httpResponse.Body, contentType, encoding);
 
-            if (Reflection.AreNotDeeplyEqual(body, parsedBody))
+            if (Reflection.AreNotDeeplyEqual(body, parsedBody, out var result))
             {
                 this.ThrowNewHttpResponseAssertionException(
                     "body",
                     "to be the given object",
-                    "in fact it was different");
+                    $"in fact it was different. {result}");
             }
 
             return this.WithContentType(contentType);
@@ -125,14 +125,14 @@
             => this.WithBody(jsonBody, ContentType.ApplicationJson, encoding);
 
         /// <inheritdoc />
-        public IAndHttpResponseTestBuilder WithContentLength(long? contentLenght)
+        public IAndHttpResponseTestBuilder WithContentLength(long? contentLength)
         {
             var actualContentLength = this.httpResponse.ContentLength;
-            if (contentLenght != actualContentLength)
+            if (contentLength != actualContentLength)
             {
                 this.ThrowNewHttpResponseAssertionException(
                     "content length",
-                    $"to be {contentLenght.GetErrorMessageName(includeQuotes: false)}",
+                    $"to be {contentLength.GetErrorMessageName(includeQuotes: false)}",
                     $"instead received {actualContentLength.GetErrorMessageName(includeQuotes: false)}");
             }
 

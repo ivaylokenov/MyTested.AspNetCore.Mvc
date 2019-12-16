@@ -4,13 +4,13 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// Used for testing <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties"/>.
+    /// Used for testing <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties"/>.
     /// </summary>
     public interface IAuthenticationPropertiesTestBuilder
     {
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties"/>
-        /// has the same <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties.AllowRefresh"/>
+        /// Tests whether <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties"/>
+        /// has the same <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties.AllowRefresh"/>
         /// value as the provided one.
         /// </summary>
         /// <param name="allowRefresh">Expected boolean value.</param>
@@ -18,8 +18,8 @@
         IAndAuthenticationPropertiesTestBuilder AllowingRefresh(bool? allowRefresh);
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties"/>
-        /// has the same <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties.ExpiresUtc"/>
+        /// Tests whether <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties"/>
+        /// has the same <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties.ExpiresUtc"/>
         /// value as the provided one.
         /// </summary>
         /// <param name="expiration">Expected expiration value.</param>
@@ -27,8 +27,8 @@
         IAndAuthenticationPropertiesTestBuilder WithExpiration(DateTimeOffset? expiration);
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties"/>
-        /// has the same <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties.IsPersistent"/>
+        /// Tests whether <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties"/>
+        /// has the same <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties.IsPersistent"/>
         /// value as the provided one.
         /// </summary>
         /// <param name="isPersistent">Expected boolean value.</param>
@@ -36,8 +36,8 @@
         IAndAuthenticationPropertiesTestBuilder Persistent(bool isPersistent);
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties"/>
-        /// has the same <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties.IssuedUtc"/>
+        /// Tests whether <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties"/>
+        /// has the same <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties.IssuedUtc"/>
         /// value as the provided one.
         /// </summary>
         /// <param name="issuedOn">Expected date time offset value.</param>
@@ -45,18 +45,18 @@
         IAndAuthenticationPropertiesTestBuilder IssuedOn(DateTimeOffset? issuedOn);
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties"/>
+        /// Tests whether <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties"/>
         /// contains the provided item key in
-        /// its <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties.Items"/> collection.
+        /// its <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties.Items"/> collection.
         /// </summary>
         /// <param name="itemKey">Expected item key.</param>
         /// <returns>The same <see cref="IAndAuthenticationPropertiesTestBuilder"/>.</returns>
         IAndAuthenticationPropertiesTestBuilder WithItem(string itemKey);
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties"/> contains
+        /// Tests whether <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties"/> contains
         /// the provided item key and value in its
-        /// <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties.Items"/> collection.
+        /// <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties.Items"/> collection.
         /// </summary>
         /// <param name="itemKey">Expected item key.</param>
         /// <param name="itemValue">Expected item value.</param>
@@ -64,24 +64,24 @@
         IAndAuthenticationPropertiesTestBuilder WithItem(string itemKey, string itemValue);
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties"/> contains the provided items
-        /// in its <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties.Items"/> collection.
+        /// Tests whether <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties"/> contains the provided items
+        /// in its <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties.Items"/> collection.
         /// </summary>
         /// <param name="items">Expected items as anonymous object.</param>
         /// <returns>The same <see cref="IAndAuthenticationPropertiesTestBuilder"/>.</returns>
         IAndAuthenticationPropertiesTestBuilder WithItems(object items);
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties"/> contains the provided items
-        /// in its <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties.Items"/> collection.
+        /// Tests whether <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties"/> contains the provided items
+        /// in its <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties.Items"/> collection.
         /// </summary>
         /// <param name="items">Expected items as dictionary.</param>
         /// <returns>The same <see cref="IAndAuthenticationPropertiesTestBuilder"/>.</returns>
         IAndAuthenticationPropertiesTestBuilder WithItems(IDictionary<string, string> items);
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties"/>
-        /// has the same <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties.RedirectUri"/> as the provided one.
+        /// Tests whether <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties"/>
+        /// has the same <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties.RedirectUri"/> as the provided one.
         /// </summary>
         /// <param name="redirectUri">Expected redirect URI.</param>
         /// <returns>The same <see cref="IAndAuthenticationPropertiesTestBuilder"/>.</returns>

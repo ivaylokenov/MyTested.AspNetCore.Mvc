@@ -2,6 +2,7 @@
 {
     using Common;
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.Extensions.Caching.Distributed;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -11,11 +12,12 @@
         {
             services.AddMvc();
             services.Replace<IMemoryCache, CustomMemoryCache>(ServiceLifetime.Singleton);
+            services.Replace<IDistributedCache, CustomDistributedCache>(ServiceLifetime.Singleton);
         }
 
-        public void Configure(IApplicationBuilder app)
-        {
-            app.UseMvcWithDefaultRoute();
-        }
+        public void Configure(IApplicationBuilder app) => app
+            .UseRouting()
+            .UseEndpoints(endpoints => endpoints
+                .MapDefaultControllerRoute());
     }
 }

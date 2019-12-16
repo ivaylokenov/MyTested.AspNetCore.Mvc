@@ -15,7 +15,7 @@
                     .With(ServiceMock.GetInstance()))
                 .InvokedWith(c => c.InvokeAsync())
                 .ShouldReturn()
-                .View()
-                .WithModel(new[] { "Mock", "Test" });
+                .View(view => view
+                    .WithModel(new[] { "Mock", "Test" }));
     }
 }

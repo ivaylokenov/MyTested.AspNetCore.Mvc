@@ -16,11 +16,10 @@
                 .AddMvcCore()
                 .AddFormatterMappings()
                 .AddViews()
-                .AddDataAnnotations()
-                .AddJsonFormatters();
+                .AddDataAnnotations();
         
-        public Action<IServiceCollection> ServiceRegistrationDelegate =>
-            serviceCollection => serviceCollection.AddViewComponentsTesting();
+        public Action<IServiceCollection> ServiceRegistrationDelegate 
+            => serviceCollection => serviceCollection.AddViewComponentsTesting();
 
         public object TryGetValue(Type type, ComponentTestContext testContext)
             => Reflection.AreAssignable(this.viewComponentAttributesType, type) // ViewComponentAttributes

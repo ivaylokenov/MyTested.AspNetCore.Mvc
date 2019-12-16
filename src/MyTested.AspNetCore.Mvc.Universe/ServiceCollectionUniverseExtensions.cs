@@ -18,9 +18,10 @@
             CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
 
             serviceCollection
-                .AddMvcTesting()
+                .AddControllersWithViewsTesting()
                 .ReplaceDbContext()
                 .ReplaceMemoryCache()
+                .ReplaceDistributedCache()
                 .ReplaceSession();
 
             return serviceCollection;

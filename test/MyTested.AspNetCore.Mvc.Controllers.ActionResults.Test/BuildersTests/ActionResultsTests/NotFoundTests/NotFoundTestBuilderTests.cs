@@ -306,7 +306,7 @@
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound(notFound => notFound
-                    .ContainingOutputFormatterOfType<JsonOutputFormatter>());
+                    .ContainingOutputFormatterOfType<NewtonsoftJsonOutputFormatter>());
         }
 
         [Fact]

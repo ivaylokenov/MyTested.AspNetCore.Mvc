@@ -12,6 +12,7 @@ MyTested.AspNetCore.Mvc Packages
  - `MyTested.AspNetCore.Mvc.Models` - Contains setup and assertion methods for response and view models
  - `MyTested.AspNetCore.Mvc.Routing` - Contains setup and assertion methods for routes
  - `MyTested.AspNetCore.Mvc.Core` - Contains setup and assertion methods for MVC core features
+ - `MyTested.AspNetCore.Mvc.Pipeline` - Contains setup methods for pipeline tests
  - `MyTested.AspNetCore.Mvc.TempData` - Contains setup and assertion methods for `ITempDataDictionary`
  - `MyTested.AspNetCore.Mvc.ViewData` - Contains assertion methods for `ViewDataDictionary` and dynamic `ViewBag`
  - `MyTested.AspNetCore.Mvc.ViewComponents` - Contains setup and assertion methods for view components
@@ -24,7 +25,7 @@ MyTested.AspNetCore.Mvc Packages
  - `MyTested.AspNetCore.Mvc.DataAnnotations` - Contains setup and assertion methods for data annotation validations
  - `MyTested.AspNetCore.Mvc.EntityFrameworkCore` - Contains setup and assertion methods for `DbContext`
  - `MyTested.AspNetCore.Mvc.DependencyInjection` - Contains setup methods for dependency injection services
- - `MyTested.AspNetCore.Mvc.Caching` - Contains setup and assertion methods for `IMemoryCache`
+ - `MyTested.AspNetCore.Mvc.Caching` - Contains setup and assertion methods for `IMemoryCache` and `IDistributedCache`
  - `MyTested.AspNetCore.Mvc.Session` - Contains setup and assertion methods for `ISession`
  - `MyTested.AspNetCore.Mvc.Options` - Contains setup and assertion methods for `IOptions`
  - `MyTested.AspNetCore.Mvc.Helpers` - Contains additional helper methods for easier assertions

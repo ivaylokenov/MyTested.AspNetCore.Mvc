@@ -1,15 +1,12 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Application
 {
     using System;
+    using Internal.Routing;
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Routing;
 
     public static partial class TestApplication
     {
-        private static readonly RequestDelegate NullHandler;
-
         private static volatile IRouter router;
 
         public static IRouter Router
@@ -33,7 +30,7 @@
 
             var routeBuilder = new RouteBuilder(applicationBuilder)
             {
-                DefaultHandler = new RouteHandler(NullHandler)
+                DefaultHandler = RouteHandlerMock.Null
             };
 
             for (int i = 0; i < applicationBuilder.Routes.Count; i++)
@@ -44,13 +41,23 @@
             
             AdditionalRouting?.Invoke(routeBuilder);
 
-            if (StartupType == null || routeBuilder.Routes.Count == 0)
+            var routeBuilderRoutes = routeBuilder.Routes;
+
+            if (StartupType == null || routeBuilderRoutes.Count == 0)
             {
                 routeBuilder.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+            }
 
-                routeBuilder.Routes.Insert(0, AttributeRouting.CreateAttributeMegaRoute(serviceProvider));
+            var attributeRoutingType = WebFramework.Internals.AttributeRouting;
+
+            if (!routeBuilderRoutes[0].GetType().Name.StartsWith(nameof(Attribute)))
+            {
+                var createAttributeMegaRouteMethod = attributeRoutingType.GetMethod("CreateAttributeMegaRoute");
+                var attributeRouter = (IRouter)createAttributeMegaRouteMethod?.Invoke(null, new object[] { serviceProvider });
+
+                routeBuilderRoutes.Insert(0, attributeRouter);
             }
 
             router = routeBuilder.Build();

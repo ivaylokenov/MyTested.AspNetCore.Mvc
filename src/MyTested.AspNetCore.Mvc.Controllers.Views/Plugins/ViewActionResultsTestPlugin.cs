@@ -12,7 +12,6 @@
                 .AddMvcCore()
                 .AddFormatterMappings()
                 .AddViews()
-                .AddDataAnnotations()
-                .AddJsonFormatters();
+                .AddDataAnnotations();
     }
 }
