@@ -71,6 +71,19 @@ Take a look around and...
 
 Funds donated via both platforms are used for development and marketing purposes. Funds donated via OpenCollective are managed with transparent expenses. Your name/logo will receive proper recognition and exposure by donating on either platform.
 
+## Main Features
+
+- **Built-in service mock resolver** - register your mocks once, use them everywhere.
+- **Controller tests** - unit or integration tests for both MVC or API scenarios.
+- **View component tests** - validate your view logic as fast as possible.
+- **Route tests** - asserting route paths and model binding is as accessible as it can get.
+- **Pipeline tests** - from the web request to the returned response - the whole chain is validated.
+- **Simple and easy to learn fluent API** - takes no more than 20 minutes to learn the library.
+- **Strongly-typed assertions** - the fluent test chain is designed to be developer-friendly and helpful. 
+- **Friendly error messages** - failed tests throw exceptions with detailed error reports.
+- **Isolated test scope** - each test is run in isolated scope, making asynchronous execution more than welcome. 
+- **Built-in mocks** - in-memory database, authentication, authorization, session, caching, temp data, and more.
+
 ## Quick Start
 
 To add **MyTested.AspNetCore.Mvc** to your solution, you must follow these simple steps:
