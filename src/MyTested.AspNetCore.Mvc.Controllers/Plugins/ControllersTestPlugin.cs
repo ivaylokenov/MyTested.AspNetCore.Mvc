@@ -16,7 +16,7 @@
             => serviceCollection => serviceCollection.AddMvcCore();
         
         public Action<IServiceCollection> ServiceRegistrationDelegate 
-            => serviceCollection => serviceCollection.AddControllersTesting();
+            => serviceCollection => serviceCollection.AddControllersCoreTesting();
 
         public object TryGetValue(Type type, ComponentTestContext testContext)
             => Reflection.AreAssignable(this.controllerAttributesType, type) // ControllerAttributes

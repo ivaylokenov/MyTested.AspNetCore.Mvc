@@ -1,11 +1,13 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
     using System;
+    using Builders.Contracts.And;
     using Builders.Contracts.Invocations;
     using Builders.Contracts.Models;
+    using Builders.And;
     using Builders.Base;
-    using Utilities.Validators;
     using Builders.Models;
+    using Utilities.Validators;
 
     /// <summary>
     /// Contains model extension methods for <see cref="IBaseShouldReturnTestBuilder"/>.
@@ -17,10 +19,23 @@
         /// </summary>
         /// <param name="builder">Instance of <see cref="IBaseShouldReturnTestBuilder{TInvocationResult}"/> type.</param>
         /// <param name="resultType">Expected return type.</param>
-        /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TInvocationResult}"/> type.</returns>
-        public static IAndModelDetailsTestBuilder<TInvocationResult> ResultOfType<TInvocationResult>(
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        public static IAndTestBuilder ResultOfType<TInvocationResult>(
             this IBaseShouldReturnTestBuilder<TInvocationResult> builder,
             Type resultType)
+            => builder.ResultOfType(resultType, null);
+
+        /// <summary>
+        /// Tests whether the result is of the provided type.
+        /// </summary>
+        /// <param name="builder">Instance of <see cref="IBaseShouldReturnTestBuilder{TInvocationResult}"/> type.</param>
+        /// <param name="resultTestBuilder">Builder for testing the result.</param>
+        /// <param name="resultType">Expected return type.</param>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        public static IAndTestBuilder ResultOfType<TInvocationResult>(
+            this IBaseShouldReturnTestBuilder<TInvocationResult> builder,
+            Type resultType,
+            Action<IModelDetailsTestBuilder<TInvocationResult>> resultTestBuilder)
         {
             var actualBuilder = (BaseTestBuilderWithActionContext)builder;
 
@@ -30,7 +45,9 @@
                 canBeAssignable: true,
                 allowDifferentGenericTypeDefinitions: true);
 
-            return new ModelDetailsTestBuilder<TInvocationResult>(actualBuilder.TestContext);
+            resultTestBuilder?.Invoke(new ModelDetailsTestBuilder<TInvocationResult>(actualBuilder.TestContext));
+
+            return new AndTestBuilder(actualBuilder.TestContext);
         }
 
         /// <summary>
@@ -38,9 +55,21 @@
         /// </summary>
         /// <param name="builder">Instance of <see cref="IBaseShouldReturnTestBuilder"/> type.</param>
         /// <typeparam name="TResult">Expected response type.</typeparam>
-        /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TResult}"/> type.</returns>
-        public static IAndModelDetailsTestBuilder<TResult> ResultOfType<TResult>(
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        public static IAndTestBuilder ResultOfType<TResult>(
             this IBaseShouldReturnTestBuilder builder)
+            => builder.ResultOfType<TResult>(null);
+
+        /// <summary>
+        /// Tests whether the result is of the provided type.
+        /// </summary>
+        /// <param name="builder">Instance of <see cref="IBaseShouldReturnTestBuilder"/> type.</param>
+        /// <typeparam name="TResult">Expected response type.</typeparam>
+        /// <param name="resultTestBuilder">Builder for testing the result.</param>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        public static IAndTestBuilder ResultOfType<TResult>(
+            this IBaseShouldReturnTestBuilder builder,
+            Action<IModelDetailsTestBuilder<TResult>> resultTestBuilder)
         {
             var actualBuilder = (BaseTestBuilderWithActionContext)builder;
 
@@ -48,7 +77,9 @@
                 actualBuilder.TestContext,
                 canBeAssignable: true);
 
-            return new ModelDetailsTestBuilder<TResult>(actualBuilder.TestContext);
+            resultTestBuilder?.Invoke(new ModelDetailsTestBuilder<TResult>(actualBuilder.TestContext));
+
+            return new AndTestBuilder(actualBuilder.TestContext);
         }
 
         /// <summary>

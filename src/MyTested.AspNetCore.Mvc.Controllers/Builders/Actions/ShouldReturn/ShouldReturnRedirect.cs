@@ -18,12 +18,12 @@
         /// <inheritdoc />
         public IAndTestBuilder Redirect(Action<IRedirectTestBuilder> redirectTestBuilder)
         {
-            if (this.ActionResult is RedirectToRouteResult)
+            if (this.ObjectActionResult is RedirectToRouteResult)
             {
                 return this.ValidateRedirectResult<RedirectToRouteResult>(redirectTestBuilder);
             }
 
-            if (this.ActionResult is RedirectToActionResult)
+            if (this.ObjectActionResult is RedirectToActionResult)
             {
                 return this.ValidateRedirectResult<RedirectToActionResult>(redirectTestBuilder);
             }

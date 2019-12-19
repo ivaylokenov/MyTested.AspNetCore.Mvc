@@ -15,7 +15,7 @@
 
     public class Startup
     {
-        public Startup(IHostingEnvironment hostingEnvironment)
+        public Startup(IWebHostEnvironment hostingEnvironment)
         {
             // Below code demonstrates usage of multiple configuration sources. For instance a setting say 'setting1'
             // is found in both the registered sources, then the later source will win. By this way a Local config
@@ -57,7 +57,7 @@
             services.AddLogging();
 
             // Add MVC services to the services container
-            services.AddMvc();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
 
             // Add memory cache services
             services.AddMemoryCache();

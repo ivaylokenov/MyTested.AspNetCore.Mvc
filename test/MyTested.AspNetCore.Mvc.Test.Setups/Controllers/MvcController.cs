@@ -23,6 +23,7 @@
     using Pipelines;
     using Newtonsoft.Json;
     using Services;
+    using ActionFilters;
 
     [Authorize(Roles = "Admin,Moderator")]
     [FormatFilter]
@@ -331,6 +332,8 @@
             NoStore = true,
             Order = 2)]
         [MiddlewareFilter(typeof(MyPipeline), Order = 2)]
+        [ServiceFilter(typeof(MyActionFilter), Order = 2)]
+        [TypeFilter(typeof(MyActionFilterWithArgs), Order = 2, Arguments = new object[] { 10 })]
         public IActionResult VariousAttributesAction()
         {
             return this.Ok();
@@ -759,6 +762,19 @@
         public IActionResult ObjectResultWithResponse()
         {
             return new ObjectResult(this.ResponseModel.ToList());
+        }
+
+        public IActionResult OkResultWithRepeatedName()
+        {
+            return this.Ok(new CustomActionResult());
+        }
+
+        public IActionResult OkResultWithRepeatedCollectionName()
+        {
+            return this.Ok(new List<CustomActionResult>
+            {
+                new CustomActionResult()
+            });
         }
 
         public IActionResult BadRequestAction()
@@ -1205,6 +1221,32 @@
             return this.Ok(this.HttpContext.Session.Keys.Count());
         }
 
+        public object AnonymousResult()
+        {
+            return new
+            {
+                Id = 1,
+                Text = "test",
+                Nested = new
+                {
+                    IsTrue = true
+                }
+            };
+        }
+
+        public IActionResult AnonymousOkResult()
+        {
+            return this.Ok(new 
+            { 
+                Id = 1, 
+                Text = "test",
+                Nested = new
+                {
+                    IsTrue = true
+                }
+            });
+        }
+
         public IActionResult WithService(IHttpContextAccessor httpContextAccessor)
         {
             if (httpContextAccessor == null)
@@ -1213,6 +1255,29 @@
             }
 
             return this.Ok();
+        }
+
+        public ActionResult<ResponseModel> ActionResultOfT(int id)
+        {
+            if (id == 0)
+            {
+                return this.BadRequest();
+            }
+
+            return this.ResponseModel.First();
+        }
+
+        public ActionResult<object> ActionResultOfAnonymousType()
+        {
+            return new
+            {
+                Id = 1,
+                Text = "test",
+                Nested = new
+                {
+                    IsTrue = true
+                }
+            };
         }
 
         private void ThrowNewNullReferenceException()

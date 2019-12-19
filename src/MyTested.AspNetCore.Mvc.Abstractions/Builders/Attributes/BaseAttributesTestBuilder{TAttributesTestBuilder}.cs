@@ -31,17 +31,15 @@
         /// <value>Test builder for the attributes.</value>
         public abstract TAttributesTestBuilder AttributesTestBuilder { get; }
 
-        /// <inheritdoc />
-        public TAttributesTestBuilder ContainingAttributeOfType<TAttribute>()
-            where TAttribute : Attribute
+        ///// <inheritdoc />
+        public TAttributesTestBuilder ContainingAttributeOfType(Type attribute)
         {
-            var expectedAttributeType = typeof(TAttribute);
             this.Validations.Add(attrs =>
             {
-                if (attrs.All(a => a.GetType() != expectedAttributeType))
+                if (attrs.All(a => a.GetType() != attribute))
                 {
                     this.ThrowNewAttributeAssertionException(
-                        expectedAttributeType.ToFriendlyTypeName(),
+                        attribute.ToFriendlyTypeName(),
                         "in fact such was not found");
                 }
             });
@@ -49,6 +47,10 @@
             return this.AttributesTestBuilder;
         }
 
+        /// <inheritdoc />
+        public TAttributesTestBuilder ContainingAttributeOfType<TAttribute>()
+             where TAttribute : Attribute => this.ContainingAttributeOfType(typeof(TAttribute));
+        
         /// <inheritdoc />
         public TAttributesTestBuilder PassingFor<TAttribute>(Action<TAttribute> assertions)
             where TAttribute : Attribute

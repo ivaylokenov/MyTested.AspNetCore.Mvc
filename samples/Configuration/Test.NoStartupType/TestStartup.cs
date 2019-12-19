@@ -1,7 +1,7 @@
 ﻿namespace Test.NoStartupType
 {
     using Microsoft.Extensions.Configuration;
-    using WebApplication.Core;
+    using WebApplication;
 
     public class TestStartup : Startup
     {

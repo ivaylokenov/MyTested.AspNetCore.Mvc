@@ -304,7 +304,7 @@
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .Object(result => result
-                    .ContainingOutputFormatterOfType<JsonOutputFormatter>());
+                    .ContainingOutputFormatterOfType<NewtonsoftJsonOutputFormatter>());
         }
 
         [Fact]

@@ -6,6 +6,7 @@
     using Contracts.Base;
     using Exceptions;
     using Internal;
+    using Internal.Configuration;
     using Internal.Http;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Http;
@@ -13,7 +14,8 @@
     using Utilities.Extensions;
     using Utilities.Validators;
 
-    public abstract partial class BaseComponentBuilder<TComponent, TTestContext, TBuilder> : BaseTestBuilderWithComponentBuilder<TBuilder>
+    public abstract partial class BaseComponentBuilder<TComponent, TTestContext, TBuilder> 
+        : BaseTestBuilderWithComponentBuilder<TBuilder>
         where TComponent : class
         where TTestContext : ComponentTestContext
         where TBuilder : IBaseTestBuilder
@@ -72,15 +74,27 @@
             var component = this.TestContext.Component;
             if (component == null)
             {
+                component = this.TryExtractComponentFromExecution();
+
                 var explicitDependenciesAreSet = this.TestContext.AggregatedDependencies.Any();
                 if (explicitDependenciesAreSet)
                 {
+                    var executionComponent = component;
+
                     // Custom dependencies are set, try create instance with them.
                     component = Reflection.TryCreateInstance<TComponent>(this.TestContext.AggregatedDependencies);
+
+                    if (executionComponent != null)
+                    {
+                        // Copy the public properties from the execution component to the newly created instance.
+                        Reflection.CopyProperties(executionComponent, component);
+
+                        this.SkipComponentActivation = true;
+                    }
                 }
-                else
+                else if (component == null)
                 {
-                    // No custom dependencies are set, try create instance with component factory.
+                    // No execution component, no custom dependencies set, try create instance with the component factory.
                     component = this.TryCreateComponentWithFactory();
 
                     if (component != null)
@@ -128,13 +142,15 @@
         {
             if (!this.IsValidComponent)
             {
-                throw new InvalidOperationException($"{typeof(TComponent).ToFriendlyTypeName()} is not recognized as a valid {this.ComponentName} type. Classes decorated with 'Non{this.ComponentName.CapitalizeAndJoin()}Attribute' are not considered as passable {this.ComponentName}s. Additionally, make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file in order to enable proper {this.ComponentName} discovery. If your type is still not recognized, you may manually add it in the application part manager by using the 'AddMvc().PartManager.ApplicationParts.Add(applicationPart))' method.");
+                throw new InvalidOperationException($"{typeof(TComponent).ToFriendlyTypeName()} is not recognized as a valid {this.ComponentName} type. Classes decorated with 'Non{this.ComponentName.CapitalizeAndJoin()}Attribute' are not considered as passable {this.ComponentName}s. To enable proper {this.ComponentName} discovery, the test framework tries to load your web application by convention. If such is not found, you will need to set it manually by providing your web project's name in the test configuration's '{GeneralTestConfiguration.PrefixKey}:{GeneralTestConfiguration.WebAssemblyNameKey}' section ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default). If your {this.ComponentName} type is still not recognized, you may add it by hand in the application part manager by using the 'AddControllers().PartManager.ApplicationParts.Add(applicationPart))' or 'AddControllersWithViews().PartManager.ApplicationParts.Add(applicationPart))' methods.");
             }
         }
-
+        
         protected abstract TComponent TryCreateComponentWithFactory();
 
         protected abstract void ActivateComponent();
+
+        protected virtual TComponent TryExtractComponentFromExecution() => null;
 
         private void PrepareComponent()
         {

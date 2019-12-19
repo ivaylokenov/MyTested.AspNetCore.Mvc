@@ -1,12 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions
 {
-    using Base;
     using Contracts.Actions;
-    using Contracts.CaughtExceptions;
-    using CaughtExceptions;
     using Internal;
     using Internal.TestContexts;
-    using ShouldHave;
     using ShouldReturn;
     using Utilities.Validators;
 
@@ -15,7 +11,8 @@
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public class ActionResultTestBuilder<TActionResult>
-        : BaseTestBuilderWithActionResult<TActionResult>, IActionResultTestBuilder<TActionResult>
+        : BaseActionResultTestBuilder<TActionResult>, 
+        IActionResultTestBuilder<TActionResult>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ActionResultTestBuilder{TActionResult}"/> class.
@@ -24,21 +21,6 @@
         public ActionResultTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
-        }
-
-        /// <inheritdoc />
-        public IShouldHaveTestBuilder<TActionResult> ShouldHave()
-        {
-            InvocationValidator.CheckForException(this.CaughtException, this.TestContext.ExceptionMessagePrefix);
-            return new ShouldHaveTestBuilder<TActionResult>(this.TestContext);
-        }
-
-        /// <inheritdoc />
-        public IShouldThrowTestBuilder ShouldThrow()
-        {
-            TestHelper.ExecuteTestCleanup();
-            InvocationValidator.CheckForNullException(this.CaughtException, this.TestContext.ExceptionMessagePrefix);
-            return new ShouldThrowTestBuilder(this.TestContext);
         }
 
         /// <inheritdoc />

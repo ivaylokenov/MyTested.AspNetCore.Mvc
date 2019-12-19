@@ -5,11 +5,8 @@
     using Exceptions;
     using Internal;
     using Internal.Contracts.ActionResults;
-    using Internal.Services;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Options;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Used for testing <see cref="JsonResult"/>.
@@ -41,9 +38,6 @@
         public override object GetActualModel() => this.GetJsonResult()?.Value;
         
         public JsonResult GetJsonResult() => this.TestContext.MethodResult as JsonResult;
-
-        public JsonSerializerSettings GetServiceDefaultSerializerSettings()
-            => TestServiceProvider.GetService<IOptions<MvcJsonOptions>>()?.Value?.SerializerSettings;
 
         /// <summary>
         /// Throws new <see cref="JsonResultAssertionException"/> for the provided property name, expected value and actual value.

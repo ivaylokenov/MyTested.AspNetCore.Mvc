@@ -1,5 +1,19 @@
 <h1><img src="https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/logo.png" align="left" alt="MyTested.AspNetCore.Mvc" width="100">&nbsp; MyTested.AspNetCore.Mvc - Fluent Testing<br />&nbsp; Library for ASP.NET Core MVC</h1> 
 
+## Special Sponsors
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="middle">
+          <a href="http://bit.ly/bellatrixsolutions" target="_blank">
+    <img width="323px" src="https://user-images.githubusercontent.com/3391906/68993273-d4f5c700-087e-11ea-9b39-e173733fcbfb.png" alt=""The Ultimate Cross-Platform .NET Framework>
+  </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 ## Gold Sponsors
 
 <table>
@@ -20,6 +34,11 @@
           <img width="148px" src="https://user-images.githubusercontent.com/3391906/66921689-637fea00-f02e-11e9-944a-b07c6f345a06.png">
         </a>
       </td>
+      <td align="center" valign="middle">
+          <a href="http://bit.ly/onebitsoftware" target="_blank">
+          <img width="148px" height="70px" src="https://user-images.githubusercontent.com/3391906/69410626-1a4d4500-0d14-11ea-905f-c1705b6364bf.png">
+        </a>
+      </td>
     </tr>
   </tbody>
 </table>
@@ -36,7 +55,7 @@
 
 <img src="https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/version-2.2/tools/test-sample.gif" />
 
-**MyTested.AspNetCore.Mvc** has [more than 500 assertion methods](https://MyTestedASP.NET/Core/Mvc/Features) and is 100% covered by [more than 2000 unit tests](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/version-2.2/test). It should work correctly. Almost all items in the [issues page](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/issues) are expected future features and enhancements.
+**MyTested.AspNetCore.Mvc** has [more than 500 assertion methods](https://MyTestedASP.NET/Core/Mvc/Features) and is 100% covered by [more than 2500 unit tests](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/version-2.2/test). It should work correctly. Almost all items in the [issues page](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/issues) are expected future features and enhancements.
 
 **MyTested.AspNetCore.Mvc** helps you speed up the testing process in your web development team! If you find that statement unbelievable, these are the words which some of the many happy **MyTested.AspNetCore.Mvc** users once said: 
 > "I’ve been using your packages for almost 3 years now and it has saved me countless hours in creating unit tests and wanted to thank you for making this. I cannot imagine how much code I would have had to write to create the 450+ and counting unit tests I have for my controllers."
@@ -53,12 +72,13 @@ Take a look around and...
 
 😏 ...if you find it useful, make sure you **subscribe** for future releases by clicking the **"Watch"** button and choosing **"Releases only"**!
 
-👀 ...if you want to learn cool C# coding techniques, **subscribe** to my [YouTube channel](https://www.youtube.com/channel/UCP5Ons7fK3yKhX6lhc9XcfQ), where I regularly post online video lessons!
+👀 ...if you want to learn cool C# coding techniques, **subscribe** to my **[YouTube channel](https://www.youtube.com/channel/UCP5Ons7fK3yKhX6lhc9XcfQ)**, where I regularly post online video lessons!
 
 ✔ ...if you want to **support** the project, **[become a sponsor/backer](#sponsors--backers)** or go to [https://MyTestedASP.NET](https://MyTestedASP.NET), and consider **purchasing a premium [license](#license)**!
 
 #### Featured in
 
+- [The official ASP.NET Core MVC documentation](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/testing?view=aspnetcore-3.0#additional-resources)
 - [The official ASP.NET Core MVC repository](https://github.com/aspnet/AspNetCore/tree/master/src/Mvc#aspnet-core-mvc)
 - [NuGet Package of the week in "The week in .NET – 6/28/2016"](https://devblogs.microsoft.com/dotnet/the-week-in-net-6282016/)
 - [Awesome .NET Core](https://github.com/thangchung/awesome-dotnet-core#testing)
@@ -133,7 +153,7 @@ To add **MyTested.AspNetCore.Mvc** to your solution, you must follow these simpl
 namespace MyApp.Tests
 {
     using MyTested.AspNetCore.Mvc;
-	
+    
     using Microsoft.Extensions.DependencyInjection;
 
     public class TestStartup : Startup
@@ -141,7 +161,7 @@ namespace MyApp.Tests
         public void ConfigureTestServices(IServiceCollection services)
         {
             base.ConfigureServices(services);
-			
+            
             // Replace only your own custom services. The ASP.NET Core ones 
             // are already replaced by MyTested.AspNetCore.Mvc. 
             services.Replace<IService, MockedService>();
@@ -156,7 +176,7 @@ namespace MyApp.Tests
 namespace MyApp.Tests.Controllers
 {
     using MyTested.AspNetCore.Mvc;
-	
+    
     using MyApp.Controllers;
     using Xunit;
 
@@ -181,49 +201,6 @@ It is **strongly advised** to read the [tutorial](http://docs.mytestedasp.net/tu
 
 You can also check out the [provided samples](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/version-2.2/samples) for real-life ASP.NET Core MVC application testing.
 
-## Package Installation
-
-You can install this library using [NuGet](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc.Universe) into your test project (or reference it directly in your `.csproj` file). Currently **MyTested.AspNetCore.Mvc** is fully compatible with ASP.NET Core MVC 2.2.0 and all older versions available on the official NuGet feed.
-
-```powershell
-Install-Package MyTested.AspNetCore.Mvc.Universe
-```
-
-This package will include all available assertion methods in your test project, including ones for authentication, database, session, caching and more. If you want only the MVC related features, install `MyTested.AspNetCore.Mvc`. If you want to use the completely **FREE** and **UNLIMITED** version of the library, install only `MyTested.AspNetCore.Mvc.Lite` and no other package. Additionally, if you prefer, you can be more specific by including only some of the packages:
-
- - `MyTested.AspNetCore.Mvc.Configuration` - Contains setup and assertion methods for configurations
- - `MyTested.AspNetCore.Mvc.Controllers` - Contains setup and assertion methods for controllers
- - `MyTested.AspNetCore.Mvc.Controllers.Attributes` - Contains setup and assertion methods for controller attributes
- - `MyTested.AspNetCore.Mvc.Controllers.ActionResults` - Contains setup and assertion methods for controller API action results
- - `MyTested.AspNetCore.Mvc.Controllers.Views` - Contains setup and assertion methods for controller view features
- - `MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults` - Contains setup and assertion methods for controller view action results
- - `MyTested.AspNetCore.Mvc.Models` - Contains setup and assertion methods for response and view models
- - `MyTested.AspNetCore.Mvc.Routing` - Contains setup and assertion methods for routes
- - `MyTested.AspNetCore.Mvc.Core` - Contains setup and assertion methods for MVC core features
- - `MyTested.AspNetCore.Mvc.TempData` - Contains setup and assertion methods for `ITempDataDictionary`
- - `MyTested.AspNetCore.Mvc.ViewData` - Contains assertion methods for `ViewDataDictionary` and dynamic `ViewBag`
- - `MyTested.AspNetCore.Mvc.ViewComponents` - Contains setup and assertion methods for view components
- - `MyTested.AspNetCore.Mvc.ViewComponents.Attributes` - Contains setup and assertion methods for view component attributes
- - `MyTested.AspNetCore.Mvc.ViewComponents.Results` - Contains setup and assertion methods for view component results
- - `MyTested.AspNetCore.Mvc.ViewFeatures` - Contains setup and assertion methods for MVC view features
- - `MyTested.AspNetCore.Mvc.Http` - Contains setup and assertion methods for HTTP context, request and response
- - `MyTested.AspNetCore.Mvc.Authentication` - Contains setup methods for `ClaimsPrincipal`
- - `MyTested.AspNetCore.Mvc.ModelState` - Contains setup and assertion methods for `ModelStateDictionary` validations
- - `MyTested.AspNetCore.Mvc.DataAnnotations` - Contains setup and assertion methods for data annotation validations
- - `MyTested.AspNetCore.Mvc.EntityFrameworkCore` - Contains setup and assertion methods for `DbContext`
- - `MyTested.AspNetCore.Mvc.DependencyInjection` - Contains setup methods for dependency injection services
- - `MyTested.AspNetCore.Mvc.Caching` - Contains setup and assertion methods for `IMemoryCache` and `IDistributedCache`
- - `MyTested.AspNetCore.Mvc.Session` - Contains setup and assertion methods for `ISession`
- - `MyTested.AspNetCore.Mvc.Options` - Contains setup and assertion methods for `IOptions`
- - `MyTested.AspNetCore.Mvc.Helpers` - Contains additional helper methods for easier assertions
- - `MyTested.AspNetCore.Mvc.Lite` - Completely **FREE** and **UNLIMITED** version of the library. It should not be used in combination with any other package. Includes `Controllers`, `Controllers.Views` and `ViewComponents`.
- 
-After the downloading is complete, just add `using MyTested.AspNetCore.Mvc;` to your source code and you are ready to test in the most elegant and developer friendly way.
-
-```c#	
-using MyTested.AspNetCore.Mvc;
-```
-
 ## Test Examples
 
 Here are some examples of how **powerful** the fluent testing API actually is! 
@@ -241,9 +218,9 @@ A controller integration test uses the globally registered services from the `Te
 // and tests for added by the action view bag entry,
 // and tests for view result and model with specific assertions.
 MyController<MyMvcController>
-    .Instance()
-    .WithUser(user => user
-        .WithUsername("MyUserName"))
+    .Instance(instance => instance
+        .WithUser(user => user
+            .WithUsername("MyUserName")))
     .Calling(c => c.MyAction(myRequestModel))
     .ShouldHave()
     .ValidModelState()
@@ -268,14 +245,14 @@ MyController<MyMvcController>
 // and tests for added by the action cache entry,
 // and tests for view result with specific model type.
 MyController<MyMvcController>
-    .Instance()
-    .WithOptions(options => options
-        .For<MyAppSettings>(settings => settings.Cache = true))
-    .WithSession(session => session
-        .WithEntry("MySession", "MySessionValue"))
-    .WithData(data => data
-        .WithEntities(entities => entities
-            .AddRange(MyDataProvider.GetMyModels())))
+    .Instance(instance => instance
+        .WithOptions(options => options
+            .For<MyAppSettings>(settings => settings.Cache = true))
+        .WithSession(session => session
+            .WithEntry("MySession", "MySessionValue"))
+        .WithData(data => data
+            .WithEntities(entities => entities
+                .AddRange(MyDataProvider.GetMyModels()))))
     .Calling(c => c.MyAction())
     .ShouldHave()
     .MemoryCache(cache => cache
@@ -330,22 +307,22 @@ A controller unit test uses service mocks explicitly provided in each separate a
 // Instantiates controller with the provided service mocks,
 // and tests for view result.
 MyController<MyMvcController>
-    .Instance()
-    .WithDependencies(
-        serviceMock,
-        anotherServiceMock,
-        From.Services<IYetAnotherService>()) // Provides a global service.
+    .Instance(instance => instance
+        .WithDependencies(
+            serviceMock,
+            anotherServiceMock,
+            From.Services<IYetAnotherService>())) // Provides a global service.
     .Calling(c => c.MyAction())
     .ShouldReturn()
     .Accepted();
-	
+    
 // Instantiates controller with the provided service mocks,
 // and tests for view result.
 MyController<MyMvcController>
-    .Instance()
-    .WithDependencies(dependencies => dependencies
-        .With<IService>(serviceMock)
-        .WithNo<IAnotherService>()) // Provides null for IAnotherService.
+    .Instance(instance => instance
+        .WithDependencies(dependencies => dependencies
+            .With<IService>(serviceMock)
+            .WithNo<IAnotherService>())) // Provides null for IAnotherService.
     .Calling(c => c.MyAction(From.Services<IYetAnotherService>())) // Provides a global service.
     .ShouldReturn()
     .View();
@@ -407,6 +384,55 @@ MyRouting
     .ToValidModelState();
 ```
 
+*Note: route tests execute action filters.*
+
+### Pipeline tests
+
+A pipeline test provides strongly-typed assertions for the MVC pipeline (from routing to action result):
+
+```c#
+// Tests a route for correct route values, 
+// and validates whether the controller action 
+// with an authenticated user and the provided data
+// returns redirect result to a specific action,
+// while resolving services from the `TestStartup` class.
+MyMvc
+    .Pipeline()
+    .ShouldMap("/My/Action/1")
+    .To<MyController>(c => c.Action(1))
+    .Which(controller => controller
+        .WithUser()
+        .WithData(MyDataProvider.GetMyModels()))
+    .ShouldReturn()
+    .Redirect(redirect => redirect
+        .To<AnotherController>(c => c.AnotherAction()));
+
+// Tests a route for correct route values, 
+// and validates whether the controller action 
+// with an authenticated user and the provided data
+// returns view result with a specific model,
+// while resolving services from the provided mocks.
+MyMvc
+    .Pipeline()
+    .ShouldMap("/My/Action/1")
+    .To<MyController>(c => c.Action(1))
+    .Which(controller => controller
+        .WithUser()
+        .WithData(MyDataProvider.GetMyModels())
+        .WithDependencies(
+            serviceMock,
+            anotherServiceMock))
+    .ShouldReturn()
+    .View(result => result
+        .WithModelOfType<MyResponseModel>());
+```
+
+*Note: pipeline tests execute action filters.*
+
+*Note: pipeline tests does not run the server middleware configuration.*
+
+*Note: pipeline tests are available from version 3.0.0 onwards.*
+
 ### Attribute Declaration Tests
 
 An attribute declaration test validates controller and action attribute declarations:
@@ -437,12 +463,12 @@ All applicable methods are available on the view component testing API too:
 ```c#
 // View component integration test.
 MyViewComponent<MyMvcController>
-    .Instance()
-    .WithSession(session => session
-        .WithEntry("MySession", "MySessionValue"))
-    .WithData(data => data
-        .WithEntities(entities => entities
-            .AddRange(MyDataProvider.GetMyModels())))
+    .Instance(instance => instance
+        .WithSession(session => session
+            .WithEntry("MySession", "MySessionValue"))
+        .WithData(data => data
+            .WithEntities(entities => entities
+                .AddRange(MyDataProvider.GetMyModels()))))
     .InvokedWith(c => c.InvokeAsync(1))
     .ShouldHave()
     .ViewBag(viewBag => viewBag
@@ -452,14 +478,14 @@ MyViewComponent<MyMvcController>
     .ShouldReturn()
     .View()
     .WithModelOfType<MyResponseModel>();
-	
+    
 // View component unit test.
 MyViewComponent<MyMvcController>
-    .Instance()
-    .WithDependencies(
-        serviceMock,
-        anotherServiceMock,
-        From.Services<IYetAnotherService>()) // Provides a global service.
+    .Instance(instance => instance
+        .WithDependencies(
+            serviceMock,
+            anotherServiceMock,
+            From.Services<IYetAnotherService>())) // Provides a global service.
     .InvokedWith(c => c.InvokeAsync(1))
     .ShouldReturn()
     .View();
@@ -485,20 +511,20 @@ MyMvc
     .WithData(data => data
         .WithEntities(entities => 
             AddData(sessionId, entities)))
-			
+            
     // Act
     .Calling(c => c.MyAction(
         From.Services<MyDataContext>(), // Action injected services can be populated with this call.
         new MyModel { Id = id },
         CancellationToken.None))
-			
+            
     // Assert
     .ShouldReturn()
     .Redirect(result => result
         .To<AnotherController>(c => c.AnotherAction(
             With.No<MyDataContext>(),
             id)));
-			
+            
 // With variables.
 
 // Arrange
@@ -506,7 +532,7 @@ var controller = MyController<MyMvcController>
     .Instance()
     .WithUser(username, new[] { role })
     .WithData(MyTestData.GetData());
-	
+    
 // Act
 var call = controller.Calling(c => c.MyAction(id));
     
@@ -573,6 +599,50 @@ MyMvc
     .AndAlso()
     .ShouldReturn()
     .BadRequest();
+```
+
+## Package Installation
+
+You can install this library using [NuGet](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc.Universe) into your test project (or reference it directly in your `.csproj` file). Currently **MyTested.AspNetCore.Mvc** is fully compatible with ASP.NET Core MVC 2.2.0 and all older versions available on the official NuGet feed.
+
+```powershell
+Install-Package MyTested.AspNetCore.Mvc.Universe
+```
+
+This package will include all available assertion methods in your test project, including ones for authentication, database, session, caching and more. If you want only the MVC related features, install `MyTested.AspNetCore.Mvc`. If you want to use the completely **FREE** and **UNLIMITED** version of the library, install only `MyTested.AspNetCore.Mvc.Lite` and no other package. Additionally, if you prefer, you can be more specific by including only some of the packages:
+
+ - `MyTested.AspNetCore.Mvc.Configuration` - Contains setup and assertion methods for configurations
+ - `MyTested.AspNetCore.Mvc.Controllers` - Contains setup and assertion methods for controllers
+ - `MyTested.AspNetCore.Mvc.Controllers.Attributes` - Contains setup and assertion methods for controller attributes
+ - `MyTested.AspNetCore.Mvc.Controllers.ActionResults` - Contains setup and assertion methods for controller API action results
+ - `MyTested.AspNetCore.Mvc.Controllers.Views` - Contains setup and assertion methods for controller view features
+ - `MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults` - Contains setup and assertion methods for controller view action results
+ - `MyTested.AspNetCore.Mvc.Models` - Contains setup and assertion methods for responses and view models
+ - `MyTested.AspNetCore.Mvc.Routing` - Contains setup and assertion methods for routes
+ - `MyTested.AspNetCore.Mvc.Core` - Contains setup and assertion methods for MVC core features
+ - `MyTested.AspNetCore.Mvc.Pipeline` - Contains setup methods for pipeline tests
+ - `MyTested.AspNetCore.Mvc.TempData` - Contains setup and assertion methods for `ITempDataDictionary`
+ - `MyTested.AspNetCore.Mvc.ViewData` - Contains assertion methods for `ViewDataDictionary` and dynamic `ViewBag`
+ - `MyTested.AspNetCore.Mvc.ViewComponents` - Contains setup and assertion methods for view components
+ - `MyTested.AspNetCore.Mvc.ViewComponents.Attributes` - Contains setup and assertion methods for view component attributes
+ - `MyTested.AspNetCore.Mvc.ViewComponents.Results` - Contains setup and assertion methods for view component results
+ - `MyTested.AspNetCore.Mvc.ViewFeatures` - Contains setup and assertion methods for MVC view features
+ - `MyTested.AspNetCore.Mvc.Http` - Contains setup and assertion methods for HTTP context, request and response
+ - `MyTested.AspNetCore.Mvc.Authentication` - Contains setup methods for `ClaimsPrincipal`
+ - `MyTested.AspNetCore.Mvc.ModelState` - Contains setup and assertion methods for `ModelStateDictionary` validations
+ - `MyTested.AspNetCore.Mvc.DataAnnotations` - Contains setup and assertion methods for data annotation validations
+ - `MyTested.AspNetCore.Mvc.EntityFrameworkCore` - Contains setup and assertion methods for `DbContext`
+ - `MyTested.AspNetCore.Mvc.DependencyInjection` - Contains setup methods for dependency injection services
+ - `MyTested.AspNetCore.Mvc.Caching` - Contains setup and assertion methods for `IMemoryCache`
+ - `MyTested.AspNetCore.Mvc.Session` - Contains setup and assertion methods for `ISession`
+ - `MyTested.AspNetCore.Mvc.Options` - Contains setup and assertion methods for `IOptions`
+ - `MyTested.AspNetCore.Mvc.Helpers` - Contains additional helper methods for easier assertions
+ - `MyTested.AspNetCore.Mvc.Lite` - Completely **FREE** and **UNLIMITED** version of the library. It should not be used in combination with any other package. Includes `Controllers`, `Controllers.Views` and `ViewComponents`.
+ 
+After the downloading is complete, just add `using MyTested.AspNetCore.Mvc;` to your source code and you are ready to test in the most elegant and developer friendly way.
+
+```c#    
+using MyTested.AspNetCore.Mvc;
 ```
 
 ## Versioning

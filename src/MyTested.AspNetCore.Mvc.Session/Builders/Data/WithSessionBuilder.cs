@@ -17,8 +17,9 @@
         /// Initializes a new instance of the <see cref="WithSessionBuilder"/> class.
         /// </summary>
         /// <param name="session"><see cref="ISession"/> to built.</param>
-        public WithSessionBuilder(ISession session) : base(session) { }
-
+        public WithSessionBuilder(ISession session) : base(session) 
+        { 
+        }
         /// <inheritdoc />
         public IAndWithSessionBuilder WithId(string sessionId)
         {
