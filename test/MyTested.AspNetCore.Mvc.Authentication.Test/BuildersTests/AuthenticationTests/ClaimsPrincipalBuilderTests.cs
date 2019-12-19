@@ -8,6 +8,7 @@
     using Setups.Controllers;
     using Microsoft.AspNetCore.Mvc;
     using Xunit;
+    using MyTested.AspNetCore.Mvc.Builders.Authentication;
 
     public class ClaimsPrincipalBuilderTests
     {
@@ -287,7 +288,7 @@
                 .Instance()
                 .WithUser(user => user
                     .WithNameType("CustomUsername"))
-                .WithoutUser(user => user.WithoutClaim("CustomUsername", "TestUser"))
+                .WithoutUser("CustomUsername", "TestUser")
                 .ShouldPassForThe<MvcController>(controller =>
                 {
                     var claimToBeDeleted = controller.User.Claims.FirstOrDefault(c => c.Type == "CustomUsername");
@@ -296,22 +297,23 @@
                 });
         }
 
-        [Fact(Skip = "Trying to find out why certain property is set.")]
+        [Fact]
         public void WithoutClaimByProvidingClaimsDirectlyShouldRemoveTheCorrectClaimOnly()
-        { 
-            var claim = 
-                new Claim("CustomUsername", "TestUser", "string", "issuer","OGissuer", 
+        {
+            var claim =
+                new Claim("CustomUsername", "TestUser", "string", "issuer", "OGissuer",
                 new ClaimsIdentity("Password", "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"));
 
-            MyController<MvcController>
+            var builder = MyController<MvcController>
                 .Instance()
-                .WithUser(user => user.WithClaim(claim))
-                .WithoutUser(user => user.WithoutClaim(claim))
+                .WithUser(u => u.WithClaim(claim));
+
+            var claimToDelete = ((MyController<MvcController>)builder).HttpContext.User.Claims.First(x => x.Value.Equals("TestUser"));
+            builder.WithoutUser(claimToDelete)
                 .ShouldPassForThe<MvcController>(controller =>
                 {
-                    var claimToBeDeleted = controller.User.Claims.FirstOrDefault(c => c.Type == claim.Type);
-
-                    Assert.Null(claimToBeDeleted);
+                    var deletedClaim = controller.User.Claims.FirstOrDefault(c => c.Type.Equals("CustomUsername"));
+                    Assert.Null(deletedClaim);
                 });
         }
 
@@ -321,12 +323,27 @@
             MyController<MvcController>
                 .Instance()
                 .WithUser(user => user.InRole("randomRole"))
-                .WithoutUser(user => user.WithoutRole("randomRole"))
+                .WithoutUser("randomRole")
                 .ShouldPassForThe<MvcController>(controller =>
                 {
                     var claimToBeDeleted = controller.User.Claims.FirstOrDefault(c => c.Type == "randomRole");
 
                     Assert.Null(claimToBeDeleted);
+                });
+        }
+
+        [Fact]
+        public void WithoutUserShouldReturnTheDefaultSetUser()
+        {
+            MyController<MvcController>
+                .Instance()
+                .WithUser(user => user.InRole("randomRole"))
+                .WithoutUser()
+                .ShouldPassForThe<MvcController>(controller =>
+                {
+                    var user = controller.User;
+
+                    Assert.Equal(BaseClaimsPrincipalUserBuilder.DefaultAuthenticated, user);
                 });
         }
     }

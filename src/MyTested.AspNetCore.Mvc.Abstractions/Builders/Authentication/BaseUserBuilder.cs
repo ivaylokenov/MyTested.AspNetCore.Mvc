@@ -142,12 +142,21 @@
         protected void AddRoles(IEnumerable<string> roles)
             => roles.ForEach(this.AddRole);
 
+        /// <summary>
+        /// Removes provided <see cref="Claim"/> from the list of claims.
+        /// </summary>
+        /// <param name="claim">Claim to be removed.</param>
         protected void RemoveClaim(Claim claim)
         {
             if (this.claims.Contains(claim))
                 this.claims.Remove(claim);
         }
 
+        /// <summary>
+        /// Removes provided claim by its type and value from the list of claims.
+        /// </summary>
+        /// <param name="type">Claim's type.</param>
+        /// <param name="value">Claim's value.</param>
         protected void RemoveClaim(string type, string value)
         {
             var claimsToRemove =
@@ -156,9 +165,17 @@
             claimsToRemove.ForEach(claim => this.claims.Remove(claim));
         }
 
+        /// <summary>
+        /// Remove claim by providing its role.
+        /// </summary>
+        /// <param name="role">Claim's role.</param>
         protected void RemoveRole(string role)
             => this.RemoveClaim(this.roleType, role);
 
+        /// <summary>
+        /// Remove claim by providing its username.
+        /// </summary>
+        /// <param name="username">Claim's username.</param>
         protected void RemoveUsername(string username)
             => this.RemoveClaim(this.nameType, username);
 

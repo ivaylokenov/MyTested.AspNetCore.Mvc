@@ -5,6 +5,9 @@
     using System.Linq;
     using System.Security.Claims;
 
+    /// <summary>
+    /// Base class for creating mocked authenticated <see cref="ClaimsPrincipal"/>.
+    /// </summary>
     public class BaseClaimsPrincipalUserBuilder : BaseUserBuilder
     {
         private readonly ICollection<ClaimsIdentity> _identities;
@@ -15,6 +18,10 @@
         public BaseClaimsPrincipalUserBuilder()
             => this._identities = new List<ClaimsIdentity>();
 
+        /// <summary>
+        /// Returns the principle based on provided identities and claims.
+        /// </summary>
+        /// <returns>This <see cref="ClaimsPrincipal"/>.</returns>
         public ClaimsPrincipal GetClaimsPrincipal()
         {
             var claimIdentities = this._identities.Reverse().ToList();
@@ -25,6 +32,10 @@
             return claimsPrincipal;
         }
 
+        /// <summary>
+        /// Returns the principle based on provided claims only.
+        /// </summary>
+        /// <returns>This <see cref="ClaimsPrincipal"/>.</returns>
         public ClaimsPrincipal GetClaimsPrincipalBasedOnClaimsOnly()
         {
             var claimsPrincipal = new ClaimsPrincipal(this.GetAuthenticatedClaimsIdentity());
