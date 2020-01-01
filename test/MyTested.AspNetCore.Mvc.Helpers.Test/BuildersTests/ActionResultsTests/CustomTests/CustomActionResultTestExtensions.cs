@@ -16,8 +16,8 @@
             var actualBuilder = (ShouldReturnTestBuilder<TActionResult>)shouldReturnTestBuilder;
 
             actualBuilder
-                .PassingAs<CustomActionResult>(
-                    result => result.Value as string == value && result.CustomProperty == customProperty);
+                .ResultOfType<CustomActionResult>(result => result
+                    .Passing(c => c.Value as string == value && c.CustomProperty == customProperty));
 
             return new AndTestBuilder(actualBuilder.TestContext);
         }

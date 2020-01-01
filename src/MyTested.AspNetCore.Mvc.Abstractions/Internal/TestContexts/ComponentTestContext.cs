@@ -20,13 +20,44 @@
         private IEnumerable<object> methodAttributes;
         private object model;
         
-        public object Component => this.component ??= this.ComponentConstructionDelegate();
+        public object Component
+        {
+            get
+            {
+                if (this.component == null)
+                {
+                    this.component = this.ComponentConstructionDelegate();
+                }
 
-        public IEnumerable<object> ComponentAttributes 
-            => this.componentAttributes ??= Reflection.GetCustomAttributes(this.Component);
+                return this.component;
+            }
+        }
 
-        public IDictionary<Type, object> AggregatedDependencies 
-            => this.aggregatedDependencies ??= new Dictionary<Type, object>();
+        public IEnumerable<object> ComponentAttributes
+        {
+            get
+            {
+                if (this.componentAttributes == null)
+                {
+                    this.componentAttributes = Reflection.GetCustomAttributes(this.Component);
+                }
+
+                return this.componentAttributes;
+            }
+        }
+
+        public IDictionary<Type, object> AggregatedDependencies
+        {
+            get
+            {
+                if (this.aggregatedDependencies == null)
+                {
+                    this.aggregatedDependencies = new Dictionary<Type, object>();
+                }
+
+                return this.aggregatedDependencies;
+            }
+        }
 
         public string MethodName
         {
@@ -67,11 +98,24 @@
         { 
             get => this.methodResult;
 
-            set => this.methodResult = this.ConvertMethodResult(value);
+            set
+            {
+                this.methodResult = this.ConvertMethodResult(value);
+            }
         }
 
-        public IEnumerable<object> MethodAttributes 
-            => this.methodAttributes ??= Reflection.GetCustomAttributes(this.Method);
+        public IEnumerable<object> MethodAttributes
+        {
+            get
+            {
+                if (this.methodAttributes == null)
+                {
+                    this.methodAttributes = Reflection.GetCustomAttributes(this.Method);
+                }
+
+                return this.methodAttributes;
+            }
+        }
 
         public Exception CaughtException { get; set; }
 
@@ -116,6 +160,6 @@
             this.CaughtException = invocationTestContext.CaughtException;
         }
 
-        protected virtual object ConvertMethodResult(object convertibleMethodResult) => convertibleMethodResult;
+        protected virtual object ConvertMethodResult(object methodResult) => methodResult;
     }
 }

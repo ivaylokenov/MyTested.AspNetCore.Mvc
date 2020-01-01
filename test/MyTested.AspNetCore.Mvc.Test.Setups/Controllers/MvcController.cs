@@ -1254,11 +1254,6 @@
                 return this.BadRequest();
             }
 
-            if (id == int.MaxValue)
-            {
-                return this.Ok(this.ResponseModel.First());
-            }
-
             return this.ResponseModel.First();
         }
 

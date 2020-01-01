@@ -38,7 +38,7 @@
             this.httpContext = new DefaultHttpContext(features);
 
             this.CustomRequest = this.httpRequest;
-            this.httpResponse ??= new HttpResponseMock(this.httpContext);
+            this.httpResponse = this.httpResponse ?? new HttpResponseMock(this.httpContext);
         }
 
         /// <summary>

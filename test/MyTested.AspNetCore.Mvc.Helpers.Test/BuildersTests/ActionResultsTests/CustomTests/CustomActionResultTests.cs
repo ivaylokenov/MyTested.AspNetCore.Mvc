@@ -7,7 +7,6 @@
 
     public class CustomActionResultTests
     {
-
         [Fact]
         public void CustomActionResultShouldNotThrowExceptionWithCorrectValues()
         {
@@ -16,21 +15,6 @@
                 .Calling(c => c.CustomActionResult())
                 .ShouldReturn()
                 .Custom("Value", "CustomValue");
-        }
-
-        [Fact]
-        public void CustomActionResultShouldThrowExceptionWithIncorrectActionResult()
-        {
-            Test.AssertException<ResponseModelAssertionException>(
-                () =>
-                {
-                    MyController<CustomActionResultController>
-                        .Instance()
-                        .Calling(c => c.Ok())
-                        .ShouldReturn()
-                        .Custom("Value", "CustomValue");
-                },
-                "When calling CustomActionResult action in CustomActionResultController expected response model CustomActionResult to pass the given predicate, but it failed.");
         }
 
         [Fact]

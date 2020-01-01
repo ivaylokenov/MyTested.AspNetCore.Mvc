@@ -23,6 +23,11 @@
             if (methodResult is IConvertToActionResult converter)
             {
                 methodResult = converter.Convert();
+
+                if (methodResult is ObjectResult objectResult)
+                {
+                    methodResult = objectResult.Value;
+                }
             }
 
             return methodResult;

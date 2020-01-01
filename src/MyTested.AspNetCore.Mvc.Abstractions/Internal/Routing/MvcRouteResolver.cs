@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.Controllers;
+    using Microsoft.AspNetCore.Mvc.Filters;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
@@ -48,7 +49,8 @@
                 var actions = routeContext
                     .RouteData
                     .Routers
-                    .FirstOrDefault(r => r.GetType() == WebFramework.Internals.MvcAttributeRouteHandler)
+                    .Where(r => r.GetType() == WebFramework.Internals.MvcAttributeRouteHandler)
+                    .FirstOrDefault()
                     ?.Exposed()
                     .Actions
                     ?? actionSelector.SelectCandidates(routeContext);
@@ -98,10 +100,9 @@
                 var filters = actionDescriptor
                     .FilterDescriptors
                     .OrderByDescending(f => f.Order)
-                    .Select(f => $"{f.Filter.GetName()} ({f.Scope.ToFilterScopeName()})")
-                    .ToArray();
+                    .Select(f => $"{f.Filter.GetName()} ({f.Scope.ToFilterScopeName()})");
 
-                var filtersMessage = filters.Any()
+                var filtersMessage = filters != null && filters.Any()
                     ? $"filters - {string.Join(", ", filters)}"
                     : "filters";
 

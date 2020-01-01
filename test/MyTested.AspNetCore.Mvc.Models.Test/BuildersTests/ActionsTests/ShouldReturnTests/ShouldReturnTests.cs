@@ -564,31 +564,6 @@
         }
 
         [Fact]
-        public void ActionResultOfTShouldBeProperlyRecognizedWithObjectActionResult()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.ActionResultOfT(int.MaxValue))
-                .ShouldReturn()
-                .Ok();
-        }
-
-        [Fact]
-        public void ActionResultOfTShouldBeProperlyRecognizedWithObjectActionResultAndModel()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.ActionResultOfT(int.MaxValue))
-                .ShouldReturn()
-                .Ok(result => result
-                    .WithModel(new ResponseModel
-                    {
-                        IntegerValue = 1,
-                        StringValue = "Test"
-                    }));
-        }
-
-        [Fact]
         public void ActionResultOfTShouldBeProperlyRecognizedWithModelOfGenericType()
         {
             MyController<MvcController>
