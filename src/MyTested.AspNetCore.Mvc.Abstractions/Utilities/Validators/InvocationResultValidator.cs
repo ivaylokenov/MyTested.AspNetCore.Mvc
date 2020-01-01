@@ -108,13 +108,11 @@
         private static void ThrowNewInvocationResultAssertionException(
             ComponentTestContext testContext,
             string typeNameOfExpectedReturnValue,
-            string typeNameOfActionResult)
-        {
-            throw new InvocationResultAssertionException(string.Format(
+            string typeNameOfActionResult) 
+            => throw new InvocationResultAssertionException(string.Format(
                 "{0} result to be {1}, but instead received {2}.",
                 testContext.ExceptionMessagePrefix,
                 typeNameOfExpectedReturnValue,
                 typeNameOfActionResult));
-        }
     }
 }

@@ -7,6 +7,7 @@
     using Builders.And;
     using Builders.Base;
     using Builders.Models;
+    using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;
@@ -42,7 +43,7 @@
             var actualBuilder = (BaseTestBuilderWithActionContext)builder;
 
             InvocationResultValidator.ValidateInvocationResultType(
-                ConvertMethodResult(actualBuilder.TestContext),
+                actualBuilder.TestContext,
                 resultType,
                 canBeAssignable: true,
                 allowDifferentGenericTypeDefinitions: true);
@@ -76,7 +77,7 @@
             var actualBuilder = (BaseTestBuilderWithActionContext)builder;
 
             InvocationResultValidator.ValidateInvocationResultType<TResult>(
-                ConvertMethodResult(actualBuilder.TestContext),
+                actualBuilder.TestContext,
                 canBeAssignable: true);
 
             resultTestBuilder?.Invoke(new ModelDetailsTestBuilder<TResult>(actualBuilder.TestContext));
@@ -98,7 +99,7 @@
             var actualBuilder = (BaseTestBuilderWithActionContext)builder;
 
             InvocationResultValidator.ValidateInvocationResult(
-                ConvertMethodResult(actualBuilder.TestContext), 
+                actualBuilder.TestContext, 
                 model);
 
             return new AndTestBuilder(actualBuilder.TestContext);
@@ -106,9 +107,20 @@
 
         private static ActionTestContext ConvertMethodResult(ActionTestContext testContext)
         {
-            if (testContext.MethodResult is ObjectResult objectResult)
+            var methodResult = testContext.MethodResult;
+
+            if (methodResult is IActionResult)
             {
-                testContext.MethodResult = objectResult.Value;
+                if (methodResult is ObjectResult objectResult)
+                {
+                    testContext.MethodResult = objectResult.Value;
+                }
+                else
+                {
+                    throw new InvocationResultAssertionException("Test");
+                }
+
+                return testContext;
             }
 
             return testContext;

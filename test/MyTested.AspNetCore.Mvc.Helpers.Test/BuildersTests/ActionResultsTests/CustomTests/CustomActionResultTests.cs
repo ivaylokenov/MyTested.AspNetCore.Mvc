@@ -7,7 +7,6 @@
 
     public class CustomActionResultTests
     {
-
         [Fact]
         public void CustomActionResultShouldNotThrowExceptionWithCorrectValues()
         {
