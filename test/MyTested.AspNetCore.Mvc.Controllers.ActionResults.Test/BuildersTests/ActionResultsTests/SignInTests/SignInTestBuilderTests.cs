@@ -9,6 +9,31 @@
     public class SignInTestBuilderTests
     {
         [Fact]
+        public void SignInShouldNotThrowExceptionWithCorrectActionResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.SignInWithAuthenticationPropertiesAndScheme())
+                .ShouldReturn()
+                .SignIn();
+        }
+
+        [Fact]
+        public void ConflictShouldThrowExceptionWithIncorrectActionResult()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.OkResultAction())
+                        .ShouldReturn()
+                        .SignIn();
+                },
+                "When calling OkResultAction action in MvcController expected result to be SignInResult, but instead received OkResult.");
+        }
+
+        [Fact]
         public void ShouldReturnSignInShouldNotThrowExceptionIfResultIsSignInWithCorrectAuthenticationScheme()
         {
             MyController<MvcController>
