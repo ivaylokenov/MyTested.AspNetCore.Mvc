@@ -28,7 +28,8 @@
         {
             InvocationResultValidator.ValidateInvocationResult(
                 this.TestContext,
-                result);
+                result,
+                canBeAssignable: true);
 
             return this;
         }

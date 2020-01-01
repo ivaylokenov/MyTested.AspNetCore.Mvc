@@ -81,11 +81,11 @@
             bool allowDifferentGenericTypeDefinitions = false) 
             => ValidateInvocationResultType(testContext, typeof(TExpectedType), canBeAssignable, allowDifferentGenericTypeDefinitions);
 
-        public static void ValidateInvocationResult<TResult>(ComponentTestContext testContext, TResult model)
+        public static void ValidateInvocationResult<TResult>(ComponentTestContext testContext, TResult model, bool canBeAssignable = false)
         {
             if (!Reflection.IsAnonymousType(typeof(TResult)))
             {
-                ValidateInvocationResultType<TResult>(testContext);
+                ValidateInvocationResultType<TResult>(testContext, canBeAssignable);
             }
 
             if (Reflection.AreNotDeeplyEqual(model, testContext.MethodResult, out var result))

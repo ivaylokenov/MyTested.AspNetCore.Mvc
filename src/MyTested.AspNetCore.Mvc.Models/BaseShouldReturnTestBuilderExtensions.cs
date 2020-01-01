@@ -3,11 +3,9 @@
     using System;
     using Builders.Contracts.And;
     using Builders.Contracts.Invocations;
-    using Builders.Contracts.Models;
     using Builders.And;
     using Builders.Base;
     using Builders.Contracts.Results;
-    using Builders.Models;
     using Builders.Results;
     using Exceptions;
     using Internal.TestContexts;

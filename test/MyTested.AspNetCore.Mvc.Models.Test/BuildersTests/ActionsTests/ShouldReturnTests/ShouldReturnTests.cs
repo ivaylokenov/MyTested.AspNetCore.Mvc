@@ -344,6 +344,19 @@
         }
 
         [Fact]
+        public void ShouldReturnResultOfTypeShouldChainCorrectly()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.GenericActionWithCollection())
+                .ShouldReturn()
+                .ResultOfType<ICollection<ResponseModel>>(result => result
+                    .EqualTo(TestObjectFactory.GetListOfResponseModels())
+                    .AndAlso()
+                    .Passing(model => model.Count == 2));
+        }
+
+        [Fact]
         public void ShouldReturnShouldThrowExceptionIfActionThrowsExceptionWithDefaultReturnValue()
         {
             Test.AssertException<InvocationAssertionException>(
@@ -490,6 +503,19 @@
                         .Result(model);
                 },
                 "When calling GenericInterfaceAction action in MvcController expected result to be List<ResponseModel>, but instead received ResponseModel.");
+        }
+
+        [Fact]
+        public void ShouldReturnResultShouldChainCorrectly()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.GenericActionWithCollection())
+                .ShouldReturn()
+                .Result(result => result
+                    .EqualTo(TestObjectFactory.GetListOfResponseModels())
+                    .AndAlso()
+                    .Passing(model => model.Count == 2));
         }
 
         [Fact]
