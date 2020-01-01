@@ -21,7 +21,7 @@
         [Fact]
         public void CustomActionResultShouldThrowExceptionWithIncorrectActionResult()
         {
-            Test.AssertException<ResponseModelAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<CustomActionResultController>
@@ -30,13 +30,13 @@
                         .ShouldReturn()
                         .Custom("Value", "CustomValue");
                 },
-                "When calling CustomActionResult action in CustomActionResultController expected response model CustomActionResult to pass the given predicate, but it failed.");
+                "When calling Ok action in CustomActionResultController expected result to be CustomActionResult, but instead received OkResult.");
         }
 
         [Fact]
-        public void CustomActionResultShouldNotThrowExceptionWithIncorrectValues()
+        public void CustomActionResultShouldThrowExceptionWithIncorrectValues()
         {
-            Test.AssertException<ResponseModelAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<CustomActionResultController>
@@ -45,7 +45,7 @@
                         .ShouldReturn()
                         .Custom("InvalidValue", "CustomValue");
                 },
-                "When calling CustomActionResult action in CustomActionResultController expected response model CustomActionResult to pass the given predicate, but it failed.");
+                "When calling CustomActionResult action in CustomActionResultController expected the CustomActionResult to pass the given predicate, but it failed.");
         }
     }
 }
