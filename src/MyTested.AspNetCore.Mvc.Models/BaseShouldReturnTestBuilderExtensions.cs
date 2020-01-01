@@ -7,9 +7,9 @@
     using Builders.Base;
     using Builders.Contracts.Results;
     using Builders.Results;
-    using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities;
     using Utilities.Validators;
 
     /// <summary>
@@ -17,6 +17,9 @@
     /// </summary>
     public static class BaseShouldReturnTestBuilderExtensions
     {
+        private static readonly Type ActionResultGenericType = typeof(ActionResult<>);
+        private static readonly Type ObjectResultType = typeof(ObjectResult);
+
         /// <summary>
         /// Tests whether the result is of the provided type.
         /// </summary>
@@ -45,7 +48,7 @@
             var actualBuilder = (BaseTestBuilderWithActionContext)builder;
 
             InvocationResultValidator.ValidateInvocationResultType(
-                actualBuilder.TestContext,
+                ConvertMethodResult(actualBuilder.TestContext),
                 resultType,
                 canBeAssignable: true,
                 allowDifferentGenericTypeDefinitions: true);
@@ -79,7 +82,7 @@
             var actualBuilder = (BaseTestBuilderWithActionContext)builder;
 
             InvocationResultValidator.ValidateInvocationResultType<TResult>(
-                actualBuilder.TestContext,
+                ConvertMethodResult(actualBuilder.TestContext),
                 canBeAssignable: true);
 
             resultTestBuilder?.Invoke(new ResultDetailsTestBuilder<TResult>(actualBuilder.TestContext));
@@ -99,7 +102,9 @@
         {
             var actualBuilder = (BaseTestBuilderWithActionContext)builder;
 
-            resultTestBuilder?.Invoke(new ResultDetailsTestBuilder(actualBuilder.TestContext));
+            var convertedTestContext = ConvertMethodResult(actualBuilder.TestContext);
+
+            resultTestBuilder?.Invoke(new ResultDetailsTestBuilder(convertedTestContext));
 
             return new AndTestBuilder(actualBuilder.TestContext);
         }
@@ -120,20 +125,18 @@
 
         private static ActionTestContext ConvertMethodResult(ActionTestContext testContext)
         {
-            var methodResult = testContext.MethodResult;
+            var methodReturnType = testContext.Method.ReturnType;
 
-            if (methodResult is IActionResult)
+            if (Reflection.AreAssignableByGeneric(ActionResultGenericType, methodReturnType))
             {
-                if (methodResult is ObjectResult objectResult)
-                {
-                    testContext.MethodResult = objectResult.Value;
-                }
-                else
-                {
-                    throw new InvocationResultAssertionException("Test");
-                }
+                var methodResultType = testContext.MethodResult.GetType();
 
-                return testContext;
+                if (Reflection.AreSameTypes(ObjectResultType, methodResultType))
+                {
+                    var objectResult = testContext.MethodResult as ObjectResult;
+
+                    testContext.MethodResult = objectResult?.Value;
+                }
             }
 
             return testContext;

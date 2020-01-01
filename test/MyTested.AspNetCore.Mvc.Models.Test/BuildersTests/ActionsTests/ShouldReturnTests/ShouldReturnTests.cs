@@ -557,6 +557,28 @@
         }
 
         [Fact]
+        public void ObjectResultShouldBeProperlyRecognized()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ObjectResultWithResponse())
+                .ShouldReturn()
+                .ResultOfType<ObjectResult>(result => result
+                    .Passing(obj => obj.Value is List<ResponseModel>));
+        }
+
+        [Fact]
+        public void ObjectResultChildrenShouldBeProperlyRecognized()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.OkResultWithResponse())
+                .ShouldReturn()
+                .ResultOfType<OkObjectResult>(result => result
+                    .Passing(obj => obj.Value is List<ResponseModel>));
+        }
+
+        [Fact]
         public void AnonymousResultShouldBeProperlyRecognizedAndShouldThrowException()
         {
             Test.AssertException<ResponseModelAssertionException>(
@@ -612,6 +634,17 @@
                         IntegerValue = 1,
                         StringValue = "Test"
                     }));
+        }
+
+        [Fact]
+        public void ActionResultOfTShouldBeProperlyRecognizedWithOkResultAndResultChain()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(int.MaxValue))
+                .ShouldReturn()
+                .ResultOfType<OkObjectResult>(result => result
+                    .Passing(ok => ok.Value is ResponseModel));
         }
 
         [Fact]
