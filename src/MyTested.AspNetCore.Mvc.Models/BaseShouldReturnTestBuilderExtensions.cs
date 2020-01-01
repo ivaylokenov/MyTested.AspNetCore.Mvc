@@ -20,25 +20,27 @@
         /// <summary>
         /// Tests whether the result is of the provided type.
         /// </summary>
+        /// <typeparam name="TResult">Expected result type.</typeparam>
         /// <param name="builder">Instance of <see cref="IBaseShouldReturnTestBuilder{TInvocationResult}"/> type.</param>
         /// <param name="resultType">Expected result type.</param>
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
-        public static IAndTestBuilder ResultOfType<TInvocationResult>(
-            this IBaseShouldReturnTestBuilder<TInvocationResult> builder,
+        public static IAndTestBuilder ResultOfType<TResult>(
+            this IBaseShouldReturnTestBuilder<TResult> builder,
             Type resultType)
             => builder.ResultOfType(resultType, null);
 
         /// <summary>
         /// Tests whether the result is of the provided type.
         /// </summary>
+        /// <typeparam name="TResult">Expected result type.</typeparam>
         /// <param name="builder">Instance of <see cref="IBaseShouldReturnTestBuilder{TInvocationResult}"/> type.</param>
         /// <param name="resultTestBuilder">Builder for testing the result.</param>
         /// <param name="resultType">Expected result type.</param>
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
-        public static IAndTestBuilder ResultOfType<TInvocationResult>(
-            this IBaseShouldReturnTestBuilder<TInvocationResult> builder,
+        public static IAndTestBuilder ResultOfType<TResult>(
+            this IBaseShouldReturnTestBuilder<TResult> builder,
             Type resultType,
-            Action<IModelDetailsTestBuilder<TInvocationResult>> resultTestBuilder)
+            Action<IModelDetailsTestBuilder<TResult>> resultTestBuilder)
         {
             var actualBuilder = (BaseTestBuilderWithActionContext)builder;
 
@@ -48,7 +50,7 @@
                 canBeAssignable: true,
                 allowDifferentGenericTypeDefinitions: true);
 
-            resultTestBuilder?.Invoke(new ModelDetailsTestBuilder<TInvocationResult>(actualBuilder.TestContext));
+            resultTestBuilder?.Invoke(new ModelDetailsTestBuilder<TResult>(actualBuilder.TestContext));
 
             return new AndTestBuilder(actualBuilder.TestContext);
         }
