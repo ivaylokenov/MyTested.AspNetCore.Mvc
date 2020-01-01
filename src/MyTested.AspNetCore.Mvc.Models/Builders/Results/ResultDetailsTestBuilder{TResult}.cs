@@ -4,6 +4,7 @@
     using Contracts.Results;
     using Internal.TestContexts;
     using Models;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing the result members.
@@ -25,7 +26,11 @@
         /// <inheritdoc />
         public IAndModelDetailsTestBuilder<TResult> EqualTo(TResult result)
         {
-            throw new System.NotImplementedException();
+            InvocationResultValidator.ValidateInvocationResult(
+                this.TestContext,
+                result);
+
+            return this;
         }
     }
 }

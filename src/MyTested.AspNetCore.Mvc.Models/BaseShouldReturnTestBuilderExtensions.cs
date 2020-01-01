@@ -6,7 +6,9 @@
     using Builders.Contracts.Models;
     using Builders.And;
     using Builders.Base;
+    using Builders.Contracts.Results;
     using Builders.Models;
+    using Builders.Results;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
@@ -40,7 +42,7 @@
         public static IAndTestBuilder ResultOfType<TResult>(
             this IBaseShouldReturnTestBuilder<TResult> builder,
             Type resultType,
-            Action<IModelDetailsTestBuilder<TResult>> resultTestBuilder)
+            Action<IResultDetailsTestBuilder<TResult>> resultTestBuilder)
         {
             var actualBuilder = (BaseTestBuilderWithActionContext)builder;
 
@@ -50,7 +52,7 @@
                 canBeAssignable: true,
                 allowDifferentGenericTypeDefinitions: true);
 
-            resultTestBuilder?.Invoke(new ModelDetailsTestBuilder<TResult>(actualBuilder.TestContext));
+            resultTestBuilder?.Invoke(new ResultDetailsTestBuilder<TResult>(actualBuilder.TestContext));
 
             return new AndTestBuilder(actualBuilder.TestContext);
         }
@@ -74,7 +76,7 @@
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
         public static IAndTestBuilder ResultOfType<TResult>(
             this IBaseShouldReturnTestBuilder builder,
-            Action<IModelDetailsTestBuilder<TResult>> resultTestBuilder)
+            Action<IResultDetailsTestBuilder<TResult>> resultTestBuilder)
         {
             var actualBuilder = (BaseTestBuilderWithActionContext)builder;
 
@@ -82,7 +84,24 @@
                 actualBuilder.TestContext,
                 canBeAssignable: true);
 
-            resultTestBuilder?.Invoke(new ModelDetailsTestBuilder<TResult>(actualBuilder.TestContext));
+            resultTestBuilder?.Invoke(new ResultDetailsTestBuilder<TResult>(actualBuilder.TestContext));
+
+            return new AndTestBuilder(actualBuilder.TestContext);
+        }
+
+        /// <summary>
+        /// Tests the result by using a test builder.
+        /// </summary>
+        /// <param name="builder">Instance of <see cref="IBaseShouldReturnTestBuilder"/> type.</param>
+        /// <param name="resultTestBuilder">Builder for testing the result.</param>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        public static IAndTestBuilder Result(
+            this IBaseShouldReturnTestBuilder builder,
+            Action<IResultDetailsTestBuilder> resultTestBuilder)
+        {
+            var actualBuilder = (BaseTestBuilderWithActionContext)builder;
+
+            resultTestBuilder?.Invoke(new ResultDetailsTestBuilder(actualBuilder.TestContext));
 
             return new AndTestBuilder(actualBuilder.TestContext);
         }
@@ -92,20 +111,14 @@
         /// </summary>
         /// <typeparam name="TResult">Expected result type.</typeparam>
         /// <param name="builder">Instance of <see cref="IBaseShouldReturnTestBuilder"/> type.</param>
-        /// <param name="model">Expected result object.</param>
+        /// <param name="result">Expected result object.</param>
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
         public static IAndTestBuilder Result<TResult>(
             this IBaseShouldReturnTestBuilder builder,
-            TResult model)
-        {
-            var actualBuilder = (BaseTestBuilderWithActionContext)builder;
-
-            InvocationResultValidator.ValidateInvocationResult(
-                actualBuilder.TestContext, 
-                model);
-
-            return new AndTestBuilder(actualBuilder.TestContext);
-        }
+            TResult result)
+            => builder
+                .Result(value => value
+                    .EqualTo(result));
 
         private static ActionTestContext ConvertMethodResult(ActionTestContext testContext)
         {
