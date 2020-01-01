@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Filters
+﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.ActionFilters
 {
     using System;
     using Microsoft.AspNetCore.Mvc;

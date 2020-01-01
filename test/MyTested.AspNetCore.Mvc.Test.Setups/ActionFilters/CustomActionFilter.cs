@@ -3,17 +3,14 @@
     using Microsoft.AspNetCore.Mvc.Filters;
     using Services;
 
-    public class MyActionFilterWithArgs : IActionFilter
+    public class CustomActionFilter : IActionFilter
     {
         private readonly IInjectedService service;
 
-        public MyActionFilterWithArgs(IInjectedService service, int maxRequestPerSecond)
+        public CustomActionFilter(IInjectedService service)
         {
             this.service = service;
-            this.MaxRequestPerSecond = maxRequestPerSecond;
         }
-
-        public int MaxRequestPerSecond { get; set; }
 
         public void OnActionExecuted(ActionExecutedContext context)
         {

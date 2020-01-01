@@ -20,10 +20,10 @@
     using Microsoft.Extensions.FileProviders;
     using Microsoft.Net.Http.Headers;
     using Models;
-    using Pipelines;
     using Newtonsoft.Json;
     using Services;
     using ActionFilters;
+    using Pipeline;
 
     [Authorize(Roles = "Admin,Moderator")]
     [FormatFilter]
@@ -331,9 +331,9 @@
             VaryByQueryKeys = new[] { "FirstQuery", "SecondQuery" },
             NoStore = true,
             Order = 2)]
-        [MiddlewareFilter(typeof(MyPipeline), Order = 2)]
-        [ServiceFilter(typeof(MyActionFilter), Order = 2)]
-        [TypeFilter(typeof(MyActionFilterWithArgs), Order = 2, Arguments = new object[] { 10 })]
+        [MiddlewareFilter(typeof(Pipeline), Order = 2)]
+        [ServiceFilter(typeof(CustomActionFilter), Order = 2)]
+        [TypeFilter(typeof(CustomActionFilterWithArgs), Order = 2, Arguments = new object[] { 10 })]
         public IActionResult VariousAttributesAction()
         {
             return this.Ok();

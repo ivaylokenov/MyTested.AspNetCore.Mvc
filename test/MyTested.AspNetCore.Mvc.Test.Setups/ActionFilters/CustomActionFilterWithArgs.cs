@@ -3,11 +3,11 @@
     using Microsoft.AspNetCore.Mvc.Filters;
     using Services;
 
-    public class MyOtherActionFilterWithArgs : IActionFilter
+    public class CustomActionFilterWithArgs : IActionFilter
     {
         private readonly IInjectedService service;
 
-        public MyOtherActionFilterWithArgs(IInjectedService service, int maxRequestPerSecond)
+        public CustomActionFilterWithArgs(IInjectedService service, int maxRequestPerSecond)
         {
             this.service = service;
             this.MaxRequestPerSecond = maxRequestPerSecond;

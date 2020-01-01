@@ -1,8 +1,8 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Pipelines
+﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Pipeline
 {
     using Microsoft.AspNetCore.Builder;
 
-    public class MyPipeline
+    public class OtherPipeline
     {
         public void Configure(IApplicationBuilder applicationBuilder)
         {
