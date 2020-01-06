@@ -1,8 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Actions
 {
-    using Base;
-    using CaughtExceptions;
-
     /// <summary>
     /// Used for testing the action and its result.
     /// </summary>
@@ -12,7 +9,7 @@
         /// <summary>
         /// Used for testing returned action result.
         /// </summary>
-        /// <returns>Test builder of <see cref="IShouldReturnTestBuilder{TActionResult}"/>.</returns>
-        IShouldReturnTestBuilder<TActionResult> ShouldReturn();
+        /// <returns>Test builder of <see cref="IShouldReturnActionResultTestBuilder{TActionResult}"/>.</returns>
+        IShouldReturnActionResultTestBuilder<TActionResult> ShouldReturn();
     }
 }
