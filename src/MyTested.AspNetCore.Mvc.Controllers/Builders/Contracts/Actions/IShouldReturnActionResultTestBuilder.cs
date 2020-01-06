@@ -3,10 +3,19 @@
     using System;
     using And;
 
+    /// <summary>
+    /// Used for testing returned <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/>.
+    /// </summary>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public interface IShouldReturnActionResultTestBuilder<TActionResult>
         : IShouldReturnTestBuilder<TActionResult>
     {
-        // IActionResult, ActionResult or ActionResult<T>
+        /// <summary>
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>,
+        /// <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/> or
+        /// <see cref="Microsoft.AspNetCore.Mvc.ActionResult{TResult}"/>.
+        /// </summary>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
         IAndTestBuilder ActionResult();
 
         //// IActionResult, ActionResult or ActionResult<T> with options to specify the result - Ok() for example
