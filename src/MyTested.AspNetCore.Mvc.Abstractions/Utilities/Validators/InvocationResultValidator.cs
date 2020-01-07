@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Utilities.Validators
 {
     using System;
+    using System.Linq;
     using System.Reflection;
     using Exceptions;
     using Extensions;
@@ -40,6 +41,43 @@
             bool canBeAssignable = false,
             bool allowDifferentGenericTypeDefinitions = false) 
             => ValidateInvocationResultType(testContext, typeof(TExpectedType), canBeAssignable, allowDifferentGenericTypeDefinitions);
+
+        public static void ValidateInvocationResultTypes(
+            ComponentTestContext testContext,
+            bool canBeAssignable = false,
+            bool allowDifferentGenericTypeDefinitions = false,
+            params Type[] typesOfExpectedReturnValue)
+        {
+            var invalid = false;
+
+            foreach (var type in typesOfExpectedReturnValue)
+            {
+                invalid = InvocationResultTypeIsInvalid(
+                    testContext,
+                    type,
+                    canBeAssignable,
+                    allowDifferentGenericTypeDefinitions);
+
+                if (!invalid)
+                {
+                    break;
+                }
+            }
+
+            if (invalid)
+            {
+                var expectedTypeName = string.Join(
+                    " or ", 
+                    typesOfExpectedReturnValue.Select(t => t.ToFriendlyTypeName()));
+
+                var actualTypeName = testContext.MethodResult?.GetType().ToFriendlyTypeName();
+
+                ThrowNewInvocationResultAssertionException(
+                    testContext,
+                    expectedTypeName,
+                    actualTypeName);
+            }
+        }
 
         public static void ValidateInvocationResult<TResult>(ComponentTestContext testContext, TResult model, bool canBeAssignable = false)
         {

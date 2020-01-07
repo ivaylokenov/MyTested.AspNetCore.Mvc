@@ -47,7 +47,7 @@
                 .ShouldReturnEmpty();
 
         /// <inheritdoc />
-        public IShouldReturnTestBuilder<MethodResult> ShouldReturn()
+        public IShouldReturnActionResultTestBuilder<MethodResult> ShouldReturn()
         {
             this.InvokeAction();
 
