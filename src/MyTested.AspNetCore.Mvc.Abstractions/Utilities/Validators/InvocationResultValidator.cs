@@ -15,6 +15,63 @@
             bool allowDifferentGenericTypeDefinitions = false,
             Type typeOfActualReturnValue = null)
         {
+            var invalid = InvocationResultTypeIsInvalid(
+                testContext,
+                typeOfExpectedReturnValue,
+                canBeAssignable,
+                allowDifferentGenericTypeDefinitions,
+                typeOfActualReturnValue);
+
+            if (invalid)
+            {
+                var typeOfResult = typeOfActualReturnValue ?? testContext.MethodResult?.GetType();
+
+                var (expectedTypeName, actualTypeName) = (typeOfExpectedReturnValue, typeOfResult).GetTypeComparisonNames();
+
+                ThrowNewInvocationResultAssertionException(
+                    testContext,
+                    expectedTypeName,
+                    actualTypeName);
+            }
+        }
+
+        public static void ValidateInvocationResultType<TExpectedType>(
+            ComponentTestContext testContext,
+            bool canBeAssignable = false,
+            bool allowDifferentGenericTypeDefinitions = false) 
+            => ValidateInvocationResultType(testContext, typeof(TExpectedType), canBeAssignable, allowDifferentGenericTypeDefinitions);
+
+        public static void ValidateInvocationResult<TResult>(ComponentTestContext testContext, TResult model, bool canBeAssignable = false)
+        {
+            if (!Reflection.IsAnonymousType(typeof(TResult)))
+            {
+                ValidateInvocationResultType<TResult>(testContext, canBeAssignable);
+            }
+
+            if (Reflection.AreNotDeeplyEqual(model, testContext.MethodResult, out var result))
+            {
+                throw ResponseModelAssertionException.From(testContext.ExceptionMessagePrefix, result);
+            }
+
+            testContext.Model = model;
+        }
+        
+        public static TResult GetInvocationResult<TResult>(
+            ComponentTestContext testContext,
+            bool canBeAssignable = false)
+            where TResult : class
+        {
+            ValidateInvocationResultType<TResult>(testContext, canBeAssignable);
+            return testContext.MethodResult as TResult;
+        }
+
+        private static bool InvocationResultTypeIsInvalid(
+            ComponentTestContext testContext,
+            Type typeOfExpectedReturnValue,
+            bool canBeAssignable = false,
+            bool allowDifferentGenericTypeDefinitions = false,
+            Type typeOfActualReturnValue = null)
+        {
             InvocationValidator.CheckForException(testContext.CaughtException, testContext.ExceptionMessagePrefix);
 
             var typeInfoOfExpectedReturnValue = typeOfExpectedReturnValue.GetTypeInfo();
@@ -64,45 +121,7 @@
                 invalid = !Reflection.AreAssignableByGeneric(typeOfExpectedReturnValue, typeOfResult);
             }
 
-            if (invalid)
-            {
-                var (expectedTypeName, actualTypeName) = (typeOfExpectedReturnValue, typeOfResult).GetTypeComparisonNames();
-
-                ThrowNewInvocationResultAssertionException(
-                    testContext,
-                    expectedTypeName,
-                    actualTypeName);
-            }
-        }
-
-        public static void ValidateInvocationResultType<TExpectedType>(
-            ComponentTestContext testContext,
-            bool canBeAssignable = false,
-            bool allowDifferentGenericTypeDefinitions = false) 
-            => ValidateInvocationResultType(testContext, typeof(TExpectedType), canBeAssignable, allowDifferentGenericTypeDefinitions);
-
-        public static void ValidateInvocationResult<TResult>(ComponentTestContext testContext, TResult model, bool canBeAssignable = false)
-        {
-            if (!Reflection.IsAnonymousType(typeof(TResult)))
-            {
-                ValidateInvocationResultType<TResult>(testContext, canBeAssignable);
-            }
-
-            if (Reflection.AreNotDeeplyEqual(model, testContext.MethodResult, out var result))
-            {
-                throw ResponseModelAssertionException.From(testContext.ExceptionMessagePrefix, result);
-            }
-
-            testContext.Model = model;
-        }
-        
-        public static TResult GetInvocationResult<TResult>(
-            ComponentTestContext testContext,
-            bool canBeAssignable = false)
-            where TResult : class
-        {
-            ValidateInvocationResultType<TResult>(testContext, canBeAssignable);
-            return testContext.MethodResult as TResult;
+            return invalid;
         }
 
         private static void ThrowNewInvocationResultAssertionException(
