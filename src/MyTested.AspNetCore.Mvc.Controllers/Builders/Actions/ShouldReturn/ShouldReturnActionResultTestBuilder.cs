@@ -1,8 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
+    using And;
     using Contracts.Actions;
     using Contracts.And;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Mvc;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing returned <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/>.
@@ -23,8 +26,12 @@
         /// <inheritdoc />
         public new IAndTestBuilder ActionResult()
         {
-            var result = base.ActionResult;
-            throw new System.NotImplementedException();
+            InvocationResultValidator.ValidateInvocationResultTypes(
+                this.TestContext,
+                canBeAssignable: true,
+                typesOfExpectedReturnValue: new [] { typeof(IActionResult), typeof(ActionResult<>) });
+
+            return new AndTestBuilder(this.TestContext);
         }
     }
 }
