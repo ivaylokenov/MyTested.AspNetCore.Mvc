@@ -505,7 +505,7 @@
             return this.SignOut(TestObjectFactory.GetAuthenticationProperties());
         }
 
-        public FileResult FileWithVirtualPath()
+        public IActionResult FileWithVirtualPath()
         {
             return this.File("/Test", ContentType.ApplicationJson, "FileDownloadName");
         }
@@ -702,7 +702,7 @@
 
         public async Task EmptyActionWithExceptionAsync()
         {
-            await Task.Run(() => this.ThrowNewNullReferenceException());
+            await Task.Run(this.ThrowNewNullReferenceException);
         }
 
         public async Task<IActionResult> ActionWithExceptionAsync()
@@ -1244,6 +1244,16 @@
                 return this.BadRequest();
             }
 
+            return this.Ok();
+        }
+
+        public IActionResult ActionResultInterface()
+        {
+            return this.Ok();
+        }
+
+        public ActionResult ActionResultBaseClass()
+        {
             return this.Ok();
         }
 

@@ -8,7 +8,7 @@
     public class ShouldReturnBadRequestTests
     {
         [Fact]
-        public void ShouldReturnBadRequestShouldNotThrowExceptionWhenResultIsHttpBadRequest()
+        public void ShouldReturnBadRequestShouldNotThrowExceptionWhenResultIsBadRequest()
         {
             MyController<MvcController>
                 .Instance()
@@ -28,7 +28,7 @@
         }
 
         [Fact]
-        public void ShouldReturnNotFoundShouldThrowExceptionWhenActionDoesNotReturnNotFound()
+        public void ShouldReturnBadRequestShouldThrowExceptionWhenActionDoesNotReturnBadRequest()
         {
             Test.AssertException<InvocationResultAssertionException>(
                 () =>
