@@ -13,7 +13,8 @@
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public class ShouldReturnActionResultTestBuilder<TActionResult>
-        : ShouldReturnTestBuilder<TActionResult>, IShouldReturnActionResultTestBuilder<TActionResult>
+        : ShouldReturnTestBuilder<TActionResult>, 
+        IShouldReturnActionResultTestBuilder<TActionResult>
     {
         private static readonly Type ActionResultType = typeof(IActionResult);
         private static readonly Type GenericActionResultType = typeof(ActionResult<>);
@@ -41,6 +42,15 @@
             this.ValidateActionResults();
 
             actionResultTestBuilder?.Invoke(this);
+
+            return new AndTestBuilder(this.TestContext);
+        }
+
+        IAndTestBuilder IShouldReturnActionResultTestBuilder<TActionResult>.ActionResult<TResult>()
+        {
+            InvocationResultValidator.ValidateInvocationResultType<ActionResult<TResult>>(
+                this.TestContext,
+                typeOfActualReturnValue: this.TestContext.Method.ReturnType);
 
             return new AndTestBuilder(this.TestContext);
         }

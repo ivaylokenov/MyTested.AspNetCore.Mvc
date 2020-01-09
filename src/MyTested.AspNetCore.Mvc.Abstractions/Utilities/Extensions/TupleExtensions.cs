@@ -9,9 +9,15 @@
             var expected = typeTuple.Expected;
             var actual = typeTuple.Actual;
 
-            var useFullName = expected?.Name == actual?.Name;
+            var expectedName = expected?.ToFriendlyTypeName();
+            var actualName = actual?.ToFriendlyTypeName();
 
-            return (expected.ToFriendlyTypeName(useFullName), actual.ToFriendlyTypeName(useFullName));
+            if (expectedName == actualName)
+            {
+                return (expected.ToFriendlyTypeName(true), actual.ToFriendlyTypeName(true));
+            }
+                
+            return (expectedName, actualName);
         }
     }
 }

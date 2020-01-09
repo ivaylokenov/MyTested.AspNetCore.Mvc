@@ -39,8 +39,14 @@
         public static void ValidateInvocationResultType<TExpectedType>(
             ComponentTestContext testContext,
             bool canBeAssignable = false,
-            bool allowDifferentGenericTypeDefinitions = false) 
-            => ValidateInvocationResultType(testContext, typeof(TExpectedType), canBeAssignable, allowDifferentGenericTypeDefinitions);
+            bool allowDifferentGenericTypeDefinitions = false,
+            Type typeOfActualReturnValue = null) 
+            => ValidateInvocationResultType(
+                testContext, 
+                typeof(TExpectedType), 
+                canBeAssignable, 
+                allowDifferentGenericTypeDefinitions,
+                typeOfActualReturnValue);
 
         public static void ValidateInvocationResultTypes(
             ComponentTestContext testContext,

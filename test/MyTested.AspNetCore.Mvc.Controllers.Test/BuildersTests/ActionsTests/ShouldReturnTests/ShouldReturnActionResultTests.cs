@@ -19,7 +19,7 @@
         }
 
         [Fact]
-        public void ShouldReturnActionResultShouldNotThrowExceptionWhenResultIsIActionResultBaseClass()
+        public void ShouldReturnActionResultShouldNotThrowExceptionWhenResultIsActionResultBaseClass()
         {
             MyController<MvcController>
                 .Instance()
@@ -66,7 +66,7 @@
         }
 
         [Fact]
-        public void ShouldReturnActionResultWithDetailsShouldNotThrowExceptionWhenResultIsIActionResultBaseClass()
+        public void ShouldReturnActionResultWithDetailsShouldNotThrowExceptionWhenResultIsActionResultBaseClass()
         {
             MyController<MvcController>
                 .Instance()
@@ -103,6 +103,71 @@
                             .Ok());
                 },
                 "When calling BadRequestAction action in MvcController expected result to be OkResult, but instead received BadRequestResult.");
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTShouldNotThrowExceptionWhenResultIsActionResultOfTWithActionResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(0))
+                .ShouldReturn()
+                .ActionResult<ResponseModel>();
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTShouldNotThrowExceptionWhenResultIsActionResultOfTWithModel()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(1))
+                .ShouldReturn()
+                .ActionResult<ResponseModel>();
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTShouldThrowExceptionWhenResultIsIActionResultInterface()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ActionResultInterface())
+                        .ShouldReturn()
+                        .ActionResult<ResponseModel>();
+                },
+                "When calling ActionResultInterface action in MvcController expected result to be ActionResult<ResponseModel>, but instead received IActionResult.");
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTShouldThrowExceptionWhenResultIsActionResultBaseClass()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ActionResultBaseClass())
+                        .ShouldReturn()
+                        .ActionResult<ResponseModel>();
+                },
+                "When calling ActionResultBaseClass action in MvcController expected result to be ActionResult<ResponseModel>, but instead received ActionResult.");
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTShouldThrowExceptionWhenResultIsActionResultOfWrongModel()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ActionResultOfT(0))
+                        .ShouldReturn()
+                        .ActionResult<RequestModel>();
+                },
+                "When calling ActionResultOfT action in MvcController expected result to be ActionResult<RequestModel>, but instead received ActionResult<ResponseModel>.");
         }
     }
 }
