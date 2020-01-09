@@ -18,8 +18,12 @@
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
         IAndTestBuilder ActionResult();
 
-        //// IActionResult, ActionResult or ActionResult<T> with options to specify the result - Ok() for example
-        //IAndTestBuilder ActionResult(Action<IShouldReturnTestBuilder<TActionResult>> actionResultTestBuilder);
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>,
+        /// <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/> or
+        /// <see cref="Microsoft.AspNetCore.Mvc.ActionResult{TResult}"/>.
+        /// <param name="actionResultTestBuilder">Test builder which asserts the actual action result.</param>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        IAndTestBuilder ActionResult(Action<IShouldReturnTestBuilder<TActionResult>> actionResultTestBuilder);
 
         //// ActionResult<TResult>, consider OkResult for example to be valid too? 
         //IAndTestBuilder ActionResult<TResult>();

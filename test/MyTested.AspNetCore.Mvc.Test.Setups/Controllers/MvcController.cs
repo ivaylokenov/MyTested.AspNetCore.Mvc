@@ -1249,12 +1249,12 @@
 
         public IActionResult ActionResultInterface()
         {
-            return this.Ok();
+            return this.Ok(this.ResponseModel.First());
         }
 
         public ActionResult ActionResultBaseClass()
         {
-            return this.Ok();
+            return this.Ok(this.ResponseModel.First());
         }
 
         public ActionResult<ResponseModel> ActionResultOfT(int id)

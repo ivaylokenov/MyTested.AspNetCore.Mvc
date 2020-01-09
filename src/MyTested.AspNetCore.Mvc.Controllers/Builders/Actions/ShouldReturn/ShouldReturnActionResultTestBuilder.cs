@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
+    using System;
     using And;
     using Contracts.Actions;
     using Contracts.And;
@@ -14,6 +15,9 @@
     public class ShouldReturnActionResultTestBuilder<TActionResult>
         : ShouldReturnTestBuilder<TActionResult>, IShouldReturnActionResultTestBuilder<TActionResult>
     {
+        private static readonly Type ActionResultType = typeof(IActionResult);
+        private static readonly Type GenericActionResultType = typeof(ActionResult<>);
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ShouldReturnActionResultTestBuilder{TActionResult}"/> class.
         /// </summary>
@@ -24,14 +28,27 @@
         }
 
         /// <inheritdoc />
-        public new IAndTestBuilder ActionResult()
+        IAndTestBuilder IShouldReturnActionResultTestBuilder<TActionResult>.ActionResult()
         {
-            InvocationResultValidator.ValidateInvocationResultTypes(
-                this.TestContext,
-                canBeAssignable: true,
-                typesOfExpectedReturnValue: new [] { typeof(IActionResult), typeof(ActionResult<>) });
+            this.ValidateActionResults();
 
             return new AndTestBuilder(this.TestContext);
         }
+
+        /// <inheritdoc />
+        IAndTestBuilder IShouldReturnActionResultTestBuilder<TActionResult>.ActionResult(Action<IShouldReturnTestBuilder<TActionResult>> actionResultTestBuilder)
+        {
+            this.ValidateActionResults();
+
+            actionResultTestBuilder?.Invoke(this);
+
+            return new AndTestBuilder(this.TestContext);
+        }
+
+        private void ValidateActionResults() 
+            => InvocationResultValidator.ValidateInvocationResultTypes(
+                this.TestContext,
+                canBeAssignable: true,
+                typesOfExpectedReturnValue: new[] { ActionResultType, GenericActionResultType });
     }
 }
