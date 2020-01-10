@@ -156,7 +156,7 @@
         }
 
         [Fact]
-        public void AndProvideTheActionResultShouldWorkCorrectly()
+        public void ShouldPassForTheShouldWorkCorrectlyWithActionResult()
         {
             MyController<MvcController>
                 .Instance()
@@ -172,14 +172,26 @@
         }
 
         [Fact]
+        public void ShouldPassForTheShouldWorkCorrectlyWithModel()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.CustomViewComponentResultWithViewData())
+                .ShouldReturn()
+                .ViewComponent()
+                .AndAlso()
+                .ShouldPassForThe<ICollection<ResponseModel>>(model => model.Count == 2);
+        }
+
+        [Fact]
         public void WithNoModelShouldNotThrowExceptionWhenNoModelIsReturned()
         {
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.ViewComponentResultByType())
                 .ShouldReturn()
-                .ViewComponent(viewComponent =>
-                    viewComponent.WithNoModel());
+                .ViewComponent(viewComponent => viewComponent
+                    .WithNoModel());
         }
 
         [Fact]
@@ -189,8 +201,8 @@
                 .Instance()
                 .Calling(c => c.CustomViewComponentResultWithViewData())
                 .ShouldReturn()
-                .ViewComponent(viewComponent =>
-                    viewComponent.WithModelOfType<List<ResponseModel>>());
+                .ViewComponent(viewComponent => viewComponent
+                    .WithModelOfType<List<ResponseModel>>());
         }
 
         [Fact]
