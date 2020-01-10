@@ -9,8 +9,8 @@
             var expected = typeTuple.Expected;
             var actual = typeTuple.Actual;
 
-            var expectedName = expected?.ToFriendlyTypeName();
-            var actualName = actual?.ToFriendlyTypeName();
+            var expectedName = expected.ToFriendlyTypeName();
+            var actualName = actual.ToFriendlyTypeName();
 
             if (expectedName == actualName)
             {
