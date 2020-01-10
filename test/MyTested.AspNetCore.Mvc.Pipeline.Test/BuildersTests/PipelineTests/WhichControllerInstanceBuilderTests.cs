@@ -152,7 +152,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "Expected route '/Normal/CustomFiltersAction' to match CustomFiltersAction action in NormalController but action could not be invoked because of the declared filters - CustomActionFilterAttribute (Action), UnsupportedContentTypeFilter (Global), SaveTempDataAttribute (Global), ControllerActionFilter (Controller). Either a filter is setting the response result before the action itself, or you must set the request properties so that they will pass through the MyPipeline.");
+                "Expected route '/Normal/CustomFiltersAction' to match CustomFiltersAction action in NormalController but action could not be invoked because of the declared filters - CustomActionFilterAttribute (Action), UnsupportedContentTypeFilter (Global), SaveTempDataAttribute (Global), ControllerActionFilter (Controller). Either a filter is setting the response result before the action itself, or you must set the request properties so that they will pass through the pipeline.");
         }
 
         [Fact]
@@ -182,7 +182,7 @@
 
             MyPipeline
                 .Configuration()
-                .ShouldMap("/MyPipeline/FilterAction?controller=true")
+                .ShouldMap("/Pipeline/FilterAction?controller=true")
                 .To<PipelineController>(c => c.FilterAction())
                 .Which()
                 .ShouldReturn()
@@ -211,7 +211,7 @@
 
             MyPipeline
                 .Configuration()
-                .ShouldMap("/MyPipeline/Action?controller=true")
+                .ShouldMap("/Pipeline/Action?controller=true")
                 .To<PipelineController>(c => c.Action())
                 .Which()
                 .ShouldReturn()
@@ -240,7 +240,7 @@
 
             MyPipeline
                 .Configuration()
-                .ShouldMap("/MyPipeline/FilterAction?controller=true")
+                .ShouldMap("/Pipeline/FilterAction?controller=true")
                 .To<PipelineController>(c => c.FilterAction())
                 .Which(controller => controller
                     .WithDependencies(new InjectedService()))
@@ -270,7 +270,7 @@
 
             MyPipeline
                 .Configuration()
-                .ShouldMap("/MyPipeline/Action?controller=true")
+                .ShouldMap("/Pipeline/Action?controller=true")
                 .To<PipelineController>(c => c.Action())
                 .Which(controller => controller
                     .WithDependencies(new InjectedService()))
@@ -302,7 +302,7 @@
 
             MyPipeline
                 .Configuration()
-                .ShouldMap("/MyPipeline/FilterAction?controller=true")
+                .ShouldMap("/Pipeline/FilterAction?controller=true")
                 .To<PipelineController>(c => c.FilterAction())
                 .Which(new PipelineController(injectedService))
                 .ShouldReturn()
@@ -329,7 +329,7 @@
 
             MyPipeline
                 .Configuration()
-                .ShouldMap("/MyPipeline/Action?controller=true")
+                .ShouldMap("/Pipeline/Action?controller=true")
                 .To<PipelineController>(c => c.Action())
                 .Which(new PipelineController(injectedService))
                 .ShouldReturn()
@@ -356,7 +356,7 @@
 
             MyPipeline
                 .Configuration()
-                .ShouldMap("/MyPipeline/FilterAction?controller=true")
+                .ShouldMap("/Pipeline/FilterAction?controller=true")
                 .To<PipelineController>(c => c.FilterAction())
                 .Which(() => new PipelineController(injectedService))
                 .ShouldReturn()
@@ -383,7 +383,7 @@
 
             MyPipeline
                 .Configuration()
-                .ShouldMap("/MyPipeline/Action?controller=true")
+                .ShouldMap("/Pipeline/Action?controller=true")
                 .To<PipelineController>(c => c.Action())
                 .Which(() => new PipelineController(injectedService))
                 .ShouldReturn()
@@ -411,7 +411,7 @@
 
             MyPipeline
                 .Configuration()
-                .ShouldMap("/MyPipeline/Action?controller=true")
+                .ShouldMap("/Pipeline/Action?controller=true")
                 .To<PipelineController>(c => c.Action())
                 .Which()
                 .WithHttpContext(context => context.Features.Set(new AnotherInjectedService()))
@@ -459,7 +459,7 @@
 
             MyPipeline
                 .Configuration()
-                .ShouldMap("/MyPipeline/Action?controller=true")
+                .ShouldMap("/Pipeline/Action?controller=true")
                 .To<PipelineController>(c => c.Action())
                 .Which(pipelineController => pipelineController
                     .WithHttpContext(context => context.Features.Set(new AnotherInjectedService()))
@@ -507,7 +507,7 @@
 
             MyPipeline
                 .Configuration()
-                .ShouldMap("/MyPipeline/Action?controller=true")
+                .ShouldMap("/Pipeline/Action?controller=true")
                 .To<PipelineController>(c => c.Action())
                 .Which()
                 .WithRouteData(new { ControllerFilter = contextTestValue })
@@ -542,7 +542,7 @@
 
             MyPipeline
                 .Configuration()
-                .ShouldMap("/MyPipeline/Action?controller=true")
+                .ShouldMap("/Pipeline/Action?controller=true")
                 .To<PipelineController>(c => c.Action())
                 .Which(controller => controller
                     .WithRouteData(new { ControllerFilter = contextTestValue })
