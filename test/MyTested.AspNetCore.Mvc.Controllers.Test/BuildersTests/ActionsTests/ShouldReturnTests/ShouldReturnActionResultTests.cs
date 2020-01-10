@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ActionsTests.ShouldReturnTests
 {
     using Exceptions;
+    using Microsoft.AspNetCore.Mvc;
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
@@ -255,6 +256,44 @@
                             .Ok());
                 },
                 "When calling ActionResultOfT action in MvcController expected result to be ActionResult<RequestModel>, but instead received ActionResult<ResponseModel>.");
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultShouldWorkCorrectlyWithShouldPassFotTheMethod()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultInterface())
+                .ShouldReturn()
+                .ActionResult()
+                .AndAlso()
+                .ShouldPassForThe<OkObjectResult>(ok => ok
+                    .Value.GetType() == typeof(ResponseModel));
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTShouldWorkCorrectlyWithShouldPassFotTheMethodAndActionResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(int.MaxValue))
+                .ShouldReturn()
+                .ActionResult()
+                .AndAlso()
+                .ShouldPassForThe<OkObjectResult>(ok => ok
+                    .Value.GetType() == typeof(ResponseModel));
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTShouldWorkCorrectlyWithShouldPassFotTheMethodAndModel()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(1))
+                .ShouldReturn()
+                .ActionResult<ResponseModel>()
+                .AndAlso()
+                .ShouldPassForThe<ResponseModel>(model => model.IntegerValue == 1);
         }
     }
 }

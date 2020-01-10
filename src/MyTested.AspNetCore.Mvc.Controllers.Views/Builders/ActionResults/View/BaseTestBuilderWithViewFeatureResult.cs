@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.View
 {
+    using System;
     using Builders.Base;
     using Contracts.Base;
     using Internal.TestContexts;
@@ -47,18 +48,13 @@
         public abstract TViewFeatureResultTestBuilder ResultTestBuilder { get; }
 
         public override object GetActualModel()
-        {
-            if (this.ActionResult is ViewResult)
+            => this.ActionResult switch
             {
-                return (this.ActionResult as ViewResult).Model;
-            }
-            else if (this.ActionResult is PartialViewResult)
-            {
-                return (this.ActionResult as PartialViewResult)?.ViewData?.Model;
-            }
-
-            return (this.ActionResult as ViewComponentResult)?.ViewData?.Model;
-        }
+                ViewResult viewResult => viewResult.Model,
+                PartialViewResult partialViewResult => partialViewResult.ViewData?.Model,
+                ViewComponentResult viewComponentResult => viewComponentResult.ViewData?.Model,
+                _ => this.ActionResult
+            };
 
         public override void ValidateNoModel()
         {

@@ -9,7 +9,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Used for testing returned <see cref="ActionResult"/>.
+    /// Used for testing returned <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/>.
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public class ShouldReturnActionResultTestBuilder<TActionResult>
@@ -29,7 +29,7 @@
         }
 
         /// <inheritdoc />
-        IAndTestBuilder IShouldReturnActionResultTestBuilder<TActionResult>.ActionResult()
+        public new IAndTestBuilder ActionResult()
         {
             this.ValidateActionResults();
 
@@ -37,8 +37,7 @@
         }
 
         /// <inheritdoc />
-        IAndTestBuilder IShouldReturnActionResultTestBuilder<TActionResult>.ActionResult(
-            Action<IShouldReturnTestBuilder<TActionResult>> actionResultTestBuilder)
+        public new IAndTestBuilder ActionResult(Action<IShouldReturnTestBuilder<TActionResult>> actionResultTestBuilder)
         {
             this.ValidateActionResults();
 
@@ -47,14 +46,14 @@
             return new AndTestBuilder(this.TestContext);
         }
 
-        IAndTestBuilder IShouldReturnActionResultTestBuilder<TActionResult>.ActionResult<TResult>()
+        public new IAndTestBuilder ActionResult<TResult>()
         {
             this.ValidateActionResult<TResult>();
 
             return new AndTestBuilder(this.TestContext);
         }
 
-        IAndTestBuilder IShouldReturnActionResultTestBuilder<TActionResult>.ActionResult<TResult>(
+        public new IAndTestBuilder ActionResult<TResult>(
             Action<IShouldReturnTestBuilder<TActionResult>> actionResultTestBuilder)
         {
             this.ValidateActionResult<TResult>();
