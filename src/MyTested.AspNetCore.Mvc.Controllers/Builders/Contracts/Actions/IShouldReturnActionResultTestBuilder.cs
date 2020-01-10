@@ -35,8 +35,14 @@
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
         IAndTestBuilder ActionResult<TResult>();
 
-        //// ActionResult<TResult>, consider OkResult for example to be valid too? with additional options to specify the result - Ok() for example
-        //IAndTestBuilder ActionResult<TResult>(Action<IShouldReturnTestBuilder<TActionResult>> actionResultTestBuilder);
+        /// <summary>
+        /// Tests whether the action result is
+        /// <see cref="Microsoft.AspNetCore.Mvc.ActionResult{TResult}"/>.
+        /// </summary>
+        /// <typeparam name="TResult">Type of the expected result.</typeparam>
+        /// <param name="actionResultTestBuilder">Test builder which asserts the actual action result.</param>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        IAndTestBuilder ActionResult<TResult>(Action<IShouldReturnTestBuilder<TActionResult>> actionResultTestBuilder);
 
         //// ActionResult<TResult>, consider OkResult for example to be valid too?!, with additional options to validate the TResult, like EqualTo or Passing (model/result details)
         //IAndTestBuilder ActionResult<TResult>(Action<IShouldHaveTestBuilder<TActionResult>> actionResultTestBuilder);

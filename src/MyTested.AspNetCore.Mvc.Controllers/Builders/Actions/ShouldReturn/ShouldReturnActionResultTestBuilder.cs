@@ -9,7 +9,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Used for testing returned <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/>.
+    /// Used for testing returned <see cref="ActionResult"/>.
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public class ShouldReturnActionResultTestBuilder<TActionResult>
@@ -37,7 +37,8 @@
         }
 
         /// <inheritdoc />
-        IAndTestBuilder IShouldReturnActionResultTestBuilder<TActionResult>.ActionResult(Action<IShouldReturnTestBuilder<TActionResult>> actionResultTestBuilder)
+        IAndTestBuilder IShouldReturnActionResultTestBuilder<TActionResult>.ActionResult(
+            Action<IShouldReturnTestBuilder<TActionResult>> actionResultTestBuilder)
         {
             this.ValidateActionResults();
 
@@ -48,9 +49,17 @@
 
         IAndTestBuilder IShouldReturnActionResultTestBuilder<TActionResult>.ActionResult<TResult>()
         {
-            InvocationResultValidator.ValidateInvocationResultType<ActionResult<TResult>>(
-                this.TestContext,
-                typeOfActualReturnValue: this.TestContext.Method.ReturnType);
+            this.ValidateActionResult<TResult>();
+
+            return new AndTestBuilder(this.TestContext);
+        }
+
+        IAndTestBuilder IShouldReturnActionResultTestBuilder<TActionResult>.ActionResult<TResult>(
+            Action<IShouldReturnTestBuilder<TActionResult>> actionResultTestBuilder)
+        {
+            this.ValidateActionResult<TResult>();
+
+            actionResultTestBuilder?.Invoke(this);
 
             return new AndTestBuilder(this.TestContext);
         }
@@ -60,5 +69,10 @@
                 this.TestContext,
                 canBeAssignable: true,
                 typesOfExpectedReturnValue: new[] { ActionResultType, GenericActionResultType });
+
+        private void ValidateActionResult<TResult>()
+            => InvocationResultValidator.ValidateInvocationResultType<ActionResult<TResult>>(
+                this.TestContext,
+                typeOfActualReturnValue: this.TestContext.Method.ReturnType);
     }
 }

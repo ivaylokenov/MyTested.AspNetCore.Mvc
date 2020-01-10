@@ -90,6 +90,22 @@
         }
 
         [Fact]
+        public void ShouldReturnActionResultWithDetailsAndInnerBuilderShouldThrowExceptionWhenWhenResultIsNotActionResult()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AnonymousResult())
+                        .ShouldReturn()
+                        .ActionResult(result => result
+                            .Ok());
+                },
+                "When calling AnonymousResult action in MvcController expected result to be IActionResult or ActionResult<TValue>, but instead received AnonymousType<Int32, String, AnonymousType<Boolean>>.");
+        }
+
+        [Fact]
         public void ShouldReturnActionResultWithDetailsShouldThrowExceptionWhenWhenResultIsNotActionResult()
         {
             Test.AssertException<InvocationResultAssertionException>(
@@ -166,6 +182,77 @@
                         .Calling(c => c.ActionResultOfT(0))
                         .ShouldReturn()
                         .ActionResult<RequestModel>();
+                },
+                "When calling ActionResultOfT action in MvcController expected result to be ActionResult<RequestModel>, but instead received ActionResult<ResponseModel>.");
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTWithDetailsShouldNotThrowExceptionWhenResultIsActionResultOfTWithActionResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(0))
+                .ShouldReturn()
+                .ActionResult<ResponseModel>(result => result
+                    .BadRequest());
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTWithDetailsShouldNotThrowExceptionWhenResultIsActionResultOfTWithModel()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(int.MaxValue))
+                .ShouldReturn()
+                .ActionResult<ResponseModel>(result => result
+                    .Ok(okResult => okResult
+                        .Passing(ok => ok.Value?.GetType() == typeof(ResponseModel))));
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTWithDetailsShouldThrowExceptionWhenResultIsIActionResultInterface()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ActionResultInterface())
+                        .ShouldReturn()
+                        .ActionResult<ResponseModel>(result => result
+                            .Ok());
+                },
+                "When calling ActionResultInterface action in MvcController expected result to be ActionResult<ResponseModel>, but instead received IActionResult.");
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTWithDetailsShouldThrowExceptionWhenResultIsActionResultBaseClass()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ActionResultBaseClass())
+                        .ShouldReturn()
+                        .ActionResult<ResponseModel>(result => result
+                            .Ok());
+                },
+                "When calling ActionResultBaseClass action in MvcController expected result to be ActionResult<ResponseModel>, but instead received ActionResult.");
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTWithDetailsShouldThrowExceptionWhenResultIsActionResultOfWrongModel()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ActionResultOfT(0))
+                        .ShouldReturn()
+                        .ActionResult<RequestModel>(result => result
+                            .Ok());
                 },
                 "When calling ActionResultOfT action in MvcController expected result to be ActionResult<RequestModel>, but instead received ActionResult<ResponseModel>.");
         }
