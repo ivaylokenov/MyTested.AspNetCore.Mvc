@@ -8,6 +8,7 @@
     using Exceptions;
     using Internal;
     using Internal.Contracts.ActionResults;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Base class for all test builders with view features.
@@ -48,13 +49,7 @@
         public abstract TViewFeatureResultTestBuilder ResultTestBuilder { get; }
 
         public override object GetActualModel()
-            => this.ActionResult switch
-            {
-                ViewResult viewResult => viewResult.Model,
-                PartialViewResult partialViewResult => partialViewResult.ViewData?.Model,
-                ViewComponentResult viewComponentResult => viewComponentResult.ViewData?.Model,
-                _ => this.ActionResult
-            };
+            => this.ActionResult.AsDynamic().Model;
 
         public override void ValidateNoModel()
         {

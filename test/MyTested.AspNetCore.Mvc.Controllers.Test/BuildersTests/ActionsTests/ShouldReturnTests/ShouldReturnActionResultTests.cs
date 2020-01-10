@@ -285,7 +285,19 @@
         }
 
         [Fact]
-        public void ShouldReturnActionResultOfTShouldWorkCorrectlyWithShouldPassFotTheMethodAndModel()
+        public void ShouldReturnActionResultOfTShouldWorkCorrectlyWithShouldPassForTheMethodAndObjectResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(1))
+                .ShouldReturn()
+                .ActionResult<ResponseModel>()
+                .AndAlso()
+                .ShouldPassForThe<ObjectResult>(model => model.Value.GetType() == typeof(ResponseModel));
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTShouldWorkCorrectlyWithShouldPassForTheMethodAndModel()
         {
             MyController<MvcController>
                 .Instance()

@@ -35,11 +35,11 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.HttpNotFoundAction())
+                        .Calling(c => c.NotFoundAction())
                         .ShouldReturn()
                         .BadRequest();
                 },
-                "When calling HttpNotFoundAction action in MvcController expected result to be BadRequestResult, but instead received NotFoundResult.");
+                "When calling NotFoundAction action in MvcController expected result to be BadRequestResult, but instead received NotFoundResult.");
         }
     }
 }

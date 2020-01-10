@@ -254,7 +254,7 @@
             return this.Ok();
         }
 
-        public IActionResult FullHttpBadRequestAction()
+        public IActionResult FullBadRequestAction()
         {
             return new BadRequestObjectResult(this.ResponseModel)
             {
@@ -265,7 +265,7 @@
             };
         }
 
-        public IActionResult HttpBadRequestActionWithFormatter(IOutputFormatter formatter)
+        public IActionResult BadRequestActionWithFormatter(IOutputFormatter formatter)
         {
             return new BadRequestObjectResult(this.ResponseModel)
             {
@@ -907,17 +907,17 @@
             return this.Ok(this.ResponseModel);
         }
 
-        public IActionResult HttpNotFoundAction()
+        public IActionResult NotFoundAction()
         {
             return this.NotFound();
         }
 
-        public IActionResult HttpNotFoundWithObjectAction()
+        public IActionResult NotFoundWithObjectAction()
         {
             return this.NotFound("test");
         }
 
-        public IActionResult FullHttpNotFoundAction()
+        public IActionResult FullNotFoundAction()
         {
             return new NotFoundObjectResult(this.ResponseModel)
             {
@@ -928,7 +928,7 @@
             };
         }
 
-        public IActionResult HttpNotFoundActionWithFormatter(IOutputFormatter formatter)
+        public IActionResult NotFoundActionWithFormatter(IOutputFormatter formatter)
         {
             return new NotFoundObjectResult(this.ResponseModel)
             {
