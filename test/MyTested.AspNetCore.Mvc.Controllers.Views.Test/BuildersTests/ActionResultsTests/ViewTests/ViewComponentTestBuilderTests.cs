@@ -5,8 +5,8 @@
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
-    using MyTested.AspNetCore.Mvc.Test.Setups.Models;
     using Setups;
+    using Setups.Models;
     using Setups.Controllers;
     using Xunit;
 

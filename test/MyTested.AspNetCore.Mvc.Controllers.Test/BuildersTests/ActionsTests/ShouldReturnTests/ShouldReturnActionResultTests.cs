@@ -293,7 +293,8 @@
                 .ShouldReturn()
                 .ActionResult<ResponseModel>()
                 .AndAlso()
-                .ShouldPassForThe<ObjectResult>(model => model.Value.GetType() == typeof(ResponseModel));
+                .ShouldPassForThe<ObjectResult>(model => model
+                    .Value.GetType() == typeof(ResponseModel));
         }
 
         [Fact]
