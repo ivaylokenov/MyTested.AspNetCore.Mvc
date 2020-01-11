@@ -7,12 +7,12 @@
 
     public class CustomStartupFilter : IStartupFilter
     {
-        public bool ConfigurationRegistered { get; private set; }
+        public bool Registered { get; private set; }
 
         public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
             => app =>
             {
-                this.ConfigurationRegistered = true;
+                this.Registered = true;
 
                 app.Use(async (context, nextMiddleware) =>
                 {

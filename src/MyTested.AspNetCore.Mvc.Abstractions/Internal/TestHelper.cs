@@ -15,7 +15,9 @@
     public static class TestHelper
     {
         public static Action GlobalTestCleanup { get; set; }
-        
+
+        public static IFeatureCollection DefaultHttpFeatures { get; set; } = new FeatureCollection();
+
         public static ISet<IHttpFeatureRegistrationPlugin> HttpFeatureRegistrationPlugins { get; }
             = new HashSet<IHttpFeatureRegistrationPlugin>();
 
@@ -26,7 +28,8 @@
         {
             var httpContextFactory = TestServiceProvider.GetService<IHttpContextFactory>();
             var httpContext = httpContextFactory != null
-                ? HttpContextMock.From(httpContextFactory.Create(new FeatureCollection()))
+                ? HttpContextMock.From(httpContextFactory
+                    .Create(new FeatureCollection(DefaultHttpFeatures)))
                 : new HttpContextMock();
 
             SetHttpContextToAccessor(httpContext);

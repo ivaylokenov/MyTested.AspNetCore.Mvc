@@ -854,7 +854,7 @@
             var sameStartupFilter = TestServiceProvider.GetService<IStartupFilter>() as CustomStartupFilter;
 
             Assert.NotNull(sameStartupFilter);
-            Assert.True(sameStartupFilter.ConfigurationRegistered);
+            Assert.True(sameStartupFilter.Registered);
 
             MyApplication.StartsFrom<DefaultStartup>();
         }

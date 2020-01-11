@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Http;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
@@ -46,13 +47,6 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ApplicationBuilderMock"/> class.
-        /// </summary>
-        /// <param name="builder">Application builder to copy properties from.</param>
-        public ApplicationBuilderMock(IApplicationBuilder builder)
-            => this.Properties = builder.Properties;
-
-        /// <summary>
         /// Gets or sets the current application services.
         /// </summary>
         /// <value>Result of <see cref="IServiceProvider"/> type.</value>
@@ -87,9 +81,6 @@
         /// <returns>The same <see cref="IApplicationBuilder"/>.</returns>
         public IApplicationBuilder Use(Func<RequestDelegate, RequestDelegate> middleware)
         {
-            this.ExtractEndpointRoutes(middleware);
-            this.ExtractLegacyRoutes(middleware);
-
             this.components.Add(middleware);
 
             return this;
@@ -99,10 +90,10 @@
         /// Returns new instance of <see cref="IApplicationBuilder"/>. Not used in the actual testing.
         /// </summary>
         /// <returns>Result of <see cref="IApplicationBuilder"/> type.</returns>
-        public IApplicationBuilder New() => new ApplicationBuilderMock(this);
+        public IApplicationBuilder New() => new ApplicationBuilderMock(this.ApplicationServices);
 
         /// <summary>
-        /// Builds the application delegate, which will process the incoming HTTP requests. Not used in the actual testing.
+        /// Builds the application delegate, which will process the incoming HTTP requests. Prepares the HTTP context used in the tests.
         /// </summary>
         /// <returns>Result of <see cref="RequestDelegate"/> type.</returns>
         public RequestDelegate Build()
@@ -119,6 +110,17 @@
             }
 
             return app;
+        }
+
+        public void ExtractRouteConfiguration()
+        {
+            this.Routes = new RouteCollection();
+
+            this.components.ForEach(component =>
+            {
+                this.ExtractEndpointRoutes(component);
+                this.ExtractLegacyRoutes(component);
+            });
         }
 
         private T GetProperty<T>(string key)
@@ -178,11 +180,8 @@
                         }
                     });
 
-                foreach (var routeEndpointData in routeEndpoints)
+                foreach (var (routeName, routeEndpoint) in routeEndpoints)
                 {
-                    var routeName = routeEndpointData.Key;
-                    var routeEndpoint = routeEndpointData.Value;
-
                     var routePattern = routeEndpoint.RoutePattern;
                     var rawRouteText = routePattern.RawText;
 
