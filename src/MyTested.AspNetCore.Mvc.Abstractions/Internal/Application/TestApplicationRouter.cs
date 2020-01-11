@@ -1,9 +1,14 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Application
 {
     using System;
-    using Internal.Routing;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Routing;
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Routing;
+    using Microsoft.Extensions.DependencyInjection;
+    using Utilities.Extensions;
 
     public static partial class TestApplication
     {
@@ -24,7 +29,18 @@
         {
             var applicationBuilder = new ApplicationBuilderMock(routingServiceProvider);
 
-            startupMethods?.ConfigureDelegate?.Invoke(applicationBuilder);
+            var configureDelegate = startupMethods?.ConfigureDelegate;
+
+            if (configureDelegate != null)
+            {
+                routingServiceProvider
+                    .GetService<IEnumerable<IStartupFilter>>()
+                    .Reverse()
+                    .ForEach(startupFilter => 
+                        configureDelegate = startupFilter.Configure(configureDelegate));
+            }
+
+            configureDelegate?.Invoke(applicationBuilder);
 
             AdditionalApplicationConfiguration?.Invoke(applicationBuilder);
 
