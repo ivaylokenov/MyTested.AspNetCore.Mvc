@@ -1,7 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
     using System;
+    using ActionResults.ActionResult;
     using And;
+    using Contracts.ActionResults.ActionResult;
     using Contracts.Actions;
     using Contracts.And;
     using Internal.TestContexts;
@@ -46,6 +48,7 @@
             return new AndTestBuilder(this.TestContext);
         }
 
+        /// <inheritdoc />
         public new IAndTestBuilder ActionResult<TResult>()
         {
             this.ValidateActionResult<TResult>();
@@ -53,12 +56,23 @@
             return new AndTestBuilder(this.TestContext);
         }
 
+        /// <inheritdoc />
         public new IAndTestBuilder ActionResult<TResult>(
             Action<IShouldReturnTestBuilder<TActionResult>> actionResultTestBuilder)
         {
             this.ValidateActionResult<TResult>();
 
             actionResultTestBuilder?.Invoke(this);
+
+            return new AndTestBuilder(this.TestContext);
+        }
+
+        /// <inheritdoc />
+        public new IAndTestBuilder ActionResult<TResult>(Action<IActionResultOfTTestBuilder<TResult>> actionResultTestBuilder)
+        {
+            this.ValidateActionResult<TResult>();
+
+            actionResultTestBuilder?.Invoke(new ActionResultOfTTestBuilder<TResult>(this.TestContext));
 
             return new AndTestBuilder(this.TestContext);
         }
