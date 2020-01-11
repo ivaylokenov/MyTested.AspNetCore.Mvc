@@ -6,6 +6,7 @@
     /// </summary>
     /// <typeparam name="TResult">Type of the expected result.</typeparam>
     public interface IAndActionResultOfTTestBuilder<TResult>
+        : IActionResultOfTTestBuilder<TResult>
     {
         /// <summary>
         /// AndAlso method for better readability when
