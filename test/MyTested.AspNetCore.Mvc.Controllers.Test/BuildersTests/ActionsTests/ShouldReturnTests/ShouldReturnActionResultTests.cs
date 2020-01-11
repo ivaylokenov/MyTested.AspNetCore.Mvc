@@ -6,6 +6,7 @@
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;
+    using Xunit.Sdk;
 
     public class ShouldReturnActionResultTests
     {
@@ -256,6 +257,65 @@
                             .Ok());
                 },
                 "When calling ActionResultOfT action in MvcController expected result to be ActionResult<RequestModel>, but instead received ActionResult<ResponseModel>.");
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTWithResultDetailsShouldNotThrowExceptionWhenResultIsActionResultOfTWithCorrectResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(1))
+                .ShouldReturn()
+                .ActionResult<ResponseModel>(result => result
+                    .Passing(model => model.IntegerValue == 1));
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTWithResultDetailsShouldThrowExceptionWhenResultIsActionResultOfTWithIncorrectResult()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ActionResultOfT(1))
+                        .ShouldReturn()
+                        .ActionResult<ResponseModel>(result => result
+                            .Passing(model => model.IntegerValue == 2));
+                },
+                "When calling ActionResultOfT action in MvcController expected the ResponseModel to pass the given predicate, but it failed.");
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTWithResultDetailsShouldNotThrowExceptionWhenResultIsActionResultOfTWithCorrectAssertion()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(1))
+                .ShouldReturn()
+                .ActionResult<ResponseModel>(result => result
+                    .Passing(model =>
+                    {
+                        Assert.True(model.IntegerValue == 1);
+                    }));
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTWithResultDetailsShouldThrowExceptionWhenResultIsActionResultOfTWithIncorrectAssertion()
+        {
+            Assert.Throws<TrueException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ActionResultOfT(1))
+                        .ShouldReturn()
+                        .ActionResult<ResponseModel>(result => result
+                            .Passing(model =>
+                            {
+                                Assert.True(model.IntegerValue == 2);
+                            }));
+                });
         }
 
         [Fact]

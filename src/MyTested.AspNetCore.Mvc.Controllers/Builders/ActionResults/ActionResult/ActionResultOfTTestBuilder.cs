@@ -3,6 +3,7 @@
     using Builders.Base;
     using Contracts.ActionResults.ActionResult;
     using Internal.TestContexts;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing <see cref="Microsoft.AspNetCore.Mvc.ActionResult{TResult}"/>.
@@ -21,6 +22,7 @@
         public ActionResultOfTTestBuilder(ControllerTestContext testContext) 
             : base(testContext)
         {
+            testContext.ConvertMethodResult();
         }
 
         /// <inheritdoc />

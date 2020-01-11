@@ -7,9 +7,7 @@
     using Builders.Base;
     using Builders.Contracts.Results;
     using Builders.Results;
-    using Internal.TestContexts;
-    using Microsoft.AspNetCore.Mvc;
-    using Utilities;
+    using Utilities.Extensions;
     using Utilities.Validators;
 
     /// <summary>
@@ -17,9 +15,6 @@
     /// </summary>
     public static class BaseShouldReturnTestBuilderExtensions
     {
-        private static readonly Type ActionResultGenericType = typeof(ActionResult<>);
-        private static readonly Type ObjectResultType = typeof(ObjectResult);
-
         /// <summary>
         /// Tests whether the result is of the provided type.
         /// </summary>
@@ -48,7 +43,7 @@
             var actualBuilder = (BaseTestBuilderWithActionContext)builder;
 
             InvocationResultValidator.ValidateInvocationResultType(
-                ConvertMethodResult(actualBuilder.TestContext),
+                actualBuilder.TestContext.ConvertMethodResult(),
                 resultType,
                 canBeAssignable: true,
                 allowDifferentGenericTypeDefinitions: true);
@@ -82,7 +77,7 @@
             var actualBuilder = (BaseTestBuilderWithActionContext)builder;
 
             InvocationResultValidator.ValidateInvocationResultType<TResult>(
-                ConvertMethodResult(actualBuilder.TestContext),
+                actualBuilder.TestContext.ConvertMethodResult(),
                 canBeAssignable: true);
 
             resultTestBuilder?.Invoke(new ResultDetailsTestBuilder<TResult>(actualBuilder.TestContext));
@@ -102,7 +97,7 @@
         {
             var actualBuilder = (BaseTestBuilderWithActionContext)builder;
 
-            var convertedTestContext = ConvertMethodResult(actualBuilder.TestContext);
+            var convertedTestContext = actualBuilder.TestContext.ConvertMethodResult();
 
             resultTestBuilder?.Invoke(new ResultDetailsTestBuilder(convertedTestContext));
 
@@ -122,24 +117,5 @@
             => builder
                 .Result(value => value
                     .EqualTo(result));
-
-        private static ActionTestContext ConvertMethodResult(ActionTestContext testContext)
-        {
-            var methodReturnType = testContext.Method.ReturnType;
-
-            if (Reflection.AreAssignableByGeneric(ActionResultGenericType, methodReturnType))
-            {
-                var methodResultType = testContext.MethodResult.GetType();
-
-                if (Reflection.AreSameTypes(ObjectResultType, methodResultType))
-                {
-                    var objectResult = testContext.MethodResult as ObjectResult;
-
-                    testContext.MethodResult = objectResult?.Value;
-                }
-            }
-
-            return testContext;
-        }
     }
 }
