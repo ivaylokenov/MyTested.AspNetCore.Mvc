@@ -28,6 +28,7 @@
     using Setups.Common;
     using Setups.Controllers;
     using Setups.Services;
+    using Setups.StartupFilters;
     using Setups.Startups;
     using Xunit;
 
@@ -714,10 +715,11 @@
         [Fact]
         public void RegisteringServerServicesTwiceShouldResolveThemCorrectly()
         {
-            MyApplication.IsRunningOn(server => server
-                .WithServices(services => services
-                    .AddTransient<IInjectedService, InjectedService>())
-                .WithStartup<DefaultStartup>());
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithServices(services => services
+                        .AddTransient<IInjectedService, InjectedService>())
+                    .WithStartup<DefaultStartup>());
 
             var injectedService = TestServiceProvider.GetService<IInjectedService>();
 
@@ -837,6 +839,22 @@
             Assert.Equal("value", normalRouteDataTokens[firstDataTokenKey]);
             Assert.Contains(secondDataTokenKey, normalRouteDataTokens.Keys);
             Assert.Equal("token", normalRouteDataTokens[secondDataTokenKey]);
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void StartupFiltersShouldBeRegisteredAndConsidered()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services => services
+                    .AddSingleton<IStartupFilter>(new CustomStartupFilter()));
+
+            var sameStartupFilter = TestServiceProvider.GetService<IStartupFilter>() as CustomStartupFilter;
+
+            Assert.NotNull(sameStartupFilter);
+            Assert.True(sameStartupFilter.ConfigurationRegistered);
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
