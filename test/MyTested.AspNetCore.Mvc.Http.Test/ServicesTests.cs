@@ -1,4 +1,8 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test
+﻿using Microsoft.AspNetCore.Hosting;
+using MyTested.AspNetCore.Mvc.Test.Setups.Http;
+using MyTested.AspNetCore.Mvc.Test.Setups.StartupFilters;
+
+namespace MyTested.AspNetCore.Mvc.Test
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -41,7 +45,7 @@
 
 
         [Fact]
-        public void IHttpContextAccessorShouldWorkCorrectlySynchronously()
+        public void HttpContextAccessorShouldWorkCorrectlySynchronously()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -80,7 +84,7 @@
         }
 
         [Fact]
-        public void IHttpContextAccessorShouldWorkCorrectlyAsynchronously()
+        public void HttpContextAccessorShouldWorkCorrectlyAsynchronously()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()

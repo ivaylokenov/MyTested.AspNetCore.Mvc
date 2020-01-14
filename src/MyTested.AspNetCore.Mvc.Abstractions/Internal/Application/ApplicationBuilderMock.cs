@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Http;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
@@ -81,6 +80,9 @@
         /// <returns>The same <see cref="IApplicationBuilder"/>.</returns>
         public IApplicationBuilder Use(Func<RequestDelegate, RequestDelegate> middleware)
         {
+            this.ExtractEndpointRoutes(middleware);
+            this.ExtractLegacyRoutes(middleware);
+
             this.components.Add(middleware);
 
             return this;
@@ -110,17 +112,6 @@
             }
 
             return app;
-        }
-
-        public void ExtractRouteConfiguration()
-        {
-            this.Routes = new RouteCollection();
-
-            this.components.ForEach(component =>
-            {
-                this.ExtractEndpointRoutes(component);
-                this.ExtractLegacyRoutes(component);
-            });
         }
 
         private T GetProperty<T>(string key)
