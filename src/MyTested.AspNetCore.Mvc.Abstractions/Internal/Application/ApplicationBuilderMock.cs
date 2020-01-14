@@ -95,7 +95,7 @@
         public IApplicationBuilder New() => new ApplicationBuilderMock(this.ApplicationServices);
 
         /// <summary>
-        /// Builds the application delegate, which will process the incoming HTTP requests. Prepares the HTTP context used in the tests.
+        /// Builds the application delegate, which will process the incoming HTTP requests. Not used in the actual testing.
         /// </summary>
         /// <returns>Result of <see cref="RequestDelegate"/> type.</returns>
         public RequestDelegate Build()

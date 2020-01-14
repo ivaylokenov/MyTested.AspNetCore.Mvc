@@ -1,9 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.StartupFilters
 {
     using System;
-    using Http;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
 
     public class CustomStartupFilter : IStartupFilter
     {
@@ -16,7 +16,7 @@
 
                 app.Use(async (context, nextMiddleware) =>
                 {
-                    context.Features.Set(new CustomHttpFeature());
+                    await context.Response.WriteAsync("Test Response");
 
                     await nextMiddleware();
                 });
