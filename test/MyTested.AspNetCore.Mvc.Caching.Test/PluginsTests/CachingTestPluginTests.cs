@@ -1,13 +1,12 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
 {
-    using System;
     using Microsoft.Extensions.Caching.Distributed;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
     using Plugins;
     using Xunit;
 
-    public class CachingTestPluginTest
+    public class CachingTestPluginTests
     {
         [Fact]
         public void ShouldInvokeMethodOfTypeVoidWithValidServiceCollection()

@@ -1,37 +1,38 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
-{
+﻿using Microsoft.AspNetCore.Mvc.Controllers;
+
+namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
+{  
     using System;
-    using Internal.Contracts;
-    using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Options;
     using Plugins;
     using Xunit;
 
-    public class RoutingTestPluginTest
+    public class HttpTestPluginTests
     {
         [Fact]
         public void ShouldHavePriorityWithDefaultValue()
         {
-            var testPlugin = new RoutingTestPlugin();
+            var testPlugin = new HttpTestPlugin();
 
             Assert.IsAssignableFrom<IDefaultRegistrationPlugin>(testPlugin);
             Assert.NotNull(testPlugin);
-            Assert.Equal(-8000, testPlugin.Priority);
+            Assert.Equal(-9000, testPlugin.Priority);
         }
 
         [Fact]
         public void ShouldThrowArgumentNullExceptionWithInvalidServiceCollection()
         {
-            var testPlugin = new RoutingTestPlugin();
+            var testPlugin = new HttpTestPlugin();
 
             Assert.Throws<ArgumentNullException>(() => testPlugin.DefaultServiceRegistrationDelegate(null));
-            Assert.Throws<NullReferenceException>(() => testPlugin.RoutingServiceRegistrationDelegate(null));
+            Assert.Throws<NullReferenceException>(() => testPlugin.ServiceRegistrationDelegate(null));
         }
 
         [Fact]
         public void ShouldInvokeMethodOfTypeVoidWithValidServiceCollectionForDefaultRegistration()
         {
-            var testPlugin = new RoutingTestPlugin();
+            var testPlugin = new HttpTestPlugin();
             var serviceCollection = new ServiceCollection();
 
             testPlugin.DefaultServiceRegistrationDelegate(serviceCollection);
@@ -42,12 +43,12 @@
         [Fact]
         public void ShouldInvokeMethodOfTypeVoidWithValidServiceCollection()
         {
-            var testPlugin = new RoutingTestPlugin();
+            var testPlugin = new HttpTestPlugin();
             var serviceCollection = new ServiceCollection();
 
-            testPlugin.RoutingServiceRegistrationDelegate(serviceCollection);
+            testPlugin.ServiceRegistrationDelegate(serviceCollection);
 
-            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(IRoutingServices));
+            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(IOptions<>));
         }
     }
 }

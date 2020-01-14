@@ -7,6 +7,8 @@
     public class VersioningTestPlugin : IHttpFeatureRegistrationPlugin
     {
         public Action<HttpContext> HttpFeatureRegistrationDelegate
-            => httpContext => httpContext.Features.Set(new ApiVersioningFeature(httpContext));
+            => httpContext => httpContext
+                .Features
+                .Set<IApiVersioningFeature>(new ApiVersioningFeature(httpContext));
     }
 }

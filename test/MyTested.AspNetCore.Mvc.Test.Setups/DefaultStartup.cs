@@ -8,9 +8,10 @@
         public virtual void ConfigureServices(IServiceCollection services) 
             => services.AddMvc();
 
-        public virtual void Configure(IApplicationBuilder app) => app
-            .UseRouting()
-            .UseEndpoints(endpoints => endpoints
-                .MapDefaultControllerRoute());
+        public virtual void Configure(IApplicationBuilder app) 
+            => app
+                .UseRouting()
+                .UseEndpoints(endpoints => endpoints
+                    .MapDefaultControllerRoute());
     }
 }
