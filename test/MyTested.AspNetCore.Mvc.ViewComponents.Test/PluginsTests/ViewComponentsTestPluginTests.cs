@@ -1,18 +1,19 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
-{  
+﻿using Microsoft.AspNetCore.Mvc.Controllers;
+
+namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
+{
     using System;
-    using Microsoft.AspNetCore.Mvc.Controllers;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures;
+    using Internal.Contracts;
     using Microsoft.Extensions.DependencyInjection;
     using Plugins;
     using Xunit;
 
-    public class TempDataTestPluginTest
+    public class ViewComponentsTestPluginTests
     {
         [Fact]
         public void ShouldHavePriorityWithDefaultValue()
         {
-            var testPlugin = new TempDataTestPlugin();
+            var testPlugin = new ViewComponentsTestPlugin();
 
             Assert.IsAssignableFrom<IDefaultRegistrationPlugin>(testPlugin);
             Assert.NotNull(testPlugin);
@@ -22,7 +23,7 @@
         [Fact]
         public void ShouldThrowArgumentNullExceptionWithInvalidServiceCollection()
         {
-            var testPlugin = new TempDataTestPlugin();
+            var testPlugin = new ViewComponentsTestPlugin();
 
             Assert.Throws<ArgumentNullException>(() => testPlugin.DefaultServiceRegistrationDelegate(null));
             Assert.Throws<NullReferenceException>(() => testPlugin.ServiceRegistrationDelegate(null));
@@ -31,7 +32,7 @@
         [Fact]
         public void ShouldInvokeMethodOfTypeVoidWithValidServiceCollectionForDefaultRegistration()
         {
-            var testPlugin = new TempDataTestPlugin();
+            var testPlugin = new ViewComponentsTestPlugin();
             var serviceCollection = new ServiceCollection();
 
             testPlugin.DefaultServiceRegistrationDelegate(serviceCollection);
@@ -42,12 +43,12 @@
         [Fact]
         public void ShouldInvokeMethodOfTypeVoidWithValidServiceCollection()
         {
-            var testPlugin = new TempDataTestPlugin();
+            var testPlugin = new ViewComponentsTestPlugin();
             var serviceCollection = new ServiceCollection();
 
             testPlugin.ServiceRegistrationDelegate(serviceCollection);
 
-            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(ITempDataProvider));
+            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(IViewComponentDescriptorCache));
         }
     }
 }

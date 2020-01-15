@@ -3,6 +3,7 @@
     using System;
     using Configuration;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.FileProviders;
 
     public static partial class TestWebServer
     {
@@ -18,7 +19,8 @@
             {
                 ApplicationName = ApplicationName,
                 EnvironmentName = ServerTestConfiguration.General.EnvironmentName,
-                ContentRootPath = AppContext.BaseDirectory
+                ContentRootPath = AppContext.BaseDirectory,
+                WebRootFileProvider = new NullFileProvider()
             };
 
         internal static void ResetConfigurationAndAssemblies()

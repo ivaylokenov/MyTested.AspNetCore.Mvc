@@ -15,7 +15,7 @@
     public static class TestHelper
     {
         public static Action GlobalTestCleanup { get; set; }
-        
+
         public static ISet<IHttpFeatureRegistrationPlugin> HttpFeatureRegistrationPlugins { get; }
             = new HashSet<IHttpFeatureRegistrationPlugin>();
 

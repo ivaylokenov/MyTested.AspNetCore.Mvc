@@ -1,38 +1,37 @@
-﻿using Microsoft.AspNetCore.Mvc.Controllers;
-
-namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
+﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
 {
     using System;
     using Internal.Contracts;
+    using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.DependencyInjection;
     using Plugins;
     using Xunit;
 
-    public class ViewComponentsTestPluginTest
+    public class RoutingTestPluginTests
     {
         [Fact]
         public void ShouldHavePriorityWithDefaultValue()
         {
-            var testPlugin = new ViewComponentsTestPlugin();
+            var testPlugin = new RoutingTestPlugin();
 
             Assert.IsAssignableFrom<IDefaultRegistrationPlugin>(testPlugin);
             Assert.NotNull(testPlugin);
-            Assert.Equal(-1000, testPlugin.Priority);
+            Assert.Equal(-8000, testPlugin.Priority);
         }
 
         [Fact]
         public void ShouldThrowArgumentNullExceptionWithInvalidServiceCollection()
         {
-            var testPlugin = new ViewComponentsTestPlugin();
+            var testPlugin = new RoutingTestPlugin();
 
             Assert.Throws<ArgumentNullException>(() => testPlugin.DefaultServiceRegistrationDelegate(null));
-            Assert.Throws<NullReferenceException>(() => testPlugin.ServiceRegistrationDelegate(null));
+            Assert.Throws<NullReferenceException>(() => testPlugin.RoutingServiceRegistrationDelegate(null));
         }
 
         [Fact]
         public void ShouldInvokeMethodOfTypeVoidWithValidServiceCollectionForDefaultRegistration()
         {
-            var testPlugin = new ViewComponentsTestPlugin();
+            var testPlugin = new RoutingTestPlugin();
             var serviceCollection = new ServiceCollection();
 
             testPlugin.DefaultServiceRegistrationDelegate(serviceCollection);
@@ -43,12 +42,12 @@ namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
         [Fact]
         public void ShouldInvokeMethodOfTypeVoidWithValidServiceCollection()
         {
-            var testPlugin = new ViewComponentsTestPlugin();
+            var testPlugin = new RoutingTestPlugin();
             var serviceCollection = new ServiceCollection();
 
-            testPlugin.ServiceRegistrationDelegate(serviceCollection);
+            testPlugin.RoutingServiceRegistrationDelegate(serviceCollection);
 
-            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(IViewComponentDescriptorCache));
+            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(IRoutingServices));
         }
     }
 }

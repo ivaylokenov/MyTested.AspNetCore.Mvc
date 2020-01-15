@@ -46,13 +46,6 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ApplicationBuilderMock"/> class.
-        /// </summary>
-        /// <param name="builder">Application builder to copy properties from.</param>
-        public ApplicationBuilderMock(IApplicationBuilder builder)
-            => this.Properties = builder.Properties;
-
-        /// <summary>
         /// Gets or sets the current application services.
         /// </summary>
         /// <value>Result of <see cref="IServiceProvider"/> type.</value>
@@ -99,7 +92,7 @@
         /// Returns new instance of <see cref="IApplicationBuilder"/>. Not used in the actual testing.
         /// </summary>
         /// <returns>Result of <see cref="IApplicationBuilder"/> type.</returns>
-        public IApplicationBuilder New() => new ApplicationBuilderMock(this);
+        public IApplicationBuilder New() => new ApplicationBuilderMock(this.ApplicationServices);
 
         /// <summary>
         /// Builds the application delegate, which will process the incoming HTTP requests. Not used in the actual testing.
@@ -178,11 +171,8 @@
                         }
                     });
 
-                foreach (var routeEndpointData in routeEndpoints)
+                foreach (var (routeName, routeEndpoint) in routeEndpoints)
                 {
-                    var routeName = routeEndpointData.Key;
-                    var routeEndpoint = routeEndpointData.Value;
-
                     var routePattern = routeEndpoint.RoutePattern;
                     var rawRouteText = routePattern.RawText;
 
