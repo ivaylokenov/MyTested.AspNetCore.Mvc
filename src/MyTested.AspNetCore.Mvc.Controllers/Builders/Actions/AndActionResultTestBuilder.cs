@@ -17,10 +17,8 @@
         /// </summary>
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
         public AndActionResultTestBuilder(ControllerTestContext testContext)
-            : base(testContext)
-        {
-            TestHelper.ExecuteTestCleanup();
-        }
+            : base(testContext) 
+            => TestHelper.ExecuteTestCleanup();
 
         /// <inheritdoc />
         public IActionResultTestBuilder<TActionResult> AndAlso()

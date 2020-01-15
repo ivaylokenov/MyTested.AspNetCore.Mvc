@@ -505,7 +505,7 @@
         }
 
         [Fact]
-        public void AndProvideTheActionResultShouldWorkCorrectly()
+        public void ShouldPassForTheShouldWorkCorrectlyWithViewAndActionResult()
         {
             MyController<MvcController>
                 .Instance()
@@ -521,7 +521,19 @@
         }
 
         [Fact]
-        public void AndProvideTheActionResultShouldWorkCorrectlyWithPartial()
+        public void ShouldPassForTheShouldWorkCorrectlyWithViewAndModel()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.DefaultViewWithModel())
+                .ShouldReturn()
+                .View()
+                .AndAlso()
+                .ShouldPassForThe<ICollection<ResponseModel>>(model => model.Count == 2);
+        }
+
+        [Fact]
+        public void ShouldPassForTheShouldWorkCorrectlyWithPartialViewAndActionResult()
         {
             MyController<MvcController>
                 .Instance()
@@ -537,14 +549,26 @@
         }
 
         [Fact]
+        public void ShouldPassForTheShouldWorkCorrectlyWithPartialViewAndModel()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.DefaultPartialViewWithModel())
+                .ShouldReturn()
+                .PartialView()
+                .AndAlso()
+                .ShouldPassForThe<ICollection<ResponseModel>>(model => model.Count == 2);
+        }
+
+        [Fact]
         public void WithModelOfTypeShouldNotThrowExceptionWithCorrectTypeForPartialView()
         {
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.CustomPartialViewResultWithViewData())
                 .ShouldReturn()
-                .PartialView(partialView =>
-                    partialView.WithModelOfType<List<ResponseModel>>());
+                .PartialView(partialView => partialView
+                    .WithModelOfType<List<ResponseModel>>());
         }
 
         [Fact]
@@ -585,7 +609,7 @@
                 .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);
-                    Assert.NotNull((actionResult as PartialViewResult).Model);
+                    Assert.NotNull((actionResult as PartialViewResult)?.Model);
                 });
         }
 

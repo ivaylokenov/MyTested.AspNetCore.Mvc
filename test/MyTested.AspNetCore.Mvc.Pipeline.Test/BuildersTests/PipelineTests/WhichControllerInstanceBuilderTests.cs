@@ -1,6 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.PipelineTests
 {
-    using System.Linq;
     using Exceptions;
     using Microsoft.Extensions.DependencyInjection;
     using Setups;
@@ -462,7 +461,7 @@
                 .Configuration()
                 .ShouldMap("/Pipeline/Action?controller=true")
                 .To<PipelineController>(c => c.Action())
-                .Which(controller => controller
+                .Which(pipelineController => pipelineController
                     .WithHttpContext(context => context.Features.Set(new AnotherInjectedService()))
                     .WithHttpRequest(request => request.WithHeader(contextTestKey, contextTestValue))
                     .WithUser(user => user.WithUsername(contextTestKey))

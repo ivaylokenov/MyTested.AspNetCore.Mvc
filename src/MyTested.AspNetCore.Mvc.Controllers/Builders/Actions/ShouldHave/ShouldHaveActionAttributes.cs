@@ -47,10 +47,8 @@
             return this.Builder;
         }
 
-        private void ThrowNewAttributeAssertionException(string expectedValue, string actualValue)
-        {
-            throw new AttributeAssertionException(
+        private void ThrowNewAttributeAssertionException(string expectedValue, string actualValue) 
+            => throw new AttributeAssertionException(
                 $"{this.TestContext.ExceptionMessagePrefix} action to {expectedValue}, but {actualValue}.");
-        }
     }
 }

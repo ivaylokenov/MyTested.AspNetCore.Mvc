@@ -20,21 +20,16 @@
         /// </summary>
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
         public ShouldHaveTestBuilder(ControllerTestContext testContext)
-            : base(testContext)
-        {
-            this.TestContext = testContext;
-        }
-        
+            : base(testContext) 
+            => this.TestContext = testContext;
+
         /// <summary>
         /// Gets the currently used <see cref="ControllerTestContext"/>.
         /// </summary>
         /// <value>Result of type <see cref="ControllerTestContext"/>.</value>
         public new ControllerTestContext TestContext
         {
-            get
-            {
-                return this.testContext;
-            }
+            get => this.testContext;
 
             private set
             {

@@ -9,6 +9,31 @@
     public class ConflictTestBuilderTests
     {
         [Fact]
+        public void ConflictShouldNotThrowExceptionWithCorrectActionResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ConflictAction())
+                .ShouldReturn()
+                .Conflict();
+        }
+
+        [Fact]
+        public void ConflictShouldThrowExceptionWithIncorrectActionResult()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.OkResultAction())
+                        .ShouldReturn()
+                        .Conflict();
+                },
+                "When calling OkResultAction action in MvcController expected result to be ConflictResult, but instead received OkResult.");
+        }
+
+        [Fact]
         public void WithStatusCodeShouldNotThrowExceptionWithCorrectStatusCode()
         {
             MyController<MvcController>

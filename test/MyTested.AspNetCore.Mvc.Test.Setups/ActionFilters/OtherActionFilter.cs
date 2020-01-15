@@ -3,11 +3,11 @@
     using Microsoft.AspNetCore.Mvc.Filters;
     using Services;
 
-    public class MyActionFilter : IActionFilter
+    public class OtherActionFilter : IActionFilter
     {
         private readonly IInjectedService service;
 
-        public MyActionFilter(IInjectedService service)
+        public OtherActionFilter(IInjectedService service)
         {
             this.service = service;
         }

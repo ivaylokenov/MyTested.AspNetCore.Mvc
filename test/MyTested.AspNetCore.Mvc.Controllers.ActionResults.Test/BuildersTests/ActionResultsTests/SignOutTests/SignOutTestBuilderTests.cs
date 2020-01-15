@@ -10,6 +10,31 @@
     public class SignOutTestBuilderTests
     {
         [Fact]
+        public void SignInShouldNotThrowExceptionWithCorrectActionResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.SignOutWithAuthenticationProperties())
+                .ShouldReturn()
+                .SignOut();
+        }
+
+        [Fact]
+        public void ConflictShouldThrowExceptionWithIncorrectActionResult()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.OkResultAction())
+                        .ShouldReturn()
+                        .SignOut();
+                },
+                "When calling OkResultAction action in MvcController expected result to be SignOutResult, but instead received OkResult.");
+        }
+
+        [Fact]
         public void ShouldReturnSignOutShouldNotThrowExceptionIfResultIsSignOutWithCorrectAuthenticationScheme()
         {
             MyController<MvcController>

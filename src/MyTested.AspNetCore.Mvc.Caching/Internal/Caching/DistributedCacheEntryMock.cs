@@ -2,21 +2,21 @@
 {
     using Microsoft.Extensions.Caching.Distributed;
 
-    internal class DistributedCacheEntry
+    public class DistributedCacheEntryMock
     {
-        internal DistributedCacheEntry()
+        public DistributedCacheEntryMock()
         {
             this.Options = new DistributedCacheEntryOptions();
         }
 
-        internal DistributedCacheEntry(byte[] value, DistributedCacheEntryOptions options)
+        public DistributedCacheEntryMock(byte[] value, DistributedCacheEntryOptions options)
         {
             this.Value = value;
             this.Options = options;
         }
 
-        internal byte[] Value { get; set; }
+        public byte[] Value { get; set; }
 
-        internal DistributedCacheEntryOptions Options { get; set; }
+        public DistributedCacheEntryOptions Options { get; set; }
     }
 }

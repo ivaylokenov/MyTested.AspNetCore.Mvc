@@ -1,6 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Pipeline
 {
-    using Filters;
+    using ActionFilters;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
     using Services;

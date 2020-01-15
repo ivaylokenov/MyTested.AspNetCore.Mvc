@@ -11,7 +11,7 @@
         [Fact]
         public void ShouldHavePriorityWithDefaultValue()
         {
-            var testPlugin = new ViewActionResultsTestPlugin();
+            var testPlugin = new ControllersViewsTestPlugin();
 
             Assert.IsAssignableFrom<IDefaultRegistrationPlugin>(testPlugin);
             Assert.NotNull(testPlugin);
@@ -21,7 +21,7 @@
         [Fact]
         public void ShouldThrowArgumentNullExceptionWithInvalidServiceCollection()
         {
-            var testPlugin = new ViewActionResultsTestPlugin();
+            var testPlugin = new ControllersViewsTestPlugin();
 
             Assert.Throws<ArgumentNullException>(() => testPlugin.DefaultServiceRegistrationDelegate(null));
         }
@@ -29,7 +29,7 @@
         [Fact]
         public void ShouldInvokeMethodOfTypeVoidWithValidServiceCollection()
         {
-            var testPlugin = new ViewActionResultsTestPlugin();
+            var testPlugin = new ControllersViewsTestPlugin();
             var serviceCollection = new ServiceCollection();
 
             testPlugin.DefaultServiceRegistrationDelegate(serviceCollection);

@@ -12,13 +12,13 @@
 
     public class DistributedCacheEntryTestBuilder : DistributedCacheEntryBuilder, IDistributedCacheEntryKeyTestBuilder, IAndDistributedCacheEntryTestBuilder
     {
-        private readonly ICollection<Action<DistributedCacheEntry, DistributedCacheEntry>> validations;
+        private readonly ICollection<Action<DistributedCacheEntryMock, DistributedCacheEntryMock>> validations;
 
         public DistributedCacheEntryTestBuilder(ComponentTestContext testContext)
         {
             CommonValidator.CheckForNullReference(testContext, nameof(ComponentTestContext));
 
-            this.validations = new List<Action<DistributedCacheEntry, DistributedCacheEntry>>();
+            this.validations = new List<Action<DistributedCacheEntryMock, DistributedCacheEntryMock>>();
             this.TestContext = testContext;
         }
 
@@ -111,7 +111,7 @@
 
         public new IDistributedCacheEntryTestBuilder AndAlso() => this;
 
-        internal ICollection<Action<DistributedCacheEntry, DistributedCacheEntry>> GetDistributedCacheEntryValidations()
+        internal ICollection<Action<DistributedCacheEntryMock, DistributedCacheEntryMock>> GetDistributedCacheEntryValidations()
             => this.validations;
 
         internal void ThrowNewDataProviderAssertionException(string expectedValue, string actualValue)
