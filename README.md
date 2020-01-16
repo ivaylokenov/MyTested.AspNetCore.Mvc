@@ -54,7 +54,7 @@
 
 *Windows:* [![Build status](https://ci.appveyor.com/api/projects/status/3xlag3a7f87bg4on?svg=true)](https://ci.appveyor.com/project/ivaylokenov/mytested-aspnetcore-mvc)
 
-*Ubuntu & Mac OS:* [![Build Status](https://travis-ci.com/ivaylokenov/MyTested.AspNetCore.Mvc?branch=development)](https://travis-ci.org/ivaylokenov/MyTested.AspNetCore.Mvc) 
+*Ubuntu & Mac OS:* [![Build Status](https://travis-ci.org/ivaylokenov/MyTested.AspNetCore.Mvc.svg?branch=development)](https://travis-ci.com/ivaylokenov/MyTested.AspNetCore.Mvc) 
 
 *Downloads:* [![NuGet Badge](https://buildstats.info/nuget/MyTested.AspNetCore.Mvc)](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc/)
 
