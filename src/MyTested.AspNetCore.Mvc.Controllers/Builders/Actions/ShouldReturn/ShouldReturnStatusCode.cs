@@ -5,9 +5,7 @@
     using And;
     using Contracts.ActionResults.StatusCode;
     using Contracts.And;
-    using Exceptions;
     using Microsoft.AspNetCore.Mvc;
-    using Utilities.Extensions;
     using Utilities.Validators;
 
     /// <content>

@@ -25,7 +25,7 @@
         public HttpContextMock()
             : this(new FeatureCollection())
         {
-            this.PrepareFeatures();
+            this.PrepareDefaultFeatures();
             this.PrepareDefaultValues();
         }
 
@@ -38,7 +38,7 @@
             this.httpContext = new DefaultHttpContext(features);
 
             this.CustomRequest = this.httpRequest;
-            this.httpResponse = this.httpResponse ?? new HttpResponseMock(this.httpContext);
+            this.httpResponse ??= new HttpResponseMock(this.httpContext);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@
         {
             CommonValidator.CheckForNullReference(context, nameof(HttpContext));
 
-            this.PrepareFeatures();
+            this.PrepareDefaultFeatures();
             this.PrepareData(context);
             this.PrepareDefaultValues();
         }
@@ -119,7 +119,7 @@
         public static HttpContextMock From(HttpContext httpContext)
             => new HttpContextMock(httpContext);
 
-        private void PrepareFeatures()
+        private void PrepareDefaultFeatures()
         {
             if (this.Features.Get<IHttpRequestFeature>() == null)
             {
