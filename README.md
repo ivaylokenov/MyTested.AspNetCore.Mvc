@@ -111,7 +111,9 @@ Additionally, funds donated via [Patreon](https://www.patreon.com/ivaylokenov) (
 ## Main Features
 
 - **Built-in service mock resolver** - register your mocks once, use them everywhere.
-- **Controller tests** - unit or integration tests for both MVC or API scenarios.
+- **Full request setup** - excellent arrangement of fake request data.
+- **Detailed response assertions** - precise validation for all available result objects.
+- **Controller tests** - unit or integration tests for both MVC and API scenarios.
 - **View component tests** - validate your view logic as fast as possible.
 - **Route tests** - asserting route paths and model binding is as accessible as it can get.
 - **Pipeline tests** - from the web request to the returned response - the whole chain is validated.
@@ -123,37 +125,42 @@ Additionally, funds donated via [Patreon](https://www.patreon.com/ivaylokenov) (
 
 ## Quick Start
 
+This quick start is for ASP.NET Core 3.1. For previous versions, check the [corresponding branches](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/branches).
+
 To add **MyTested.AspNetCore.Mvc** to your solution, you must follow these simple steps:
 
 1. Create a test project.
 2. Reference your web application.
 3. Install **`MyTested.AspNetCore.Mvc.Universe`** (or just the [testing packages](#package-installation) you need) from [NuGet](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc.Universe/).
-4. Open the test project's `.csproj` file.
-5. Change the project SDK to `Microsoft.NET.Sdk.Web`:
+4. Create a `testsettings.json` file at the root of the test project, set its `Copy to Output Directory` property to `Copy if newer`, and set your required application settings to fake ones:
 
-```xml
-<Project Sdk="Microsoft.NET.Sdk.Web">
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "My Fake Connection String"
+  },
+  "AllowedHosts": "*"
+}
 ```
 
-6. Add a package reference to the web framework - `Microsoft.AspNetCore.App`:
+5. Your test project's `.csproj` file should be similar to this one:
 
 ```xml
-<PackageReference Include="Microsoft.AspNetCore.App" />
-```
-
-7. Your test project's `.csproj` file should be similar to this one:
-
-```xml
-<Project Sdk="Microsoft.NET.Sdk.Web"> <!-- Changed project SDK -->
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" /> <!-- Reference to the web framework -->
-    <PackageReference Include="MyTested.AspNetCore.Mvc.Universe" Version="2.2.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <None Update="testsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+	
+  <ItemGroup>
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Universe" Version="3.1.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
     <PackageReference Include="xunit" Version="2.4.1" /> <!-- Can be any testing framework --> 
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
   </ItemGroup>
@@ -165,7 +172,7 @@ To add **MyTested.AspNetCore.Mvc** to your solution, you must follow these simpl
 </Project>
 ```
 
-8. Create a `TestStartup` class at the root of the test project to register the dependency injection services, which will be used by all test cases in the assembly. A quick solution is to inherit from the web project's `Startup` class. By default **MyTested.AspNetCore.Mvc** replaces all ASP.NET Core services with ready to be used mocks. You only need to replace your own custom services with mocked ones by using the provided extension methods. 
+6. Create a `TestStartup` class at the root of the test project to register the dependency injection services, which will be used by all test cases in the assembly. A quick solution is to inherit from the web project's `Startup` class. By default **MyTested.AspNetCore.Mvc** replaces all ASP.NET Core services with ready to be used mocks. You only need to replace your own custom services with mocked ones by using the provided extension methods. 
 
 ```c#
 namespace MyApp.Tests
@@ -188,7 +195,7 @@ namespace MyApp.Tests
 }
 ```
 
-9. Create a test case by using the fluent API the library provides. You are given a static `MyMvc` class from which all assertions can be easily configured:
+7. Create a test case by using the fluent API the library provides. You are given a static `MyMvc` class from which all assertions can be easily configured:
 
 ```c#
 namespace MyApp.Tests.Controllers
@@ -203,10 +210,14 @@ namespace MyApp.Tests.Controllers
         [Fact]
         public void ReturnViewWhenCallingIndexAction()
             => MyMvc
-                .Controller<HomeController>()
+                .Controller<HomeController>(instance => instance
+                    .WithUser("TestUser")
+                    .WithData(MyTestData.GetData()))
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .Ok();
+                .Ok(result => result
+                    .WithModelOfType<List<MyResponseModel>>()
+                    .Passing(model => model.Count == 10));
     }
 }
 ```
@@ -348,7 +359,7 @@ MyController<MyMvcController>
 
 ### Route Tests
 
-A route test validates the web application's routing configuration:
+A route test validates the web application's routing configuration, without executing the defined filters:
 
 ```c#
 // Tests a route for correct controller, action, and resolved route values.
@@ -358,7 +369,7 @@ MyRouting
     .To<MyController>(c => c.Action(1));
 
 // Tests a route for correct controller, action, and resolved route values
-// with authenticated post request and submitted form.
+// with post request and submitted form.
 MyRouting
     .Configuration()
     .ShouldMap(request => request
@@ -368,9 +379,7 @@ MyRouting
         {
             Title = title,
             Content = content
-        })
-        .WithUser()
-        .WithAntiForgeryToken())
+        }))
     .To<MyController>(c => c.Action(new MyFormModel
     {
         Title = title,
@@ -380,14 +389,12 @@ MyRouting
     .ToValidModelState();
 
 // Tests a route for correct controller, action, and resolved route values
-// with authenticated post request and JSON body.
+// with post request and JSON body.
 MyRouting
     .Configuration()
     .ShouldMap(request => request
         .WithLocation("/My/Action/1")
         .WithMethod(HttpMethod.Post)
-        .WithUser()
-        .WithAntiForgeryToken()
         .WithJsonBody(new
         {
             Integer = 1,
@@ -402,11 +409,11 @@ MyRouting
     .ToValidModelState();
 ```
 
-*Note: route tests execute action filters.*
+*Note: route tests do not execute action filters.*
 
 ### Pipeline tests
 
-A pipeline test provides strongly-typed assertions for the MVC pipeline (from routing to action result):
+A pipeline test provides strongly-typed assertions for the MVC pipeline (from routing to action result, including the application filters):
 
 ```c#
 // Tests a route for correct route values, 
@@ -416,10 +423,18 @@ A pipeline test provides strongly-typed assertions for the MVC pipeline (from ro
 // while resolving services from the `TestStartup` class.
 MyMvc
     .Pipeline()
-    .ShouldMap("/My/Action/1")
+    .ShouldMap(request => request
+        .WithLocation("/My/Action/1")
+        .WithMethod(HttpMethod.Post)
+        .WithUser()
+        .WithAntiForgeryToken()
+        .WithJsonBody(new
+        {
+            Integer = 1,
+            String = "Text"
+        }))
     .To<MyController>(c => c.Action(1))
     .Which(controller => controller
-        .WithUser()
         .WithData(MyDataProvider.GetMyModels()))
     .ShouldReturn()
     .Redirect(redirect => redirect
@@ -427,7 +442,7 @@ MyMvc
 
 // Tests a route for correct route values, 
 // and validates whether the controller action 
-// with an authenticated user and the provided data
+// with the provided data
 // returns view result with a specific model,
 // while resolving services from the provided mocks.
 MyMvc
@@ -435,7 +450,6 @@ MyMvc
     .ShouldMap("/My/Action/1")
     .To<MyController>(c => c.Action(1))
     .Which(controller => controller
-        .WithUser()
         .WithData(MyDataProvider.GetMyModels())
         .WithDependencies(
             serviceMock,
@@ -665,7 +679,7 @@ using MyTested.AspNetCore.Mvc;
 
 ## Versioning
 
-**MyTested.AspNetCore.Mvc** follows the ASP.NET Core MVC versions with which the testing framework is fully compatible. Specifically, the *major* and the *minor* versions will be incremented only when the MVC framework has a new official release. For example, version 2.2.\* of the testing framework is fully compatible with ASP.NET Core MVC 2.2.\*, version 1.1.\* is fully compatible with ASP.NET Core MVC 1.1.\*, version 1.0.15 is fully compatible with ASP.NET Core MVC 1.0.\*, and so on. 
+**MyTested.AspNetCore.Mvc** follows the ASP.NET Core MVC versions with which the testing framework is fully compatible. Specifically, the *major* and the *minor* versions will be incremented only when the MVC framework has a new official release. For example, version 3.1.\* of the testing framework is fully compatible with ASP.NET Core MVC 3.1.\*, version 2.2.\* is fully compatible with ASP.NET Core MVC 2.2.\*, version 1.0.15 is fully compatible with ASP.NET Core MVC 1.0.\*, and so on. 
 
 The public interface of **MyTested.AspNetCore.Mvc** will not have any breaking changes when the version increases (unless entirely necessary).
 
