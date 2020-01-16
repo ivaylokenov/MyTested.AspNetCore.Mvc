@@ -208,7 +208,7 @@ namespace MyApp.Tests.Controllers
     public class HomeControllerShould
     {
         [Fact]
-        public void ReturnViewWhenCallingIndexAction()
+        public void ReturnOkWithCorrectModelWhenCallingAuthenticatedIndexAction()
             => MyMvc
                 .Controller<HomeController>(instance => instance
                     .WithUser("TestUser")
