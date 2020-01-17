@@ -1,11 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Routing
 {
     using System;
+    using ActionFilters;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Routing;
-    using Setups.Filters;
 
     public class NormalController : Controller
     {

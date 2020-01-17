@@ -27,7 +27,7 @@
 
         public ICacheEntry CreateEntry(object key)
         {
-            var value = new CacheEntryMock(key);
+            var value = new MemoryCacheEntryMock(key);
             this.cache[key] = value;
             return value;
         }

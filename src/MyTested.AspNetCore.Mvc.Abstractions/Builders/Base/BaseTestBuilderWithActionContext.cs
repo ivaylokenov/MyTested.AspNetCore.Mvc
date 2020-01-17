@@ -33,6 +33,8 @@
         
         protected IAndTestBuilder Passing<TActionResult>(Action<TActionResult> assertions)
         {
+            InvocationResultValidator.ValidateInvocationResultType<TActionResult>(this.TestContext);
+
             assertions(this.TestContext.MethodResultAs<TActionResult>());
 
             return new AndTestBuilder(this.TestContext);
@@ -40,6 +42,8 @@
 
         protected IAndTestBuilder Passing<TActionResult>(Func<TActionResult, bool> predicate)
         {
+            InvocationResultValidator.ValidateInvocationResultType<TActionResult>(this.TestContext);
+
             if (!predicate(this.TestContext.MethodResultAs<TActionResult>()))
             {
                 throw new InvocationResultAssertionException(string.Format(

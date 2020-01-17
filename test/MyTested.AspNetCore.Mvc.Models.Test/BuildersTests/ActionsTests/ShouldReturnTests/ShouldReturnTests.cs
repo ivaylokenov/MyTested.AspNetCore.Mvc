@@ -344,6 +344,19 @@
         }
 
         [Fact]
+        public void ShouldReturnResultOfTypeShouldChainCorrectly()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.GenericActionWithCollection())
+                .ShouldReturn()
+                .ResultOfType<ICollection<ResponseModel>>(result => result
+                    .EqualTo(TestObjectFactory.GetListOfResponseModels())
+                    .AndAlso()
+                    .Passing(model => model.Count == 2));
+        }
+
+        [Fact]
         public void ShouldReturnShouldThrowExceptionIfActionThrowsExceptionWithDefaultReturnValue()
         {
             Test.AssertException<InvocationAssertionException>(
@@ -493,6 +506,19 @@
         }
 
         [Fact]
+        public void ShouldReturnResultShouldChainCorrectly()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.GenericActionWithCollection())
+                .ShouldReturn()
+                .Result(result => result
+                    .EqualTo(TestObjectFactory.GetListOfResponseModels())
+                    .AndAlso()
+                    .Passing(model => model.Count == 2));
+        }
+
+        [Fact]
         public void DynamicResultShouldBeProperlyRecognized()
         {
             MyController<MvcController>
@@ -531,6 +557,28 @@
         }
 
         [Fact]
+        public void ObjectResultShouldBeProperlyRecognized()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ObjectResultWithResponse())
+                .ShouldReturn()
+                .ResultOfType<ObjectResult>(result => result
+                    .Passing(obj => obj.Value is List<ResponseModel>));
+        }
+
+        [Fact]
+        public void ObjectResultChildrenShouldBeProperlyRecognized()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.OkResultWithResponse())
+                .ShouldReturn()
+                .ResultOfType<OkObjectResult>(result => result
+                    .Passing(obj => obj.Value is List<ResponseModel>));
+        }
+
+        [Fact]
         public void AnonymousResultShouldBeProperlyRecognizedAndShouldThrowException()
         {
             Test.AssertException<ResponseModelAssertionException>(
@@ -561,6 +609,42 @@
                 .Calling(c => c.ActionResultOfT(0))
                 .ShouldReturn()
                 .BadRequest();
+        }
+
+        [Fact]
+        public void ActionResultOfTShouldBeProperlyRecognizedWithObjectActionResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(int.MaxValue))
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void ActionResultOfTShouldBeProperlyRecognizedWithObjectActionResultAndModel()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(int.MaxValue))
+                .ShouldReturn()
+                .Ok(result => result
+                    .WithModel(new ResponseModel
+                    {
+                        IntegerValue = 1,
+                        StringValue = "Test"
+                    }));
+        }
+
+        [Fact]
+        public void ActionResultOfTShouldBeProperlyRecognizedWithOkResultAndResultChain()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(int.MaxValue))
+                .ShouldReturn()
+                .ResultOfType<OkObjectResult>(result => result
+                    .Passing(ok => ok.Value is ResponseModel));
         }
 
         [Fact]

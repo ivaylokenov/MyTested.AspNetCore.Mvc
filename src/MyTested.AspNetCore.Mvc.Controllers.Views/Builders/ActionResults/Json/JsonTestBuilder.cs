@@ -37,7 +37,7 @@
 
         public override object GetActualModel() => this.GetJsonResult()?.Value;
         
-        public JsonResult GetJsonResult() => this.TestContext.MethodResult as JsonResult;
+        public JsonResult GetJsonResult() => this.TestContext.MethodResultAs<JsonResult>();
 
         /// <summary>
         /// Throws new <see cref="JsonResultAssertionException"/> for the provided property name, expected value and actual value.

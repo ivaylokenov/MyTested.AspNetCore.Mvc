@@ -24,11 +24,11 @@
         }
 
         /// <inheritdoc />
-        public IShouldReturnTestBuilder<TActionResult> ShouldReturn()
+        public IShouldReturnActionResultTestBuilder<TActionResult> ShouldReturn()
         {
             TestHelper.ExecuteTestCleanup();
             InvocationValidator.CheckForException(this.CaughtException, this.TestContext.ExceptionMessagePrefix);
-            return new ShouldReturnTestBuilder<TActionResult>(this.TestContext);
+            return new ShouldReturnActionResultTestBuilder<TActionResult>(this.TestContext);
         }
     }
 }

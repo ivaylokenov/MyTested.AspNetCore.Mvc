@@ -1,9 +1,15 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Application
 {
     using System;
-    using Internal.Routing;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Routing;
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Routing;
+    using Microsoft.Extensions.DependencyInjection;
+    using Utilities.Extensions;
 
     public static partial class TestApplication
     {
@@ -24,10 +30,26 @@
         {
             var applicationBuilder = new ApplicationBuilderMock(routingServiceProvider);
 
-            startupMethods?.ConfigureDelegate?.Invoke(applicationBuilder);
+            var configureDelegate = startupMethods?.ConfigureDelegate;
+
+            if (configureDelegate != null)
+            {
+                routingServiceProvider
+                    .GetService<IEnumerable<IStartupFilter>>()
+                    .Reverse()
+                    .ForEach(startupFilter => 
+                        configureDelegate = startupFilter.Configure(configureDelegate));
+            }
+
+            configureDelegate?.Invoke(applicationBuilder);
 
             AdditionalApplicationConfiguration?.Invoke(applicationBuilder);
 
+            PrepareRouter(applicationBuilder);
+        }
+
+        private static void PrepareRouter(ApplicationBuilderMock applicationBuilder)
+        {
             var routeBuilder = new RouteBuilder(applicationBuilder)
             {
                 DefaultHandler = RouteHandlerMock.Null
@@ -38,7 +60,7 @@
                 var route = applicationBuilder.Routes[i];
                 routeBuilder.Routes.Add(route);
             }
-            
+
             AdditionalRouting?.Invoke(routeBuilder);
 
             var routeBuilderRoutes = routeBuilder.Routes;
