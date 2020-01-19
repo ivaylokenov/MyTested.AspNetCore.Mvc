@@ -214,9 +214,9 @@ namespace MyApp.Tests.Controllers
                     .WithUser("TestUser")                        // Set an authenticated user to the request.
                     .WithData(MyTestData.GetData()))             // Populate the application DbContext.
                 .Calling(c => c.Index())                         // Act - invoke the action under test.
-                .ShouldReturn()                                  // Assert the action behaviour.
+                .ShouldReturn()                                  // Assert action behavior.
                 .Ok(result => result                             // Validate the action result type.
-                    .WithModelOfType<List<MyResponseModel>>()    // Check the result model type.
+                    .WithModelOfType<List<MyResponseModel>>()    // Check the response model type.
                     .Passing(model => model.Count == 10));       // Assert specific model properties. 
     }
 }
