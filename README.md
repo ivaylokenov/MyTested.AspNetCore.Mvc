@@ -212,7 +212,7 @@ namespace MyApp.Tests.Controllers
             => MyMvc                                             // Start a test case.
                 .Controller<HomeController>(instance => instance // Arrange the controller under test.
                     .WithUser("TestUser")                        // Set an authenticated user to the request.
-                    .WithData(MyTestData.GetData()))             // Populate the application DbContext with fake data.
+                    .WithData(MyTestData.GetData()))             // Populate the application DbContext.
                 .Calling(c => c.Index())                         // Act - invoke the action under test.
                 .ShouldReturn()                                  // Assert the action behaviour.
                 .Ok(result => result                             // Validate the action result type.
