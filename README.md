@@ -209,15 +209,15 @@ namespace MyApp.Tests.Controllers
     {
         [Fact]
         public void ReturnOkWithCorrectModelWhenCallingAuthenticatedIndexAction()
-            => MyMvc
-                .Controller<HomeController>(instance => instance
-                    .WithUser("TestUser")
-                    .WithData(MyTestData.GetData()))
-                .Calling(c => c.Index())
-                .ShouldReturn()
-                .Ok(result => result
-                    .WithModelOfType<List<MyResponseModel>>()
-                    .Passing(model => model.Count == 10));
+            => MyMvc                                             // Start a test case.
+                .Controller<HomeController>(instance => instance // Arrange the controller under test.
+                    .WithUser("TestUser")                        // Set an authenticated user to the request.
+                    .WithData(MyTestData.GetData()))             // Populate the application DbContext with fake data.
+                .Calling(c => c.Index())                         // Act - invoke the action under test.
+                .ShouldReturn()                                  // Assert the action behaviour.
+                .Ok(result => result                             // Validate the action result type.
+                    .WithModelOfType<List<MyResponseModel>>()    // Check the result model type.
+                    .Passing(model => model.Count == 10));       // Assert specific model properties. 
     }
 }
 ```
