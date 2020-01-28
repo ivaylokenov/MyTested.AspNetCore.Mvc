@@ -1,10 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.ViewComponents
 {
     using System.IO;
-    using Actions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
     using TestContexts;

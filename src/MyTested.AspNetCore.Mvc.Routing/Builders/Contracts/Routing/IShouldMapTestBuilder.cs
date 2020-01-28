@@ -44,8 +44,8 @@
         /// </summary>
         /// <typeparam name="TController">Type of expected resolved controller.</typeparam>
         /// <param name="actionCall">Method call expression indicating the expected resolved action.</param>
-        /// <returns>The <see cref="IControllerRouteTestBuilder{TController}"/>.</returns>
-        IControllerRouteTestBuilder<TController> To<TController>(Expression<Action<TController>> actionCall)
+        /// <returns>The <see cref="IAndResolvedRouteTestBuilder"/>.</returns>
+        IAndResolvedRouteTestBuilder To<TController>(Expression<Action<TController>> actionCall)
             where TController : class;
 
         /// <summary>
@@ -53,8 +53,8 @@
         /// </summary>
         /// <typeparam name="TController">Type of expected resolved controller.</typeparam>
         /// <param name="actionCall">Method call expression indicating the expected resolved asynchronous action.</param>
-        /// <returns>The <see cref="IControllerRouteTestBuilder{TController}"/>.</returns>
-        IControllerRouteTestBuilder<TController> To<TController>(Expression<Func<TController, Task>> actionCall)
+        /// <returns>The <see cref="IAndResolvedRouteTestBuilder"/>.</returns>
+        IAndResolvedRouteTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
             where TController : class;
 
         /// <summary>

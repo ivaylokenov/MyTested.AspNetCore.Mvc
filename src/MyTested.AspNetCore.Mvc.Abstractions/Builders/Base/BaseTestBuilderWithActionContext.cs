@@ -5,6 +5,7 @@
     using Contracts.And;
     using Exceptions;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Mvc;
     using Utilities.Extensions;
     using Utilities.Validators;
 
@@ -33,8 +34,6 @@
         
         protected IAndTestBuilder Passing<TActionResult>(Action<TActionResult> assertions)
         {
-            InvocationResultValidator.ValidateInvocationResultType<TActionResult>(this.TestContext);
-
             assertions(this.TestContext.MethodResultAs<TActionResult>());
 
             return new AndTestBuilder(this.TestContext);
@@ -42,8 +41,6 @@
 
         protected IAndTestBuilder Passing<TActionResult>(Func<TActionResult, bool> predicate)
         {
-            InvocationResultValidator.ValidateInvocationResultType<TActionResult>(this.TestContext);
-
             if (!predicate(this.TestContext.MethodResultAs<TActionResult>()))
             {
                 throw new InvocationResultAssertionException(string.Format(

@@ -18,12 +18,12 @@
         /// <inheritdoc />
         public IAndTestBuilder Accepted(Action<IAcceptedTestBuilder> acceptedTestBuilder)
         {
-            if (this.ObjectActionResult is AcceptedAtActionResult)
+            if (this.ActionResult is AcceptedAtActionResult)
             {
                 return this.ValidateAcceptedResult<AcceptedAtActionResult>(acceptedTestBuilder);
             }
 
-            if (this.ObjectActionResult is AcceptedAtRouteResult)
+            if (this.ActionResult is AcceptedAtRouteResult)
             {
                 return this.ValidateAcceptedResult<AcceptedAtRouteResult>(acceptedTestBuilder);
             }

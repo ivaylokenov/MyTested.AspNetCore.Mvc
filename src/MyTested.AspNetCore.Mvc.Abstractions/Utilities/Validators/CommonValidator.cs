@@ -52,7 +52,7 @@
                 throw new InvalidOperationException(errorMessage);
             }
         }
-
+        
         /// <summary>
         /// Validates that two objects are equal using the Equals method.
         /// </summary>
@@ -60,8 +60,10 @@
         /// <param name="expected">Expected object.</param>
         /// <param name="actual">Actual object.</param>
         /// <returns>True or false.</returns>
-        public static bool CheckEquality<T>(T expected, T actual) 
-            => expected.Equals(actual);
+        public static bool CheckEquality<T>(T expected, T actual)
+        {
+            return expected.Equals(actual);
+        }
 
         /// <summary>
         /// Validates whether object equals the default value for its type.
@@ -69,8 +71,10 @@
         /// <typeparam name="TValue">Type of the value.</typeparam>
         /// <param name="value">Object to test.</param>
         /// <returns>True or false.</returns>
-        public static bool CheckForDefaultValue<TValue>(TValue value) 
-            => EqualityComparer<TValue>.Default.Equals(value, default);
+        public static bool CheckForDefaultValue<TValue>(TValue value)
+        {
+            return EqualityComparer<TValue>.Default.Equals(value, default(TValue));
+        }
 
         /// <summary>
         /// Validates whether type can be null.
@@ -85,9 +89,11 @@
             }
         }
 
-        private static string FormatExceptionMessage(string message) 
-            => string.IsNullOrWhiteSpace(message)
+        private static string FormatExceptionMessage(string message)
+        {
+            return string.IsNullOrWhiteSpace(message)
                  ? string.Empty
                  : $" with '{message}' message";
+        }
     }
 }

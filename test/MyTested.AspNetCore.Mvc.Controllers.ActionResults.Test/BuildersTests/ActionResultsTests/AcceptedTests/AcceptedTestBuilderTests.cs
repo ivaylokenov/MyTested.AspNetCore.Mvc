@@ -4,34 +4,10 @@
     using Setups;
     using Setups.Controllers;
     using Exceptions;
+    using Utilities;
 
     public class AcceptedTestBuilderTests
     {
-        [Fact]
-        public void AcceptedShouldNotThrowExceptionWithCorrectActionResult()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.AcceptedAction())
-                .ShouldReturn()
-                .Accepted();
-        }
-
-        [Fact]
-        public void AcceptedShouldThrowExceptionWithIncorrectActionResult()
-        {
-            Test.AssertException<InvocationResultAssertionException>(
-                () =>
-                {
-                    MyController<MvcController>
-                        .Instance()
-                        .Calling(c => c.OkResultAction())
-                        .ShouldReturn()
-                        .Accepted();
-                },
-                "When calling OkResultAction action in MvcController expected result to be AcceptedResult, but instead received OkResult.");
-        }
-
         [Fact]
         public void WithStatusCodeShouldNotThrowExceptionWithCorrectStatusCode()
         {

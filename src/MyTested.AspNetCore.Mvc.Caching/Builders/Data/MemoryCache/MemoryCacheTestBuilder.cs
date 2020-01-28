@@ -69,19 +69,17 @@
             => this.ContainingEntryOfType(typeof(TValue));
 
         /// <inheritdoc />
-        public IAndMemoryCacheTestBuilder ContainingEntryOfType(object key, Type expectedType)
+        public IAndMemoryCacheTestBuilder ContainingEntryOfType(object key, Type valueType)
         {
             var value = this.GetValue(key);
             var actualType = value.GetType();
 
-            if (Reflection.AreDifferentTypes(expectedType, actualType))
+            if (Reflection.AreDifferentTypes(valueType, actualType))
             {
-                var (expectedTypeName, actualTypeName) = (expectedType, actualType).GetTypeComparisonNames();
-
                 this.ThrowNewDataProviderAssertionException(
                     MemoryCacheName,
-                    $"to have entry with the given key and value of {expectedTypeName} type",
-                    $"in fact found {actualTypeName}");
+                    $"to have entry with the given key and value of {valueType.ToFriendlyTypeName()} type",
+                    $"in fact found {actualType.ToFriendlyTypeName()}");
             }
 
             return this;
@@ -95,12 +93,12 @@
         public IAndMemoryCacheTestBuilder ContainingEntry(object key, object value)
         {
             var actualValue = this.GetValue(key);
-            if (Reflection.AreNotDeeplyEqual(value, actualValue, out var result))
+            if (Reflection.AreNotDeeplyEqual(value, actualValue))
             {
                 this.ThrowNewDataProviderAssertionException(
                     MemoryCacheName,
                     "to have entry with the given value",
-                    $"in fact it was different. {result}");
+                    "in fact it was different");
             }
 
             return this;
@@ -124,12 +122,12 @@
                 SlidingExpiration = cacheEntry.SlidingExpiration
             };
 
-            if (Reflection.AreNotDeeplyEqual(options, actualOptions, out var result))
+            if (Reflection.AreNotDeeplyEqual(options, actualOptions))
             {
                 this.ThrowNewDataProviderAssertionException(
                     MemoryCacheName,
                     $"to have entry with the given options",
-                    $"in fact they were different. {result}");
+                    "in fact they were different");
             }
 
             return this;
@@ -221,11 +219,13 @@
         }
 
         private void ThrowNewDataProviderAssertionException(string propertyName, string expectedValue, string actualValue)
-            => throw new DataProviderAssertionException(string.Format(
+        {
+            throw new DataProviderAssertionException(string.Format(
                 "{0} {1} {2}, but {3}.",
                 this.TestContext.ExceptionMessagePrefix,
                 propertyName,
                 expectedValue,
                 actualValue));
+        }
     }
 }

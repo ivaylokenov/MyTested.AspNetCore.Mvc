@@ -20,9 +20,8 @@
             IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory, 
             IOptions<IdentityOptions> optionsAccessor, 
             ILogger<SignInManager<ApplicationUser>> logger, 
-            IAuthenticationSchemeProvider schemes,
-            IUserConfirmation<ApplicationUser> confirmation)
-            : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes, confirmation)
+            IAuthenticationSchemeProvider schemes)
+            : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes)
         {
         }
 

@@ -5,8 +5,8 @@
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
+    using MyTested.AspNetCore.Mvc.Test.Setups.Models;
     using Setups;
-    using Setups.Models;
     using Setups.Controllers;
     using Xunit;
 
@@ -156,7 +156,7 @@
         }
 
         [Fact]
-        public void ShouldPassForTheShouldWorkCorrectlyWithActionResult()
+        public void AndProvideTheActionResultShouldWorkCorrectly()
         {
             MyController<MvcController>
                 .Instance()
@@ -172,26 +172,14 @@
         }
 
         [Fact]
-        public void ShouldPassForTheShouldWorkCorrectlyWithModel()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.CustomViewComponentResultWithViewData())
-                .ShouldReturn()
-                .ViewComponent()
-                .AndAlso()
-                .ShouldPassForThe<ICollection<ResponseModel>>(model => model.Count == 2);
-        }
-
-        [Fact]
         public void WithNoModelShouldNotThrowExceptionWhenNoModelIsReturned()
         {
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.ViewComponentResultByType())
                 .ShouldReturn()
-                .ViewComponent(viewComponent => viewComponent
-                    .WithNoModel());
+                .ViewComponent(viewComponent =>
+                    viewComponent.WithNoModel());
         }
 
         [Fact]
@@ -201,8 +189,8 @@
                 .Instance()
                 .Calling(c => c.CustomViewComponentResultWithViewData())
                 .ShouldReturn()
-                .ViewComponent(viewComponent => viewComponent
-                    .WithModelOfType<List<ResponseModel>>());
+                .ViewComponent(viewComponent =>
+                    viewComponent.WithModelOfType<List<ResponseModel>>());
         }
 
         [Fact]
@@ -229,7 +217,7 @@
                         .ViewComponent(viewComponent => viewComponent
                             .WithModel(new object()));
                 },
-                "When calling CustomViewComponentResultWithViewData action in MvcController expected response model Object to be the given model, but in fact it was a different one. Expected a value of Object type, but in fact it was List<ResponseModel>.");
+                "When calling CustomViewComponentResultWithViewData action in MvcController expected response model Object to be the given model, but in fact it was a different one.");
         }
 
         [Fact]

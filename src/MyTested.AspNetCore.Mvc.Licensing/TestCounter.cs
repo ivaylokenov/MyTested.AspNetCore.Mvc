@@ -16,11 +16,13 @@
         private static string invalidLicenseMessage;
 
         private static IEnumerable<string> licenses;
-        private static DateTime subscriptionDate;
         private static DateTime releaseDate;
         private static string projectNamespace;
 
-        static TestCounter() => Sync = new object();
+        static TestCounter()
+        {
+            Sync = new object();
+        }
 
         public static void IncrementAndValidate()
         {
@@ -39,7 +41,7 @@
                     {
                         try
                         {
-                            LicenseValidator.Validate(licenses, subscriptionDate, releaseDate, projectNamespace);
+                            LicenseValidator.Validate(licenses, releaseDate, projectNamespace);
                             licensesValidated = true;
                         }
                         catch (InvalidLicenseException ex)
@@ -56,14 +58,9 @@
             }
         }
 
-        public static void SetLicenseData(
-            IEnumerable<string> registeredLicenses,
-            DateTime currentSubscriptionDate,
-            DateTime packageReleaseDate,
-            string testProjectNamespace)
+        public static void SetLicenseData(IEnumerable<string> registeredLicenses, DateTime packageReleaseDate, string testProjectNamespace)
         {
             licenses = registeredLicenses;
-            subscriptionDate = currentSubscriptionDate;
             releaseDate = packageReleaseDate;
             projectNamespace = testProjectNamespace;
             licensesValidated = false;

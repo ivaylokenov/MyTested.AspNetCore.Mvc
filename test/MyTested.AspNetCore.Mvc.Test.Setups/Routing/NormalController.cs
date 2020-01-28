@@ -1,16 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Routing
 {
-    using System;
-    using ActionFilters;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Routing;
 
     public class NormalController : Controller
     {
-        public string Data { get; set; }
-
         public static void StaticCall()
         {
         }
@@ -57,21 +52,9 @@
 
         [HttpPost]
         public IActionResult UltimateModelBinding(ModelBindingModel model, [FromServices]IUrlHelperFactory urlHelper) => null;
-
-        [Authorize]
-        public IActionResult AuthorizedAction() => null;
-
+        
         [ValidateAntiForgeryToken]
         public IActionResult FiltersAction() => null;
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult FiltersActionWithModelBinding(int id, [FromBody]RequestModel model) => null;
-
-        [CustomActionFilter]
-        public IActionResult CustomFiltersAction() => this.Ok();
-
-        public IActionResult ThrowableAction() => throw new Exception();
 
         public void VoidAction()
         {

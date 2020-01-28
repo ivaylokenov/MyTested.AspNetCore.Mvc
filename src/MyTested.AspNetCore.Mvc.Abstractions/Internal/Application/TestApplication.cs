@@ -1,12 +1,13 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Application
 {
     using System;
-    using System.Globalization;
     using Configuration;
     using Licensing;
     using Microsoft.AspNetCore.Builder;
-    using Server;
     using Services;
+    using System.Globalization;
+    using System.Threading.Tasks;
+    using Server;
 
     public static partial class TestApplication
     {
@@ -17,6 +18,8 @@
         static TestApplication()
         {
             Sync = new object();
+
+            NullHandler = c => Task.CompletedTask;
 
             TestWebServer.TryFindTestAssembly();
         }
@@ -69,7 +72,6 @@
 
             TestCounter.SetLicenseData(
                 ServerTestConfiguration.Global.Licenses,
-                DateTime.UtcNow,
                 DateTime.ParseExact(TestFramework.ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
                 TestWebServer.TestAssemblyName);
 

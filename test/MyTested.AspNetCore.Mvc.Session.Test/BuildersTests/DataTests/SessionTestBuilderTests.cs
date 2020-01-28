@@ -283,7 +283,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddSessionAction action in MvcController expected session to have entry with 'Bytes' key and the provided value, but the value was different. Difference occurs at 'Byte[][2]'. Expected a value of '4', but in fact it was '3'.");
+                "When calling AddSessionAction action in MvcController expected session to have entry with 'Bytes' key and the provided value, but the value was different.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -368,7 +368,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddSessionAction action in MvcController expected session to have entry with 'String' key and the provided value, but the value was different. Difference occurs at 'Byte[].Count'. Expected a value of '7', but in fact it was '4'.");
+                "When calling AddSessionAction action in MvcController expected session to have entry with 'String' key and the provided value, but the value was different.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -453,7 +453,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddSessionAction action in MvcController expected session to have entry with 'Integer' key and the provided value, but the value was different. Difference occurs at 'Byte[][3]'. Expected a value of '2', but in fact it was '1'.");
+                "When calling AddSessionAction action in MvcController expected session to have entry with 'Integer' key and the provided value, but the value was different.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -580,7 +580,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddSessionAction action in MvcController expected session to have entry with 'String' key and the provided value, but the value was different. Difference occurs at 'Byte[].Count'. Expected a value of '7', but in fact it was '4'.");
+                "When calling AddSessionAction action in MvcController expected session to have entry with 'String' key and the provided value, but the value was different.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -710,7 +710,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddSessionAction action in MvcController expected session to have entry with 'String' key and the provided value, but the value was different. Difference occurs at 'Byte[].Count'. Expected a value of '7', but in fact it was '4'.");
+                "When calling AddSessionAction action in MvcController expected session to have entry with 'String' key and the provided value, but the value was different.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -834,7 +834,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddSessionAction action in MvcController expected session to have entry with 'Bytes' key and the provided value, but the value was different. Difference occurs at 'Byte[].Count'. Expected a value of '4', but in fact it was '3'.");
+                "When calling AddSessionAction action in MvcController expected session to have entry with 'Bytes' key and the provided value, but the value was different.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -867,7 +867,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddSessionAction action in MvcController expected session to have entry with 'Integer' key and the provided value, but the value was different. Difference occurs at 'Byte[].Count'. Expected a value of '2', but in fact it was '4'.");
+                "When calling AddSessionAction action in MvcController expected session to have entry with 'Integer' key and the provided value, but the value was different.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -958,7 +958,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddSessionAction action in MvcController expected session to have entry with 'String' key and the provided value, but the value was different. Difference occurs at 'Byte[].Count'. Expected a value of '7', but in fact it was '4'.");
+                "When calling AddSessionAction action in MvcController expected session to have entry with 'String' key and the provided value, but the value was different.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -991,7 +991,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddSessionAction action in MvcController expected session to have entry with 'Integer' key and the provided value, but the value was different. Difference occurs at 'Byte[].Count'. Expected a value of '7', but in fact it was '4'.");
+                "When calling AddSessionAction action in MvcController expected session to have entry with 'Integer' key and the provided value, but the value was different.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -1082,7 +1082,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddSessionAction action in MvcController expected session to have entry with 'Integer' key and the provided value, but the value was different. Difference occurs at 'Byte[][3]'. Expected a value of '2', but in fact it was '1'.");
+                "When calling AddSessionAction action in MvcController expected session to have entry with 'Integer' key and the provided value, but the value was different.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -1115,7 +1115,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddSessionAction action in MvcController expected session to have entry with 'String' key and the provided value, but the value was different. Difference occurs at 'Byte[][0]'. Expected a value of '0', but in fact it was '84'.");
+                "When calling AddSessionAction action in MvcController expected session to have entry with 'String' key and the provided value, but the value was different.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }

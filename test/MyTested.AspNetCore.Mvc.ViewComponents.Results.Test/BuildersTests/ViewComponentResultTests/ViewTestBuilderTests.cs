@@ -11,56 +11,6 @@
     public class ViewTestBuilderTests
     {
         [Fact]
-        public void ShouldReturnViewWithDefaultNameShouldNotThrowExceptionWithCorrectName()
-        {
-            MyViewComponent<ViewResultComponent>
-                .InvokedWith(c => c.Invoke(null))
-                .ShouldReturn()
-                .View(view => view
-                    .WithDefaultName());
-        }
-
-        [Fact]
-        public void ShouldReturnViewWithDefaultNameShouldThrowExceptionWithDifferentName()
-        {
-            Test.AssertException<ViewViewComponentResultAssertionException>(
-                () =>
-                {
-                    MyViewComponent<ViewResultComponent>
-                        .InvokedWith(c => c.Invoke("custom"))
-                        .ShouldReturn()
-                        .View(view => view
-                            .WithDefaultName());
-                },
-                "When invoking ViewResultComponent expected view result to be the default one, but instead received 'Custom'.");
-        }
-
-        [Fact]
-        public void ShouldReturnViewWithNameShouldNotThrowExceptionWithCorrectName()
-        {
-            MyViewComponent<ViewResultComponent>
-                .InvokedWith(c => c.Invoke("custom"))
-                .ShouldReturn()
-                .View(view => view
-                    .WithName("Custom"));
-        }
-
-        [Fact]
-        public void ShouldReturnViewShouldThrowExceptionIfActionResultIsViewResultWithDifferentName()
-        {
-            Test.AssertException<ViewViewComponentResultAssertionException>(
-                () =>
-                {
-                    MyViewComponent<ViewResultComponent>
-                        .InvokedWith(c => c.Invoke("custom"))
-                        .ShouldReturn()
-                        .View(view => view
-                            .WithName("Incorrect"));
-                },
-                "When invoking ViewResultComponent expected view result to be 'Incorrect', but instead received 'Custom'.");
-        }
-
-        [Fact]
         public void WithViewEngineShouldNotThrowExceptionWithValidViewEngine()
         {
             var viewEngine = TestObjectFactory.GetViewEngine();
@@ -68,8 +18,8 @@
             MyViewComponent<ViewEngineComponent>
                 .InvokedWith(c => c.Invoke(viewEngine))
                 .ShouldReturn()
-                .View(view => view
-                    .WithViewEngine(viewEngine));
+                .View()
+                .WithViewEngine(viewEngine);
         }
 
         [Fact]
@@ -78,9 +28,8 @@
             MyViewComponent<ViewResultComponent>
                 .InvokedWith(c => c.Invoke("Test"))
                 .ShouldReturn()
-                .View(view => view
-                    .WithName("SomeView")
-                    .WithViewEngineOfType<CompositeViewEngine>());
+                .View("SomeView")
+                .WithViewEngineOfType<CompositeViewEngine>();
         }
 
         [Fact]
@@ -89,9 +38,8 @@
             MyViewComponent<ViewResultComponent>
                 .InvokedWith(c => c.Invoke("Test"))
                 .ShouldReturn()
-                .View(view => view
-                    .WithName("SomeView")
-                    .WithViewEngineOfType(typeof(CompositeViewEngine)));
+                .View("SomeView")
+                .WithViewEngineOfType(typeof(CompositeViewEngine));
         }
 
         [Fact]
@@ -103,8 +51,8 @@
                     MyViewComponent<ViewEngineComponent>
                         .InvokedWith(c => c.Invoke(null))
                         .ShouldReturn()
-                        .View(view => view
-                            .WithViewEngine(new CustomViewEngine()));
+                        .View()
+                        .WithViewEngine(new CustomViewEngine());
                 },
                 "When invoking ViewEngineComponent expected view result ViewEngine to be the same as the provided one, but instead received different result.");
         }
@@ -115,8 +63,8 @@
             MyViewComponent<ViewEngineComponent>
                 .InvokedWith(c => c.Invoke(new CustomViewEngine()))
                 .ShouldReturn()
-                .View(view => view
-                    .WithViewEngineOfType<CustomViewEngine>());
+                .View()
+                .WithViewEngineOfType<CustomViewEngine>();
         }
 
         [Fact]
@@ -125,8 +73,8 @@
             MyViewComponent<ViewEngineComponent>
                 .InvokedWith(c => c.Invoke(new CustomViewEngine()))
                 .ShouldReturn()
-                .View(view => view
-                    .WithViewEngineOfType(typeof(CustomViewEngine)));
+                .View()
+                .WithViewEngineOfType(typeof(CustomViewEngine));
         }
 
         [Fact]
@@ -138,8 +86,8 @@
                     MyViewComponent<ViewEngineComponent>
                         .InvokedWith(c => c.Invoke(new CustomViewEngine()))
                         .ShouldReturn()
-                        .View(view => view
-                            .WithViewEngineOfType<IViewEngine>());
+                        .View()
+                        .WithViewEngineOfType<IViewEngine>();
                 },
                 "When invoking ViewEngineComponent expected view result ViewEngine to be of IViewEngine type, but instead received CustomViewEngine.");
         }
@@ -153,8 +101,8 @@
                     MyViewComponent<ViewEngineComponent>
                         .InvokedWith(c => c.Invoke(new CustomViewEngine()))
                         .ShouldReturn()
-                        .View(view => view
-                            .WithViewEngineOfType(typeof(IViewEngine)));
+                        .View()
+                        .WithViewEngineOfType(typeof(IViewEngine));
                 },
                 "When invoking ViewEngineComponent expected view result ViewEngine to be of IViewEngine type, but instead received CustomViewEngine.");
         }
@@ -168,8 +116,8 @@
                     MyViewComponent<ViewResultComponent>
                         .InvokedWith(c => c.Invoke(null))
                         .ShouldReturn()
-                        .View(view => view
-                            .WithViewEngineOfType<CustomViewEngine>());
+                        .View()
+                        .WithViewEngineOfType<CustomViewEngine>();
                 },
                 "When invoking ViewResultComponent expected view result ViewEngine to be of CustomViewEngine type, but instead received CompositeViewEngine.");
         }
@@ -183,8 +131,8 @@
                     MyViewComponent<ViewResultComponent>
                         .InvokedWith(c => c.Invoke(null))
                         .ShouldReturn()
-                        .View(view => view
-                            .WithViewEngineOfType(typeof(CustomViewEngine)));
+                        .View()
+                        .WithViewEngineOfType(typeof(CustomViewEngine));
                 },
                 "When invoking ViewResultComponent expected view result ViewEngine to be of CustomViewEngine type, but instead received CompositeViewEngine.");
         }
@@ -195,11 +143,10 @@
             MyViewComponent<ViewResultComponent>
                 .InvokedWith(c => c.Invoke("All"))
                 .ShouldReturn()
-                .View(view => view
-                    .WithName("SomeView")
-                    .WithViewEngineOfType<CompositeViewEngine>()
-                    .AndAlso()
-                    .WithModelOfType<ResponseModel>());
+                .View("SomeView")
+                .WithViewEngineOfType<CompositeViewEngine>()
+                .AndAlso()
+                .WithModelOfType<ResponseModel>();
         }
 
         [Fact]
@@ -208,11 +155,10 @@
             MyViewComponent<ViewResultComponent>
                 .InvokedWith(c => c.Invoke("All"))
                 .ShouldReturn()
-                .View(view => view
-                    .WithName("SomeView")
-                    .WithViewEngineOfType(typeof(CompositeViewEngine))
-                    .AndAlso()
-                    .WithModelOfType(typeof(ResponseModel)));
+                .View("SomeView")
+                .WithViewEngineOfType(typeof(CompositeViewEngine))
+                .AndAlso()
+                .WithModelOfType(typeof(ResponseModel));
         }
     }
 }

@@ -3,24 +3,34 @@
     using System;
     using Configuration;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.FileProviders;
-
+    using Microsoft.AspNetCore.Hosting.Internal;
+    
     public static partial class TestWebServer
     {
-        private static IWebHostEnvironment environment;
+        private static IHostingEnvironment environment;
 
-        internal static IWebHostEnvironment Environment => environment ??= PrepareEnvironment();
+        internal static IHostingEnvironment Environment
+        {
+            get
+            {
+                if (environment == null)
+                {
+                    environment = PrepareEnvironment();
+                }
+
+                return environment;
+            }
+        }
 
         internal static string ApplicationName
             => ServerTestConfiguration.General.ApplicationName ?? WebAssemblyName ?? TestAssemblyName;
         
-        private static IWebHostEnvironment PrepareEnvironment()
-            => new TestHostEnvironment
+        private static IHostingEnvironment PrepareEnvironment()
+            => new HostingEnvironment
             {
                 ApplicationName = ApplicationName,
                 EnvironmentName = ServerTestConfiguration.General.EnvironmentName,
-                ContentRootPath = AppContext.BaseDirectory,
-                WebRootFileProvider = new NullFileProvider()
+                ContentRootPath = AppContext.BaseDirectory
             };
 
         internal static void ResetConfigurationAndAssemblies()

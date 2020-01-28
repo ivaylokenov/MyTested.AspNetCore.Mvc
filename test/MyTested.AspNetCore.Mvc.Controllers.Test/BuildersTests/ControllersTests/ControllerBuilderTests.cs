@@ -239,7 +239,7 @@
                 {
                     MyController<RequestModel>.Instance();
                 },
-                "RequestModel is not recognized as a valid controller type. Classes decorated with 'NonControllerAttribute' are not considered as passable controllers. To enable proper controller discovery, the test framework tries to load your web application by convention. If such is not found, you will need to set it manually by providing your web project's name in the test configuration's 'General:WebAssemblyName' section ('testsettings.json' file by default). If your controller type is still not recognized, you may add it by hand in the application part manager by using the 'AddControllers().PartManager.ApplicationParts.Add(applicationPart))' or 'AddControllersWithViews().PartManager.ApplicationParts.Add(applicationPart))' methods.");
+                "RequestModel is not recognized as a valid controller type. Classes decorated with 'NonControllerAttribute' are not considered as passable controllers. Additionally, make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file in order to enable proper controller discovery. If your type is still not recognized, you may manually add it in the application part manager by using the 'AddMvc().PartManager.ApplicationParts.Add(applicationPart))' method.");
         }
 
         [Fact]
@@ -290,7 +290,7 @@
                 {
                     MyController<NonController>.Instance();
                 },
-                "NonController is not recognized as a valid controller type. Classes decorated with 'NonControllerAttribute' are not considered as passable controllers. To enable proper controller discovery, the test framework tries to load your web application by convention. If such is not found, you will need to set it manually by providing your web project's name in the test configuration's 'General:WebAssemblyName' section ('testsettings.json' file by default). If your controller type is still not recognized, you may add it by hand in the application part manager by using the 'AddControllers().PartManager.ApplicationParts.Add(applicationPart))' or 'AddControllersWithViews().PartManager.ApplicationParts.Add(applicationPart))' methods.");
+                "NonController is not recognized as a valid controller type. Classes decorated with 'NonControllerAttribute' are not considered as passable controllers. Additionally, make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file in order to enable proper controller discovery. If your type is still not recognized, you may manually add it in the application part manager by using the 'AddMvc().PartManager.ApplicationParts.Add(applicationPart))' method.");
         }
 
         private void CheckActionResultTestBuilder<TActionResult>(

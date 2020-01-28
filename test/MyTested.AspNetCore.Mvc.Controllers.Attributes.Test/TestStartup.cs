@@ -10,8 +10,8 @@
         public override void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IInjectedService, InjectedService>();
-            services.AddScoped<CustomActionFilter>();
-            services.AddScoped<CustomActionFilterWithArgs>();
+            services.AddScoped<MyActionFilter>();
+            services.AddScoped<MyActionFilterWithArgs>();
 
             services.AddAuthorization(options =>
                 options.AddPolicy("Admin",

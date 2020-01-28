@@ -1,26 +1,35 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Invocations.ShouldReturn
 {
-    using System;
-    using Builders.And;
-    using Contracts.And;
     using Contracts.ViewComponentResults;
     using Microsoft.AspNetCore.Mvc.ViewComponents;
     using ViewComponentResults;
     using Utilities.Validators;
+    using Exceptions;
 
     public partial class ViewComponentShouldReturnTestBuilder<TInvocationResult>
     {
         /// <inheritdoc />
-        public IAndTestBuilder View() => this.View(null);
+        public IAndViewTestBuilder View()
+        {
+            return this.View(null);
+        }
 
         /// <inheritdoc />
-        public IAndTestBuilder View(Action<IViewTestBuilder> viewTestBuilder)
+        public IAndViewTestBuilder View(string viewName)
         {
-            InvocationResultValidator.ValidateInvocationResultType<ViewViewComponentResult>(this.TestContext);
+            var viewResult = InvocationResultValidator
+                .GetInvocationResult<ViewViewComponentResult>(this.TestContext);
 
-            viewTestBuilder?.Invoke(new ViewTestBuilder(this.TestContext));
+            var actualViewName = viewResult.ViewName;
+            if (viewName != actualViewName)
+            {
+                throw ViewViewComponentResultAssertionException.ForNameEquality(
+                    this.TestContext.ExceptionMessagePrefix,
+                    viewName,
+                    actualViewName);
+            }
 
-            return new AndTestBuilder(this.TestContext);
+            return new ViewTestBuilder(this.TestContext);
         }
     }
 }

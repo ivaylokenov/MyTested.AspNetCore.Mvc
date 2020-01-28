@@ -23,7 +23,9 @@
         }
 
         /// <inheritdoc />
-        public IModelErrorTestBuilder<TModel> For<TModel>() 
-            => new ModelErrorTestBuilder<TModel>(this.TestContext, this.ModelState);
+        public IModelErrorTestBuilder<TModel> For<TModel>()
+        {
+            return new ModelErrorTestBuilder<TModel>(this.TestContext, this.ModelState);
+        }
     }
 }

@@ -7,14 +7,13 @@
     public class RedirectTestBuilderTests
     {
         [Fact]
-        public void ShouldPassForTheShouldWorkCorrectly()
+        public void AndProvideTheActionResultShouldWorkCorrectly()
         {
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
                 .Redirect()
-                .AndAlso()
                 .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);

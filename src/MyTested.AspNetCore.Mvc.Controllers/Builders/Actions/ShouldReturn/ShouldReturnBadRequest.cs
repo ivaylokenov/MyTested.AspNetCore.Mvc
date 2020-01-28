@@ -17,7 +17,7 @@
         /// <inheritdoc />
         public IAndTestBuilder BadRequest(Action<IBadRequestTestBuilder> badRequestTestBuilder)
         {
-            if (this.ObjectActionResult is BadRequestObjectResult)
+            if (this.ActionResult is BadRequestObjectResult)
             {
                 return this.ValidateBadRequestResult<BadRequestObjectResult>(badRequestTestBuilder);
             }

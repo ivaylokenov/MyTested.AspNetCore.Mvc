@@ -6,7 +6,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
     using Modules;
     using Services;
 
@@ -27,13 +26,13 @@
 
             services.AddSingleton<IDateTimeService>(_ => new DateTimeService());
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         public void ConfigureContainer(ContainerBuilder builder) 
             => builder.RegisterModule(new AutofacModule());
         
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -46,23 +45,19 @@
             }
 
             app.UseHttpsRedirection();
-
             app.UseStaticFiles();
-
             app.UseCookiePolicy();
 
-            app.UseRouting();
-
-            app.UseEndpoints(endpoints =>
+            app.UseMvc(routes =>
             {
-                endpoints.MapControllerRoute(
+                routes.MapRoute(
                     name: "custom",
-                    pattern: "Index",
+                    template: "Index",
                     defaults: new { controller = "Home", action = "Index" });
 
-                endpoints.MapControllerRoute(
+                routes.MapRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

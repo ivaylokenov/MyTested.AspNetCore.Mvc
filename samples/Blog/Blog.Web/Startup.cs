@@ -14,7 +14,6 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
 
     public class Startup
     {
@@ -61,14 +60,12 @@
                 .AddTransient<IDateTimeProvider, DateTimeProvider>();
 
             services
-                .AddControllersWithViews(options => options
+                .AddMvc(options => options
                     .AddAutoValidateAntiforgeryToken())
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
-            services.AddRazorPages();
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
         
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -84,10 +81,7 @@
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseRouting();
-
             app.UseAuthentication();
-            app.UseAuthorization();
 
             app.UseMvcWithAreas();
 

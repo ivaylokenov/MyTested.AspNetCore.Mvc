@@ -486,8 +486,8 @@
                     .WithEntry("ByteEntry", new byte[] { 1, 2, 3 }))
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
-                .View(view => view
-                    .WithModel(new byte[] { 1, 2, 3 }));
+                .View()
+                .WithModel(new byte[] { 1, 2, 3 });
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -510,8 +510,8 @@
                     .WithEntry("IntEntry", 1))
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
-                .View(view => view
-                    .WithModel(1));
+                .View()
+                .WithModel(1);
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -608,8 +608,8 @@
                     }))
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
-                .View(view => view
-                    .WithModel(new byte[] { 1, 2, 3 }));
+                .View()
+                .WithModel(new byte[] { 1, 2, 3 });
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -664,8 +664,8 @@
                     }))
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
-                .View(view => view
-                    .WithModel(new byte[] { 1, 2, 3 }));
+                .View()
+                .WithModel(new byte[] { 1, 2, 3 });
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -718,8 +718,8 @@
                     }))
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
-                .View(view => view
-                    .WithModel("stringTest"));
+                .View()
+                .WithModel("stringTest");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -771,8 +771,8 @@
                     }))
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
-                .View(view => view
-                    .WithModel(1));
+                .View()
+                .WithModel(1);
 
             MyApplication.StartsFrom<DefaultStartup>();
         }

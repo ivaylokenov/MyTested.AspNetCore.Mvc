@@ -18,12 +18,12 @@
         /// <inheritdoc />
         public IAndTestBuilder Created(Action<ICreatedTestBuilder> createdTestBuilder)
         {
-            if (this.ObjectActionResult is CreatedAtActionResult)
+            if (this.ActionResult is CreatedAtActionResult)
             {
                 return this.ValidateCreatedResult<CreatedAtActionResult>(createdTestBuilder);
             }
 
-            if (this.ObjectActionResult is CreatedAtRouteResult)
+            if (this.ActionResult is CreatedAtRouteResult)
             {
                 return this.ValidateCreatedResult<CreatedAtRouteResult>(createdTestBuilder);
             }

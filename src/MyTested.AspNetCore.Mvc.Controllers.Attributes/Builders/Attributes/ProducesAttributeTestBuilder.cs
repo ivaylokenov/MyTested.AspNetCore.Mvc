@@ -80,11 +80,9 @@
 
                 if (Reflection.AreDifferentTypes(expectedType, actualType))
                 {
-                    var (expectedTypeName, actualTypeName) = (expectedType, actualType).GetTypeComparisonNames();
-
                     this.FailedValidationAction(
-                        $"{this.ExceptionMessagePrefix}'{expectedTypeName}' type",
-                        $"in fact found '{actualTypeName}'");
+                        $"{this.ExceptionMessagePrefix}'{expectedType.ToFriendlyTypeName()}' type",
+                        $"in fact found '{actualType.ToFriendlyTypeName()}'");
                 }
             });
 

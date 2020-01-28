@@ -1,14 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
     using System;
-    using Builders.Contracts.And;
     using Builders.Contracts.Invocations;
-    using Builders.And;
+    using Builders.Contracts.Models;
     using Builders.Base;
-    using Builders.Contracts.Results;
-    using Builders.Results;
-    using Utilities.Extensions;
     using Utilities.Validators;
+    using Builders.Models;
 
     /// <summary>
     /// Contains model extension methods for <see cref="IBaseShouldReturnTestBuilder"/>.
@@ -18,104 +15,58 @@
         /// <summary>
         /// Tests whether the result is of the provided type.
         /// </summary>
-        /// <typeparam name="TResult">Expected result type.</typeparam>
         /// <param name="builder">Instance of <see cref="IBaseShouldReturnTestBuilder{TInvocationResult}"/> type.</param>
-        /// <param name="resultType">Expected result type.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
-        public static IAndTestBuilder ResultOfType<TResult>(
-            this IBaseShouldReturnTestBuilder<TResult> builder,
+        /// <param name="resultType">Expected return type.</param>
+        /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TInvocationResult}"/> type.</returns>
+        public static IAndModelDetailsTestBuilder<TInvocationResult> ResultOfType<TInvocationResult>(
+            this IBaseShouldReturnTestBuilder<TInvocationResult> builder,
             Type resultType)
-            => builder.ResultOfType(resultType, null);
-
-        /// <summary>
-        /// Tests whether the result is of the provided type.
-        /// </summary>
-        /// <typeparam name="TResult">Expected result type.</typeparam>
-        /// <param name="builder">Instance of <see cref="IBaseShouldReturnTestBuilder{TInvocationResult}"/> type.</param>
-        /// <param name="resultTestBuilder">Builder for testing the result.</param>
-        /// <param name="resultType">Expected result type.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
-        public static IAndTestBuilder ResultOfType<TResult>(
-            this IBaseShouldReturnTestBuilder<TResult> builder,
-            Type resultType,
-            Action<IResultDetailsTestBuilder<TResult>> resultTestBuilder)
         {
             var actualBuilder = (BaseTestBuilderWithActionContext)builder;
 
             InvocationResultValidator.ValidateInvocationResultType(
-                actualBuilder.TestContext.ConvertMethodResult(),
+                actualBuilder.TestContext,
                 resultType,
                 canBeAssignable: true,
                 allowDifferentGenericTypeDefinitions: true);
 
-            resultTestBuilder?.Invoke(new ResultDetailsTestBuilder<TResult>(actualBuilder.TestContext));
-
-            return new AndTestBuilder(actualBuilder.TestContext);
+            return new ModelDetailsTestBuilder<TInvocationResult>(actualBuilder.TestContext);
         }
 
         /// <summary>
         /// Tests whether the result is of the provided type.
         /// </summary>
         /// <param name="builder">Instance of <see cref="IBaseShouldReturnTestBuilder"/> type.</param>
-        /// <typeparam name="TResult">Expected result type.</typeparam>
-        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
-        public static IAndTestBuilder ResultOfType<TResult>(
+        /// <typeparam name="TResult">Expected response type.</typeparam>
+        /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TResult}"/> type.</returns>
+        public static IAndModelDetailsTestBuilder<TResult> ResultOfType<TResult>(
             this IBaseShouldReturnTestBuilder builder)
-            => builder.ResultOfType<TResult>(null);
-
-        /// <summary>
-        /// Tests whether the result is of the provided type.
-        /// </summary>
-        /// <param name="builder">Instance of <see cref="IBaseShouldReturnTestBuilder"/> type.</param>
-        /// <typeparam name="TResult">Expected result type.</typeparam>
-        /// <param name="resultTestBuilder">Builder for testing the result.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
-        public static IAndTestBuilder ResultOfType<TResult>(
-            this IBaseShouldReturnTestBuilder builder,
-            Action<IResultDetailsTestBuilder<TResult>> resultTestBuilder)
         {
             var actualBuilder = (BaseTestBuilderWithActionContext)builder;
 
             InvocationResultValidator.ValidateInvocationResultType<TResult>(
-                actualBuilder.TestContext.ConvertMethodResult(),
+                actualBuilder.TestContext,
                 canBeAssignable: true);
 
-            resultTestBuilder?.Invoke(new ResultDetailsTestBuilder<TResult>(actualBuilder.TestContext));
-
-            return new AndTestBuilder(actualBuilder.TestContext);
-        }
-
-        /// <summary>
-        /// Tests the result by using a test builder.
-        /// </summary>
-        /// <param name="builder">Instance of <see cref="IBaseShouldReturnTestBuilder"/> type.</param>
-        /// <param name="resultTestBuilder">Builder for testing the result.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
-        public static IAndTestBuilder Result(
-            this IBaseShouldReturnTestBuilder builder,
-            Action<IResultDetailsTestBuilder> resultTestBuilder)
-        {
-            var actualBuilder = (BaseTestBuilderWithActionContext)builder;
-
-            var convertedTestContext = actualBuilder.TestContext.ConvertMethodResult();
-
-            resultTestBuilder?.Invoke(new ResultDetailsTestBuilder(convertedTestContext));
-
-            return new AndTestBuilder(actualBuilder.TestContext);
+            return new ModelDetailsTestBuilder<TResult>(actualBuilder.TestContext);
         }
 
         /// <summary>
         /// Tests whether the result is deeply equal to the provided one.
         /// </summary>
-        /// <typeparam name="TResult">Expected result type.</typeparam>
+        /// <typeparam name="TResult">Expected response type.</typeparam>
         /// <param name="builder">Instance of <see cref="IBaseShouldReturnTestBuilder"/> type.</param>
-        /// <param name="result">Expected result object.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
-        public static IAndTestBuilder Result<TResult>(
+        /// <param name="model">Expected return object.</param>
+        /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TResult}"/> type.</returns>
+        public static IAndModelDetailsTestBuilder<TResult> Result<TResult>(
             this IBaseShouldReturnTestBuilder builder,
-            TResult result)
-            => builder
-                .Result(value => value
-                    .EqualTo(result));
+            TResult model)
+        {
+            var actualBuilder = (BaseTestBuilderWithActionContext)builder;
+
+            InvocationResultValidator.ValidateInvocationResult(actualBuilder.TestContext, model);
+
+            return new ModelDetailsTestBuilder<TResult>(actualBuilder.TestContext);
+        }
     }
 }

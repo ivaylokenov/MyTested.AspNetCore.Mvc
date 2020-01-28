@@ -18,12 +18,12 @@
         /// <inheritdoc />
         public IAndTestBuilder File(Action<IFileTestBuilder> fileTestBuilder)
         {
-            if (this.ObjectActionResult is VirtualFileResult)
+            if (this.ActionResult is VirtualFileResult)
             {
                 return this.ValidateFileResult<VirtualFileResult>(fileTestBuilder);
             }
 
-            if (this.ObjectActionResult is FileStreamResult)
+            if (this.ActionResult is FileStreamResult)
             {
                 return this.ValidateFileResult<FileStreamResult>(fileTestBuilder);
             }

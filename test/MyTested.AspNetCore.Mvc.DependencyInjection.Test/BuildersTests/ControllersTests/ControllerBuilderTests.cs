@@ -392,8 +392,8 @@
                     .WithSetupFor<IScopedService>(s => s.Value = "Custom"))
                 .Calling(c => c.DoNotSetValue())
                 .ShouldReturn()
-                .ResultOfType<string>(result => result
-                    .Passing(r => r == "Custom"));
+                .ResultOfType<string>()
+                .Passing(r => r == "Custom");
 
             MyController<ServicesController>
                 .Instance()
@@ -402,8 +402,8 @@
                     .WithSetupFor<IScopedService>(s => s.Value = "SecondCustom"))
                 .Calling(c => c.FromServices(From.Services<IScopedService>()))
                 .ShouldReturn()
-                .ResultOfType<string>(result => result
-                    .Passing(r => r == "SecondCustom"));
+                .ResultOfType<string>()
+                .Passing(r => r == "SecondCustom");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }

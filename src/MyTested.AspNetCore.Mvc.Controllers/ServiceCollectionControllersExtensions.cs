@@ -29,7 +29,7 @@
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection AddControllersCoreTesting(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddControllersTesting(this IServiceCollection serviceCollection)
         {
             CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
             

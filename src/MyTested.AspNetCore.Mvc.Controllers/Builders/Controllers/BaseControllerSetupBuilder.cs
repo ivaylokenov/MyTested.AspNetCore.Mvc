@@ -33,7 +33,7 @@
         /// <inheritdoc />
         public TBuilder WithActionContext(Action<ActionContext> actionContextSetup)
         {
-            this.TestContext.ComponentContextPreparationDelegate += context => actionContextSetup(context);
+            this.TestContext.ComponentContextPreparationDelegate += actionContextSetup;
             return this.Builder;
         }
         

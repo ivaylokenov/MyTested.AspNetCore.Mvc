@@ -3,20 +3,20 @@
     using System;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
-    using Internal.Results;
+    using Internal;
     using Internal.TestContexts;
     using Utilities;
     using System.Reflection;
 
     public partial class BaseComponentBuilder<TComponent, TTestContext, TBuilder>
     {
-        protected void InvokeResult<TMethodResult>(Expression<Func<TComponent, TMethodResult>> methodCall)
+        protected void Invoke<TMethodResult>(Expression<Func<TComponent, TMethodResult>> methodCall)
         {
             var actionInfo = this.GetAndValidateMethodResult(methodCall);
             this.TestContext.Apply(actionInfo);
         }
 
-        protected void InvokeAsyncResult<TMethodResult>(Expression<Func<TComponent, Task<TMethodResult>>> methodCall)
+        protected void Invoke<TMethodResult>(Expression<Func<TComponent, Task<TMethodResult>>> methodCall)
         {
             var methodInfo = this.GetAndValidateMethodResult(methodCall);
             var methodResult = default(TMethodResult);
@@ -34,7 +34,7 @@
             this.TestContext.MethodResult = methodResult;
         }
 
-        protected void InvokeVoid(Expression<Action<TComponent>> methodCall)
+        protected void Invoke(Expression<Action<TComponent>> methodCall)
         {
             var methodName = this.GetAndValidateMethod(methodCall);
             Exception caughtException = null;
@@ -54,7 +54,7 @@
             this.TestContext.MethodResult = VoidMethodResult.Instance;
         }
 
-        protected void InvokeAsyncVoid(Expression<Func<TComponent, Task>> methodCall)
+        protected void Invoke(Expression<Func<TComponent, Task>> methodCall)
         {
             var methodInfo = this.GetAndValidateMethodResult(methodCall);
 

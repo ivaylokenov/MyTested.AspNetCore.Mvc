@@ -3,14 +3,15 @@
     using Microsoft.AspNetCore.Mvc;
     using ActionFilters;
     using Models;
-    using Pipeline;
+    using Pipelines;
 
     [ApiController]
     [Consumes("application/json", "application/xml")]
     [Produces("application/json", "application/xml", Type = typeof(ResponseModel), Order = 1)]
-    [MiddlewareFilter(typeof(Pipeline), Order = 2)]
-    [ServiceFilter(typeof(CustomActionFilter), Order = 2)]
-    [TypeFilter(typeof(CustomActionFilterWithArgs), Order = 2, Arguments = new object[] { 10 })]
+    [ProducesResponseType(200, Type = typeof(ResponseModel))]
+    [MiddlewareFilter(typeof(MyPipeline), Order = 2)]
+    [ServiceFilter(typeof(MyActionFilter), Order = 2)]
+    [TypeFilter(typeof(MyActionFilterWithArgs), Order = 2, Arguments = new object[] { 10 })]
     public class ApiController : Controller
     {
         [Route("/route")]

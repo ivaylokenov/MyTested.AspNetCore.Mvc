@@ -7,7 +7,7 @@
     public class ForbidTestBuilderTests
     {
         [Fact]
-        public void ShouldPassForTheShouldWorkCorrectly()
+        public void AndProvideTheActionResultShouldWorkCorrectly()
         {
             MyController<MvcController>
                 .Instance()

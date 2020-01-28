@@ -17,14 +17,19 @@
         /// <param name="state">Not used parameter. Used for testing with <see cref="ILogger"/> service.</param>
         /// <returns>Disposable object.</returns>
         public IDisposable BeginScope<TState>(TState state)
-            => DisposableMock.Instance;
+        {
+            return DisposableMock.Instance;
+        }
 
         /// <summary>
         /// Does nothing. Always returns false.
         /// </summary>
         /// <param name="logLevel">Not used parameter. Used for testing with <see cref="ILogger"/> service.</param>
         /// <returns>Always false.</returns>
-        public bool IsEnabled(LogLevel logLevel) => false;
+        public bool IsEnabled(LogLevel logLevel)
+        {
+            return false;
+        }
 
         /// <summary>
         /// Does nothing. Used for testing purposes.

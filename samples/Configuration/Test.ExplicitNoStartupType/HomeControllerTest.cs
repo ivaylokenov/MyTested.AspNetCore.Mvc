@@ -2,7 +2,7 @@ namespace Test.ExplicitNoStartupType
 {
     using MyTested.AspNetCore.Mvc;
     using System;
-    using WebApplication;
+    using WebApplication.Core;
     using Xunit;
 
     public class HomeControllerTest

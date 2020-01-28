@@ -71,8 +71,8 @@
             MyViewComponent<NormalComponent>
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
-                .ResultOfType<ContentViewComponentResult>(result => result
-                    .Passing(c => c.Content == "Test"));
+                .ResultOfType<ContentViewComponentResult>()
+                .Passing(c => c.Content == "Test");
         }
 
         [Fact]
@@ -112,8 +112,8 @@
                     MyViewComponent<NormalComponent>
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
-                        .ResultOfType<ContentViewComponentResult>(result => result
-                            .Passing(c => c.Content == "Incorrect"));
+                        .ResultOfType<ContentViewComponentResult>()
+                        .Passing(c => c.Content == "Incorrect");
                 },
                 "When invoking NormalComponent expected response model ContentViewComponentResult to pass the given predicate, but it failed.");
         }
@@ -180,7 +180,7 @@
                         .ShouldReturn()
                         .Result("Incorrect");
                 },
-                "When invoking StringComponent expected the response model to be the given model, but in fact it was a different one. Expected a value of 'Incorrect', but in fact it was 'TestString'.");
+                "When invoking StringComponent expected the response model to be the given model, but in fact it was a different one.");
         }
         
         [Fact]

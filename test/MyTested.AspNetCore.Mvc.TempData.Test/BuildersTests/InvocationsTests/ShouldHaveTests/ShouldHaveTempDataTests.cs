@@ -158,7 +158,7 @@
                         .ShouldReturn()
                         .View();
                 },
-                "When invoking AddTempDataComponent expected temp data to have entry with 'Test' key and the provided value, but the value was different. Expected a value of 'Invalid', but in fact it was 'TempValue'.");
+                "When invoking AddTempDataComponent expected temp data to have entry with 'Test' key and the provided value, but the value was different.");
         }
 
         [Fact]
@@ -218,7 +218,7 @@
                         .ShouldReturn()
                         .View();
                 },
-                "When invoking AddTempDataComponent expected temp data to have entry with 'Another' key and the provided value, but the value was different. Expected a value of 'Invalid', but in fact it was 'AnotherValue'.");
+                "When invoking AddTempDataComponent expected temp data to have entry with 'Another' key and the provided value, but the value was different.");
         }
 
         [Fact]
@@ -300,7 +300,7 @@
                         .ShouldReturn()
                         .View();
                 },
-                "When invoking AddTempDataComponent expected temp data to have entry with 'Another' key and the provided value, but the value was different. Expected a value of 'Invalid', but in fact it was 'AnotherValue'.");
+                "When invoking AddTempDataComponent expected temp data to have entry with 'Another' key and the provided value, but the value was different.");
         }
 
         [Fact]

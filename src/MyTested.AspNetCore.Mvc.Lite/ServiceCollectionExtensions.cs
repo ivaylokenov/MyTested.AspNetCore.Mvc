@@ -19,7 +19,7 @@
 
             serviceCollection
                 .AddCoreTesting()
-                .AddControllersCoreTesting()
+                .AddControllersTesting()
                 .AddViewComponentsTesting();
             
             return serviceCollection;

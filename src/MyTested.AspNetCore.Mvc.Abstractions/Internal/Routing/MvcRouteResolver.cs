@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
+    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities;
@@ -23,13 +24,8 @@
         /// <param name="services">Application services from which the route will be resolved.</param>
         /// <param name="router">IRouter to resolve route values.</param>
         /// <param name="routeContext">RouteContext to use for resolving the route values.</param>
-        /// <param name="fullExecution">Indicates whether the full MVC pipeline will be executed or not.</param>
         /// <returns>Resolved route information.</returns>
-        public static ResolvedRouteContext Resolve(
-            IServiceProvider services,
-            IRouter router,
-            RouteContext routeContext,
-            bool fullExecution = false)
+        public static ResolvedRouteContext Resolve(IServiceProvider services, IRouter router, RouteContext routeContext)
         {
             try
             {
@@ -48,11 +44,11 @@
                 var actions = routeContext
                     .RouteData
                     .Routers
-                    .FirstOrDefault(r => r.GetType() == WebFramework.Internals.MvcAttributeRouteHandler)
-                    ?.Exposed()
-                    .Actions
+                    .OfType<MvcAttributeRouteHandler>()
+                    .FirstOrDefault()
+                    ?.Actions
                     ?? actionSelector.SelectCandidates(routeContext);
-
+                
                 actionDescriptor = actionSelector.SelectBestCandidate(
                     routeContext,
                     actions);
@@ -66,8 +62,6 @@
             {
                 return new ResolvedRouteContext("action could not be matched");
             }
-
-            routeContext.HttpContext.Features.Set(new RouteTestingFeature(fullExecution));
 
             var actionContext = new ActionContext(routeContext.HttpContext, routeContext.RouteData, actionDescriptor);
 
@@ -90,22 +84,12 @@
             }
             catch (Exception ex)
             {
-                return new ResolvedRouteContext($"exception was thrown when trying to invoke the pipeline: '{ex.Unwrap().Message}'");
+                return new ResolvedRouteContext($"exception was thrown when trying to bind the action arguments: '{ex.Unwrap().Message}'");
             }
 
             if (modelBindingActionInvoker.BoundActionArguments == null)
             {
-                var filters = actionDescriptor
-                    .FilterDescriptors
-                    .OrderByDescending(f => f.Order)
-                    .Select(f => $"{f.Filter.GetName()} ({f.Scope.ToFilterScopeName()})")
-                    .ToArray();
-
-                var filtersMessage = filters.Any()
-                    ? $"filters - {string.Join(", ", filters)}"
-                    : "filters";
-
-                return new ResolvedRouteContext($"action could not be invoked because of the declared {filtersMessage}. Either a filter is setting the response result before the action itself, or you must set the request properties so that they will pass through the pipeline");
+                return new ResolvedRouteContext("action could not be invoked because of the declared filters. You must set the request properties so that they will pass through the pipeline");
             }
 
             return new ResolvedRouteContext(

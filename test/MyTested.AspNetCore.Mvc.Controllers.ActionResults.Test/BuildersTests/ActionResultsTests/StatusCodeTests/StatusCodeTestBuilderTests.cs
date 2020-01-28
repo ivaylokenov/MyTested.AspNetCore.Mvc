@@ -268,7 +268,7 @@
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .StatusCode(result => result
-                    .ContainingOutputFormatterOfType<NewtonsoftJsonOutputFormatter>());
+                    .ContainingOutputFormatterOfType<JsonOutputFormatter>());
         }
 
         [Fact]

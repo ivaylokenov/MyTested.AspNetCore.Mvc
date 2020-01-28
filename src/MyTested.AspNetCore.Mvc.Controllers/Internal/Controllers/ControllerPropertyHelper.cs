@@ -44,11 +44,15 @@
         }
 
         public static ControllerPropertyHelper GetProperties<TController>()
-            where TController : class 
-            => GetProperties(typeof(TController));
+            where TController : class
+        {
+            return GetProperties(typeof(TController));
+        }
 
-        public static ControllerPropertyHelper GetProperties(Type type) 
-            => ControllerPropertiesCache.GetOrAdd(type, _ => new ControllerPropertyHelper(type));
+        public static ControllerPropertyHelper GetProperties(Type type)
+        {
+            return ControllerPropertiesCache.GetOrAdd(type, _ => new ControllerPropertyHelper(type));
+        }
 
         private void TryCreateControllerContextDelegates()
         {

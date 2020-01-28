@@ -2,7 +2,7 @@ namespace Test.NoAsync
 {
     using System;
     using MyTested.AspNetCore.Mvc;
-    using WebApplication;
+    using WebApplication.Core;
     using Xunit;
 
     public class HomeControllerTest

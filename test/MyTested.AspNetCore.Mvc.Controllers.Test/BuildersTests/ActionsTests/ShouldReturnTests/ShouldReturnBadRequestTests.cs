@@ -8,7 +8,7 @@
     public class ShouldReturnBadRequestTests
     {
         [Fact]
-        public void ShouldReturnBadRequestShouldNotThrowExceptionWhenResultIsBadRequest()
+        public void ShouldReturnBadRequestShouldNotThrowExceptionWhenResultIsHttpBadRequest()
         {
             MyController<MvcController>
                 .Instance()
@@ -28,18 +28,18 @@
         }
 
         [Fact]
-        public void ShouldReturnBadRequestShouldThrowExceptionWhenActionDoesNotReturnBadRequest()
+        public void ShouldReturnNotFoundShouldThrowExceptionWhenActionDoesNotReturnNotFound()
         {
             Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.NotFoundAction())
+                        .Calling(c => c.HttpNotFoundAction())
                         .ShouldReturn()
                         .BadRequest();
                 },
-                "When calling NotFoundAction action in MvcController expected result to be BadRequestResult, but instead received NotFoundResult.");
+                "When calling HttpNotFoundAction action in MvcController expected result to be BadRequestResult, but instead received NotFoundResult.");
         }
     }
 }

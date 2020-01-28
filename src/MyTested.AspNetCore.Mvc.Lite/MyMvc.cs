@@ -37,8 +37,6 @@
 
         /// <summary>
         /// Starts a controller test.
-        /// This assertion chain validates the controller as an atomic unit - it does not 
-        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
         /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
@@ -48,8 +46,6 @@
 
         /// <summary>
         /// Starts a controller test.
-        /// This assertion chain validates the controller as an atomic unit - it does not 
-        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
         /// <param name="controller">Instance of the ASP.NET Core MVC controller to test.</param>
@@ -60,8 +56,6 @@
 
         /// <summary>
         /// Starts a controller test.
-        /// This assertion chain validates the controller as an atomic unit - it does not 
-        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
         /// <param name="construction">Construction function returning the instantiated controller.</param>
@@ -72,8 +66,6 @@
 
         /// <summary>
         /// Starts a controller test.
-        /// This assertion chain validates the controller as an atomic unit - it does not 
-        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
         /// <param name="controllerInstanceBuilder">Builder for creating the controller instance.</param>
@@ -84,8 +76,6 @@
 
         /// <summary>
         /// Starts a view component test.
-        /// This assertion chain validates the view component as an atomic unit - it does not 
-        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         /// <typeparam name="TViewComponent">Class representing ASP.NET Core MVC view component.</typeparam>
         /// <returns>Test builder of <see cref="IViewComponentBuilder{TViewComponent}"/> type.</returns>
@@ -95,8 +85,6 @@
 
         /// <summary>
         /// Starts a view component test.
-        /// This assertion chain validates the view component as an atomic unit - it does not 
-        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         /// <typeparam name="TViewComponent">Class representing ASP.NET Core MVC view component.</typeparam>
         /// <param name="viewComponent">Instance of the ASP.NET Core MVC view component to use.</param>
@@ -107,8 +95,6 @@
 
         /// <summary>
         /// Starts a view component test.
-        /// This assertion chain validates the view component as an atomic unit - it does not 
-        /// execute server requests, middleware, routing, filters, or application responses.
         /// </summary>
         /// <typeparam name="TViewComponent">Class representing ASP.NET Core MVC view component.</typeparam>
         /// <param name="construction">Construction function returning the instantiated view component.</param>

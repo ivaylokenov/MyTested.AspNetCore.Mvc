@@ -1,85 +1,59 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Routing
 {
-    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Reflection;
     using System.Threading.Tasks;
     using Contracts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
+    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.Extensions.Logging;
-    using TestContexts;
-    using Utilities.Extensions;
     using Utilities.Validators;
 
-    public class ModelBindingActionInvoker : IModelBindingActionInvoker
+    public class ModelBindingActionInvoker : ResourceInvoker, IModelBindingActionInvoker
     {
-        private static readonly Type RouteActionResultMockType = typeof(RouteActionResultMock);
-
+        private readonly ControllerActionInvokerCacheEntry cacheEntry;
         private readonly ControllerContext controllerContext;
-        private readonly dynamic cacheEntry;
-        private readonly object invoker;
+
+        private Dictionary<string, object> arguments;
 
         public ModelBindingActionInvoker(
             ILogger logger,
             DiagnosticListener diagnosticListener,
-            IActionContextAccessor actionContextAccessor,
             IActionResultTypeMapper mapper,
             ControllerContext controllerContext,
-            dynamic cacheEntry,
-            IFilterMetadata[] filters,
-            bool fullExecution)
+            ControllerActionInvokerCacheEntry cacheEntry,
+            IFilterMetadata[] filters)
+            : base(diagnosticListener, logger, mapper, controllerContext, filters, controllerContext.ValueProviderFactories)
         {
             CommonValidator.CheckForNullReference(cacheEntry, nameof(cacheEntry));
-            CommonValidator.CheckForNullReference(controllerContext, nameof(controllerContext));
 
-            this.controllerContext = controllerContext;
             this.cacheEntry = cacheEntry;
-
-            filters = this.PrepareFilters(filters, fullExecution);
-
-            var invokerType = WebFramework.Internals.ControllerActionInvoker;
-            var constructor = invokerType.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)[0];
-            this.invoker = constructor.Invoke(new object[] { logger, diagnosticListener, actionContextAccessor, mapper, controllerContext, cacheEntry, filters });
+            this.controllerContext = controllerContext;
         }
 
-        public IDictionary<string, object> BoundActionArguments { get; private set; }
-
-        public async Task InvokeAsync()
+        public IDictionary<string, object> BoundActionArguments => this.arguments;
+        
+        protected override async Task InvokeInnerFilterAsync()
         {
-            var exposedInvoker = this.invoker.Exposed();
+            // Not initialized in the constructor because filters may
+            // short-circuit the request and tests will fail with wrong exception message.
+            this.arguments = new Dictionary<string, object>();
 
-            // Invoke the filter pipeline and execute the pipeline.
-            await exposedInvoker.InvokeAsync();
-
-            if (exposedInvoker._result.GetType() != RouteActionResultMockType)
+            var actionDescriptor = this.controllerContext.ActionDescriptor;
+            if (actionDescriptor.BoundProperties.Count == 0 &&
+                actionDescriptor.Parameters.Count == 0)
             {
-                // Filters short-circuited the action pipeline. Do not set model bound arguments.
                 return;
             }
 
-            var executionTestContext = this.controllerContext
-                .HttpContext
-                .Features
-                .Get<ExecutionTestContext>();
-
-            this.BoundActionArguments = executionTestContext.ActionArguments;
+            await this.cacheEntry.ControllerBinderDelegate(this.controllerContext, _instance, this.arguments);
         }
 
-        private IFilterMetadata[] PrepareFilters(IFilterMetadata[] filters, bool fullExecution)
+        protected override void ReleaseResources()
         {
-            var routeTestingActionFilter = new RouteTestingActionFilter();
-
-            if (!fullExecution)
-            {
-                return new[] { routeTestingActionFilter };
-            }
-            else
-            {
-                return new List<IFilterMetadata>(filters) { routeTestingActionFilter }.ToArray();
-            }
+            // Intentionally does nothing.
         }
     }
 }

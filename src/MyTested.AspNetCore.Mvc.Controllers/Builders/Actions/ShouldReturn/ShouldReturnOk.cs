@@ -17,7 +17,7 @@
         /// <inheritdoc />
         public IAndTestBuilder Ok(Action<IOkTestBuilder> okTestBuilder)
         {
-            if (this.ObjectActionResult is OkObjectResult)
+            if (this.ActionResult is OkObjectResult)
             {
                 return this.ValidateOkResult<OkObjectResult>(okTestBuilder);
             }

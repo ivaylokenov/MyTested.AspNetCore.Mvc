@@ -17,7 +17,7 @@
         /// <inheritdoc />
         public IAndTestBuilder NotFound(Action<INotFoundTestBuilder> notFoundTestBuilder)
         {
-            if (this.ObjectActionResult is NotFoundObjectResult)
+            if (this.ActionResult is NotFoundObjectResult)
             {
                 return this.ValidateNotFoundResult<NotFoundObjectResult>(notFoundTestBuilder);
             }

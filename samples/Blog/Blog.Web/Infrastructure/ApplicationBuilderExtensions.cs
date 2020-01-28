@@ -16,19 +16,17 @@
             => app.SeedDataAsync().GetAwaiter().GetResult();
 
         public static IApplicationBuilder UseMvcWithAreas(this IApplicationBuilder app)
-            => app.UseEndpoints(routes =>
+            => app.UseMvc(routes =>
             {
-                routes.MapControllerRoute(
-                    name: "areas",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-                );
-
-                routes.MapControllerRoute(
+                routes.MapRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}"
+                    template: "{controller=Home}/{action=Index}/{id?}"
                 );
 
-                routes.MapRazorPages();
+                routes.MapRoute(
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
             });
 
         public static async Task<IApplicationBuilder> SeedDataAsync(this IApplicationBuilder app)

@@ -345,7 +345,7 @@
                         .Created(created => created
                             .ContainingRouteValue("id", 2));
                 },
-                "When calling CreatedAtActionResult action in MvcController expected created result route values to have entry with 'id' key and the provided value, but the value was different. Expected a value of '2', but in fact it was '1'.");
+                "When calling CreatedAtActionResult action in MvcController expected created result route values to have entry with 'id' key and the provided value, but the value was different.");
         }
 
         [Fact]
@@ -800,7 +800,7 @@
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
                 .Created(created => created
-                    .ContainingOutputFormatterOfType<NewtonsoftJsonOutputFormatter>());
+                    .ContainingOutputFormatterOfType<JsonOutputFormatter>());
         }
 
         [Fact]

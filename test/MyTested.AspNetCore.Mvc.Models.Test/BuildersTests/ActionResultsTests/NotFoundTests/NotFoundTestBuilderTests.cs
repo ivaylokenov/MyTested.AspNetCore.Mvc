@@ -12,7 +12,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.NotFoundAction())
+                .Calling(c => c.HttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound(notFound => notFound
                     .WithNoModel());
@@ -26,12 +26,12 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.NotFoundWithObjectAction())
+                        .Calling(c => c.HttpNotFoundWithObjectAction())
                         .ShouldReturn()
                         .NotFound(notFound => notFound
                             .WithNoModel());
                 },
-                "When calling NotFoundWithObjectAction action in MvcController expected to not have a response model but in fact such was found.");
+                "When calling HttpNotFoundWithObjectAction action in MvcController expected to not have a response model but in fact such was found.");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Caching
 {
+    using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
@@ -10,10 +11,10 @@
 
     public class DistributedCacheMock : IDistributedCacheMock
     {
-        private readonly IDictionary<string, DistributedCacheEntryMock> cache;
+        private readonly IDictionary<string, DistributedCacheEntry> cache;
 
         public DistributedCacheMock()
-            => this.cache = new ConcurrentDictionary<string, DistributedCacheEntryMock>();
+            => this.cache = new ConcurrentDictionary<string, DistributedCacheEntry>();
 
         public byte[] Get(string key)
         {
@@ -29,7 +30,7 @@
 
         public void Set(string key, byte[] value, DistributedCacheEntryOptions options)
         {
-            var entry = new DistributedCacheEntryMock(value, options);
+            var entry = new DistributedCacheEntry(value, options);
             this.cache.Add(key, entry);
         }
 

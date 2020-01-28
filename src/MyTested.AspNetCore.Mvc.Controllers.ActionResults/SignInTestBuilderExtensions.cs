@@ -59,12 +59,12 @@
 
             var actualPrincipal = actualBuilder.ActionResult.Principal;
 
-            if (Reflection.AreNotDeeplyEqual(principal, actualPrincipal, out var result))
+            if (Reflection.AreNotDeeplyEqual(principal, actualPrincipal))
             {
                 actualBuilder.ThrowNewFailedValidationException(
                     "principal",
                     "to be the same as the provided one",
-                    $"instead received different result. {result}");
+                    "instead received different result");
             }
 
             return actualBuilder;

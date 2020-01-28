@@ -1,10 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Utilities.Validators
 {
+    using Extensions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Extensions;
-    using Internal;
 
     public static class DictionaryValidator
     {
@@ -33,21 +32,22 @@
             var entryExists = dictionary.ContainsKey(key);
             var actualValue = entryExists ? dictionary[key] : null;
 
-            DeepEqualityResult result = null;
-            if (!entryExists || Reflection.AreNotDeeplyEqual(value, actualValue, out result))
+            if (!entryExists || Reflection.AreNotDeeplyEqual(value, actualValue))
             {
                 failedValidationAction(
                     name,
                     $"to have entry with '{key}' key and the provided value",
-                    $"{(entryExists ? $"the value was different. {result}" : "such was not found")}");
+                    $"{(entryExists ? "the value was different" : "such was not found")}");
             }
         }
 
         public static void ValidateValueOfType<TValue>(
             string name,
             IDictionary<string, object> dictionary,
-            Action<string, string, string> failedValidationAction) 
-            => ValidateValueOfType<TValue>(name, dictionary.Values, failedValidationAction);
+            Action<string, string, string> failedValidationAction)
+        {
+            ValidateValueOfType<TValue>(name, dictionary.Values, failedValidationAction);
+        }
 
         public static void ValidateValueOfType(
             string name,
@@ -65,29 +65,26 @@
            string name,
            IDictionary<object, object> dictionary,
            Action<string, string, string> failedValidationAction,
-           Type expectedType)
-            => ValidateValueOfType(name, dictionary.Values, failedValidationAction, expectedType);
+           Type valueType)
+            => ValidateValueOfType(name, dictionary.Values, failedValidationAction, valueType);
         
         public static void ValidateStringKeyAndValueOfType(
             string name,
             IDictionary<string, object> dictionary,
             string key,
             Action<string, string, string> failedValidationAction,
-            Type expectedType)
+            Type valueType)
         {
             var entryExists = dictionary.ContainsKey(key);
-
             var actualValue = entryExists ? dictionary[key] : null;
+
             var actualType = actualValue?.GetType();
-
-            if (!entryExists || Reflection.AreDifferentTypes(expectedType, actualType))
+            if (!entryExists || Reflection.AreDifferentTypes(valueType, actualType))
             {
-                var (expectedTypeName, actualTypeName) = (expectedType, actualType).GetTypeComparisonNames();
-
                 failedValidationAction(
                     name,
-                    $"to have entry with '{key}' key and value of {expectedTypeName} type",
-                    $"{(entryExists ? $"in fact found {actualTypeName}" : "such was not found")}");
+                    $"to have entry with '{key}' key and value of {valueType.ToFriendlyTypeName()} type",
+                    $"{(entryExists ? $"in fact found {actualType.ToFriendlyTypeName()}" : "such was not found")}");
             }
         }
 
@@ -147,15 +144,15 @@
           string name,
           ICollection<object> values,
           Action<string, string, string> failedValidationAction,
-          Type expectedType)
+          Type valueType)
         {
-            var entryOfSameType = values.FirstOrDefault(arg => arg.GetType() == expectedType);
+            var entryOfSameType = values.FirstOrDefault(arg => arg.GetType() == valueType);
 
             if (entryOfSameType == null)
             {
                 failedValidationAction(
                     name,
-                    $"to have at least one entry of {expectedType.ToFriendlyTypeName()} type",
+                    $"to have at least one entry of {valueType.ToFriendlyTypeName()} type",
                     "none was found");
             }
         }

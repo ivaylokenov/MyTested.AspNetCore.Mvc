@@ -27,9 +27,7 @@
             return customServiceProvider;
         }
 
-        public void Configure(IApplicationBuilder app) => app
-            .UseRouting()
-            .UseEndpoints(endpoints => endpoints
-                .MapDefaultControllerRoute());
+        public void Configure(IApplicationBuilder app)
+            => app.UseMvcWithDefaultRoute();
     }
 }

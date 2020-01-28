@@ -20,7 +20,7 @@
         /// <inheritdoc />
         public IAndTestBuilder UnprocessableEntity(Action<IUnprocessableEntityTestBuilder> unprocessableEntityTestBuilder)
         {
-            if (this.ObjectActionResult is UnprocessableEntityObjectResult)
+            if (this.ActionResult is UnprocessableEntityObjectResult)
             {
                 return this.ValidateUnprocessableEntityResult<UnprocessableEntityObjectResult>(unprocessableEntityTestBuilder);
             }

@@ -12,6 +12,8 @@
             TimeSpan ioTimeout, 
             Func<bool> tryEstablishSession, 
             bool isNewSessionKey)
-            => new SessionMock();
+        {
+            return new SessionMock();
+        }
     }
 }

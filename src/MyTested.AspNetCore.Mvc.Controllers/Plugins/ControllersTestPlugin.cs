@@ -3,7 +3,6 @@
     using System;
     using Microsoft.Extensions.DependencyInjection;
     using Internal.TestContexts;
-    using Microsoft.AspNetCore.Mvc;
     using Utilities;
 
     public class ControllersTestPlugin : BaseTestPlugin, IDefaultRegistrationPlugin, IServiceRegistrationPlugin, IShouldPassForPlugin
@@ -17,16 +16,13 @@
             => serviceCollection => serviceCollection.AddMvcCore();
         
         public Action<IServiceCollection> ServiceRegistrationDelegate 
-            => serviceCollection => serviceCollection.AddControllersCoreTesting();
+            => serviceCollection => serviceCollection.AddControllersTesting();
 
         public object TryGetValue(Type type, ComponentTestContext testContext)
             => Reflection.AreAssignable(this.controllerAttributesType, type) // ControllerAttributes
                 ? new ControllerAttributes(testContext.ComponentAttributes)
                 : Reflection.AreAssignable(this.actionAttributesType, type) // ActionAttributes
-                ? new ActionAttributes(testContext.MethodAttributes)
-                : testContext.MethodResult is ObjectResult objectResult // ObjectResult Model
-                    && Reflection.AreAssignable(type, objectResult.Value?.GetType())
-                ? objectResult.Value
+                ? (object)new ActionAttributes(testContext.MethodAttributes)
                 : null;
     }
 }

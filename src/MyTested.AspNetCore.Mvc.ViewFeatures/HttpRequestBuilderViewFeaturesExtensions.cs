@@ -1,13 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
-    using System;
     using Builders.Contracts.Http;
     using Builders.Http;
-    using Internal;
     using Microsoft.AspNetCore.Antiforgery;
+    using Microsoft.AspNetCore.Antiforgery.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Options;
-    using Utilities.Extensions;
 
     /// <summary>
     /// Contains <see cref="IAntiforgery"/> extension methods for <see cref="IHttpRequestBuilder"/>.
@@ -44,20 +42,15 @@
                 actualHttpRequestBuilder.WithFormField(antiForgeryOptions.FormFieldName, tokens.RequestToken);
             }
 
-            var antiforgeryFeature = WebFramework.Internals.IAntiforgeryFeature;
+            var generatedAntiforgeryFeature = httpContext.Features.Get<IAntiforgeryFeature>();
 
-            var generatedAntiforgeryFeature = httpContext.Features[antiforgeryFeature].Exposed();
-
-            var newAntiforgeryFeature = Activator
-                .CreateInstance(WebFramework.Internals.AntiforgeryFeature)
-                .Exposed();
-
-            newAntiforgeryFeature.HaveDeserializedCookieToken = false;
-            newAntiforgeryFeature.HaveDeserializedRequestToken = false;
-            newAntiforgeryFeature.CookieToken = generatedAntiforgeryFeature.NewCookieToken;
-            newAntiforgeryFeature.RequestToken = generatedAntiforgeryFeature.NewRequestToken;
-
-            httpContext.Features[antiforgeryFeature] = newAntiforgeryFeature.Object;
+            httpContext.Features.Set<IAntiforgeryFeature>(new AntiforgeryFeature
+            {
+                HaveDeserializedCookieToken = false,
+                HaveDeserializedRequestToken = false,
+                CookieToken = generatedAntiforgeryFeature.NewCookieToken,
+                RequestToken = generatedAntiforgeryFeature.NewRequestToken
+            });
 
             return actualHttpRequestBuilder;
         }

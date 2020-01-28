@@ -78,7 +78,7 @@ namespace MusicStore.Models
         /// <returns></returns>
         private static async Task CreateAdminUser(IServiceProvider serviceProvider)
         {
-            var env = serviceProvider.GetService<IWebHostEnvironment>();
+            var env = serviceProvider.GetService<IHostingEnvironment>();
 
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)

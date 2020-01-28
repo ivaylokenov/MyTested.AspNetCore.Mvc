@@ -122,7 +122,7 @@
                         .Forbid(forbid => forbid
                             .WithAuthenticationProperties(authenticationProperties));
                 },
-                "When calling ForbidWithAuthenticationProperties action in MvcController expected forbid result authentication properties to be the same as the provided one, but instead received different result. Difference occurs at 'AuthenticationProperties.Items[.refresh].Value'. Expected a value of 'False', but in fact it was 'True'.");
+                "When calling ForbidWithAuthenticationProperties action in MvcController expected forbid result authentication properties to be the same as the provided one, but instead received different result.");
         }
 
         [Fact]

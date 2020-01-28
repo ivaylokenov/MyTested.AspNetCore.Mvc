@@ -1,6 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.TestContexts
 {
-    using System.Linq;
     using System.Linq.Expressions;
     using Application;
     using Http;
@@ -11,27 +10,26 @@
 
     public abstract class HttpTestContext
     {
+        private HttpContextMock httpContextMock;
         private RouteData routeData;
 
         protected HttpTestContext()
         {
             TestHelper.ExecuteTestCleanup();
-            this.HttpContextMock = TestHelper.CreateHttpContextMock();
+            this.httpContextMock = TestHelper.CreateHttpContextMock();
         }
 
         public HttpContext HttpContext
         {
-            get => this.HttpContextMock;
+            get => this.httpContextMock;
 
             set
             {
                 CommonValidator.CheckForNullReference(value, nameof(this.HttpContext));
-                this.HttpContextMock = HttpContextMock.From(value);
-                TestHelper.SetHttpContextToAccessor(this.HttpContextMock);
+                this.httpContextMock = HttpContextMock.From(value);
+                TestHelper.SetHttpContextToAccessor(this.httpContextMock);
             }
         }
-
-        public HttpContextMock HttpContextMock { get; private set; }
 
         public HttpRequest HttpRequest => this.HttpContext.Request;
 
@@ -44,7 +42,7 @@
                 if (this.routeData == null)
                 {
                     this.routeData = this.HttpContext.GetRouteData();
-                    if (this.routeData == null || !this.routeData.Routers.Any())
+                    if (this.routeData == null)
                     {
                         this.routeData = RouteDataResolver.ResolveRouteData(TestApplication.Router, this.HttpContext);
                     }
@@ -65,5 +63,7 @@
         public ISession Session => this.HttpContext.Session;
 
         public abstract string ExceptionMessagePrefix { get; }
+
+        public HttpContextMock HttpContextMock => this.httpContextMock;
     }
 }

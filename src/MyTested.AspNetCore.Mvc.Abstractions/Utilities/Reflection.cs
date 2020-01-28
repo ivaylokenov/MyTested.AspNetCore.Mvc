@@ -8,8 +8,6 @@
     using System.Linq.Expressions;
     using System.Reflection;
     using System.Runtime.CompilerServices;
-    using Extensions;
-    using Internal;
     using Microsoft.AspNetCore.Routing;
 
     /// <summary>
@@ -21,7 +19,6 @@
         private static readonly ConcurrentDictionary<Type, IEnumerable<object>> TypeAttributesCache = new ConcurrentDictionary<Type, IEnumerable<object>>();
         private static readonly ConcurrentDictionary<MethodInfo, IEnumerable<object>> MethodAttributesCache = new ConcurrentDictionary<MethodInfo, IEnumerable<object>>();
         private static readonly ConcurrentDictionary<Type, string> FriendlyTypeNames = new ConcurrentDictionary<Type, string>();
-        private static readonly ConcurrentDictionary<Type, string> FullFriendlyTypeNames = new ConcurrentDictionary<Type, string>();
 
         /// <summary>
         /// Checks whether two objects have the same types.
@@ -108,9 +105,6 @@
         public static bool IsGenericTypeDefinition(Type type)
             => type.GetTypeInfo().IsGenericTypeDefinition;
 
-        public static bool HasGenericTypeDefinition(Type type, Type genericTypeDefinition)
-            => type.IsGenericType && type.GetGenericTypeDefinition() == genericTypeDefinition;
-
         /// <summary>
         /// Checks whether two types are assignable by generic definition.
         /// </summary>
@@ -171,7 +165,7 @@
             var dataParam = Expression.Parameter(typeof(object), "data");
             var firstConvert = Expression.Convert(dataParam, data.GetType());
             var secondConvert = Expression.Convert(firstConvert, type);
-            var body = Expression.Block(secondConvert);
+            var body = Expression.Block(new Expression[] { secondConvert });
 
             var run = Expression.Lambda(body, dataParam).Compile();
             var ret = run.DynamicInvoke(data);
@@ -182,20 +176,29 @@
         /// Transforms generic type name to friendly one, showing generic type arguments.
         /// </summary>
         /// <param name="type">Type which name will be transformed.</param>
-        /// <param name="useFullName">Indicates whether the type name should be full ot not.</param>
         /// <returns>Transformed name as string.</returns>
-        public static string ToFriendlyTypeName(this Type type, bool useFullName = false)
+        public static string ToFriendlyTypeName(this Type type)
         {
             if (type == null)
             {
                 return "null";
             }
 
-            return useFullName
-                ? FullFriendlyTypeNames
-                    .GetOrAdd(type, _ => GetFriendlyTypeName(type, true))
-                : FriendlyTypeNames
-                    .GetOrAdd(type, _ => GetFriendlyTypeName(type, false));
+            return FriendlyTypeNames.GetOrAdd(type, _ =>
+            {
+                const string anonymousTypePrefix = "<>f__";
+
+                if (!type.GetTypeInfo().IsGenericType)
+                {
+                    return type.Name.Replace(anonymousTypePrefix, string.Empty);
+                }
+
+                var genericArgumentNames = type.GetGenericArguments().Select(ga => ga.ToFriendlyTypeName());
+                var friendlyGenericName = type.Name.Split('`')[0].Replace(anonymousTypePrefix, string.Empty);
+                var joinedGenericArgumentNames = string.Join(", ", genericArgumentNames);
+
+                return $"{friendlyGenericName}<{joinedGenericArgumentNames}>";
+            });
         }
 
         public static T TryFastCreateInstance<T>()
@@ -229,7 +232,7 @@
 
             try
             {
-                constructorParameters ??= new Dictionary<Type, object>();
+                constructorParameters = constructorParameters ?? new Dictionary<Type, object>();
                 instance = Activator.CreateInstance(type, constructorParameters.Select(p => p.Value).ToArray()) as T;
             }
             catch (Exception)
@@ -302,21 +305,7 @@
         /// <param name="actual">Actual object.</param>
         /// <returns>True or false.</returns>
         public static bool AreDeeplyEqual(object expected, object actual)
-            => AreDeeplyEqual(expected, actual, out _);
-
-        /// <summary>
-        /// Checks whether two objects are deeply equal by reflecting all their public properties recursively. Resolves successfully value and reference types, overridden Equals method, custom == operator, IComparable, nested objects and collection properties.
-        /// </summary>
-        /// <param name="expected">Expected object.</param>
-        /// <param name="actual">Actual object.</param>
-        /// <param name="result">Result object containing differences between the two objects.</param>
-        /// <returns>True or false.</returns>
-        public static bool AreDeeplyEqual(object expected, object actual, out DeepEqualityResult result)
-        {
-            result = new DeepEqualityResult(expected?.GetType(), actual?.GetType());
-
-            return AreDeeplyEqual(expected, actual, new ConditionalWeakTable<object, object>(), result);
-        }
+            => AreDeeplyEqual(expected, actual, new ConditionalWeakTable<object, object>());
 
         /// <summary>
         /// Checks whether two objects are not deeply equal by reflecting all their public properties recursively. Resolves successfully value and reference types, overridden Equals method, custom == operator, IComparable, nested objects and collection properties.
@@ -326,45 +315,7 @@
         /// <returns>True or false.</returns>
         /// <remarks>This method is used for the route testing. Since the ASP.NET Core MVC model binder creates new instances, circular references are not checked.</remarks>
         public static bool AreNotDeeplyEqual(object expected, object actual)
-            => AreNotDeeplyEqual(expected, actual, out _);
-
-        /// <summary>
-        /// Checks whether two objects are not deeply equal by reflecting all their public properties recursively. Resolves successfully value and reference types, overridden Equals method, custom == operator, IComparable, nested objects and collection properties.
-        /// </summary>
-        /// <param name="expected">Expected object.</param>
-        /// <param name="actual">Actual object.</param>
-        /// <param name="result">Result object containing differences between the two objects.</param>
-        /// <returns>True or false.</returns>
-        /// <remarks>This method is used for the route testing. Since the ASP.NET Core MVC model binder creates new instances, circular references are not checked.</remarks>
-        public static bool AreNotDeeplyEqual(object expected, object actual, out DeepEqualityResult result)
-            => !AreDeeplyEqual(expected, actual, out result);
-
-        /// <summary>
-        /// Copies the non-null property values from one object to another.
-        /// </summary>
-        /// <param name="source">Source object for the property values.</param>
-        /// <param name="destination">Destination object for the property values.</param>
-        public static void CopyProperties(object source, object destination)
-        {
-            var sourceType = source?.GetType();
-            var destinationType = destination?.GetType();
-
-            if (sourceType == null || destinationType == null || sourceType != destinationType)
-            {
-                throw new InvalidOperationException("Cannot copy properties from or to null objects, and when the object types are different.");
-            }
-
-            var properties = ObjectPropertyHelper.GetProperties(sourceType);
-
-            foreach (var property in properties.PropertyDelegates)
-            {
-                var originalValue = property.Getter(source);
-                if (originalValue != null)
-                {
-                    property.Setter(destination, originalValue);
-                }
-            }
-        }
+            => !AreDeeplyEqual(expected, actual);
 
         /// <summary>
         /// Creates a delegate from an object by providing MethodInfo filter.
@@ -409,19 +360,8 @@
             return typeInfo.IsDefined(typeof(CompilerGeneratedAttribute), false)
                 && typeInfo.IsGenericType
                 && (type.Name.Contains("AnonymousType") || type.Name.Contains("AnonType"))
-                && typeInfo.Attributes.HasFlag(TypeAttributes.NotPublic);
+                && (typeInfo.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
         }
-
-        public static MethodInfo GetNonPublicMethod(Type type, string name)
-            => type.GetMethod(name, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-
-        private static bool IsDateTimeRelated(this Type type)
-            => type == typeof(DateTime)
-            || type == typeof(DateTime?)
-            || type == typeof(TimeSpan)
-            || type == typeof(TimeSpan?)
-            || type == typeof(DateTimeOffset)
-            || type == typeof(DateTimeOffset?);
 
         private static ConstructorInfo GetConstructorByUnorderedParameters(this Type type, IEnumerable<Type> types)
         {
@@ -461,22 +401,16 @@
                 .FirstOrDefault();
         }
 
-        private static bool AreDeeplyEqual(
-            object expected, 
-            object actual, 
-            ConditionalWeakTable<object, object> processedElements,
-            DeepEqualityResult result)
+        private static bool AreDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
         {
-            result.ApplyValues(expected, actual);
-
             if (expected == null && actual == null)
             {
-                return result.Success;
+                return true;
             }
 
             if (expected == null || actual == null)
             {
-                return result.Failure;
+                return false;
             }
 
             var expectedType = expected.GetType();
@@ -485,7 +419,7 @@
             {
                 if (processedElements.TryGetValue(expected, out _))
                 {
-                    return result.Success;
+                    return true;
                 }
 
                 processedElements.Add(expected, expected);
@@ -497,84 +431,47 @@
             if ((expectedType == objectType && actualType != objectType)
                 || (actualType == objectType && expectedType != objectType))
             {
-                return result.Failure;
+                return false;
             }
 
-            var stringType = typeof(string);
-
-            if (expected is IEnumerable && expectedType != stringType)
+            if (expected is IEnumerable && expectedType != typeof(string))
             {
-                return CollectionsAreDeeplyEqual(expected, actual, processedElements, result);
+                return CollectionsAreDeeplyEqual(expected, actual, processedElements);
             }
 
-            var expectedTypeIsAnonymous = IsAnonymousType(expectedType);
-            if (expectedTypeIsAnonymous)
-            {
-                var actualIsAnonymous = IsAnonymousType(actualType);
-                if (!actualIsAnonymous)
-                {
-                    return result.Failure;
-                }
-            }
-
-            if (!expectedTypeIsAnonymous
-                && expectedType != actualType
+            if (expectedType != actualType
                 && !expectedType.IsAssignableFrom(actualType)
                 && !actualType.IsAssignableFrom(expectedType))
             {
-                return result.Failure;
+                return false;
             }
 
             if (expectedType.GetTypeInfo().IsPrimitive || expectedType.GetTypeInfo().IsEnum)
             {
-                return expected.ToString() == actual.ToString()
-                    ? result.Success
-                    : result.Failure;
+                return expected.ToString() == actual.ToString();
             }
-            
+
             var equalsOperator = expectedType.GetMethods().FirstOrDefault(m => m.Name == "op_Equality");
             if (equalsOperator != null)
             {
-                var equalsOperatorResult = (bool)equalsOperator.Invoke(null, new[] { expected, actual });
-                if (!equalsOperatorResult && expectedType != stringType)
-                {
-                    result.PushPath("== (Equality Operator)");
-                    if (!expectedType.IsDateTimeRelated())
-                    {
-                        result.ClearValues();
-                    }
-                }
-
-                return equalsOperatorResult
-                    ? result.Success
-                    : result.Failure;
+                return (bool)equalsOperator.Invoke(null, new[] { expected, actual });
             }
 
-            if (expectedType != objectType && !expectedTypeIsAnonymous)
+            if (expectedType != objectType && !IsAnonymousType(expectedType))
             {
                 var equalsMethod = expectedType.GetMethods().FirstOrDefault(m => m.Name == "Equals" && m.DeclaringType == expectedType);
                 if (equalsMethod != null)
                 {
-                    var equalsMethodResult = (bool)equalsMethod.Invoke(expected, new[] { actual });
-                    if (!equalsMethodResult)
-                    {
-                        result
-                            .PushPath("Equals()")
-                            .ClearValues();
-                    }
-
-                    return equalsMethodResult
-                        ? result.Success
-                        : result.Failure;
+                    return (bool)equalsMethod.Invoke(expected, new[] { actual });
                 }
             }
 
-            if (ComparablesAreDeeplyEqual(expected, actual, result))
+            if (ComparablesAreDeeplyEqual(expected, actual))
             {
-                return result.Success;
+                return true;
             }
 
-            if (!ObjectPropertiesAreDeeplyEqual(expected, actual, processedElements, result))
+            if (!ObjectPropertiesAreDeeplyEqual(expected, actual, processedElements))
             {
                 return false;
             }
@@ -582,91 +479,57 @@
             return true;
         }
 
-        private static bool AreNotDeeplyEqual(
-            object expected, 
-            object actual, 
-            ConditionalWeakTable<object, object> processedElements,
-            DeepEqualityResult result)
-            => !AreDeeplyEqual(expected, actual, processedElements, result);
+        private static bool AreNotDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
+            => !AreDeeplyEqual(expected, actual, processedElements);
 
-        private static bool CollectionsAreDeeplyEqual(
-            object expected, 
-            object actual, 
-            ConditionalWeakTable<object, object> processedElements,
-            DeepEqualityResult result)
+        private static bool CollectionsAreDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
         {
             var expectedAsEnumerable = (IEnumerable)expected;
             if (!(actual is IEnumerable actualAsEnumerable))
             {
-                return result.Failure;
+                return false;
             }
 
             var listOfExpectedValues = expectedAsEnumerable.Cast<object>().ToList();
             var listOfActualValues = actualAsEnumerable.Cast<object>().ToList();
 
-            var listOfExpectedValuesCount = listOfExpectedValues.Count;
-            var listOfActualValuesCount = listOfActualValues.Count;
-
-            if (listOfExpectedValuesCount != listOfActualValuesCount)
+            if (listOfExpectedValues.Count != listOfActualValues.Count)
             {
-                return result
-                    .PushPath(nameof(listOfExpectedValues.Count))
-                    .ApplyValues(listOfExpectedValuesCount, listOfActualValuesCount)
-                    .Failure;
+                return false;
             }
 
-            for (int i = 0; i < listOfExpectedValues.Count; i++)
+            var collectionIsNotEqual = listOfExpectedValues
+                .Where((t, i) => AreNotDeeplyEqual(t, listOfActualValues[i], processedElements))
+                .Any();
+
+            if (collectionIsNotEqual)
             {
-                var expectedValue = listOfExpectedValues[i];
-                var actualValue = listOfActualValues[i];
-
-                var collectionIsDictionary = expected is IDictionary;
-
-                var indexPath = collectionIsDictionary
-                    ? $"[{expectedValue.AsDynamic().Key}]"
-                    : $"[{i}]";
-
-                result.PushPath(indexPath);
-
-                if (AreNotDeeplyEqual(expectedValue, actualValue, processedElements, result))
-                {
-                    return result.Failure;
-                }
-
-                result.PopPath();
+                return false;
             }
 
-            return result.Success;
+            return true;
         }
 
-        private static bool ComparablesAreDeeplyEqual(object expected, object actual, DeepEqualityResult result)
+        private static bool ComparablesAreDeeplyEqual(object expected, object actual)
         {
             if (expected is IComparable expectedAsComparable)
             {
                 if (expectedAsComparable.CompareTo(actual) == 0)
                 {
-                    return result.Success;
+                    return true;
                 }
             }
 
             if (ObjectImplementsIComparable(expected) && ObjectImplementsIComparable(actual))
             {
-                var methodName = "CompareTo";
-
-                var method = expected.GetType().GetMethod(methodName);
+                var method = expected.GetType().GetMethod("CompareTo");
                 if (method != null)
                 {
-                    var compareToResult = (int)method.Invoke(expected, new[] { actual }) == 0;
-                    if (!compareToResult)
-                    {
-                        result.PushPath($"{methodName}()");
-                    }
-
-                    return compareToResult;
+                    return (int)method.Invoke(expected, new[] { actual }) == 0;
                 }
             }
 
-            return result.Failure;
+            return false;
         }
 
         private static bool ObjectImplementsIComparable(object obj)
@@ -674,11 +537,7 @@
                 .GetInterfaces()
                 .FirstOrDefault(i => i.Name.StartsWith("IComparable")) != null;
 
-        private static bool ObjectPropertiesAreDeeplyEqual(
-            object expected, 
-            object actual, 
-            ConditionalWeakTable<object, object> processedElements,
-            DeepEqualityResult result)
+        private static bool ObjectPropertiesAreDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
         {
             // Using RouteValueDictionary because it caches internally property getters as delegates.
             // It is better not to implement own cache, because these object types may be used
@@ -691,68 +550,47 @@
                 var expectedPropertyValue = expectedProperties[key];
                 var actualPropertyValue = actualProperties[key];
 
-                result.PushPath(key);
-
                 if (expectedPropertyValue is IEnumerable && expectedPropertyValue.GetType() != typeof(string))
                 {
-                    if (!CollectionsAreDeeplyEqual(
-                        expectedPropertyValue, 
-                        actualPropertyValue, 
-                        processedElements,
-                        result))
+                    if (!CollectionsAreDeeplyEqual(expectedPropertyValue, actualPropertyValue, processedElements))
                     {
-                        return result.Failure;
+                        return false;
                     }
                 }
 
-                var propertiesAreDifferent = AreNotDeeplyEqual(
-                    expectedPropertyValue, 
-                    actualPropertyValue, 
-                    processedElements,
-                    result);
-
+                var propertiesAreDifferent = AreNotDeeplyEqual(expectedPropertyValue, actualPropertyValue, processedElements);
                 if (propertiesAreDifferent)
                 {
-                    return result.Failure;
+                    return false;
                 }
-
-                result.PopPath();
             }
 
-            return result.Success;
+            return true;
         }
 
-        private static string GetFriendlyTypeName(Type type, bool useFullName)
+        public class DeepEqualResult
         {
-            const string anonymousTypePrefix = "<>f__";
+            private DeepEqualResult(bool areEqual) => this.AreEqual = areEqual;
 
-            var typeName = useFullName 
-                ? type?.FullName ?? type?.Name
-                : type?.Name;
+            public static DeepEqualResult Success { get; } = new DeepEqualResult(true);
 
-            if (typeName == null)
-            {
-                throw new InvalidOperationException("Type name cannot be null.");
-            }
+            public bool AreEqual { get; }
 
-            if (!type.GetTypeInfo().IsGenericType)
-            {
-                return typeName.Replace(anonymousTypePrefix, string.Empty);
-            }
+            public string ErrorPath { get; private set; }
 
-            var genericArgumentNames = type.GetGenericArguments().Select(ga => ga.ToFriendlyTypeName(useFullName));
-            var friendlyGenericName = typeName.Split('`')[0].Replace(anonymousTypePrefix, string.Empty);
+            public object ExpectedValue { get; private set; }
 
-            var anonymousName = "AnonymousType";
+            public object ActualValue { get; private set; }
 
-            if (friendlyGenericName.StartsWith(anonymousName))
-            {
-                friendlyGenericName = friendlyGenericName.Remove(anonymousName.Length);
-            }
+            public static DeepEqualResult Failure(string errorPath, object expected, object actual) 
+                => new DeepEqualResult(false)
+                {
+                    ErrorPath = errorPath,
+                    ExpectedValue = expected,
+                    ActualValue = actual
+                };
 
-            var joinedGenericArgumentNames = string.Join(", ", genericArgumentNames);
-
-            return $"{friendlyGenericName}<{joinedGenericArgumentNames}>";
+            public static implicit operator bool(DeepEqualResult result) => result.AreEqual;
         }
 
         private static class New<T>

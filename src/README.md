@@ -12,7 +12,6 @@ MyTested.AspNetCore.Mvc Packages
  - `MyTested.AspNetCore.Mvc.Models` - Contains setup and assertion methods for response and view models
  - `MyTested.AspNetCore.Mvc.Routing` - Contains setup and assertion methods for routes
  - `MyTested.AspNetCore.Mvc.Core` - Contains setup and assertion methods for MVC core features
- - `MyTested.AspNetCore.Mvc.Pipeline` - Contains setup methods for pipeline tests
  - `MyTested.AspNetCore.Mvc.TempData` - Contains setup and assertion methods for `ITempDataDictionary`
  - `MyTested.AspNetCore.Mvc.ViewData` - Contains assertion methods for `ViewDataDictionary` and dynamic `ViewBag`
  - `MyTested.AspNetCore.Mvc.ViewComponents` - Contains setup and assertion methods for view components

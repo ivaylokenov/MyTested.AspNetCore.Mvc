@@ -3,10 +3,9 @@
     using System;
     using System.Collections.Generic;
     using Contracts.Data;
+    using Microsoft.Extensions.Caching.Memory;
     using Contracts.Data.MemoryCache;
     using Data.MemoryCache;
-    using Microsoft.Extensions.Caching.Memory;
-    using Microsoft.Extensions.DependencyInjection;
     using Utilities.Extensions;
 
     /// <inheritdoc />4

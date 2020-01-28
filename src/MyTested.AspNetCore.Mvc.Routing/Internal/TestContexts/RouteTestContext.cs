@@ -3,18 +3,20 @@
     using System;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.AspNetCore.Http.Features.Authentication;
+    using Routing;
 
     public class RouteTestContext : HttpTestContext
     {
         private RouteContext routeContext;
 
-        public RouteTestContext() => this.SetAuthentication();
+        public RouteTestContext()
+        {
+            this.SetAuthentication();
+        }
 
         public IRouter Router { get; internal set; }
 
         public IServiceProvider Services { get; internal set; }
-
-        public bool FullExecution { get; internal set; }
 
         public RouteContext RouteContext
         {
@@ -36,6 +38,10 @@
             var httpAuthenticationFeature =
                 this.HttpContext.Features.Get<IHttpAuthenticationFeature>()
                 ?? new HttpAuthenticationFeature();
+
+#pragma warning disable 618
+            httpAuthenticationFeature.Handler = new RouteAuthenticationHandler();
+#pragma warning restore 618
 
             this.HttpContext.Features.Set(httpAuthenticationFeature);
         }

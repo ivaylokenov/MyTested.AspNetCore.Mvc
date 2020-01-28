@@ -199,7 +199,7 @@
                        .ShouldReturn()
                        .Ok();
                 },
-                "When calling AddTempDataAction action in MvcController expected temp data to have entry with 'Test' key and the provided value, but the value was different. Expected a value of 'Invalid', but in fact it was 'TempValue'.");
+                "When calling AddTempDataAction action in MvcController expected temp data to have entry with 'Test' key and the provided value, but the value was different.");
         }
 
         [Fact]
@@ -393,7 +393,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddTempDataAction action in MvcController expected temp data to have entry with 'Test' key and the provided value, but the value was different. Expected a value of 'Value', but in fact it was 'TempValue'.");
+                "When calling AddTempDataAction action in MvcController expected temp data to have entry with 'Test' key and the provided value, but the value was different.");
         }
     }
 }

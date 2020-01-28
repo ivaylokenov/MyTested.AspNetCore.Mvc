@@ -7,7 +7,7 @@
     public class FileTestBuilderTests
     {
         [Fact]
-        public void ShouldPassForTheShouldWorkCorrectly()
+        public void AndProvideTheActionResultShouldWorkCorrectly()
         {
             MyController<MvcController>
                 .Instance()

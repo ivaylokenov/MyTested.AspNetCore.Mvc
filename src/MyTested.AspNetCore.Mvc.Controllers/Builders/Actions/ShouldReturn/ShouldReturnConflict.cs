@@ -17,7 +17,7 @@
         /// <inheritdoc />
         public IAndTestBuilder Conflict(Action<IConflictTestBuilder> conflictTestBuilder)
         {
-            if (this.ObjectActionResult is ConflictObjectResult)
+            if (this.ActionResult is ConflictObjectResult)
             {
                 return this.ValidateConflictResult<ConflictObjectResult>(conflictTestBuilder);
             }

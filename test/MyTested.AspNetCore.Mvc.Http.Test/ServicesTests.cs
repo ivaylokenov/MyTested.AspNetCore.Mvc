@@ -41,7 +41,7 @@
 
 
         [Fact]
-        public void HttpContextAccessorShouldWorkCorrectlySynchronously()
+        public void IHttpContextAccessorShouldWorkCorrectlySynchronously()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -80,7 +80,7 @@
         }
 
         [Fact]
-        public void HttpContextAccessorShouldWorkCorrectlyAsynchronously()
+        public void IHttpContextAccessorShouldWorkCorrectlyAsynchronously()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()

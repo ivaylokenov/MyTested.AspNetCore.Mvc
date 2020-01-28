@@ -5,17 +5,17 @@
     using System.Runtime.CompilerServices;
     using Configuration;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Server;
     using Services;
-    using Utilities.Extensions;
 
     public static partial class TestApplication
     {
         private const string DefaultStartupTypeName = "Startup";
 
         private static Type startupType;
-        private static dynamic startupMethods;
+        private static StartupMethods startupMethods;
         
         private static MethodInfo findMethod;
         
@@ -49,7 +49,9 @@
             {
                 if (findMethod == null)
                 {
-                    findMethod = WebFramework.Internals.StartupLoader.GetMethod(
+                    // Calling the internal StartupLoader method to prevent
+                    // copy-pasted code from the ASP.NET Core source code.
+                    findMethod = typeof(StartupLoader).GetMethod(
                         "FindMethod",
                         BindingFlags.NonPublic | BindingFlags.Static);
                 }
@@ -111,22 +113,18 @@
                 
                 TestWebServer.AdditionalServices?.Invoke(serviceCollection);
 
-                var startupLoader = WebFramework.Internals.StartupLoader.Exposed();
-                
-                startupMethods = startupLoader.LoadMethods(
+                startupMethods = StartupLoader.LoadMethods(
                     serviceCollection.BuildServiceProviderFromFactory(),
                     StartupType,
                     TestWebServer.Environment.EnvironmentName);
-                
+
                 if (typeof(IStartup).GetTypeInfo().IsAssignableFrom(StartupType.GetTypeInfo()))
                 {
                     serviceCollection.AddSingleton(typeof(IStartup), StartupType);
                 }
                 else
                 {
-                    serviceCollection.AddSingleton(
-                        typeof(IStartup), 
-                        sp => Activator.CreateInstance(WebFramework.Internals.ConventionBasedStartup, startupMethods));
+                    serviceCollection.AddSingleton(typeof(IStartup), sp => new ConventionBasedStartup(startupMethods));
                 }
             }
         }

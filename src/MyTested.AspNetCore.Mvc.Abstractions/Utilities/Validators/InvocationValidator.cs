@@ -31,8 +31,8 @@
                 }
 
                 // ArgumentOutOfRangeException may be thrown because of missing route values
-                if (exception is InvalidOperationException exceptionAsInvalidOperationException
-                    && exceptionAsInvalidOperationException.Message.Contains("Could not find an IRouter"))
+                if (exception is ArgumentOutOfRangeException exceptionAsArgumentOutOfRangeException 
+                    && exceptionAsArgumentOutOfRangeException.StackTrace.Contains("Microsoft.AspNetCore.Mvc.Routing"))
                 {
                     throw new InvalidOperationException("Route values are not present in the method call but are needed for successful pass of this test case. Consider calling 'WithRouteData' on the component builder to resolve them from the provided lambda expression or set the HTTP request path by using 'WithHttpRequest'.");
                 }

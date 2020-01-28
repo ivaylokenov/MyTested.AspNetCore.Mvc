@@ -45,7 +45,7 @@
             var plugins = testFrameworkAssemblies
                 .Select(l => Assembly
                     .Load(new AssemblyName(l.Name))
-                    .GetType($"{testFrameworkName}.Plugins.{l.Name.Replace(testFrameworkName, string.Empty).Replace(".", string.Empty)}TestPlugin"))
+                    .GetType($"{testFrameworkName}.Plugins.{l.Name.Replace(testFrameworkName, string.Empty).Trim('.')}TestPlugin"))
                 .Where(p => p != null)
                 .ToArray();
 

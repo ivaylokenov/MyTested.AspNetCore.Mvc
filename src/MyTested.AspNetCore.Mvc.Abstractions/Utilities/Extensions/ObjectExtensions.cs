@@ -20,7 +20,7 @@
             }
             catch (InvalidCastException)
             {
-                return default;
+                return default(T);
             }
         }
 

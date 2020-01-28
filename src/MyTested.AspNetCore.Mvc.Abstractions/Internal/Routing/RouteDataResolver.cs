@@ -7,8 +7,10 @@
 
     public static class RouteDataResolver
     {
-        public static RouteData ResolveRouteData(IRouter router, HttpContext httpContext) 
-            => ResolveRouteData(router, new RouteContext(httpContext));
+        public static RouteData ResolveRouteData(IRouter router, HttpContext httpContext)
+        {
+            return ResolveRouteData(router, new RouteContext(httpContext));
+        }
 
         public static RouteData ResolveRouteData(IRouter router, RouteContext routeContext)
         {

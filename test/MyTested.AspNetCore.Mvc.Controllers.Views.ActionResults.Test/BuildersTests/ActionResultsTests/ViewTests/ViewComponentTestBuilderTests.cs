@@ -60,7 +60,7 @@
                         .ViewComponent(viewComponent => viewComponent
                             .ContainingArgument("model", new { model = 1 }));
                 },
-                "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have entry with 'model' key and the provided value, but the value was different. Expected a value of AnonymousType<Int32> type, but in fact it was List<ResponseModel>.");
+                "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have entry with 'model' key and the provided value, but the value was different.");
         }
 
         [Fact]
@@ -188,7 +188,7 @@
                         .ViewComponent(viewComponent => viewComponent
                             .ContainingArguments(new { id = 1, test = "incorrect" }));
                 }),
-                "When calling ViewComponentResultByName action in MvcController expected view component result arguments to have entry with 'test' key and the provided value, but the value was different. Expected a value of 'incorrect', but in fact it was 'text'.");
+                "When calling ViewComponentResultByName action in MvcController expected view component result arguments to have entry with 'test' key and the provided value, but the value was different.");
         }
 
         [Fact]

@@ -461,15 +461,14 @@
                 ["MultipleTestHeader"] = new[] { "FirstMultipleTestHeaderValue", "AnotherMultipleTestHeaderValue" },
                 ["Content-Type"] = "application/json",
                 ["Content-Length"] = "100",
-                ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" },
+                ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly" },
             };
 
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.CustomVoidResponseAction())
                 .ShouldHave()
-                .HttpResponse(response => response
-                    .ContainingHeaders(headers));
+                .HttpResponse(response => response.ContainingHeaders(headers));
         }
 
         [Fact]
@@ -529,7 +528,7 @@
                     MultipleTestHeader = new[] { "FirstMultipleTestHeaderValue", "AnotherMultipleTestHeaderValue" },
                     Content_Type = "application/json",
                     Content_Length = "100",
-                    Set_Cookie = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" },
+                    Set_Cookie = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly" },
                 }));
         }
 
@@ -547,7 +546,7 @@
                     ["MultipleTestHeader"] = "FirstMultipleTestHeaderValue,AnotherMultipleTestHeaderValue",
                     ["Content-Type"] = "application/json",
                     ["Content-Length"] = "100",
-                    ["Set-Cookie"] = "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly,AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; httponly"
+                    ["Set-Cookie"] = "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly,AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly"
                 }));
         }
 
@@ -565,7 +564,7 @@
                     ["MultipleTestHeader"] = new[] { "FirstMultipleTestHeaderValue", "AnotherMultipleTestHeaderValue" },
                     ["Content-Type"] = "application/json",
                     ["Content-Length"] = "100",
-                    ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" }
+                    ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly" }
                 }));
         }
 
@@ -583,7 +582,7 @@
                     ["MultipleTestHeader"] = new[] { "FirstMultipleTestHeaderValue", "AnotherMultipleTestHeaderValue" },
                     ["Content-Type"] = new[] { "application/json" },
                     ["Content-Length"] = new[] { "100" },
-                    ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" }
+                    ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly" }
                 }));
         }
 
@@ -679,7 +678,7 @@
                         .ShouldHave()
                         .HttpResponse(response => response.WithJsonBody(new RequestModel { Integer = 2, RequiredString = "Text" }));
                 },
-                "When calling CustomResponseAction action in MvcController expected HTTP response body to be the given object, but in fact it was different. Difference occurs at 'RequestModel.Integer'. Expected a value of '2', but in fact it was '1'.");
+                "When calling CustomResponseAction action in MvcController expected HTTP response body to be the given object, but in fact it was different.");
         }
 
         [Fact]
@@ -727,7 +726,7 @@
                         .ShouldHave()
                         .HttpResponse(response => response.WithJsonBody(new RequestModel { Integer = 2, RequiredString = "Text" }));
                 },
-                "When invoking HttpResponseComponent expected HTTP response body to be the given object, but in fact it was different. Difference occurs at 'RequestModel.Integer'. Expected a value of '2', but in fact it was '1'.");
+                "When invoking HttpResponseComponent expected HTTP response body to be the given object, but in fact it was different.");
         }
     }
 }

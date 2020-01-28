@@ -8,7 +8,8 @@
     public static class DictionaryExtensions
     {
         public static IDictionary<string, MethodArgumentTestContext> ToDetailedValues(this IDictionary<string, object> dictionary)
-            => dictionary.ToDictionary(
+        {
+            return dictionary.ToDictionary(
                 a => a.Key,
                 a => new MethodArgumentTestContext
                 {
@@ -16,6 +17,7 @@
                     Type = a.Value?.GetType(),
                     Value = a.Value
                 });
+        }
 
         public static IDictionary<string, object> ToRouteValues(
             this IDictionary<string, MethodArgumentTestContext> dictionary,

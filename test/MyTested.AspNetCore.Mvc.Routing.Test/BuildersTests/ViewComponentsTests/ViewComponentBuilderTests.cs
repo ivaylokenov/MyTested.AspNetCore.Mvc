@@ -51,10 +51,10 @@
                 () =>
                 {
                     MyViewComponent<RouteDataComponent>
-                        .InvokedWith(c => c.Invoke())
-                        .ShouldReturn()
-                        .View(view => view
-                            .WithModel("/"));
+                       .InvokedWith(c => c.Invoke())
+                       .ShouldReturn()
+                       .View()
+                       .WithModel("/");
                 },
                 "Route values are not present in the method call but are needed for successful pass of this test case. Consider calling 'WithRouteData' on the component builder to resolve them from the provided lambda expression or set the HTTP request path by using 'WithHttpRequest'.");
         }

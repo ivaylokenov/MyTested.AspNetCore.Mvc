@@ -1,6 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.View
 {
-    using System;
     using Builders.Base;
     using Contracts.Base;
     using Internal.TestContexts;
@@ -8,7 +7,6 @@
     using Exceptions;
     using Internal;
     using Internal.Contracts.ActionResults;
-    using Utilities.Extensions;
 
     /// <summary>
     /// Base class for all test builders with view features.
@@ -49,7 +47,18 @@
         public abstract TViewFeatureResultTestBuilder ResultTestBuilder { get; }
 
         public override object GetActualModel()
-            => this.ActionResult.AsDynamic().Model;
+        {
+            if (this.ActionResult is ViewResult)
+            {
+                return (this.ActionResult as ViewResult).Model;
+            }
+            else if (this.ActionResult is PartialViewResult)
+            {
+                return (this.ActionResult as PartialViewResult)?.ViewData?.Model;
+            }
+
+            return (this.ActionResult as ViewComponentResult)?.ViewData?.Model;
+        }
 
         public override void ValidateNoModel()
         {

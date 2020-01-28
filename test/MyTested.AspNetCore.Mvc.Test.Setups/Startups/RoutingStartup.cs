@@ -5,8 +5,10 @@
 
     public class RoutingStartup
     {
-        public void ConfigureServices(IServiceCollection services) 
-            => services.AddMvc();
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc();
+        }
 
         public void Configure(IApplicationBuilder app)
         {

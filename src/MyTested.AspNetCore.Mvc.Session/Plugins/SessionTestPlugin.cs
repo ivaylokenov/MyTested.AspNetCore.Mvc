@@ -17,8 +17,7 @@
                 serviceDescriptor.ServiceType == this.defaultSessionStoreServiceType &&
                 serviceDescriptor.ImplementationType == this.defaultSessionStoreImplementationType;
 
-        public Action<IServiceCollection> ServiceRegistrationDelegate 
-            => serviceCollection => serviceCollection.ReplaceSession();
+        public Action<IServiceCollection> ServiceRegistrationDelegate => serviceCollection => serviceCollection.ReplaceSession();
 
         public Action<HttpContext> HttpFeatureRegistrationDelegate 
             => httpContext =>

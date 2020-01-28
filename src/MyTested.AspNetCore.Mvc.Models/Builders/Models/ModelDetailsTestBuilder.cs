@@ -17,7 +17,7 @@
         : BaseTestBuilderWithActionContext, IAndModelDetailsTestBuilder<TModel>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModelDetailsTestBuilder{TModel}"/> class.
+        /// Initializes a new instance of the <see cref="ModelDetailsTestBuilder{TResponseModel}"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="ActionTestContext"/> containing data about the currently executed assertion chain.</param>
         public ModelDetailsTestBuilder(ActionTestContext testContext)

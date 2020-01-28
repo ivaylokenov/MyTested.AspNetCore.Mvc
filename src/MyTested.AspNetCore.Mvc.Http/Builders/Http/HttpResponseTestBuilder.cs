@@ -72,7 +72,7 @@
                 this.ThrowNewHttpResponseAssertionException(
                     "body",
                     $"to be of {typeof(TBody).ToFriendlyTypeName()} type when using '{contentType}'",
-                    "in fact it was not");
+                    $"in fact it was not");
             }
 
             return this.WithContentType(contentType);
@@ -87,12 +87,12 @@
         {
             var parsedBody = FormattersHelper.ReadFromStream<TBody>(this.httpResponse.Body, contentType, encoding);
 
-            if (Reflection.AreNotDeeplyEqual(body, parsedBody, out var result))
+            if (Reflection.AreNotDeeplyEqual(body, parsedBody))
             {
                 this.ThrowNewHttpResponseAssertionException(
                     "body",
                     "to be the given object",
-                    $"in fact it was different. {result}");
+                    "in fact it was different");
             }
 
             return this.WithContentType(contentType);

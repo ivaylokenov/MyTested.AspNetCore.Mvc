@@ -83,12 +83,12 @@
             Action<string, string, string> failedValidationAction)
         {
             var actualProperties = (AuthenticationProperties)TryGetAuthenticationProperties(actionResult);
-            if (Reflection.AreNotDeeplyEqual(properties, actualProperties, out var result))
+            if (Reflection.AreNotDeeplyEqual(properties, actualProperties))
             {
                 failedValidationAction(
                     "authentication properties",
                     "to be the same as the provided one",
-                    $"instead received different result. {result}");
+                    "instead received different result");
             }
         }
 

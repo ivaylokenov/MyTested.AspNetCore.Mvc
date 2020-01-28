@@ -1,5 +1,6 @@
 ﻿namespace Blog.Test.Routing.Admin
 {
+    using Blog.Controllers;
     using MyTested.AspNetCore.Mvc;
     using Xunit;
 
@@ -11,14 +12,18 @@
         public void GetAllShouldBeRoutedCorrectly()
             => MyRouting
                 .Configuration()
-                .ShouldMap("/Admin/Articles/All")
+                .ShouldMap(request => request
+                    .WithLocation("/Admin/Articles/All")
+                    .WithUser(new[] { ControllerConstants.AdministratorRole }))
                 .To<ArticlesController>(c => c.All());
 
         [Fact]
         public void GetMineShouldBeRoutedCorrectly()
             => MyRouting
                 .Configuration()
-                .ShouldMap("/Admin/Articles/ChangeVisibility/1")
+                .ShouldMap(request => request
+                    .WithLocation("/Admin/Articles/ChangeVisibility/1")
+                    .WithUser(new[] { ControllerConstants.AdministratorRole }))
                 .To<ArticlesController>(c => c.ChangeVisibility(1));
     }
 }

@@ -24,8 +24,8 @@
                 .Instance()
                 .Calling(c => c.SetValue())
                 .ShouldReturn()
-                .ResultOfType<string>(result => result
-                    .Passing(r => r == "Scoped"));
+                .ResultOfType<string>()
+                .Passing(r => r == "Scoped");
 
             MyController<ServicesController>
                 .Instance()
@@ -33,22 +33,22 @@
                     .WithNo<IScopedService>())
                 .Calling(c => c.DoNotSetValue())
                 .ShouldReturn()
-                .ResultOfType<string>(result => result
-                    .Passing(r => r == "Default"));
+                .ResultOfType<string>()
+                .Passing(r => r == "Default");
 
             MyController<ServicesController>
                 .Instance()
                 .Calling(c => c.DoNotSetValue())
                 .ShouldReturn()
-                .ResultOfType<string>(result => result
-                    .Passing(r => r == "Constructor"));
+                .ResultOfType<string>()
+                .Passing(r => r == "Constructor");
 
             MyController<ServicesController>
                 .Instance()
                 .Calling(c => c.FromServices(From.Services<IScopedService>()))
                 .ShouldReturn()
-                .ResultOfType<string>(result => result
-                    .Passing(r => r == "Constructor"));
+                .ResultOfType<string>()
+                .Passing(r => r == "Constructor");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }

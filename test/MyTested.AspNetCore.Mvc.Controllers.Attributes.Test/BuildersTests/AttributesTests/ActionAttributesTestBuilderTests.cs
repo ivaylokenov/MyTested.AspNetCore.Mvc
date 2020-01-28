@@ -3,11 +3,11 @@
     using System.Collections.Generic;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
+    using Setups.Pipelines;
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
     using Setups.ActionFilters;
-    using Setups.Pipeline;
     using Xunit;
 
     using HttpMethod = System.Net.Http.HttpMethod;
@@ -807,7 +807,7 @@
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
-                    .SpecifyingMiddleware(typeof(Pipeline)));
+                    .SpecifyingMiddleware(typeof(MyPipeline)));
         }
 
         [Fact]
@@ -821,7 +821,7 @@
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes
-                            .SpecifyingMiddleware(typeof(Pipeline)));
+                            .SpecifyingMiddleware(typeof(MyPipeline)));
                 },
                 "When calling NormalActionWithAttributes action in MvcController expected action to have MiddlewareFilterAttribute, but in fact such was not found.");
         }
@@ -837,9 +837,9 @@
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes
-                            .SpecifyingMiddleware(typeof(OtherPipeline)));
+                            .SpecifyingMiddleware(typeof(MyOtherPipeline)));
                 },
-                "When calling VariousAttributesAction action in MvcController expected action to have MiddlewareFilterAttribute with 'OtherPipeline' type, but in fact found 'Pipeline'.");
+                "When calling VariousAttributesAction action in MvcController expected action to have MiddlewareFilterAttribute with 'MyOtherPipeline' type, but in fact found 'MyPipeline'.");
         }
 
         [Fact]
@@ -851,7 +851,7 @@
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes
                             .SpecifyingMiddleware(middleware => middleware
-                                .OfType(typeof(Pipeline))));
+                                .OfType(typeof(MyPipeline))));
         }
 
         [Fact]
@@ -866,9 +866,9 @@
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes
                             .SpecifyingMiddleware(middleware => middleware
-                                .OfType(typeof(OtherPipeline))));
+                                .OfType(typeof(MyOtherPipeline))));
                 },
-                "When calling VariousAttributesAction action in MvcController expected action to have MiddlewareFilterAttribute with 'OtherPipeline' type, but in fact found 'Pipeline'.");
+                "When calling VariousAttributesAction action in MvcController expected action to have MiddlewareFilterAttribute with 'MyOtherPipeline' type, but in fact found 'MyPipeline'.");
         }
 
         [Fact]
@@ -907,7 +907,7 @@
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .SpecifyingMiddleware(middleware => middleware
-                        .OfType(typeof(Pipeline))
+                        .OfType(typeof(MyPipeline))
                         .AndAlso()
                         .WithOrder(2)));
         }
@@ -924,7 +924,7 @@
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes
                             .SpecifyingMiddleware(middleware => middleware
-                                .OfType(typeof(Pipeline))
+                                .OfType(typeof(MyPipeline))
                                 .AndAlso()
                                 .WithOrder(1)));
                 },
@@ -939,7 +939,7 @@
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
-                    .WithTypeFilter(typeof(CustomActionFilterWithArgs)));
+                    .WithTypeFilter(typeof(MyActionFilterWithArgs)));
         }
 
         [Fact]
@@ -953,7 +953,7 @@
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes
-                            .WithTypeFilter(typeof(CustomActionFilterWithArgs)));
+                            .WithTypeFilter(typeof(MyActionFilterWithArgs)));
                 },
                 "When calling NormalActionWithAttributes action in MvcController expected action to have TypeFilterAttribute, but in fact such was not found.");
         }
@@ -969,9 +969,9 @@
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes
-                            .WithTypeFilter(typeof(OtherActionFilterWithArgs)));
+                            .WithTypeFilter(typeof(MyOtherActionFilterWithArgs)));
                 },
-                "When calling VariousAttributesAction action in MvcController expected action to have TypeFilterAttribute with 'OtherActionFilterWithArgs' type, but in fact found 'CustomActionFilterWithArgs'.");
+                "When calling VariousAttributesAction action in MvcController expected action to have TypeFilterAttribute with 'MyOtherActionFilterWithArgs' type, but in fact found 'MyActionFilterWithArgs'.");
         }
 
         [Fact]
@@ -983,7 +983,7 @@
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .WithTypeFilter(filter => filter
-                        .OfType(typeof(CustomActionFilterWithArgs))));
+                        .OfType(typeof(MyActionFilterWithArgs))));
         }
 
         [Fact]
@@ -998,9 +998,9 @@
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes
                             .WithTypeFilter(filter => filter
-                                .OfType(typeof(OtherActionFilterWithArgs))));
+                                .OfType(typeof(MyOtherActionFilterWithArgs))));
                 },
-                "When calling VariousAttributesAction action in MvcController expected action to have TypeFilterAttribute with 'OtherActionFilterWithArgs' type, but in fact found 'CustomActionFilterWithArgs'.");
+                "When calling VariousAttributesAction action in MvcController expected action to have TypeFilterAttribute with 'MyOtherActionFilterWithArgs' type, but in fact found 'MyActionFilterWithArgs'.");
         }
 
         [Fact]
@@ -1039,7 +1039,7 @@
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .WithTypeFilter(filter => filter
-                        .OfType(typeof(CustomActionFilterWithArgs))
+                        .OfType(typeof(MyActionFilterWithArgs))
                         .AndAlso()
                         .WithOrder(2)));
         }
@@ -1056,7 +1056,7 @@
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes
                             .WithTypeFilter(filter => filter
-                                .OfType(typeof(CustomActionFilterWithArgs))
+                                .OfType(typeof(MyActionFilterWithArgs))
                                 .AndAlso()
                                 .WithOrder(1)));
                 },
@@ -1072,7 +1072,7 @@
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .WithTypeFilter(filter => filter
-                        .OfType(typeof(CustomActionFilterWithArgs))
+                        .OfType(typeof(MyActionFilterWithArgs))
                         .AndAlso()
                         .WithArguments(new object[]
                         {
@@ -1092,7 +1092,7 @@
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes
                             .WithTypeFilter(filter => filter
-                                .OfType(typeof(CustomActionFilterWithArgs))
+                                .OfType(typeof(MyActionFilterWithArgs))
                                 .AndAlso()
                                 .WithArguments(new object[]
                                 {
@@ -1143,7 +1143,7 @@
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
-                    .WithServiceFilter(typeof(CustomActionFilter)));
+                    .WithServiceFilter(typeof(MyActionFilter)));
         }
 
         [Fact]
@@ -1157,7 +1157,7 @@
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes
-                            .WithServiceFilter(typeof(CustomActionFilter)));
+                            .WithServiceFilter(typeof(MyActionFilter)));
                 },
                 "When calling NormalActionWithAttributes action in MvcController expected action to have ServiceFilterAttribute, but in fact such was not found.");
         }
@@ -1173,9 +1173,9 @@
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes
-                            .WithServiceFilter(typeof(OtherActionFilter)));
+                            .WithServiceFilter(typeof(MyOtherActionFilter)));
                 },
-                "When calling VariousAttributesAction action in MvcController expected action to have ServiceFilterAttribute with 'OtherActionFilter' type, but in fact found 'CustomActionFilter'.");
+                "When calling VariousAttributesAction action in MvcController expected action to have ServiceFilterAttribute with 'MyOtherActionFilter' type, but in fact found 'MyActionFilter'.");
         }
 
         [Fact]
@@ -1187,7 +1187,7 @@
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .WithServiceFilter(filter => filter
-                        .OfType(typeof(CustomActionFilter))));
+                        .OfType(typeof(MyActionFilter))));
         }
 
         [Fact]
@@ -1202,9 +1202,9 @@
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes
                             .WithServiceFilter(filter => filter
-                                .OfType(typeof(OtherActionFilter))));
+                                .OfType(typeof(MyOtherActionFilter))));
                 },
-                "When calling VariousAttributesAction action in MvcController expected action to have ServiceFilterAttribute with 'OtherActionFilter' type, but in fact found 'CustomActionFilter'.");
+                "When calling VariousAttributesAction action in MvcController expected action to have ServiceFilterAttribute with 'MyOtherActionFilter' type, but in fact found 'MyActionFilter'.");
         }
 
         [Fact]
@@ -1243,7 +1243,7 @@
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .WithServiceFilter(filter => filter
-                        .OfType(typeof(CustomActionFilter))
+                        .OfType(typeof(MyActionFilter))
                         .AndAlso()
                         .WithOrder(2)));
         }
@@ -1260,7 +1260,7 @@
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes
                             .WithServiceFilter(filter => filter
-                                .OfType(typeof(CustomActionFilter))
+                                .OfType(typeof(MyActionFilter))
                                 .AndAlso()
                                 .WithOrder(1)));
                 },

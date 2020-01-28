@@ -18,7 +18,7 @@
         /// <inheritdoc />	
         public IAndTestBuilder Unauthorized(Action<IUnauthorizedTestBuilder> unauthorizedTestBuilder)
         {
-            if (this.ObjectActionResult is UnauthorizedObjectResult)
+            if (this.ActionResult is UnauthorizedObjectResult)
             {
                 return this.ValidateUnauthorizedResult<UnauthorizedObjectResult>(unauthorizedTestBuilder);
             }
