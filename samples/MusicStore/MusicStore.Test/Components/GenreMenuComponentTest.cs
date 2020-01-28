@@ -18,9 +18,9 @@
                     .WithEntities(entities => entities.AddRange(GetGenres)))
                 .InvokedWith(vc => vc.InvokeAsync())
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<IEnumerable<string>>()
-                .Passing(g => g.Count() == 9);
+                .View(view => view
+                    .WithModelOfType<IEnumerable<string>>()
+                    .Passing(g => g.Count() == 9));
         }
 
         private static IEnumerable<Genre> GetGenres => Enumerable.Range(1, 10).Select(n => new Genre { GenreId = n });

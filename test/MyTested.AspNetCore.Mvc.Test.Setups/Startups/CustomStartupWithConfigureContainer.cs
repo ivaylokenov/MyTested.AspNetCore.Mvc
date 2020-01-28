@@ -17,7 +17,9 @@
         public void ConfigureContainer(CustomContainer services)
             => services.Services.AddTransient<IInjectedService, InjectedService>();
 
-        public void Configure(IApplicationBuilder app)
-            => app.UseMvcWithDefaultRoute();
+        public void Configure(IApplicationBuilder app) => app
+            .UseRouting()
+            .UseEndpoints(endpoints => endpoints
+                .MapDefaultControllerRoute());
     }
 }

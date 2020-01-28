@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Controllers
 {
     using Contracts.Controllers;
-    using Internal.Configuration;
     using Internal.TestContexts;
 
     /// <summary>
@@ -18,16 +17,9 @@
         /// </summary>
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
         public ControllerBuilder(ControllerTestContext testContext)
-            : base(testContext) 
-            => this.EnabledModelStateValidation = ServerTestConfiguration
-                .Global
-                .GetControllersConfiguration()
-                .ModelStateValidation;
-
-        public bool EnabledModelStateValidation { get; set; }
-
-        /// <inheritdoc />
-        public IAndControllerBuilder<TController> AndAlso() => this;
+            : base(testContext)
+        {
+        }
 
         /// <inheritdoc />
         public IControllerTestBuilder ShouldHave()
@@ -35,7 +27,10 @@
             this.TestContext.ComponentBuildDelegate?.Invoke();
             return new ControllerTestBuilder(this.TestContext);
         }
-        
+
+        /// <inheritdoc />
+        public IAndControllerBuilder<TController> AndAlso() => this;
+
         protected override IAndControllerBuilder<TController> SetBuilder() => this;
     }
 }

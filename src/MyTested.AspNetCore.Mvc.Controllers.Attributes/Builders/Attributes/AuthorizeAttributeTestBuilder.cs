@@ -1,9 +1,12 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Attributes
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Contracts.Attributes;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Authorization;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing <see cref="AuthorizeAttribute"/>.
@@ -49,6 +52,60 @@
 
             return this;
         }
+
+        /// <inheritdoc />
+        public IAndAuthorizeAttributeTestBuilder WithRole(string role)
+        {
+            if (!string.IsNullOrEmpty(role))
+            {
+                this.Attribute.Roles = role;
+
+                this.Validations.Add((expected, actual) =>
+                {
+                    var expectedRoles = expected.Roles;
+                    var actualRoles = actual.Roles;
+
+                    if (!string.Equals(expectedRoles, actualRoles, StringComparison.OrdinalIgnoreCase))
+                    {
+                        this.FailedValidationAction(
+                            $"{this.ExceptionMessagePrefix}'{expectedRoles}' roles",
+                            $"in fact found '{actualRoles}'");
+                    }
+                });
+            }
+
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IAndAuthorizeAttributeTestBuilder WithRoles(IEnumerable<string> roles)
+        {
+            if (roles != null && roles.Any())
+            {
+                this.Attribute.Roles = string.Join(",", roles);
+
+                this.Validations.Add((expected, actual) =>
+                {
+                    var expectedRoles = expected.Roles;
+                    var actualRoles = actual.Roles;
+
+                    if (!string.Equals(expectedRoles, actualRoles, StringComparison.OrdinalIgnoreCase))
+                    {
+                        this.FailedValidationAction(
+                            $"{this.ExceptionMessagePrefix}'{expectedRoles}' roles",
+                            $"in fact found '{actualRoles}'");
+                    }
+                });
+
+                roles.ForEach(role => this.WithRole(role));
+            }
+
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IAndAuthorizeAttributeTestBuilder WithRoles(params string[] roles)
+            => this.WithRoles(new List<string>(roles));
 
         /// <inheritdoc />
         public IAndAuthorizeAttributeTestBuilder WithAuthenticationSchemes(string authenticationSchemes)

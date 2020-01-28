@@ -30,9 +30,7 @@
         /// <param name="categoryName">Not used category name parameter. This method is used for testing with <see cref="ILogger"/> service.</param>
         /// <returns>Mock of <see cref="ILogger"/>.</returns>
         public ILogger CreateLogger(string categoryName)
-        {
-            return LoggerMock.Instance;
-        }
+            => LoggerMock.Instance;
 
         /// <summary>
         /// Does nothing. Used for testing with ILogger service.

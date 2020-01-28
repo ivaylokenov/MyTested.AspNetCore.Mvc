@@ -305,7 +305,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given value, but in fact it was different.");
+                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given value, but in fact it was different. Expected a value of 'invalid', but in fact it was 'value'.");
         }
 
         [Fact]
@@ -350,7 +350,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given options, but in fact they were different.");
+                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given options, but in fact they were different. Difference occurs at 'MemoryCacheEntryOptions.AbsoluteExpirationRelativeToNow.== (Equality Operator)'. Expected a value of '00:02:00', but in fact it was '00:01:00'.");
         }
 
         [Fact]
@@ -460,7 +460,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given value, but in fact it was different.");
+                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given value, but in fact it was different. Expected a value of 'invalid', but in fact it was 'anotherValue'.");
         }
 
         public void Dispose()

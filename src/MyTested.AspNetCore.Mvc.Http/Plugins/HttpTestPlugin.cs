@@ -17,8 +17,7 @@
         public Action<IServiceCollection> DefaultServiceRegistrationDelegate 
             => serviceCollection => serviceCollection
                 .AddMvcCore()
-                .AddFormatterMappings()
-                .AddJsonFormatters();
+                .AddFormatterMappings();
 
         public Action<IServiceCollection> ServiceRegistrationDelegate 
             => serviceCollection => serviceCollection.AddStringInputFormatter();

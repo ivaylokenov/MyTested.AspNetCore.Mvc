@@ -9,6 +9,31 @@
     public class UnprocessableEntityTestBuilderTests
     {
         [Fact]
+        public void UnprocessableEntityShouldNotThrowExceptionWithCorrectActionResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.UnprocessableEntityAction())
+                .ShouldReturn()
+                .UnprocessableEntity();
+        }
+
+        [Fact]
+        public void UnprocessableEntityShouldThrowExceptionWithIncorrectActionResult()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.OkResultAction())
+                        .ShouldReturn()
+                        .UnprocessableEntity();
+                },
+                "When calling OkResultAction action in MvcController expected result to be UnprocessableEntityResult, but instead received OkResult.");
+        }
+
+        [Fact]
         public void WithStatusCodeShouldNotThrowExceptionWithCorrectStatusCode()
         {
             MyController<MvcController>
@@ -43,11 +68,7 @@
                         .UnprocessableEntity(unprocessableEntity => unprocessableEntity
                             .WithStatusCode(415));
                 },
-#if NETCOREAPP
                 "When calling UnprocessableEntityAction action in MvcController expected unprocessable entity result to have 415 (UnsupportedMediaType) status code, but instead received 422 (UnprocessableEntity).");
-#else
-                "When calling UnprocessableEntityAction action in MvcController expected unprocessable entity result to have 415 (UnsupportedMediaType) status code, but instead received 422 (422).");
-#endif
         }
 
         [Fact]
@@ -63,11 +84,7 @@
                         .UnprocessableEntity(unprocessableEntity => unprocessableEntity
                             .WithStatusCode(HttpStatusCode.UnsupportedMediaType));
                 },
-#if NETCOREAPP
                 "When calling UnprocessableEntityAction action in MvcController expected unprocessable entity result to have 415 (UnsupportedMediaType) status code, but instead received 422 (UnprocessableEntity).");
-#else
-                "When calling UnprocessableEntityAction action in MvcController expected unprocessable entity result to have 415 (UnsupportedMediaType) status code, but instead received 422 (422).");
-#endif
         }
 
         [Fact]
@@ -107,7 +124,7 @@
                         .UnprocessableEntity(unprocessableEntity => unprocessableEntity
                             .Passing(ue => ue.ContentTypes?.Count == 0));
                 },
-                $"When calling FullUnprocessableEntityAction action in MvcController expected the UnprocessableEntityObjectResult to pass the given predicate, but it failed.");
+                "When calling FullUnprocessableEntityAction action in MvcController expected the UnprocessableEntityObjectResult to pass the given predicate, but it failed.");
         }
 
         [Fact]

@@ -82,7 +82,9 @@
                     .WithSetupFor<IScopedService>(s => s.Value = "TestValue"))
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
-                .View("TestValue");
+                .View(view => view
+                    .Passing(result => result
+                        .ViewName == "TestValue"));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
