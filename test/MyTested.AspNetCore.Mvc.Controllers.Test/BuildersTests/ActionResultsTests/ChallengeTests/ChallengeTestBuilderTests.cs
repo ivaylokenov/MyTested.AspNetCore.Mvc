@@ -7,7 +7,7 @@
     public class ChallengeTestBuilderTests
     {
         [Fact]
-        public void AndProvideTheActionResultShouldWorkCorrectly()
+        public void ShouldPassForTheShouldWorkCorrectly()
         {
             MyController<MvcController>
                 .Instance()

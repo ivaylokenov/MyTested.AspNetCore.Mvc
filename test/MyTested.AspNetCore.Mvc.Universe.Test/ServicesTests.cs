@@ -198,19 +198,16 @@
             builtInOptions.Value.InputFormatters.RemoveType<StringInputFormatter>();
 
             Assert.NotNull(builtInOptions);
-            Assert.True(builtInOptions.Value.InputFormatters.Count == 2);
+            Assert.True(builtInOptions.Value.InputFormatters.Count == 1);
             Assert.DoesNotContain(typeof(StringInputFormatter), builtInOptions.Value.InputFormatters.Select(f => f.GetType()));
 
             MyApplication.StartsFrom<TestStartup>()
-                .WithServices(services =>
-                {
-                    services.AddMvcUniverseTesting();
-                });
+                .WithServices(services => services.AddMvcUniverseTesting());
 
             builtInOptions = TestServiceProvider.GetService<IOptions<MvcOptions>>();
 
             Assert.NotNull(builtInOptions);
-            Assert.True(builtInOptions.Value.InputFormatters.Count == 3);
+            Assert.True(builtInOptions.Value.InputFormatters.Count == 2);
             Assert.Contains(typeof(StringInputFormatter), builtInOptions.Value.InputFormatters.Select(f => f.GetType()));
         }
 
@@ -233,7 +230,7 @@
             var builtInOptions = TestServiceProvider.GetService<IOptions<MvcOptions>>();
 
             Assert.NotNull(builtInOptions);
-            Assert.True(builtInOptions.Value.InputFormatters.Count == 3);
+            Assert.True(builtInOptions.Value.InputFormatters.Count == 2);
             Assert.Contains(typeof(StringInputFormatter), builtInOptions.Value.InputFormatters.Select(f => f.GetType()));
             Assert.Same(inputFormatter, builtInOptions.Value.InputFormatters.FirstOrDefault(f => f.GetType() == typeof(StringInputFormatter)));
         }
@@ -409,7 +406,7 @@
 
             var mvcOptions = TestServiceProvider.GetService<IOptions<MvcOptions>>();
 
-            Assert.False(mvcOptions.Value.EnableEndpointRouting);
+            Assert.True(mvcOptions.Value.EnableEndpointRouting);
         }
 
         [Fact]

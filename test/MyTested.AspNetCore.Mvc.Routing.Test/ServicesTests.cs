@@ -5,8 +5,6 @@
     using Internal.Contracts;
     using Internal.Routing;
     using Microsoft.AspNetCore.Mvc.Abstractions;
-    using Microsoft.AspNetCore.Mvc.Internal;
-    using Microsoft.AspNetCore.Mvc.RazorPages.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Setups.Common;
@@ -16,6 +14,9 @@
 
     public class ServicesTests
     {
+        private const string ControllerActionInvokerProvider = "ControllerActionInvokerProvider";
+        private const string PageActionInvokerProvider = "PageActionInvokerProvider";
+
         [Fact]
         public void WithoutAdditionalServicesTheDefaultActionInvokersShouldBeSet()
         {
@@ -26,8 +27,8 @@
             var modelBindingActionInvokerFactory = services.GetService<IModelBindingActionInvokerFactory>();
 
             Assert.Equal(2, actionInvokerProviders.Count);
-            Assert.Contains(actionInvokerProviders, a => a.GetType() == typeof(ControllerActionInvokerProvider));
-            Assert.Contains(actionInvokerProviders, a => a.GetType() == typeof(PageActionInvokerProvider));
+            Assert.Contains(actionInvokerProviders, a => a.GetType().Name == ControllerActionInvokerProvider);
+            Assert.Contains(actionInvokerProviders, a => a.GetType().Name == PageActionInvokerProvider);
             Assert.Null(modelBindingActionInvokerFactory);
 
             var routeServices = TestApplication.RoutingServices;
@@ -55,8 +56,8 @@
             var modelBindingActionInvokerFactory = services.GetService<IModelBindingActionInvokerFactory>();
 
             Assert.Equal(2, actionInvokerProviders.Count);
-            Assert.Contains(actionInvokerProviders, a => a.GetType() == typeof(ControllerActionInvokerProvider));
-            Assert.Contains(actionInvokerProviders, a => a.GetType() == typeof(PageActionInvokerProvider));
+            Assert.Contains(actionInvokerProviders, a => a.GetType().Name == ControllerActionInvokerProvider);
+            Assert.Contains(actionInvokerProviders, a => a.GetType().Name == PageActionInvokerProvider);
             Assert.Null(modelBindingActionInvokerFactory);
 
             var routeServices = TestApplication.RoutingServices;
@@ -91,8 +92,8 @@
             var modelBindingActionInvokerFactory = services.GetService<IModelBindingActionInvokerFactory>();
 
             Assert.Equal(3, actionInvokerProviders.Count);
-            Assert.Contains(actionInvokerProviders, a => a.GetType() == typeof(ControllerActionInvokerProvider));
-            Assert.Contains(actionInvokerProviders, a => a.GetType() == typeof(PageActionInvokerProvider));
+            Assert.Contains(actionInvokerProviders, a => a.GetType().Name == ControllerActionInvokerProvider);
+            Assert.Contains(actionInvokerProviders, a => a.GetType().Name == PageActionInvokerProvider);
             Assert.Contains(actionInvokerProviders, a => a.GetType() == typeof(CustomActionInvokerProvider));
             Assert.NotNull(modelBindingActionInvokerFactory);
 

@@ -16,14 +16,14 @@
         /// <inheritdoc />
         public IViewComponentResultTestBuilder<TInvocationResult> InvokedWith<TInvocationResult>(Expression<Func<TViewComponent, TInvocationResult>> invocationCall)
         {
-            this.Invoke(invocationCall);
+            this.InvokeResult(invocationCall);
             return new ViewComponentResultTestBuilder<TInvocationResult>(this.TestContext);
         }
 
         /// <inheritdoc />
         public IViewComponentResultTestBuilder<TInvocationResult> InvokedWith<TInvocationResult>(Expression<Func<TViewComponent, Task<TInvocationResult>>> invocationCall)
         {
-            this.Invoke(invocationCall);
+            this.InvokeAsyncResult(invocationCall);
             return new ViewComponentResultTestBuilder<TInvocationResult>(this.TestContext);
         }
 

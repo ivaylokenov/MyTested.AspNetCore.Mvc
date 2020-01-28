@@ -26,8 +26,8 @@
         [Fact]
         public void AllShouldReturnViewWithAllArticles()
             => MyController<ArticlesController>
-                .Instance()
-                .WithData(ArticleTestData.GetArticles(1, isPublic: false))
+                .Instance(instance => instance
+                    .WithData(ArticleTestData.GetArticles(1, isPublic: false)))
                 .Calling(c => c.All())
                 .ShouldReturn()
                 .View(view => view
@@ -37,8 +37,8 @@
         [Fact]
         public void ChangeVisibilityShouldChangeArticleAndRedirectToAll()
             => MyController<ArticlesController>
-                .Instance()
-                .WithData(ArticleTestData.GetArticles(1, isPublic: false))
+                .Instance(instance => instance
+                    .WithData(ArticleTestData.GetArticles(1, isPublic: false)))
                 .Calling(c => c.ChangeVisibility(1))
                 .ShouldHave()
                 .Data(data => data

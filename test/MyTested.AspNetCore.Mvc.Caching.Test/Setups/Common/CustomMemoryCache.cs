@@ -7,7 +7,7 @@
     {
         public ICacheEntry CreateEntry(object key)
         {
-            return new CacheEntryMock(key);
+            return new MemoryCacheEntryMock(key);
         }
         
         public void Dispose()

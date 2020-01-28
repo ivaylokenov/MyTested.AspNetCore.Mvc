@@ -5,7 +5,7 @@
     using Contracts;
     using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
-    internal class ValidControllersCache : IValidControllersCache, IControllerModelConvention
+    public class ValidControllersCache : IValidControllersCache, IControllerModelConvention
     {
         // Hash set will be synchronized because after initialization only 'Contains' method will be invoked.
         private static readonly HashSet<Type> ControllersCache = new HashSet<Type>();

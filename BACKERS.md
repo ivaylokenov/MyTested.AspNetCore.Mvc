@@ -25,8 +25,13 @@ Additionally, funds donated via [Patreon](https://www.patreon.com/ivaylokenov) (
     <tr>
       <td align="center" valign="middle">
           <a href="http://bit.ly/bellatrixsolutions" target="_blank">
-    <img width="323px" src="https://user-images.githubusercontent.com/3391906/68993273-d4f5c700-087e-11ea-9b39-e173733fcbfb.png" alt=""The Ultimate Cross-Platform .NET Framework>
-  </a>
+    <img width="323px" src="https://user-images.githubusercontent.com/3391906/68993273-d4f5c700-087e-11ea-9b39-e173733fcbfb.png" alt="The Ultimate Cross-Platform .NET Framework">
+          </a>
+      </td>
+      <td align="center" valign="middle">
+          <a href="https://www.jetbrains.com/?from=MyTestedASP.NET" target="_blank">
+    <img width="323px" src="https://user-images.githubusercontent.com/3391906/72542498-ee21f080-388c-11ea-92ac-0b0153028933.png" alt="JetBrains">
+          </a>
       </td>
     </tr>
   </tbody>
@@ -98,7 +103,7 @@ Additionally, funds donated via [Patreon](https://www.patreon.com/ivaylokenov) (
 Aleksandur Gyuzelov, Desislav Stoyanov, Emil Venkov, Georgi Krasimirov Georgiev, Kristiyan Mihailov, Lyubomir Krastanov, Nikolay Boyadzhiev, Nikolay Mihaylov, Rositsa Nenova, Slavi Bozhikov, Vasil Bonev, Yuriy Georgiev, Калин Ценков, Velina Getova
 
 ## One-Time Donations
-Stilgar Naibski, Ivomir Assi, Maria Georgieva, Tyler Austen, Stefan Minchev, Borislav Lazarov, Georgi Petrov, Yuliyana Tahova, Philip Shishov, Mariya Georgieva, Tanya Georgieva, Danny Berova, German Dimitrov, Aleksandar Evangelatov, Anton Petrov, Hristo Ivanov, Anna Stambolieva, Nedelcho Penev, Yulian Ashikov, Boyana Aleksova, Plamen Haralambiev, Victoria Karamanova, Ivaylo Goranov, Aneliya Drazheva, Zdravko Yakimov, Vanya Kuncheva, Georgi Petrov, Stanimir Pavlov, Teodor Stefanov, Stefan Minchev, Simon Valentinova Kochova, Marin Marinov, Petar Peshev, Radoslav Astardzhiev, Dimitar Radkov, Aleksandar Tsvetkov, Georgi Dragnev, Veselin Neychev, Kaloyan Kolev, Andrey Blagoev, Yordan Penev, Ventsislav Yordanov, Nikolay Georgiev, Siyana Yasenova Zdravkova, Ani Kalpachka, Gergana Damyanova, Petya Koleva, Dyanko Petkov, Nikola Kolchakov, Borislava Hranova
+Stilgar Naibski, Ivomir Assi, Maria Georgieva, Tyler Austen, Stefan Minchev, Borislav Lazarov, Yuliyana Tahova, Philip Shishov, Mariya Georgieva, Tanya Georgieva, Danny Berova, German Dimitrov, Aleksandar Evangelatov, Anton Petrov, Hristo Ivanov, Anna Stambolieva, Nedelcho Penev, Yulian Ashikov, Boyana Aleksova, Plamen Haralambiev, Victoria Karamanova, Ivaylo Goranov, Aneliya Drazheva, Zdravko Yakimov, Vanya Kuncheva, Georgi Petrov, Stanimir Pavlov, Teodor Stefanov, Stefan Minchev, Simon Valentinova Kochova, Marin Marinov, Petar Peshev, Radoslav Astardzhiev, Dimitar Radkov, Aleksandar Tsvetkov, Georgi Dragnev, Veselin Neychev, Kaloyan Kolev, Andrey Blagoev, Yordan Penev, Ventsislav Yordanov, Nikolay Georgiev, Siyana Yasenova Zdravkova, Ani Kalpachka, Gergana Damyanova, Petya Koleva, Dyanko Petkov, Nikola Kolchakov, Borislava Hranova
 
 ## Previous Supporters
 - Regina Uzunova

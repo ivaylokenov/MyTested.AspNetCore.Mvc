@@ -7,11 +7,11 @@
 
     public class DistributedCacheEntryBuilder : IDistributedCacheEntryKeyBuilder, IAndDistributedCacheEntryBuilder
     {
-        internal DistributedCacheEntry DistributedCacheEntry { get; set; }
+        internal DistributedCacheEntryMock DistributedCacheEntry { get; set; }
         internal string EntryKey { get; set; }
 
         public DistributedCacheEntryBuilder()
-            => this.DistributedCacheEntry = new DistributedCacheEntry();
+            => this.DistributedCacheEntry = new DistributedCacheEntryMock();
         
         public IAndDistributedCacheEntryBuilder WithKey(string key)
         {

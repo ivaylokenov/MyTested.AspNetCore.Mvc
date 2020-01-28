@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using Exceptions;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Routing;
     using Setups;
@@ -144,7 +143,7 @@
                         .ShouldMap("/Home/Contact/1")
                         .ToRouteValue("id", 2);
                 },
-                "Expected route '/Home/Contact/1' to contain route value with 'id' key and the provided value but the value was different.");
+                "Expected route '/Home/Contact/1' to contain route value with 'id' key and the provided value but the value was different. Expected a value of '2', but in fact it was '1'.");
         }
 
         [Fact]
@@ -192,7 +191,7 @@
                         .ShouldMap("/Home/Contact/1")
                         .ToRouteValues(new { controller = "Home", action = "Index", id = 1 });
                 },
-                "Expected route '/Home/Contact/1' to contain route value with 'action' key and the provided value but the value was different.");
+                "Expected route '/Home/Contact/1' to contain route value with 'action' key and the provided value but the value was different - Contact.");
         }
 
         [Fact]
@@ -280,7 +279,7 @@
                         .ShouldMap("/Test")
                         .ToDataToken("random", 2);
                 },
-                "Expected route '/Test' to contain data token with 'random' key and the provided value but the value was different.");
+                "Expected route '/Test' to contain data token with 'random' key and the provided value but the value was different. Expected a value of Int32 type, but in fact it was String.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -328,7 +327,7 @@
                         .ShouldMap("/Test")
                         .ToDataTokens(new { random = "value", another = "invalid" });
                 },
-                "Expected route '/Test' to contain data token with 'another' key and the provided value but the value was different.");
+                "Expected route '/Test' to contain data token with 'another' key and the provided value but the value was different. Expected a value of 'invalid', but in fact it was 'token'.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -744,12 +743,12 @@
         [Fact]
         public void ShouldMapWithRequestShouldWorkCorrectly()
         {
-            var request = new DefaultHttpRequest(new DefaultHttpContext());
-            request.Path = "/Normal/FromServicesAction";
+            var context = new DefaultHttpContext();
+            context.Request.Path = "/Normal/FromServicesAction";
 
             MyRouting
                 .Configuration()
-                .ShouldMap(request)
+                .ShouldMap(context.Request)
                 .To<NormalController>(c => c.FromServicesAction(From.Services<IActionSelector>()));
         }
 
@@ -760,6 +759,55 @@
                 .Configuration()
                 .ShouldMap(new Uri("/Normal/FromServicesAction", UriKind.Relative))
                 .To<NormalController>(c => c.FromServicesAction(From.Services<IActionSelector>()));
+        }
+
+        [Fact]
+        public void ShouldMapShouldNotExecuteAuthorizationFiltersAndShouldValidateJustRoutes()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap("/Normal/AuthorizedAction")
+                .To<NormalController>(c => c.AuthorizedAction());
+        }
+
+        [Fact]
+        public void ShouldMapShouldNotExecuteActionFiltersAndShouldValidateJustRoutes()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap("/Normal/FiltersAction")
+                .To<NormalController>(c => c.FiltersAction());
+        }
+
+        [Fact]
+        public void ShouldMapShouldNotExecuteCustomActionFiltersAndShouldValidateJustRoutes()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap("/Normal/CustomFiltersAction?throw=true")
+                .To<NormalController>(c => c.CustomFiltersAction());
+        }
+
+        [Fact]
+        public void ShouldMapShouldNotExecuteActionFiltersAndShouldValidateJustRoutesAndModelBinding()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap(request => request
+                    .WithLocation("/Normal/FiltersActionWithModelBinding/1")
+                    .WithMethod(HttpMethod.Post)
+                    .WithJsonBody(new
+                    {
+                        Integer = 1,
+                        String = "Text"
+                    }))
+                .To<NormalController>(c => c.FiltersActionWithModelBinding(
+                    1,
+                    new RequestModel
+                    {
+                        Integer = 1,
+                        String = "Text"
+                    }));
         }
 
         [Fact]
