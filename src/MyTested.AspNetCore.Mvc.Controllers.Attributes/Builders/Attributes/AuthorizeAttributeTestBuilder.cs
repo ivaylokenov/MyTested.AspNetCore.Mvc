@@ -96,8 +96,6 @@
                             $"in fact found '{actualRoles}'");
                     }
                 });
-
-                roles.ForEach(role => this.WithRole(role));
             }
 
             return this;
@@ -105,7 +103,14 @@
 
         /// <inheritdoc />
         public IAndAuthorizeAttributeTestBuilder WithRoles(params string[] roles)
-            => this.WithRoles(new List<string>(roles));
+        {
+            if (roles != null && roles.Any())
+            {
+                return this.WithRoles(new List<string>(roles));
+            }
+
+            return this;
+        }
 
         /// <inheritdoc />
         public IAndAuthorizeAttributeTestBuilder WithAuthenticationSchemes(string authenticationSchemes)
