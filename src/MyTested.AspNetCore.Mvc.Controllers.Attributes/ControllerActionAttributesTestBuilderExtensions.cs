@@ -682,18 +682,9 @@
             var testAllowedRoles = !string.IsNullOrEmpty(withAllowedRoles);
             if (testAllowedRoles)
             {
-                actualBuilder.Validations.Add(attrs =>
-                {
-                    var authorizeAttribute = actualBuilder.GetAttributeOfType<AuthorizeAttribute>(attrs);
-                    var actualRoles = authorizeAttribute.Roles;
-
-                    if (withAllowedRoles != actualRoles)
-                    {
-                        actualBuilder.ThrowNewAttributeAssertionException(
-                            $"{authorizeAttribute.GetName()} with allowed '{withAllowedRoles}' roles",
-                            $"in fact found '{actualRoles}'");
-                    }
-                });
+                return controllerActionAttributesTestBuilder
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRoles(withAllowedRoles));
             }
 
             return actualBuilder.AttributesTestBuilder;
