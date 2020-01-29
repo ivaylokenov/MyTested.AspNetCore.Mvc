@@ -6,14 +6,14 @@
 
     public class AsyncHelper
     {
-        private static readonly TaskFactory taskFactory = new TaskFactory(
+        private static readonly TaskFactory TaskFactory = new TaskFactory(
             CancellationToken.None,
             TaskCreationOptions.None,
             TaskContinuationOptions.None,
             TaskScheduler.Default);
 
         public static TResult RunSync<TResult>(Func<Task<TResult>> func) 
-            => taskFactory
+            => TaskFactory
                 .StartNew(func)
                 .Unwrap()
                 .ConfigureAwait(false)
@@ -21,7 +21,7 @@
                 .GetResult();
 
         public static void RunSync(Func<Task> func) 
-            => taskFactory
+            => TaskFactory
                 .StartNew(func)
                 .Unwrap()
                 .ConfigureAwait(false)

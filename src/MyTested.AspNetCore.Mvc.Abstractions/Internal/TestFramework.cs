@@ -7,20 +7,18 @@
     public static class TestFramework
     {
         public const string TestFrameworkName = "MyTested.AspNetCore.Mvc";
-        public const string ReleaseDate = "2019-07-01";
-        public const string VersionPrefix = "2.2";
+        public const string ReleaseDate = "2019-12-12";
+        public const string VersionPrefix = "3.1";
 
         internal static void EnsureCorrectVersion(DependencyContext dependencyContext)
         {
-            var aspNetCoreMvcLibraries = dependencyContext
+            var aspNetCoreMetaPackage = dependencyContext
                 .RuntimeLibraries
-                .Where(l => WebFramework.AspNetCoreMvcLibraries.Contains(l.Name));
+                .FirstOrDefault(l => l.Name.StartsWith(WebFramework.AspNetCoreMetaPackageName));
 
-            var libraryWithMismatchedVersion = aspNetCoreMvcLibraries.FirstOrDefault(d => !d.Version.StartsWith(VersionPrefix));
-
-            if (libraryWithMismatchedVersion != null)
+            if (aspNetCoreMetaPackage == null || !aspNetCoreMetaPackage.Version.StartsWith(VersionPrefix))
             {
-                throw new InvalidOperationException($"This version of {TestFrameworkName} only supports ASP.NET Core {VersionPrefix} applications but a {libraryWithMismatchedVersion.Version} assembly was referenced - {libraryWithMismatchedVersion.Name}.");
+                throw new InvalidOperationException($"This version of {TestFrameworkName} only supports ASP.NET Core {VersionPrefix} applications but {(aspNetCoreMetaPackage == null ? "no" : $"the {aspNetCoreMetaPackage.Version}")} web framework was referenced.");
             }
         }
     }

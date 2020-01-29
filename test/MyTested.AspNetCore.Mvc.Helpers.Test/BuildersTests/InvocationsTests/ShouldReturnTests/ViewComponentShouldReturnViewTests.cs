@@ -7,6 +7,15 @@
     public class ViewComponentShouldReturnViewTests
     {
         [Fact]
+        public void ShouldReturnViewWithNameShouldNotThrowExceptionWithCorrectName()
+        {
+            MyViewComponent<ViewResultComponent>
+                .InvokedWith(c => c.Invoke("custom"))
+                .ShouldReturn()
+                .View("Custom");
+        }
+
+        [Fact]
         public void ShouldReturnViewWithNameShouldNotThrowExceptionWithCorrectModel()
         {
             MyViewComponent<ViewResultComponent>

@@ -14,11 +14,19 @@
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddMvcTesting(this IServiceCollection serviceCollection)
+            => serviceCollection.AddControllersWithViewsTesting();
+
+        /// <summary>
+        /// Adds controllers with views testing services.
+        /// </summary>
+        /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection AddControllersWithViewsTesting(this IServiceCollection serviceCollection)
         {
             CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
 
             serviceCollection
-                .AddMvcCoreTesting()
+                .AddControllersTesting()
                 .AddViewFeaturesTesting()
                 .AddStringInputFormatter()
                 .ReplaceOptions();

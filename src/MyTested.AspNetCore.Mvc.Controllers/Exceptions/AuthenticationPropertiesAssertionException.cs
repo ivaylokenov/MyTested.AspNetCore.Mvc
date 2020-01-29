@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties"/> assertion.
+    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Authentication.AuthenticationProperties"/> assertion.
     /// </summary>
     public class AuthenticationPropertiesAssertionException : Exception
     {

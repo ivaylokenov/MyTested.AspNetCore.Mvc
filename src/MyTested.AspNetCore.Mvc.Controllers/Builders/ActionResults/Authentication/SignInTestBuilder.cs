@@ -43,7 +43,7 @@
         /// <param name="expectedValue">Expected value of the tested property.</param>
         /// <param name="actualValue">Actual value of the tested property.</param>
         public void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
-            => throw new SignInResultAssertionException(string.Format(
+            =>throw new SignInResultAssertionException(string.Format(
                 ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,
                 "sign in",

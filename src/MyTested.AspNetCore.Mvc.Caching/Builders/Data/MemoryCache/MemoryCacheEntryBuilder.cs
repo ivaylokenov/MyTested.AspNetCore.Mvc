@@ -14,13 +14,13 @@
         /// Initializes a new instance of the <see cref="MemoryCacheEntryBuilder"/> class.
         /// </summary>
         public MemoryCacheEntryBuilder() 
-            => this.MemoryCacheEntry = new CacheEntryMock();
+            => this.MemoryCacheEntry = new MemoryCacheEntryMock();
 
         /// <summary>
         /// Gets the mocked <see cref="IMemoryCache"/> entry.
         /// </summary>
         /// <value>The built <see cref="ICacheEntry"/>.</value>
-        protected CacheEntryMock MemoryCacheEntry { get; private set; }
+        protected MemoryCacheEntryMock MemoryCacheEntry { get; private set; }
 
         /// <inheritdoc />
         public IAndMemoryCacheEntryBuilder WithKey(object key)
