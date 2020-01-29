@@ -1609,6 +1609,356 @@
         }
 
         [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithCorrectRole()
+        {
+            MyController<AuthorizationController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithRole("Admin")));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithIncorrectRole()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRole("Moderator")));
+            },
+            "When calling NormalActionWithAuthorizeAttribute action in AuthorizationController expected action to have AuthorizeAttribute with 'Moderator' roles, but in fact found 'Admin'.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithMultipleRoles()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRole("Admin,Moderator")));
+            },
+            "When calling NormalActionWithAuthorizeAttribute action in AuthorizationController expected action to have AuthorizeAttribute with 'Admin,Moderator' roles, but in fact found 'Admin'.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithoutDefinedRole()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.EmptyActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRole("Admin")));
+            },
+            "When calling EmptyActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'Admin' roles, but in fact found ''.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithEmptyRole()
+        {
+            MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRole(string.Empty)));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithNullRole()
+        {
+            MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRole(null)));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithAuthenticationSchemeAndAlsoWithRole()
+        {
+            MyController<AuthorizationController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithAuthenticationSchemes("Cookies")
+                        .AndAlso()
+                        .WithRole("Admin")));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithAuthenticationSchemeAndAlsoWithIncorrectRole()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithAuthenticationSchemes("Cookies")
+                            .AndAlso()
+                            .WithRole("Moderator")));
+            },
+            "When calling NormalActionWithAuthorizeAttribute action in AuthorizationController expected action to have AuthorizeAttribute with 'Moderator' roles, but in fact found 'Admin'.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithCorrectRoles()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithRoles(new List<string>() { "Admin", "Moderator"})));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithIncorrectRoles()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRoles(new List<string>() { "Admin", "Student" })));
+            },
+            "When calling NormalActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'Admin,Student' roles, but in fact found 'Admin,Moderator'.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithoutDefinedRoles()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.EmptyActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                           .WithRoles(new List<string>() { "Admin", "Moderator" })));
+            },
+            "When calling EmptyActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'Admin,Moderator' roles, but in fact found ''.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithEmptyRoles()
+        {
+            MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRoles(new List<string>())));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithNullRoles()
+        {
+            List<string> roles = null;
+
+            MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRoles(roles)));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithAuthenticationSchemeAndAlsoWithRoles()
+        {
+            MyController<AuthorizationController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithAuthenticationSchemes("Cookies")
+                        .AndAlso()
+                        .WithRoles(new List<string>() { "Admin" })));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithAuthenticationSchemeAndAlsoWithIncorrectRoles()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithAuthenticationSchemes("Cookies")
+                            .AndAlso()
+                            .WithRoles(new List<string>() { "Moderator" })));
+            },
+            "When calling NormalActionWithAuthorizeAttribute action in AuthorizationController expected action to have AuthorizeAttribute with 'Moderator' roles, but in fact found 'Admin'.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithCorrectParamsRoles()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithRoles("Admin", "Moderator")));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithIncorrectParamsRoles()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRoles("Admin", "Student")));
+            },
+            "When calling NormalActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'Admin,Student' roles, but in fact found 'Admin,Moderator'.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithIncorrectSingleParamsRoles()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRoles("Student")));
+            },
+            "When calling NormalActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'Student' roles, but in fact found 'Admin,Moderator'.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithMissingDefinedRoles()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.EmptyActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                           .WithRoles("Admin", "Moderator")));
+            },
+            "When calling EmptyActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'Admin,Moderator' roles, but in fact found ''.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithEmptyParamsRoles()
+        {
+            MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRoles()));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithEmptyStringParamsRoles()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRoles(string.Empty)));
+            },
+            "When calling NormalActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with '' roles, but in fact found 'Admin,Moderator'.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithNullParamsRoles()
+        {
+            MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRoles(null)));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithAuthenticationSchemeAndAlsoWithParamsRoles()
+        {
+            MyController<AuthorizationController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithAuthenticationSchemes("Cookies")
+                        .AndAlso()
+                        .WithRoles("Admin")));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithAuthenticationSchemeAndAlsoWithIncorrectParamsRoles()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithAuthenticationSchemes("Cookies")
+                            .AndAlso()
+                            .WithRoles("Moderator")));
+            },
+            "When calling NormalActionWithAuthorizeAttribute action in AuthorizationController expected action to have AuthorizeAttribute with 'Moderator' roles, but in fact found 'Admin'.");
+        }
+
+        [Fact]
         public void AddingFormatShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<ApiController>
