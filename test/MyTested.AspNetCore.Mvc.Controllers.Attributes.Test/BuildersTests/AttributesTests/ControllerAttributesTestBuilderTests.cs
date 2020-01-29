@@ -1222,7 +1222,7 @@
                         .Attributes(attributes => attributes
                             .RestrictingForAuthorizedRequests(withAllowedRoles: "Admin"));
                 },
-                "When testing MvcController was expected to have AuthorizeAttribute with allowed 'Admin' roles, but in fact found 'Admin,Moderator'.");
+                "When testing MvcController was expected to have AuthorizeAttribute with 'Admin' roles, but in fact found 'Admin,Moderator'.");
         }
 
         [Fact]

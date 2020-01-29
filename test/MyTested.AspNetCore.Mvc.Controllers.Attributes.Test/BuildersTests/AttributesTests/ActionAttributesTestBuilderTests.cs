@@ -1389,7 +1389,7 @@
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedRoles: "Admin"));
                 },
-                "When calling NormalActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with allowed 'Admin' roles, but in fact found 'Admin,Moderator'.");
+                "When calling NormalActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'Admin' roles, but in fact found 'Admin,Moderator'.");
         }
 
         [Fact]
