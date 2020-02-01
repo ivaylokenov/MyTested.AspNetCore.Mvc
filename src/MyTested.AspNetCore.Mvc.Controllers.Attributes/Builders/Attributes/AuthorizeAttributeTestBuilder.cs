@@ -102,14 +102,7 @@
 
         /// <inheritdoc />
         public IAndAuthorizeAttributeTestBuilder WithRoles(params string[] roles)
-        {
-            if (roles != null && roles.Any())
-            {
-                return this.WithRoles(new List<string>(roles));
-            }
-
-            return this;
-        }
+            => this.WithRoles(roles.AsEnumerable());
 
         /// <inheritdoc />
         public IAndAuthorizeAttributeTestBuilder WithAuthenticationSchemes(string authenticationSchemes)
