@@ -682,9 +682,13 @@
             var testAllowedRoles = !string.IsNullOrEmpty(withAllowedRoles);
             if (testAllowedRoles)
             {
+                var roles = withAllowedRoles
+                                .Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                                .AsEnumerable();
+
                 return controllerActionAttributesTestBuilder
                         .RestrictingForAuthorizedRequests(authorization => authorization
-                            .WithRoles(withAllowedRoles));
+                            .WithRoles(roles));
             }
 
             return actualBuilder.AttributesTestBuilder;

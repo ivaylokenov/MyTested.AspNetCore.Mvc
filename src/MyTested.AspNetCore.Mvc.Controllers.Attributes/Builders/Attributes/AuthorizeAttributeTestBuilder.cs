@@ -57,18 +57,22 @@
         {
             if (!string.IsNullOrEmpty(role))
             {
-                this.Attribute.Roles = role;
-
                 this.Validations.Add((expected, actual) =>
                 {
-                    var expectedRoles = expected.Roles;
-                    var actualRoles = actual.Roles;
+                    var actualRoles = new List<string>();
 
-                    if (!string.Equals(expectedRoles, actualRoles, StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrEmpty(actual.Roles))
+                    {
+                        actualRoles = actual.Roles
+                                        .Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                                        .ToList();
+                    }
+
+                    if (!actualRoles.Contains(role))
                     {
                         this.FailedValidationAction(
-                            $"{this.ExceptionMessagePrefix}'{expectedRoles}' roles",
-                            $"in fact found '{actualRoles}'");
+                            $"{this.ExceptionMessagePrefix}'{role}' role",
+                            $"in fact such was not found");
                     }
                 });
             }
@@ -81,20 +85,7 @@
         {
             if (roles != null && roles.Any())
             {
-                this.Attribute.Roles = string.Join(",", roles);
-
-                this.Validations.Add((expected, actual) =>
-                {
-                    var expectedRoles = expected.Roles;
-                    var actualRoles = actual.Roles;
-
-                    if (!string.Equals(expectedRoles, actualRoles, StringComparison.OrdinalIgnoreCase))
-                    {
-                        this.FailedValidationAction(
-                            $"{this.ExceptionMessagePrefix}'{expectedRoles}' roles",
-                            $"in fact found '{actualRoles}'");
-                    }
-                });
+                roles.ForEach(role => this.WithRole(role));
             }
 
             return this;
