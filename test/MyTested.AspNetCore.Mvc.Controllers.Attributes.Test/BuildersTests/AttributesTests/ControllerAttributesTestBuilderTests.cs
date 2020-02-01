@@ -1212,17 +1212,12 @@
         }
 
         [Fact]
-        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithControllerWithoutTheAttributeWithIncorrectRoles()
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithControllerWithTheAttributeWithCorrectRoles()
         {
-            Test.AssertException<AttributeAssertionException>(
-                () =>
-                {
-                    MyController<MvcController>
-                        .ShouldHave()
-                        .Attributes(attributes => attributes
-                            .RestrictingForAuthorizedRequests(withAllowedRoles: "Admin"));
-                },
-                "When testing MvcController was expected to have AuthorizeAttribute with 'Admin' roles, but in fact found 'Admin,Moderator'.");
+            MyController<MvcController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(withAllowedRoles: "Admin"));
         }
 
         [Fact]
@@ -1418,7 +1413,7 @@
                         .RestrictingForAuthorizedRequests(authorization => authorization
                             .WithRole("Moderator")));
             },
-            "When testing AuthorizationController was expected to have AuthorizeAttribute with 'Moderator' roles, but in fact found 'Admin'.");
+            "When testing AuthorizationController was expected to have AuthorizeAttribute with 'Moderator' role, but in fact such was not found.");
         }
 
         [Fact]
@@ -1432,7 +1427,7 @@
                         .RestrictingForAuthorizedRequests(authorization => authorization
                             .WithRole("Admin")));
             },
-            "When testing ApiController was expected to have AuthorizeAttribute with 'Admin' roles, but in fact found ''.");
+            "When testing ApiController was expected to have AuthorizeAttribute with 'Admin' role, but in fact such was not found.");
         }
 
         [Fact]
@@ -1480,7 +1475,7 @@
                             .AndAlso()
                             .WithRole("Moderator")));
             },
-            "When testing AuthorizationController was expected to have AuthorizeAttribute with 'Moderator' roles, but in fact found 'Admin'.");
+            "When testing AuthorizationController was expected to have AuthorizeAttribute with 'Moderator' role, but in fact such was not found.");
         }
 
         [Fact]
@@ -1504,7 +1499,7 @@
                         .RestrictingForAuthorizedRequests(authorization => authorization
                             .WithRoles(new List<string>() { "Admin", "Student" })));
             },
-            "When testing MvcController was expected to have AuthorizeAttribute with 'Admin,Student' roles, but in fact found 'Admin,Moderator'.");
+            "When testing MvcController was expected to have AuthorizeAttribute with 'Student' role, but in fact such was not found.");
         }
 
         [Fact]
@@ -1518,7 +1513,7 @@
                         .RestrictingForAuthorizedRequests(authorization => authorization
                             .WithRoles(new List<string>() { "Admin" })));
             },
-            "When testing ApiController was expected to have AuthorizeAttribute with 'Admin' roles, but in fact found ''.");
+            "When testing ApiController was expected to have AuthorizeAttribute with 'Admin' role, but in fact such was not found.");
         }
 
         [Fact]
@@ -1568,7 +1563,7 @@
                             .AndAlso()
                             .WithRoles(new List<string>() { "Moderator" })));
             },
-            "When testing AuthorizationController was expected to have AuthorizeAttribute with 'Moderator' roles, but in fact found 'Admin'.");
+            "When testing AuthorizationController was expected to have AuthorizeAttribute with 'Moderator' role, but in fact such was not found.");
         }
 
         [Fact]
@@ -1602,7 +1597,7 @@
                         .RestrictingForAuthorizedRequests(authorization => authorization
                             .WithRoles("Admin", "Student")));
             },
-            "When testing MvcController was expected to have AuthorizeAttribute with 'Admin,Student' roles, but in fact found 'Admin,Moderator'.");
+            "When testing MvcController was expected to have AuthorizeAttribute with 'Student' role, but in fact such was not found.");
         }
 
         [Fact]
@@ -1616,7 +1611,7 @@
                         .RestrictingForAuthorizedRequests(authorization => authorization
                             .WithRoles("Admin")));
             },
-            "When testing ApiController was expected to have AuthorizeAttribute with 'Admin' roles, but in fact found ''.");
+            "When testing ApiController was expected to have AuthorizeAttribute with 'Admin' role, but in fact such was not found.");
         }
 
         [Fact]
@@ -1640,45 +1635,33 @@
         }
 
         [Fact]
-        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithMultipleNullParamsRoles()
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithMultipleNullParamsRoles()
         {
-            Test.AssertException<AttributeAssertionException>(() =>
-            {
-                MyController<AuthorizationController>
-                    .ShouldHave()
-                    .Attributes(attributes => attributes
-                        .RestrictingForAuthorizedRequests(authorization => authorization
-                            .WithRoles(null, null)));
-            },
-            "When testing AuthorizationController was expected to have AuthorizeAttribute with ',' roles, but in fact found 'Admin'.");
+            MyController<AuthorizationController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithRoles(null, null)));
         }
 
         [Fact]
-        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithEmptyStringParamsRoles()
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithEmptyStringParamsRoles()
         {
-            Test.AssertException<AttributeAssertionException>(() =>
-            {
-                MyController<AuthorizationController>
-                    .ShouldHave()
-                    .Attributes(attributes => attributes
-                        .RestrictingForAuthorizedRequests(authorization => authorization
-                            .WithRoles(string.Empty)));
-            },
-            "When testing AuthorizationController was expected to have AuthorizeAttribute with '' roles, but in fact found 'Admin'.");
+            MyController<AuthorizationController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithRoles(string.Empty)));
         }
 
         [Fact]
-        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithMultipleEmptyParamsRoles()
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithMultipleEmptyParamsRoles()
         {
-            Test.AssertException<AttributeAssertionException>(() =>
-            {
-                MyController<AuthorizationController>
-                    .ShouldHave()
-                    .Attributes(attributes => attributes
-                        .RestrictingForAuthorizedRequests(authorization => authorization
-                            .WithRoles(string.Empty, string.Empty)));
-            },
-            "When testing AuthorizationController was expected to have AuthorizeAttribute with ',' roles, but in fact found 'Admin'.");
+            MyController<AuthorizationController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithRoles(string.Empty, string.Empty)));
         }
 
         [Fact]
@@ -1706,7 +1689,7 @@
                             .AndAlso()
                             .WithRoles("Moderator")));
             },
-            "When testing AuthorizationController was expected to have AuthorizeAttribute with 'Moderator' roles, but in fact found 'Admin'.");
+            "When testing AuthorizationController was expected to have AuthorizeAttribute with 'Moderator' role, but in fact such was not found.");
         }
 
         [Fact]
