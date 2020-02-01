@@ -32,7 +32,6 @@
             {
                 this.Attribute = new AuthorizeAttribute(policy)
                 {
-                    Roles = this.Attribute.Roles,
                     AuthenticationSchemes = this.Attribute.AuthenticationSchemes
                 };
 
