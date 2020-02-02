@@ -552,6 +552,254 @@
         }
 
         [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeAndStatusCode()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingResponseProduction(200));
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithMissingAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.Ok())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(200));
+                },
+                "When calling Ok action in MvcController expected action to have ProducesResponseTypeAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithCorrectAttributeAndWrongStatusCode()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(404));
+                },
+                "When calling Post action in ApiController expected action to have ProducesResponseTypeAttribute with '404' status code, but in fact found '200'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeType()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingResponseProduction(typeof(RequestModel)));
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithMissingAttributeWithType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.Ok())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(typeof(RequestModel)));
+                },
+                "When calling Ok action in MvcController expected action to have ProducesResponseTypeAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithCorrectAttributeAndWrongType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(typeof(ResponseModel)));
+                },
+                "When calling Post action in ApiController expected action to have ProducesResponseTypeAttribute with 'ResponseModel' type, but in fact found 'RequestModel'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndCorrectStatusCode()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingResponseProduction(typeof(RequestModel), 200));
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithMissingAttributeWithTypeAndCorrectStatusCode()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.Ok())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(typeof(RequestModel), 200));
+                },
+                "When calling Ok action in MvcController expected action to have ProducesResponseTypeAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithCorrectAttributeTypeAndWrongStatusCode()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(typeof(RequestModel), 404));
+                },
+                "When calling Post action in ApiController expected action to have ProducesResponseTypeAttribute with '404' status code, but in fact found '200'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithIncorrectAttributeTypeAndCorrectStatusCode()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(typeof(ResponseModel), 200));
+                },
+                "When calling Post action in ApiController expected action to have ProducesResponseTypeAttribute with 'ResponseModel' type, but in fact found 'RequestModel'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeAndStatusCodeUsingBuilder()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingResponseProduction(responseProduction => responseProduction
+                        .WithStatusCode(200)));
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithCorrectAttributeAndWrongStatusCodeUsingBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(responseProduction => responseProduction
+                                .WithStatusCode(404)));
+                },
+                "When calling Post action in ApiController expected action to have ProducesResponseTypeAttribute with '404' status code, but in fact found '200'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeTypeUsingBuilder()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingResponseProduction(responseProduction => responseProduction
+                        .OfType(typeof(RequestModel))));
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithCorrectAttributeAndWrongTypeUsingBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(responseProduction => responseProduction
+                                .OfType(typeof(ResponseModel))));
+                },
+                "When calling Post action in ApiController expected action to have ProducesResponseTypeAttribute with 'ResponseModel' type, but in fact found 'RequestModel'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndStatusCodeUsingBuilder()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingResponseProduction(responseProduction => responseProduction
+                        .WithStatusCode(200)
+                        .OfType(typeof(RequestModel))));
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldThrowExceptionWithWrongAttributeTypeAndStatusCodeUsingBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingResponseProduction(responseProduction => responseProduction
+                                .WithStatusCode(200)
+                                .OfType(typeof(ResponseModel))));
+                },
+                "When calling Post action in ApiController expected action to have ProducesResponseTypeAttribute with 'ResponseModel' type, but in fact found 'RequestModel'.");
+        }
+
+        [Fact]
+        public void SpecifyingResponseProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndAlsoWithStatusCodeUsingBuilder()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingResponseProduction(responseProduction => responseProduction
+                        .WithStatusCode(200)
+                        .AndAlso()
+                        .OfType(typeof(RequestModel))));
+        }
+
+        [Fact]
         public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttribute()
         {
             MyController<MvcController>
@@ -686,23 +934,17 @@
         [Fact]
         public void WithTypeFilterShouldNotThrowExceptionWithCorrectAttribute()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .WithTypeFilter(typeof(CustomActionFilterWithArgs)));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldThrowExceptionWithMissingAttribute()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -714,15 +956,11 @@
                             .WithTypeFilter(typeof(CustomActionFilterWithArgs)));
                 },
                 "When calling NormalActionWithAttributes action in MvcController expected action to have TypeFilterAttribute, but in fact such was not found.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldThrowExceptionWithCorrectAttributeAndWrongImplementationType()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -734,15 +972,11 @@
                             .WithTypeFilter(typeof(OtherActionFilterWithArgs)));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have TypeFilterAttribute with 'OtherActionFilterWithArgs' type, but in fact found 'CustomActionFilterWithArgs'.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldNotThrowExceptionWithCorrectImplementationType()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
@@ -750,15 +984,11 @@
                 .ActionAttributes(attributes => attributes
                     .WithTypeFilter(filter => filter
                         .OfType(typeof(CustomActionFilterWithArgs))));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldThrowExceptionWithWrongImplementationType()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -771,15 +1001,11 @@
                                 .OfType(typeof(OtherActionFilterWithArgs))));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have TypeFilterAttribute with 'OtherActionFilterWithArgs' type, but in fact found 'CustomActionFilterWithArgs'.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldThrowExceptionWithCorrectAttributeAndWrongOrder()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -791,30 +1017,22 @@
                             .WithTypeFilter(filter => filter.WithOrder(1)));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have TypeFilterAttribute with order of 1, but in fact found 2.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderForOrder()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .WithTypeFilter(filter => filter.WithOrder(2)));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldNotThrowExceptionWithCorrectAttributeImplementationTypeAndUsingBuilderForOrder()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
@@ -824,15 +1042,11 @@
                         .OfType(typeof(CustomActionFilterWithArgs))
                         .AndAlso()
                         .WithOrder(2)));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldThrowExceptionWithCorrectAttributeImplementationTypeAndUsingBuilderForOrderWithWrongOrder()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -847,15 +1061,11 @@
                                 .WithOrder(1)));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have TypeFilterAttribute with order of 1, but in fact found 2.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldNotThrowExceptionWithCorrectAttributeImplementationTypeAndUsingBuilderForArguments()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
@@ -868,15 +1078,11 @@
                         {
                             10
                         })));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldThrowExceptionWithCorrectAttributeImplementationTypeAndUsingBuilderForForArgumentsWithWrongArgs()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -894,15 +1100,11 @@
                                 })));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have TypeFilterAttribute with argument with the provided value, but in fact such was not found.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldThrowExceptionWithCorrectAttributeAndWrongArgumentsValue()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -917,15 +1119,11 @@
                             })));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have TypeFilterAttribute with argument with the provided value, but in fact such was not found.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithTypeFilterShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderForArguments()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
@@ -935,30 +1133,22 @@
                     {
                         10
                     })));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceFilterShouldNotThrowExceptionWithCorrectAttribute()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .WithServiceFilter(typeof(CustomActionFilter)));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceFilterShouldThrowExceptionWithMissingAttribute()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -970,15 +1160,11 @@
                             .WithServiceFilter(typeof(CustomActionFilter)));
                 },
                 "When calling NormalActionWithAttributes action in MvcController expected action to have ServiceFilterAttribute, but in fact such was not found.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceFilterShouldThrowExceptionWithCorrectAttributeAndWrongConfigurationType()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -990,15 +1176,11 @@
                             .WithServiceFilter(typeof(OtherActionFilter)));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have ServiceFilterAttribute with 'OtherActionFilter' type, but in fact found 'CustomActionFilter'.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceFilterShouldNotThrowExceptionWithCorrectServiceFilterType()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
@@ -1006,15 +1188,11 @@
                 .ActionAttributes(attributes => attributes
                     .WithServiceFilter(filter => filter
                         .OfType(typeof(CustomActionFilter))));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceFilterShouldThrowExceptionWithWrongServiceFilterType()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -1027,15 +1205,11 @@
                                 .OfType(typeof(OtherActionFilter))));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have ServiceFilterAttribute with 'OtherActionFilter' type, but in fact found 'CustomActionFilter'.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceFilterShouldThrowExceptionWithCorrectAttributeAndWrongOrder()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -1047,30 +1221,22 @@
                             .WithServiceFilter(filter => filter.WithOrder(1)));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have ServiceFilterAttribute with order of 1, but in fact found 2.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceFilterShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderForOrder()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .WithServiceFilter(filter => filter.WithOrder(2)));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceFilterShouldNotThrowExceptionWithCorrectAttributeServiceTypeAndUsingBuilderForOrder()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
@@ -1080,15 +1246,11 @@
                         .OfType(typeof(CustomActionFilter))
                         .AndAlso()
                         .WithOrder(2)));
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceFilterShouldThrowExceptionWithCorrectAttributeServiceTypeAndUsingBuilderForOrderWithWrongOrder()
         {
-            MyApplication.StartsFrom<TestStartup>();
-
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
@@ -1103,8 +1265,6 @@
                                 .WithOrder(1)));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have ServiceFilterAttribute with order of 1, but in fact found 2.");
-
-            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -1218,18 +1378,631 @@
         }
 
         [Fact]
-        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithActionWithoutTheAttributeWithIncorrectRoles()
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithActionWithTheAttributeContainingTheAllowedRoles()
         {
-            Test.AssertException<AttributeAssertionException>(
-                () =>
-                {
-                    MyController<MvcController>
-                        .Instance()
-                        .Calling(c => c.NormalActionWithAttributes())
-                        .ShouldHave()
-                        .ActionAttributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedRoles: "Admin"));
-                },
-                "When calling NormalActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with allowed 'Admin' roles, but in fact found 'Admin,Moderator'.");
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedRoles: "Admin"));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithCorrectAuthenticationScheme()
+        {
+            MyController<AuthorizationController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithAuthenticationSchemes("Cookies")));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithIncorrectAuthenticationScheme()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithAuthenticationSchemes("JWTBearer")));
+            },
+            "When calling NormalActionWithAuthorizeAttribute action in AuthorizationController expected action to have AuthorizeAttribute with 'JWTBearer' authentication schemes, but in fact found 'Cookies'.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithMultipleAuthenticationSchemes()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithAuthenticationSchemes("JWTBearer, Cookies")));
+            },
+            "When calling NormalActionWithAuthorizeAttribute action in AuthorizationController expected action to have AuthorizeAttribute with 'JWTBearer, Cookies' authentication schemes, but in fact found 'Cookies'.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithoutDefinedSchemes()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.EmptyActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithAuthenticationSchemes("JWTBearer, Cookies")));
+            },
+            "When calling EmptyActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'JWTBearer, Cookies' authentication schemes, but in fact found ''.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithEmptyAuthenticationScheme()
+        {
+            MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithAuthenticationSchemes(string.Empty)));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithNullAuthenticationScheme()
+        {
+            MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithAuthenticationSchemes(null)));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithEmptyPolicyAndAlsoWithCorrectAuthenticationScheme()
+        {
+            MyController<AuthorizationController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithPolicy(string.Empty)
+                        .AndAlso()
+                        .WithAuthenticationSchemes("Cookies")));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithEmptyPolicyAndAlsoWithNotDefinedAuthenticationScheme()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.EmptyActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithPolicy(string.Empty)
+                            .AndAlso()
+                            .WithAuthenticationSchemes("Cookies")));
+            },
+            "When calling EmptyActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'Cookies' authentication schemes, but in fact found ''.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithCorrectPolicy()
+        {
+            MyController<AuthorizationController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithPolicy("Admin")));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithIncorrectPolicy()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithPolicy("MyPolicy")));
+            },
+            "When calling NormalActionWithAuthorizeAttribute action in AuthorizationController expected action to have AuthorizeAttribute with 'MyPolicy' policy, but in fact found 'Admin'.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithoutDefinedPolicy()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.EmptyActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithPolicy("MyPolicy")));
+            },
+            "When calling EmptyActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'MyPolicy' policy, but in fact found ''.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithEmptyPolicy()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.EmptyActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithPolicy(string.Empty)));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithNullPolicy()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.EmptyActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithPolicy(null)));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithAuthenticationSchemeAndAlsoWithPolicy()
+        {
+            MyController<AuthorizationController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithAuthenticationSchemes("Cookies")
+                        .AndAlso()
+                        .WithPolicy("Admin")));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithAuthenticationSchemeAndAlsoWithIncorrectPolicy()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithAuthenticationSchemes("Cookies")
+                            .AndAlso()
+                            .WithPolicy("MyPolicy")));
+            },
+            "When calling NormalActionWithAuthorizeAttribute action in AuthorizationController expected action to have AuthorizeAttribute with 'MyPolicy' policy, but in fact found 'Admin'.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithCorrectRole()
+        {
+            MyController<AuthorizationController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithRole("Admin")));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithIncorrectRole()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRole("Moderator")));
+            },
+            "When calling NormalActionWithAuthorizeAttribute action in AuthorizationController expected action to have AuthorizeAttribute with 'Moderator' role, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithMultipleRoles()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRole("Admin,Moderator")));
+            },
+            "When calling NormalActionWithAuthorizeAttribute action in AuthorizationController expected action to have AuthorizeAttribute with 'Admin,Moderator' role, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithoutDefinedRole()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.EmptyActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRole("Admin")));
+            },
+            "When calling EmptyActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'Admin' role, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithEmptyRole()
+        {
+            MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRole(string.Empty)));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithNullRole()
+        {
+            MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRole(null)));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithAuthenticationSchemeAndAlsoWithRole()
+        {
+            MyController<AuthorizationController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithAuthenticationSchemes("Cookies")
+                        .AndAlso()
+                        .WithRole("Admin")));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithAuthenticationSchemeAndAlsoWithIncorrectRole()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithAuthenticationSchemes("Cookies")
+                            .AndAlso()
+                            .WithRole("Moderator")));
+            },
+            "When calling NormalActionWithAuthorizeAttribute action in AuthorizationController expected action to have AuthorizeAttribute with 'Moderator' role, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithSingleCorrectRoles()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithRoles(new List<string>() { "Admin" })));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithCorrectRoles()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithRoles(new List<string>() { "Admin", "Moderator" })));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithOneIncorrectRole()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRoles(new List<string>() { "Admin", "Student" })));
+            },
+            "When calling NormalActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'Student' role, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithMultipleIncorrectRoles()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRoles(new List<string>() { "Teacher", "Student" })));
+            },
+            "When calling NormalActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'Teacher' role, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithoutDefinedRoles()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.EmptyActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                           .WithRoles(new List<string>() { "Admin", "Moderator" })));
+            },
+            "When calling EmptyActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'Admin' role, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithEmptyRoles()
+        {
+            MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRoles(new List<string>())));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithNullRoles()
+        {
+            List<string> roles = null;
+
+            MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRoles(roles)));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithAuthenticationSchemeAndAlsoWithRoles()
+        {
+            MyController<AuthorizationController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithAuthenticationSchemes("Cookies")
+                        .AndAlso()
+                        .WithRoles(new List<string>() { "Admin" })));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithAuthenticationSchemeAndAlsoWithIncorrectRoles()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithAuthenticationSchemes("Cookies")
+                            .AndAlso()
+                            .WithRoles(new List<string>() { "Moderator" })));
+            },
+            "When calling NormalActionWithAuthorizeAttribute action in AuthorizationController expected action to have AuthorizeAttribute with 'Moderator' role, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionContainingSingleCorrectParamsRoles()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithRoles("Admin")));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithCorrectParamsRoles()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithRoles("Admin", "Moderator")));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithOneIncorrectParamsRoles()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRoles("Admin", "Student")));
+            },
+            "When calling NormalActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'Student' role, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithMultipleIncorrectParamsRoles()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRoles("Teacher", "Student")));
+            },
+            "When calling NormalActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'Teacher' role, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithIncorrectSingleParamsRoles()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRoles("Student")));
+            },
+            "When calling NormalActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'Student' role, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithMissingDefinedRoles()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.EmptyActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                           .WithRoles("Admin", "Moderator")));
+            },
+            "When calling EmptyActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with 'Admin' role, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithEmptyParamsRoles()
+        {
+            MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAttributes())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRoles()));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithEmptyStringParamsRoles()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithRoles(string.Empty)));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithNullParamsRoles()
+        {
+            MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithRoles(null)));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithAuthenticationSchemeAndAlsoWithParamsRoles()
+        {
+            MyController<AuthorizationController>
+                .Instance()
+                .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithAuthenticationSchemes("Cookies")
+                        .AndAlso()
+                        .WithRoles("Admin")));
+        }
+
+        [Fact]
+        public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithAuthenticationSchemeAndAlsoWithIncorrectParamsRoles()
+        {
+            Test.AssertException<AttributeAssertionException>(() =>
+            {
+                MyController<AuthorizationController>
+                    .Instance()
+                    .Calling(c => c.NormalActionWithAuthorizeAttribute())
+                    .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests(authorization => authorization
+                            .WithAuthenticationSchemes("Cookies")
+                            .AndAlso()
+                            .WithRoles("Moderator")));
+            },
+            "When calling NormalActionWithAuthorizeAttribute action in AuthorizationController expected action to have AuthorizeAttribute with 'Moderator' role, but in fact such was not found.");
         }
 
         [Fact]
@@ -2267,7 +3040,7 @@
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have attribute restricting requests for HTTP 'HEAD' method, but in fact none was found.");
         }
-        
+
         [Fact]
         public void WithNoShouldWorkCorrectly()
         {
