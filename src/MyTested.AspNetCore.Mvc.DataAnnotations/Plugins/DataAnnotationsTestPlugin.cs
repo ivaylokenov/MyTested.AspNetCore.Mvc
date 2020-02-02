@@ -11,7 +11,6 @@
             => serviceCollection => serviceCollection
                 .AddMvcCore()
                 .AddFormatterMappings()
-                .AddJsonFormatters()
                 .AddDataAnnotations();
     }
 }

@@ -5,9 +5,7 @@
     using And;
     using Contracts.ActionResults.StatusCode;
     using Contracts.And;
-    using Exceptions;
     using Microsoft.AspNetCore.Mvc;
-    using Utilities.Extensions;
     using Utilities.Validators;
 
     /// <content>
@@ -30,7 +28,7 @@
 
         private IAndStatusCodeTestBuilder GetStatusCodeTestBuilder()
         {
-            if (this.ActionResult is StatusCodeResult)
+            if (this.ObjectActionResult is StatusCodeResult)
             {
                 InvocationResultValidator.ValidateInvocationResultType<StatusCodeResult>(this.TestContext);
                 return new StatusCodeTestBuilder<StatusCodeResult>(this.TestContext);

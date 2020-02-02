@@ -126,7 +126,7 @@
                         .Challenge(challenge => challenge
                             .WithAuthenticationProperties(authenticationProperties));
                 },
-                "When calling ChallengeWithAuthenticationProperties action in MvcController expected challenge result authentication properties to be the same as the provided one, but instead received different result.");
+                "When calling ChallengeWithAuthenticationProperties action in MvcController expected challenge result authentication properties to be the same as the provided one, but instead received different result. Difference occurs at 'AuthenticationProperties.Items[.refresh].Value'. Expected a value of 'False', but in fact it was 'True'.");
         }
 
         [Fact]
@@ -141,7 +141,6 @@
                     .AndAlso()
                     .ContainingAuthenticationScheme(AuthenticationScheme.NTLM));
         }
-
 
         [Fact]
         public void PassingShouldCorrectlyRunItsAssertionFunction()

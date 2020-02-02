@@ -68,14 +68,14 @@
         /// <summary>
         /// Tests whether the view component result is <see cref="Microsoft.AspNetCore.Mvc.ViewComponents.ViewViewComponentResult"/> with the default view name.
         /// </summary>
-        /// <returns>Test builder of <see cref="IAndViewTestBuilder"/> type.</returns>
-        IAndViewTestBuilder View();
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        IAndTestBuilder View();
 
-        /// <summary>
-        /// Tests whether the view component result is <see cref="Microsoft.AspNetCore.Mvc.ViewComponents.ViewViewComponentResult"/> with the provided view name.
+        /// <summary>       
+        /// Tests whether the view component result is <see cref="Microsoft.AspNetCore.Mvc.ViewComponents.ViewViewComponentResult"/> with the default view name.
         /// </summary>
-        /// <param name="viewName">Expected view name.</param>
-        /// <returns>Test builder of <see cref="IAndViewTestBuilder"/> type.</returns>
-        IAndViewTestBuilder View(string viewName);
+        /// <param name="viewTestBuilder">Builder for testing the view result.</param>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        IAndTestBuilder View(Action<IViewTestBuilder> viewTestBuilder);
     }
 }

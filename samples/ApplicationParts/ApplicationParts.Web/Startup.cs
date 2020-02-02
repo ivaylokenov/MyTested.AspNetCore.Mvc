@@ -9,13 +9,13 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Hosting;
     using Models;
     using Services;
 
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -41,7 +41,7 @@
                 .AddDefaultTokenProviders();
 
             services
-                .AddMvc()
+                .AddControllersWithViews()
                 .PartManager
                 .ApplicationParts
                 .Add(new AssemblyPart(typeof(HomeController).Assembly));
@@ -50,13 +50,12 @@
             services.AddTransient<ISmsSender, AuthMessageSender>();
         }
         
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                app.UseBrowserLink();
             }
             else
             {
@@ -65,18 +64,21 @@
 
             app.UseStaticFiles();
 
+            app.UseRouting();
+
             app.UseAuthentication();
-            
-            app.UseMvc(routes =>
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "custom",
-                    template: "CustomRoute",
+                    pattern: "CustomRoute",
                     defaults: new { controller = "Home", action = "Index" });
 
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

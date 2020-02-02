@@ -2,14 +2,12 @@
 {
     using Contracts;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Plugins;
     using Server;
     using Services;
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Reflection;
     using Utilities.Extensions;
@@ -69,7 +67,7 @@
                 TryReplaceKnownServices(serviceCollection);
             }
 
-            serviceProvider = serviceProvider ?? serviceCollection.BuildServiceProviderFromFactory();
+            serviceProvider ??= serviceCollection.BuildServiceProviderFromFactory();
 
             PrepareRoutingServices(knownServicesReplaced);
             EnsureApplicationParts(serviceProvider);
@@ -111,16 +109,7 @@
         {
             try
             {
-                return startupMethods.ConfigureServicesDelegate(serviceCollection);
-            }
-            catch (TargetInvocationException exception)
-            {
-                if (exception.InnerException is FileNotFoundException)
-                {
-                    throw new InvalidOperationException($"Application dependencies could not be loaded correctly. If your web project references the '{WebFramework.AspNetCoreMetaPackageName}' package, you need to reference it in your test project too. Additionally, make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file.");
-                }
-
-                throw;
+                return startupMethods.ConfigureServicesDelegate?.Invoke(serviceCollection);
             }
             catch (InvalidOperationException exception)
             {
@@ -162,8 +151,7 @@
 
             if (routingServices.ServiceCollection == null)
             {
-                throw new InvalidOperationException(
-                    $"Route testing requires the registered {nameof(IRoutingServices)} service implementation to provide test routing services by either the {nameof(IRoutingServices.ServiceProvider)} property or the {nameof(IRoutingServices.ServiceCollection)} one.");
+                throw new InvalidOperationException($"Route testing requires the registered {nameof(IRoutingServices)} service implementation to provide test routing services by either the {nameof(IRoutingServices.ServiceProvider)} property or the {nameof(IRoutingServices.ServiceCollection)} one.");
             }
 
             if (!routingServicesReplaced)
@@ -225,8 +213,7 @@
                     additionalExceptionMessageForStartupType = $" An easy way to do the second option is to add a {TestWebServer.Environment.EnvironmentName}Startup class at the root of your test project and invoke the extension methods there.";
                 }
 
-                throw new InvalidOperationException(
-                    $"Testing services could not be resolved. If your {nameof(IStartup.ConfigureServices)} method returns an {nameof(IServiceProvider)}, you should either change it to return 'void' or manually register the required testing services by calling one of the provided {nameof(IServiceCollection)} extension methods in the '{TestFramework.TestFrameworkName}' namespace.{additionalExceptionMessageForStartupType}");
+                throw new InvalidOperationException($"Testing services could not be resolved. If your {nameof(IStartup.ConfigureServices)} method returns an {nameof(IServiceProvider)}, you should either change it to return 'void' or manually register the required testing services by calling one of the provided {nameof(IServiceCollection)} extension methods in the '{TestFramework.TestFrameworkName}' namespace.{additionalExceptionMessageForStartupType}");
             }
         }
 
@@ -241,13 +228,13 @@
         {
             private readonly IServiceProvider serverServiceProvider;
             private readonly IServiceCollection services;
-            private readonly StartupMethods startupTypeMethods;
+            private readonly dynamic startupTypeMethods;
             private readonly MethodInfo configureContainerMethod;
 
             public RoutingServiceProviderBuilder(
                 IServiceProvider serverServiceProvider,
                 IServiceCollection services,
-                StartupMethods startupTypeMethods,
+                dynamic startupTypeMethods,
                 MethodInfo configureContainerMethod)
             {
                 this.serverServiceProvider = serverServiceProvider;
@@ -258,15 +245,22 @@
 
             public override IServiceProvider BuildServiceProvider()
             {
-                var configureContainerBuilder = new ConfigureContainerBuilder(this.configureContainerMethod)
-                {
-                    ConfigureContainerFilters = this.ConfigureContainerPipeline
-                };
+                var configureContainerBuilder = Activator
+                    .CreateInstance(
+                        WebFramework.Internals.ConfigureContainerBuilder,
+                        this.configureContainerMethod)
+                    .Exposed();
+
+                Func<Action<object>, Action<object>> configureContainerPipeline = this.ConfigureContainerPipeline;
+
+                configureContainerBuilder.ConfigureContainerFilters = configureContainerPipeline;
 
                 var serviceProviderFactory = serviceProvider.GetRequiredService<IServiceProviderFactory<TContainerBuilder>>();
                 var builder = serviceProviderFactory.CreateBuilder(this.services);
 
-                configureContainerBuilder.Build(this.startupTypeMethods.StartupInstance)(builder);
+                configureContainerBuilder
+                    .Build(this.startupTypeMethods.StartupInstance)
+                    .Invoke(builder);
 
                 return serviceProviderFactory.CreateServiceProvider(builder);
             }
@@ -277,7 +271,9 @@
             private Action<TContainerBuilder> BuildFiltersPipeline(
                 Action<TContainerBuilder> configureContainer)
                 => builder => this.serverServiceProvider
+#pragma warning disable CS0612 // Type or member is obsolete
                     .GetRequiredService<IEnumerable<IStartupConfigureContainerFilter<TContainerBuilder>>>()
+#pragma warning restore CS0612 // Type or member is obsolete
                     .Reverse()
                     .Aggregate(configureContainer, (current, filter) => filter
                         .ConfigureContainer(current))(builder);

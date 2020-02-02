@@ -235,6 +235,31 @@
         /// <summary>
         /// Validates whether UrlHelper contains the same type as the provided one from action result containing such property.
         /// </summary>
+        /// <param name="actionResult">Action result with UrlHelper.</param>
+        /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
+        /// <param name="urlHelperType"></param>
+        public static void ValidateUrlHelperOfType(
+            dynamic actionResult,
+            Action<string, string, string> failedValidationAction,
+            Type urlHelperType)
+        {
+            RuntimeBinderValidator.ValidateBinding(() =>
+            {
+                var actualUrlHelper = (IUrlHelper)actionResult.UrlHelper;
+                if (actualUrlHelper == null ||
+                    Reflection.AreDifferentTypes(urlHelperType, actualUrlHelper.GetType()))
+                {
+                    failedValidationAction(
+                        "URL helper",
+                        $"to be of {urlHelperType.Name} type",
+                        $"instead received {actualUrlHelper.GetName()}");
+                }
+            });
+        }
+
+        /// <summary>
+        /// Validates whether UrlHelper contains the same type as the provided one from action result containing such property.
+        /// </summary>
         /// <typeparam name="TUrlHelper">Type of IUrlHelper.</typeparam>
         /// <param name="actionResult">Action result with UrlHelper.</param>
         /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
@@ -242,19 +267,6 @@
             dynamic actionResult,
             Action<string, string, string> failedValidationAction)
             where TUrlHelper : IUrlHelper
-        {
-            RuntimeBinderValidator.ValidateBinding(() =>
-            {
-                var actualUrlHelper = (IUrlHelper)actionResult.UrlHelper;
-                if (actualUrlHelper == null ||
-                    Reflection.AreDifferentTypes(typeof(TUrlHelper), actualUrlHelper.GetType()))
-                {
-                    failedValidationAction(
-                        "URL helper",
-                        $"to be of {typeof(TUrlHelper).Name} type",
-                        $"instead received {actualUrlHelper.GetName()}");
-                }
-            });
-        }
+            => RouteActionResultValidator.ValidateUrlHelperOfType(actionResult, failedValidationAction, typeof(TUrlHelper));
     }
 }

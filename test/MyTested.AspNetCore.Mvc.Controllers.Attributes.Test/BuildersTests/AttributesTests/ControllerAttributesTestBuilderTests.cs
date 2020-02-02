@@ -6,8 +6,8 @@
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
-    using Setups.Pipelines;
     using Setups.ActionFilters;
+    using Setups.Pipeline;
     using Xunit;
 
     public class ControllerAttributesTestBuilderTests
@@ -445,7 +445,7 @@
             MyController<ApiController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
-                    .SpecifyingMiddleware(typeof(MyPipeline)));
+                    .SpecifyingMiddleware(typeof(Pipeline)));
         }
 
         [Fact]
@@ -457,7 +457,7 @@
                     MyController<AttributesController>
                         .ShouldHave()
                         .Attributes(attributes => attributes
-                            .SpecifyingMiddleware(typeof(MyPipeline)));
+                            .SpecifyingMiddleware(typeof(Pipeline)));
                 },
                 "When testing AttributesController was expected to have MiddlewareFilterAttribute, but in fact such was not found.");
         }
@@ -471,9 +471,9 @@
                     MyController<ApiController>
                         .ShouldHave()
                         .Attributes(attributes => attributes
-                            .SpecifyingMiddleware(typeof(MyOtherPipeline)));
+                            .SpecifyingMiddleware(typeof(OtherPipeline)));
                 },
-                "When testing ApiController was expected to have MiddlewareFilterAttribute with 'MyOtherPipeline' type, but in fact found 'MyPipeline'.");
+                "When testing ApiController was expected to have MiddlewareFilterAttribute with 'OtherPipeline' type, but in fact found 'Pipeline'.");
         }
 
         [Fact]
@@ -483,7 +483,7 @@
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SpecifyingMiddleware(middleware => middleware
-                        .OfType(typeof(MyPipeline))));
+                        .OfType(typeof(Pipeline))));
         }
 
         [Fact]
@@ -496,9 +496,9 @@
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SpecifyingMiddleware(middleware => middleware
-                                .OfType(typeof(MyOtherPipeline))));
+                                .OfType(typeof(OtherPipeline))));
                 },
-                "When testing ApiController was expected to have MiddlewareFilterAttribute with 'MyOtherPipeline' type, but in fact found 'MyPipeline'.");
+                "When testing ApiController was expected to have MiddlewareFilterAttribute with 'OtherPipeline' type, but in fact found 'Pipeline'.");
         }
 
         [Fact]
@@ -531,7 +531,7 @@
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SpecifyingMiddleware(middleware => middleware
-                        .OfType(typeof(MyPipeline))
+                        .OfType(typeof(Pipeline))
                         .AndAlso()
                         .WithOrder(2)));
         }
@@ -546,7 +546,7 @@
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SpecifyingMiddleware(middleware => middleware
-                                .OfType(typeof(MyPipeline))
+                                .OfType(typeof(Pipeline))
                                 .AndAlso()
                                 .WithOrder(1)));
                 },
@@ -561,7 +561,7 @@
             MyController<ApiController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
-                    .WithTypeFilter(typeof(MyActionFilterWithArgs)));
+                    .WithTypeFilter(typeof(CustomActionFilterWithArgs)));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -577,7 +577,7 @@
                     MyController<AttributesController>
                         .ShouldHave()
                         .Attributes(attributes => attributes
-                            .WithTypeFilter(typeof(MyActionFilterWithArgs)));
+                            .WithTypeFilter(typeof(CustomActionFilterWithArgs)));
                 },
                 "When testing AttributesController was expected to have TypeFilterAttribute, but in fact such was not found.");
 
@@ -595,9 +595,9 @@
                     MyController<ApiController>
                         .ShouldHave()
                         .Attributes(attributes => attributes
-                            .WithTypeFilter(typeof(MyOtherActionFilterWithArgs)));
+                            .WithTypeFilter(typeof(OtherActionFilterWithArgs)));
                 },
-                "When testing ApiController was expected to have TypeFilterAttribute with 'MyOtherActionFilterWithArgs' type, but in fact found 'MyActionFilterWithArgs'.");
+                "When testing ApiController was expected to have TypeFilterAttribute with 'OtherActionFilterWithArgs' type, but in fact found 'CustomActionFilterWithArgs'.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -611,7 +611,7 @@
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .WithTypeFilter(filter => filter
-                        .OfType(typeof(MyActionFilterWithArgs))));
+                        .OfType(typeof(CustomActionFilterWithArgs))));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -628,9 +628,9 @@
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .WithTypeFilter(filter => filter
-                                .OfType(typeof(MyOtherActionFilterWithArgs))));
+                                .OfType(typeof(OtherActionFilterWithArgs))));
                 },
-                "When testing ApiController was expected to have TypeFilterAttribute with 'MyOtherActionFilterWithArgs' type, but in fact found 'MyActionFilterWithArgs'.");
+                "When testing ApiController was expected to have TypeFilterAttribute with 'OtherActionFilterWithArgs' type, but in fact found 'CustomActionFilterWithArgs'.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -675,7 +675,7 @@
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .WithTypeFilter(filter => filter
-                        .OfType(typeof(MyActionFilterWithArgs))
+                        .OfType(typeof(CustomActionFilterWithArgs))
                         .AndAlso()
                         .WithOrder(2)));
 
@@ -694,7 +694,7 @@
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .WithTypeFilter(filter => filter
-                                .OfType(typeof(MyActionFilterWithArgs))
+                                .OfType(typeof(CustomActionFilterWithArgs))
                                 .AndAlso()
                                 .WithOrder(1)));
                 },
@@ -712,7 +712,7 @@
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .WithTypeFilter(filter => filter
-                        .OfType(typeof(MyActionFilterWithArgs))
+                        .OfType(typeof(CustomActionFilterWithArgs))
                         .AndAlso()
                         .WithArguments(new object[]
                         {
@@ -734,7 +734,7 @@
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .WithTypeFilter(filter => filter
-                                .OfType(typeof(MyActionFilterWithArgs))
+                                .OfType(typeof(CustomActionFilterWithArgs))
                                 .AndAlso()
                                 .WithArguments(new object[]
                                 {
@@ -791,7 +791,7 @@
             MyController<ApiController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
-                    .WithServiceFilter(typeof(MyActionFilter)));
+                    .WithServiceFilter(typeof(CustomActionFilter)));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -807,7 +807,7 @@
                     MyController<AttributesController>
                         .ShouldHave()
                         .Attributes(attributes => attributes
-                            .WithServiceFilter(typeof(MyActionFilter)));
+                            .WithServiceFilter(typeof(CustomActionFilter)));
                 },
                 "When testing AttributesController was expected to have ServiceFilterAttribute, but in fact such was not found.");
 
@@ -825,9 +825,9 @@
                     MyController<ApiController>
                         .ShouldHave()
                         .Attributes(attributes => attributes
-                            .WithServiceFilter(typeof(MyOtherActionFilter)));
+                            .WithServiceFilter(typeof(OtherActionFilter)));
                 },
-                "When testing ApiController was expected to have ServiceFilterAttribute with 'MyOtherActionFilter' type, but in fact found 'MyActionFilter'.");
+                "When testing ApiController was expected to have ServiceFilterAttribute with 'OtherActionFilter' type, but in fact found 'CustomActionFilter'.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -841,7 +841,7 @@
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .WithServiceFilter(filter => filter
-                        .OfType(typeof(MyActionFilter))));
+                        .OfType(typeof(CustomActionFilter))));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -858,9 +858,9 @@
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .WithServiceFilter(filter => filter
-                                .OfType(typeof(MyOtherActionFilter))));
+                                .OfType(typeof(OtherActionFilter))));
                 },
-                "When testing ApiController was expected to have ServiceFilterAttribute with 'MyOtherActionFilter' type, but in fact found 'MyActionFilter'.");
+                "When testing ApiController was expected to have ServiceFilterAttribute with 'OtherActionFilter' type, but in fact found 'CustomActionFilter'.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -905,7 +905,7 @@
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .WithServiceFilter(filter => filter
-                        .OfType(typeof(MyActionFilter))
+                        .OfType(typeof(CustomActionFilter))
                         .AndAlso()
                         .WithOrder(2)));
 
@@ -924,7 +924,7 @@
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .WithServiceFilter(filter => filter
-                                .OfType(typeof(MyActionFilter))
+                                .OfType(typeof(CustomActionFilter))
                                 .AndAlso()
                                 .WithOrder(1)));
                 },

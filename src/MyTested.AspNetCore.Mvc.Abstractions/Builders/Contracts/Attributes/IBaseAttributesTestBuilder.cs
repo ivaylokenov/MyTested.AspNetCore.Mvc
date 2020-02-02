@@ -18,6 +18,13 @@
             where TAttribute : Attribute;
 
         /// <summary>
+        /// Tests whether the collected attributes contain the provided attribute type.
+        /// </summary>
+        /// <param name="attributeType"></param>
+        /// <returns></returns>
+        TAttributesTestBuilder ContainingAttributeOfType(Type attributeType);
+
+        /// <summary>
         /// Tests whether the collected attributes contain the provided attribute type passing the given assertions.
         /// </summary>
         /// <typeparam name="TAttribute">Type of expected attribute.</typeparam>

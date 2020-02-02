@@ -55,44 +55,52 @@
         }
 
         /// <inheritdoc />
-        public IAndMemoryCacheTestBuilder ContainingEntryOfType<TValue>()
+        public IAndMemoryCacheTestBuilder ContainingEntryOfType(Type valueType)
         {
-            DictionaryValidator.ValidateValueOfType<TValue>(
+            DictionaryValidator.ValidateValueOfType(
                 MemoryCacheName,
                 this.GetMemoryCacheAsDictionary(),
-                this.ThrowNewDataProviderAssertionException);
+                this.ThrowNewDataProviderAssertionException, valueType);
 
             return this;
         }
 
+        public IAndMemoryCacheTestBuilder ContainingEntryOfType<TValue>()
+            => this.ContainingEntryOfType(typeof(TValue));
+
         /// <inheritdoc />
-        public IAndMemoryCacheTestBuilder ContainingEntryOfType<TValue>(object key)
+        public IAndMemoryCacheTestBuilder ContainingEntryOfType(object key, Type expectedType)
         {
             var value = this.GetValue(key);
-            var expectedType = typeof(TValue);
             var actualType = value.GetType();
 
             if (Reflection.AreDifferentTypes(expectedType, actualType))
             {
+                var (expectedTypeName, actualTypeName) = (expectedType, actualType).GetTypeComparisonNames();
+
                 this.ThrowNewDataProviderAssertionException(
                     MemoryCacheName,
-                    $"to have entry with the given key and value of {expectedType.ToFriendlyTypeName()} type",
-                    $"in fact found {actualType.ToFriendlyTypeName()}");
+                    $"to have entry with the given key and value of {expectedTypeName} type",
+                    $"in fact found {actualTypeName}");
             }
 
             return this;
         }
 
         /// <inheritdoc />
+        public IAndMemoryCacheTestBuilder ContainingEntryOfType<TValue>(object key)
+            => this.ContainingEntryOfType(key, typeof(TValue));
+        
+        /// <inheritdoc />
         public IAndMemoryCacheTestBuilder ContainingEntry(object key, object value)
         {
             var actualValue = this.GetValue(key);
-            if (Reflection.AreNotDeeplyEqual(value, actualValue))
+            if (Reflection.AreNotDeeplyEqual(value, actualValue, out var result))
             {
                 this.ThrowNewDataProviderAssertionException(
                     MemoryCacheName,
                     "to have entry with the given value",
-                    "in fact it was different");
+                    $"in fact it was different. {result}");
             }
 
             return this;
@@ -116,12 +124,12 @@
                 SlidingExpiration = cacheEntry.SlidingExpiration
             };
 
-            if (Reflection.AreNotDeeplyEqual(options, actualOptions))
+            if (Reflection.AreNotDeeplyEqual(options, actualOptions, out var result))
             {
                 this.ThrowNewDataProviderAssertionException(
                     MemoryCacheName,
                     $"to have entry with the given options",
-                    "in fact they were different");
+                    $"in fact they were different. {result}");
             }
 
             return this;
@@ -213,13 +221,11 @@
         }
 
         private void ThrowNewDataProviderAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new DataProviderAssertionException(string.Format(
+            => throw new DataProviderAssertionException(string.Format(
                 "{0} {1} {2}, but {3}.",
                 this.TestContext.ExceptionMessagePrefix,
                 propertyName,
                 expectedValue,
                 actualValue));
-        }
     }
 }
