@@ -32,9 +32,7 @@
         public void GetCreateShouldBeRoutedCorrectly()
             => MyRouting
                 .Configuration()
-                .ShouldMap(request => request
-                    .WithLocation("/Articles/Create")
-                    .WithUser())
+                .ShouldMap("/Articles/Create")
                 .To<ArticlesController>(c => c.Create());
 
         [Theory]
@@ -49,9 +47,7 @@
                     {
                         Title = title,
                         Content = content
-                    })
-                    .WithUser()
-                    .WithAntiForgeryToken())
+                    }))
                 .To<ArticlesController>(c => c.Create(new ArticleFormModel
                 {
                     Title = title,
@@ -64,9 +60,7 @@
         public void GetEditShouldBeRoutedCorrectly()
             => MyRouting
                 .Configuration()
-                .ShouldMap(request => request
-                    .WithLocation("/Articles/Edit/1")
-                    .WithUser())
+                .ShouldMap("/Articles/Edit/1")
                 .To<ArticlesController>(c => c.Edit(1));
 
         [Theory]
@@ -81,9 +75,7 @@
                     {
                         Title = title,
                         Content = content
-                    })
-                    .WithUser()
-                    .WithAntiForgeryToken())
+                    }))
                 .To<ArticlesController>(c => c.Edit(1, new ArticleFormModel
                 {
                     Title = title,
@@ -96,27 +88,21 @@
         public void GetDeleteShouldBeRoutedCorrectly()
             => MyRouting
                 .Configuration()
-                .ShouldMap(request => request
-                    .WithLocation("/Articles/Delete/1")
-                    .WithUser())
+                .ShouldMap("/Articles/Delete/1")
                 .To<ArticlesController>(c => c.Delete(1));
 
         [Fact]
         public void GetConfirmDeleteShouldBeRoutedCorrectly()
             => MyRouting
                 .Configuration()
-                .ShouldMap(request => request
-                    .WithLocation("/Articles/ConfirmDelete/1")
-                    .WithUser())
+                .ShouldMap("/Articles/ConfirmDelete/1")
                 .To<ArticlesController>(c => c.ConfirmDelete(1));
         
         [Fact]
         public void GetMineShouldBeRoutedCorrectly()
             => MyRouting
                 .Configuration()
-                .ShouldMap(request => request
-                    .WithLocation("/Articles/Mine")
-                    .WithUser())
+                .ShouldMap("/Articles/Mine")
                 .To<ArticlesController>(c => c.Mine());
     }
 }

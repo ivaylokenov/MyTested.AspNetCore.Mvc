@@ -7,7 +7,6 @@
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
-    using Microsoft.AspNetCore.Mvc.Internal;
     using Plugins;
     using Services;
     using TestContexts;
@@ -16,7 +15,7 @@
     public static class TestHelper
     {
         public static Action GlobalTestCleanup { get; set; }
-        
+
         public static ISet<IHttpFeatureRegistrationPlugin> HttpFeatureRegistrationPlugins { get; }
             = new HashSet<IHttpFeatureRegistrationPlugin>();
 
@@ -77,8 +76,13 @@
 
             try
             {
-                var typeActivatorCache = TestServiceProvider.GetRequiredService<ITypeActivatorCache>();
-                return typeActivatorCache.CreateInstance<TInstance>(TestServiceProvider.Current, typeof(TInstance));
+                var typeActivatorCacheType = WebFramework.Internals.TypeActivatorCache;
+                var openGenericCreateInstance = typeActivatorCacheType.GetMethod("CreateInstance");
+                var closedGenericCreateInstance = openGenericCreateInstance.MakeGenericMethod(typeof(TInstance));
+                var typeActivatorCache = TestServiceProvider.GetService(typeActivatorCacheType);
+                var createInstanceDelegate = (Func<IServiceProvider, Type, TInstance>)closedGenericCreateInstance.CreateDelegate(typeof(Func<IServiceProvider, Type, TInstance>), typeActivatorCache);
+
+                return createInstanceDelegate(TestServiceProvider.Current, typeof(TInstance));
             }
             catch
             {

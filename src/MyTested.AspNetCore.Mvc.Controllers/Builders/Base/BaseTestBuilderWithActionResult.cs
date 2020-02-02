@@ -28,6 +28,12 @@
         /// <value>Action result to be tested.</value>
         public TActionResult ActionResult => this.TestContext.MethodResultAs<TActionResult>();
 
+        /// <summary>
+        /// Gets the action result which will be tested as object.
+        /// </summary>
+        /// <value>Action result to be tested as object.</value>
+        protected object ObjectActionResult => this.TestContext.MethodResult;
+
         /// <inheritdoc />
         public IAndTestBuilder Passing(Action<TActionResult> assertions)
             => this.Passing<TActionResult>(assertions);

@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
+    using System.Linq;
     using Builders.Base;
     using Builders.Contracts.Base;
     using Internal.Application;
@@ -21,9 +22,8 @@
         public static TBuilder WithRouteData<TBuilder>(
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder)
             where TBuilder : IBaseTestBuilder
-        {
-            return builder.WithRouteData(null);
-        }
+            => builder
+                .WithRouteData(null);
 
         /// <summary>
         /// Indicates that route values should be extracted from the provided action call expression adding the given additional values.
@@ -45,14 +45,22 @@
 
                 if (testContext.RouteDataMethodCall != null)
                 {
+                    var originalRouteData = testContext.RouteData;
+
                     testContext.RouteData = RouteExpressionParser.ResolveRouteData(
                         TestApplication.Router,
                         testContext.RouteDataMethodCall);
+
+                    testContext.RouteData.AddFrom(originalRouteData);
                 }
 
                 if (testContext.RouteData == null)
                 {
                     testContext.RouteData = new RouteData();
+                }
+
+                if (!testContext.RouteData.Routers.Any())
+                {
                     testContext.RouteData.Routers.Add(TestApplication.Router);
                 }
                 

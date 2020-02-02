@@ -10,18 +10,13 @@
     public class ViewComponentContextMock : ViewComponentContext
     {
         private HttpTestContext testContext;
-        
-        private ViewComponentContextMock(HttpTestContext testContext, ViewComponentContext viewComponentContext)
-        {
-            this.PrepareViewComponentContext(testContext, viewComponentContext);
-        }
-        
+
+        private ViewComponentContextMock(HttpTestContext testContext, ViewComponentContext viewComponentContext) 
+            => this.PrepareViewComponentContext(testContext, viewComponentContext);
+
         private HttpTestContext TestContext
         {
-            get
-            {
-                return this.testContext;
-            }
+            get => this.testContext;
 
             set
             {

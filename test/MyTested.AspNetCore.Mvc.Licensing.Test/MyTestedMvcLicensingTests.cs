@@ -21,7 +21,7 @@
                 .WithTestAssembly(this);
 
             LicenseValidator.ClearLicenseDetails();
-            TestCounter.SetLicenseData(null, DateTime.MinValue, "MyTested.AspNetCore.Mvc.Tests");
+            TestCounter.SetLicenseData(null, DateTime.MinValue, DateTime.MinValue, "MyTested.AspNetCore.Mvc.Tests");
 
             Task.Run(async () =>
             {
@@ -54,11 +54,11 @@
             MyApplication
                 .StartsFrom<DefaultStartup>()
                 .WithConfiguration(configuration => configuration
-                    .Add("License", "1-3i7E5P3qX5IUWHIAfcXG6DSbOwUBidygp8bnYY/2Rd9zA15SwRWP6QDDp+m/dDTZNBFX2eIHcU/gdcdm83SL695kf3VyvMPw+iyPN6QBh/WnfQwGLqBecrQw+WNPJMz6UgXi2q4e4s/D8/iSjMlwCnzJvC2Yv3zSuADdWObQsygxOjk5OTktMTItMzE6YWRtaW5AbXl0ZXN0ZWRhc3AubmV0Ok15VGVzdGVkLk12YyBUZXN0czpGdWxsOk15VGVzdGVkLkFzcE5ldENvcmUuTXZjLg=="))
+                    .Add("License", "1-1pKwrILvp8I6UEGplN/RvjVeUW8DX0G5V2UhskQUmOd46C5rO9Nb+FcWf/xqBaYljRtCydmSqvmv37PFvMD7PUrXI0lyDcvRKoCJywthqp0wqrjvfmJOWcsH4AHaPdWZXIAG2NP77A7EwhjbNvzQ6tR6HovSFv2S5qcJWB0Ht/4xOjIwOTktMTAtMTU6YWRtaW5AbXl0ZXN0ZWRhc3AubmV0Ok15VGVzdGVkLkFzcE5ldENvcmUuTXZjIFRlc3RzOkRldmVsb3BlcjpNeVRlc3RlZC5Bc3BOZXRDb3JlLk12Yy46U3Vic2NyaXB0aW9u"))
                 .WithTestAssembly(this);
 
             LicenseValidator.ClearLicenseDetails();
-            TestCounter.SetLicenseData(null, DateTime.MinValue, "MyTested.AspNetCore.Mvc.Tests");
+            TestCounter.SetLicenseData(null, new DateTime(2016, 10, 10), new DateTime(2016, 10, 10), "MyTested.AspNetCore.Mvc.Tests");
 
             Task.Run(async () =>
             {
@@ -95,7 +95,7 @@
                 .WithTestAssembly(this);
 
             LicenseValidator.ClearLicenseDetails();
-            TestCounter.SetLicenseData(null, DateTime.MinValue, "MyTested.AspNetCore.Mvc.Tests");
+            TestCounter.SetLicenseData(null, new DateTime(2016, 10, 10), new DateTime(2016, 10, 10), "MyTested.AspNetCore.Mvc.Tests");
             
             Task.Run(async () =>
             {

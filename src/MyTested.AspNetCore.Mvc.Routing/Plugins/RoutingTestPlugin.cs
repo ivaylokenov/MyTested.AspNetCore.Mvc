@@ -10,8 +10,7 @@
         public Action<IServiceCollection> DefaultServiceRegistrationDelegate 
             => serviceCollection => serviceCollection
                 .AddMvcCore()
-                .AddFormatterMappings()
-                .AddJsonFormatters();
+                .AddFormatterMappings();
 
         public Action<IServiceCollection> RoutingServiceRegistrationDelegate 
             => serviceCollection => serviceCollection.AddRoutingTesting();

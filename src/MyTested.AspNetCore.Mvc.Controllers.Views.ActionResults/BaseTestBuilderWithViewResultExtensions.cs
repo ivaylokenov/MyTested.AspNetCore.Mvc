@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
+    using System;
     using Builders.Base;
     using Builders.Contracts.ActionResults.Base;
     using Builders.Contracts.Base;
@@ -108,7 +109,22 @@
         /// <returns>The same <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/> test builder.</returns>
         public static TViewResultTestBuilder WithViewEngineOfType<TViewResultTestBuilder, TViewEngine>(
             this IBaseTestBuilderWithViewResult<TViewResultTestBuilder> baseTestBuilderWithViewResult)
-            where TViewEngine : IViewEngine 
+            where TViewEngine : IViewEngine
+            where TViewResultTestBuilder : IBaseTestBuilderWithActionResult
+            => WithViewEngineOfType<TViewResultTestBuilder>(baseTestBuilderWithViewResult, typeof(TViewEngine));
+
+        /// <summary>
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/> or
+        /// the <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/>
+        /// has the same <see cref="IViewEngine"/> type as the provided one.
+        /// </summary>
+        /// <param name="baseTestBuilderWithViewResult">
+        /// Instance of <see cref="IBaseTestBuilderWithViewResult{TViewResultTestBuilder}"/> type.
+        /// </param>
+        /// <param name="viewEngineType"></param>
+        /// <returns>The same <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/> test builder.</returns>
+        public static TViewResultTestBuilder WithViewEngineOfType<TViewResultTestBuilder>(
+            this IBaseTestBuilderWithViewResult<TViewResultTestBuilder> baseTestBuilderWithViewResult,Type viewEngineType)
             where TViewResultTestBuilder : IBaseTestBuilderWithActionResult
         {
             var actualBuilder = GetActualBuilder(baseTestBuilderWithViewResult);
@@ -116,11 +132,11 @@
             var actualViewEngine = GetViewEngine(baseTestBuilderWithViewResult);
 
             if (actualViewEngine == null
-                || Reflection.AreDifferentTypes(typeof(TViewEngine), actualViewEngine.GetType()))
+                || Reflection.AreDifferentTypes(viewEngineType, actualViewEngine.GetType()))
             {
                 actualBuilder.ThrowNewFailedValidationException(
                     "engine",
-                    $"to be of {typeof(TViewEngine).Name} type",
+                    $"to be of {viewEngineType.Name} type",
                     $"instead received {actualViewEngine.GetName()}");
             }
 

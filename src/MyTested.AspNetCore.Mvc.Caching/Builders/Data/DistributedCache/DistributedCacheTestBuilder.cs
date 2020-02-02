@@ -139,7 +139,7 @@
             mockedDistributedCache.TryGetCacheEntryOptions(entryKey, out var actualDistributedCacheEntryOptions);
             var actualDistributedCacheEntryValue = mockedDistributedCache.Get(entryKey);
 
-            var actualDistributedCacheEntry = new DistributedCacheEntry(actualDistributedCacheEntryValue, actualDistributedCacheEntryOptions);
+            var actualDistributedCacheEntry = new DistributedCacheEntryMock(actualDistributedCacheEntryValue, actualDistributedCacheEntryOptions);
 
             var validations = newDistributedCacheEntryBuilder.GetDistributedCacheEntryValidations();
             validations.ForEach(v => v(expectedDistributedCacheEntry, actualDistributedCacheEntry));

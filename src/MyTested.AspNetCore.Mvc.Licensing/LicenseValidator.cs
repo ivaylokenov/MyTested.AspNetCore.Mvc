@@ -12,11 +12,14 @@
         private const string PublicKey = "BgIAAACkAABSU0ExAAQAAAEAAQD5Hv5iOBm7GKs7GRQBwlYlbNsJZOL8PfX+rQuKK+tO4JquMo0ScaQiz4duyfjp1/dsrNAsRnRoDfIvaL75YYezaEaoRXldI83CjDPU92chrLUkaQdFtY1XyiBt6lJREkD6LBSRSJD9Z9Aeaqssl8fbaJpTk5wppIImhEvHrJ3F6g==";
         private const int SigningDataLength = 128;
 
+        private const int PerpetualOnlyLicenseParts = 6;
+        private const int SubscriptionAvailableLicenseParts = 7;
+
         private static ICollection<LicenseDetails> registeredLicenses;
 
         public static bool HasValidLicense => registeredLicenses != null && registeredLicenses.Any();
 
-        public static bool Validate(IEnumerable<string> licenses, DateTime releaseDate, string projectNamespace)
+        public static bool Validate(IEnumerable<string> licenses, DateTime subscriptionDate, DateTime releaseDate, string projectNamespace)
         {
             var licensesArray = licenses?.ToArray();
             if (licensesArray == null || !licensesArray.Any())
@@ -30,7 +33,7 @@
             {
                 try
                 {
-                    Validate(license, releaseDate, projectNamespace);
+                    Validate(license, subscriptionDate, releaseDate, projectNamespace);
                 }
                 catch (Exception)
                 {
@@ -60,7 +63,8 @@
                     User = registeredLicense.User,
                     Type = registeredLicense.Type,
                     InformationDetails = registeredLicense.InformationDetails,
-                    NamespacePrefix = registeredLicense.NamespacePrefix
+                    NamespacePrefix = registeredLicense.NamespacePrefix,
+                    ExpirationType = registeredLicense.ExpirationType
                 });
             }
 
@@ -69,7 +73,7 @@
 
         public static void ClearLicenseDetails() => registeredLicenses = null;
 
-        private static void Validate(string license, DateTime releaseDate, string projectNamespace)
+        private static void Validate(string license, DateTime subscriptionDate, DateTime releaseDate, string projectNamespace)
         {
             if (license == null || projectNamespace == null)
             {
@@ -104,7 +108,7 @@
             var parsedLicenseDetails = new StreamReader(stream).ReadToEnd();
 
             var parsedLicenseParts = parsedLicenseDetails.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-            if (parsedLicenseParts.Length != 6)
+            if (parsedLicenseParts.Length != PerpetualOnlyLicenseParts && parsedLicenseParts.Length != SubscriptionAvailableLicenseParts)
             {
                 throw new InvalidLicenseException("License details are invalid");
             }
@@ -115,13 +119,15 @@
             }
 
             if (!int.TryParse(
-                parsedLicenseParts[0], 
-                NumberStyles.Integer, 
-                CultureInfo.InvariantCulture, 
+                parsedLicenseParts[0],
+                NumberStyles.Integer,
+                CultureInfo.InvariantCulture,
                 out var parsedLicenseId))
             {
                 throw new InvalidLicenseException("License ID is invalid");
             }
+
+            var subscriptionAvailable = parsedLicenseParts.Length == SubscriptionAvailableLicenseParts;
 
             var licenseDetails = new LicenseDetails
             {
@@ -130,14 +136,17 @@
                 User = parsedLicenseParts[2],
                 InformationDetails = parsedLicenseParts[3],
                 Type = parsedLicenseParts[4],
-                NamespacePrefix = parsedLicenseParts[5]
+                NamespacePrefix = parsedLicenseParts[5],
+                ExpirationType = subscriptionAvailable
+                    ? parsedLicenseParts[6]
+                    : ExpirationType.Perpetual
             };
 
-            var parsedSigningData = licenseDetails.GetSignificateData();
+            var parsedSigningData = licenseDetails.GetSignificateData(subscriptionAvailable);
 
             var signingData = new byte[SigningDataLength];
             Array.Copy(licenseAsBytes, signingData, SigningDataLength);
-            
+
             var cryptoProvider = new RSACryptoServiceProvider(1024)
             {
                 PersistKeyInCsp = false
@@ -157,9 +166,14 @@
                 throw new InvalidLicenseException("License ID does not match signature license ID");
             }
 
-            if (licenseDetails.ExpiryDate < releaseDate)
+            if (licenseDetails.ExpirationType == ExpirationType.Perpetual && licenseDetails.ExpiryDate < releaseDate)
             {
                 throw new InvalidLicenseException($"License is not valid for this version of My Tested ASP.NET Core MVC. License expired on {licenseDetails.ExpiryDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}. This version of My Tested ASP.NET Core MVC was released on {releaseDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}");
+            }
+
+            if (licenseDetails.ExpirationType == ExpirationType.Subscription && licenseDetails.ExpiryDate < subscriptionDate)
+            {
+                throw new InvalidLicenseException($"License subscription expired on {licenseDetails.ExpiryDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}");
             }
 
             if (licenseDetails.Type != LicenseType.Enterprise && licenseDetails.NamespacePrefix != "." && !projectNamespace.StartsWith(licenseDetails.NamespacePrefix))

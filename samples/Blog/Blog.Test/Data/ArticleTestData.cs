@@ -9,7 +9,14 @@
     public static class ArticleTestData
     {
         public static List<Article> GetArticles(int count, bool isPublic = true, bool sameUser = true)
-            => Enumerable
+        {
+            var user = new User
+            {
+                Id = TestUser.Identifier,
+                UserName = TestUser.Username
+            };
+
+            var articles = Enumerable
                 .Range(1, count)
                 .Select(i => new Article
                 {
@@ -18,12 +25,15 @@
                     Content = $"Article Content {i}",
                     IsPublic = isPublic,
                     PublishedOn = isPublic ? new DateTime(2019, 1, 1) : default(DateTime?),
-                    User = new User
+                    User = sameUser ? user : new User
                     {
-                        Id = sameUser ? TestUser.Identifier : $"Author Id {i}",
-                        UserName = sameUser ? TestUser.Username : $"Author {i}"
+                        Id = $"Author Id {i}",
+                        UserName = $"Author {i}"
                     }
                 })
                 .ToList();
+
+            return articles;
+        }
     }
 }

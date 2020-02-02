@@ -34,7 +34,7 @@
         }
 
         [Fact]
-        public void ShouldThrowExceptionShouldCatchAndValidateTypeOfException()
+        public void ShouldThrowExceptionShouldCatchAndValidateTypeOfExceptionForGeneric()
         {
             MyController<MvcController>
                 .Instance()
@@ -42,6 +42,33 @@
                 .ShouldThrow()
                 .Exception()
                 .OfType<NullReferenceException>();
+        }
+
+        [Fact]
+        public void ShouldThrowExceptionShouldCatchAndValidateTypeOfException()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionWithException())
+                .ShouldThrow()
+                .Exception()
+                .OfType(typeof(NullReferenceException));
+        }
+
+        [Fact]
+        public void ShouldThrowExceptionShouldThrowWithInvalidTypeOfExceptionForGeneric()
+        {
+            Test.AssertException<InvalidExceptionAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ActionWithException())
+                        .ShouldThrow()
+                        .Exception()
+                        .OfType<InvalidOperationException>();
+                },
+                "When calling ActionWithException action in MvcController expected InvalidOperationException, but instead received NullReferenceException.");
         }
 
         [Fact]
@@ -55,7 +82,7 @@
                         .Calling(c => c.ActionWithException())
                         .ShouldThrow()
                         .Exception()
-                        .OfType<InvalidOperationException>();
+                        .OfType(typeof(InvalidOperationException));
                 },
                 "When calling ActionWithException action in MvcController expected InvalidOperationException, but instead received NullReferenceException.");
         }

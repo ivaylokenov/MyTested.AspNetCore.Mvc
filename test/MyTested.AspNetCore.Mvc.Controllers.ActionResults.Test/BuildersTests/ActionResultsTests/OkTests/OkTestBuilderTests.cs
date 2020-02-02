@@ -306,7 +306,7 @@
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok(ok => ok
-                    .ContainingOutputFormatterOfType<JsonOutputFormatter>());
+                    .ContainingOutputFormatterOfType<NewtonsoftJsonOutputFormatter>());
         }
 
         [Fact]
