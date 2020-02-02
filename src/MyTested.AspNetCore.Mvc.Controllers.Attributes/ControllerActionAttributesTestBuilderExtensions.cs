@@ -687,8 +687,8 @@
                     .AsEnumerable();
 
                 return controllerActionAttributesTestBuilder
-                        .RestrictingForAuthorizedRequests(authorization => authorization
-                            .WithRoles(roles));
+                    .RestrictingForAuthorizedRequests(authorization => authorization
+                        .WithRoles(roles));
             }
 
             return actualBuilder.AttributesTestBuilder;
