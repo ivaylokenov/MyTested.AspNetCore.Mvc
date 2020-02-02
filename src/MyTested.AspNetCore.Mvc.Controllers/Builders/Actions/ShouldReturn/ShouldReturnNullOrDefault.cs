@@ -53,18 +53,14 @@
             return new AndTestBuilder(this.TestContext);
         }
 
-        private bool CheckValidDefaultValue()
-        {
-            return CommonValidator.CheckForDefaultValue(this.ActionResult) && this.CaughtException == null;
-        }
+        private bool CheckValidDefaultValue() 
+            => CommonValidator.CheckForDefaultValue(this.ActionResult) && this.CaughtException == null;
 
-        private void ThrowNewActionResultAssertionException(string message)
-        {
-            throw new InvocationResultAssertionException(string.Format(
+        private void ThrowNewActionResultAssertionException(string message) 
+            => throw new InvocationResultAssertionException(string.Format(
                 "When calling {0} action in {1} expected action result to be {2}",
                 this.ActionName,
                 this.Controller.GetName(),
                 message));
-        }
     }
 }

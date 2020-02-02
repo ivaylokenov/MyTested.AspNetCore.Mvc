@@ -8,9 +8,9 @@
     using MyTested.AspNetCore.Mvc;
     using Services;
     using Services.Models;
-    using Shouldly;
     using System.Linq;
     using Xunit;
+    using Shouldly;
 
     public class ArticlesControllerTest
     {
@@ -36,7 +36,6 @@
         [Fact]
         public void DetailsShouldReturnNotFoundWhenInvalidArticleId()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Details(int.MaxValue))
                 .ShouldReturn()
                 .NotFound();
@@ -44,8 +43,8 @@
         [Fact]
         public void DetailsShouldReturnNotFoundWhenNonPublicArticleAndAnonymousUser()
             => MyController<ArticlesController>
-                .Instance()
-                .WithData(ArticleTestData.GetArticles(1, isPublic: false))
+                .Instance(instance => instance
+                    .WithData(ArticleTestData.GetArticles(1, isPublic: false)))
                 .Calling(c => c.Details(1))
                 .ShouldReturn()
                 .NotFound();
@@ -53,8 +52,8 @@
         [Fact]
         public void DetailsShouldReturnViewWithCorrectModelWhenPublicArticleAndAnonymousUser()
             => MyController<ArticlesController>
-                .Instance()
-                .WithData(ArticleTestData.GetArticles(1))
+                .Instance(instance => instance
+                    .WithData(ArticleTestData.GetArticles(1)))
                 .Calling(c => c.Details(1))
                 .ShouldReturn()
                 .View(view => view
@@ -64,9 +63,9 @@
         [Fact]
         public void DetailsShouldReturnNotFoundWhenNonPublicArticleAndNonAdministratorNonAuthorUser()
             => MyController<ArticlesController>
-                .Instance()
-                .WithUser("NonAuthor")
-                .WithData(ArticleTestData.GetArticles(1, isPublic: false))
+                .Instance(instance => instance
+                    .WithUser("NonAuthor")
+                    .WithData(ArticleTestData.GetArticles(1, isPublic: false)))
                 .Calling(c => c.Details(1))
                 .ShouldReturn()
                 .NotFound();
@@ -74,9 +73,9 @@
         [Fact]
         public void DetailsShouldReturnViewWithCorrectModelWhenPublicArticleAndNonAdministratorNonAuthorUser()
             => MyController<ArticlesController>
-                .Instance()
-                .WithUser("NonAuthor")
-                .WithData(ArticleTestData.GetArticles(1))
+                .Instance(instance => instance
+                    .WithUser("NonAuthor")
+                    .WithData(ArticleTestData.GetArticles(1)))
                 .Calling(c => c.Details(1))
                 .ShouldReturn()
                 .View(view => view
@@ -93,9 +92,9 @@
             string username,
             string role)
             => MyController<ArticlesController>
-                .Instance()
-                .WithUser(username, new[] { role })
-                .WithData(ArticleTestData.GetArticles(1, isPublic))
+                .Instance(instance => instance
+                    .WithUser(username, new[] { role })
+                    .WithData(ArticleTestData.GetArticles(1, isPublic)))
                 .Calling(c => c.Details(1))
                 .ShouldReturn()
                 .View(view => view
@@ -105,7 +104,6 @@
         [Fact]
         public void CreateGetShouldHaveRestrictionsForHttpGetOnlyAndAuthorizedUsersAndShouldReturnView()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Create())
                 .ShouldHave()
                 .ActionAttributes(attrs => attrs
@@ -118,7 +116,6 @@
         [Fact]
         public void CreatePostShouldHaveRestrictionsForHttpPostOnlyAndAuthorizedUsers()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Create(With.Empty<ArticleFormModel>()))
                 .ShouldHave()
                 .ActionAttributes(attrs => attrs
@@ -128,7 +125,6 @@
         [Fact]
         public void CreatePostShouldReturnViewWithSameModelWhenInvalidModelState()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Create(With.Default<ArticleFormModel>()))
                 .ShouldHave()
                 .InvalidModelState()
@@ -138,9 +134,8 @@
 
         [Theory]
         [InlineData("Article Title", "Article Content")]
-        public void CreatePostShouldSaveArticleSetModelStateMessageAndRedirectWhenValidModelState(string title, string content)
+        public void CreatePostShouldSaveArticleSetTempDataMessageAndRedirectWhenValidModel(string title, string content)
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Create(new ArticleFormModel
                 {
                     Title = title,
@@ -168,7 +163,6 @@
         [Fact]
         public void EditGetShouldHaveRestrictionsForHttpGetOnlyAndAuthorizedUsers()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Edit(With.Empty<int>()))
                 .ShouldHave()
                 .ActionAttributes(attrs => attrs
@@ -178,7 +172,6 @@
         [Fact]
         public void EditGetShouldReturnNotFoundWhenInvalidId()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Edit(With.Any<int>()))
                 .ShouldReturn()
                 .NotFound();
@@ -186,9 +179,9 @@
         [Fact]
         public void EditGetShouldReturnNotFoundWhenNonAuthorUser()
             => MyController<ArticlesController>
-                .Instance()
-                .WithUser("NonAuthor")
-                .WithData(ArticleTestData.GetArticles(1))
+                .Instance(instance => instance
+                    .WithUser("NonAuthor")
+                    .WithData(ArticleTestData.GetArticles(1)))
                 .Calling(c => c.Edit(1))
                 .ShouldReturn()
                 .NotFound();
@@ -198,9 +191,9 @@
         [InlineData(1, "Administrator", ControllerConstants.AdministratorRole)]
         public void EditGetShouldReturnViewWithCorrectModelWhenCorrectUser(int articleId, string username, string role)
             => MyController<ArticlesController>
-                .Instance()
-                .WithUser(username, new[] { role })
-                .WithData(ArticleTestData.GetArticles(articleId))
+                .Instance(instance => instance
+                    .WithUser(username, new[] { role })
+                    .WithData(ArticleTestData.GetArticles(articleId)))
                 .Calling(c => c.Edit(articleId))
                 .ShouldReturn()
                 .View(view => view
@@ -210,7 +203,6 @@
         [Fact]
         public void EditPostShouldHaveRestrictionsForHttpPostOnlyAndAuthorizedUsers()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Edit(
                     With.Empty<int>(), 
                     With.Empty<ArticleFormModel>()))
@@ -222,7 +214,6 @@
         [Fact]
         public void EditPostShouldReturnNotFoundWhenInvalidId()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Edit(
                     With.Any<int>(),
                     With.Any<ArticleFormModel>()))
@@ -232,9 +223,9 @@
         [Fact]
         public void EditPostShouldReturnNotFoundWhenNonAuthorUser()
             => MyController<ArticlesController>
-                .Instance()
-                .WithUser(user => user.WithIdentifier("NonAuthor"))
-                .WithData(ArticleTestData.GetArticles(1))
+                .Instance(instance => instance
+                    .WithUser(user => user.WithIdentifier("NonAuthor"))
+                    .WithData(ArticleTestData.GetArticles(1)))
                 .Calling(c => c.Edit(1, With.Empty<ArticleFormModel>()))
                 .ShouldReturn()
                 .NotFound();
@@ -242,9 +233,9 @@
         [Fact]
         public void EditPostShouldReturnViewWithSameModelWhenInvalidModelState()
             => MyController<ArticlesController>
-                .Instance()
-                .WithUser()
-                .WithData(ArticleTestData.GetArticles(1))
+                .Instance(instance => instance
+                    .WithUser()
+                    .WithData(ArticleTestData.GetArticles(1)))
                 .Calling(c => c.Edit(1, With.Default<ArticleFormModel>()))
                 .ShouldHave()
                 .InvalidModelState()
@@ -262,9 +253,9 @@
             string username, 
             string role)
             => MyController<ArticlesController>
-                .Instance()
-                .WithUser(username, new[] { role })
-                .WithData(ArticleTestData.GetArticles(1))
+                .Instance(instance => instance
+                    .WithUser(username, new[] { role })
+                    .WithData(ArticleTestData.GetArticles(1)))
                 .Calling(c => c.Edit(articleId, new ArticleFormModel
                 {
                     Title = $"Edit {title}",
@@ -297,7 +288,6 @@
         [Fact]
         public void DeleteShouldHaveRestrictionsForAuthorizedUsers()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Delete(With.Empty<int>()))
                 .ShouldHave()
                 .ActionAttributes(attrs => attrs
@@ -306,7 +296,6 @@
         [Fact]
         public void DeleteShouldReturnNotFoundWhenInvalidId()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Delete(With.Any<int>()))
                 .ShouldReturn()
                 .NotFound();
@@ -314,9 +303,9 @@
         [Fact]
         public void DeleteShouldReturnNotFoundWhenNonAuthorUser()
             => MyController<ArticlesController>
-                .Instance()
-                .WithUser(user => user.WithIdentifier("NonAuthor"))
-                .WithData(ArticleTestData.GetArticles(1))
+                .Instance(instance => instance
+                    .WithUser(user => user.WithIdentifier("NonAuthor"))
+                    .WithData(ArticleTestData.GetArticles(1)))
                 .Calling(c => c.Delete(1))
                 .ShouldReturn()
                 .NotFound();
@@ -326,9 +315,9 @@
         [InlineData(1, "Administrator", ControllerConstants.AdministratorRole)]
         public void DeleteShouldReturnViewWithCorrectModelWhenCorrectUser(int articleId, string username, string role)
             => MyController<ArticlesController>
-                .Instance()
-                .WithUser(username, new[] { role })
-                .WithData(ArticleTestData.GetArticles(articleId))
+                .Instance(instance => instance
+                    .WithUser(username, new[] { role })
+                    .WithData(ArticleTestData.GetArticles(articleId)))
                 .Calling(c => c.Delete(articleId))
                 .ShouldReturn()
                 .View(articleId);
@@ -336,7 +325,6 @@
         [Fact]
         public void ConfirmDeleteShouldHaveRestrictionsForAuthorizedUsers()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.ConfirmDelete(With.Empty<int>()))
                 .ShouldHave()
                 .ActionAttributes(attrs => attrs
@@ -345,7 +333,6 @@
         [Fact]
         public void ConfirmDeleteShouldReturnNotFoundWhenInvalidId()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.ConfirmDelete(With.Any<int>()))
                 .ShouldReturn()
                 .NotFound();
@@ -353,9 +340,9 @@
         [Fact]
         public void ConfirmDeleteShouldReturnNotFoundWhenNonAuthorUser()
             => MyController<ArticlesController>
-                .Instance()
-                .WithUser(user => user.WithIdentifier("NonAuthor"))
-                .WithData(ArticleTestData.GetArticles(1))
+                .Instance(instance => instance
+                    .WithUser(user => user.WithIdentifier("NonAuthor"))
+                    .WithData(ArticleTestData.GetArticles(1)))
                 .Calling(c => c.ConfirmDelete(1))
                 .ShouldReturn()
                 .NotFound();
@@ -368,9 +355,9 @@
             string username, 
             string role)
             => MyController<ArticlesController>
-                .Instance()
-                .WithUser(username, new[] { role })
-                .WithData(ArticleTestData.GetArticles(articleId))
+                .Instance(instance => instance
+                    .WithUser(username, new[] { role })
+                    .WithData(ArticleTestData.GetArticles(articleId)))
                 .Calling(c => c.ConfirmDelete(articleId))
                 .ShouldHave()
                 .Data(data => data
@@ -387,7 +374,6 @@
         [Fact]
         public void MineShouldHaveRestrictionsForAuthorizedUsers()
             => MyController<ArticlesController>
-                .Instance()
                 .Calling(c => c.Mine())
                 .ShouldHave()
                 .ActionAttributes(attrs => attrs
@@ -396,9 +382,9 @@
         [Fact]
         public void MineShouldReturnViewWithCorrectModel()
             => MyController<ArticlesController>
-                .Instance()
-                .WithUser("Author Id 1", "Author 1")
-                .WithData(ArticleTestData.GetArticles(2, sameUser: false))
+                .Instance(instance => instance
+                    .WithUser("Author Id 1", "Author 1")
+                    .WithData(ArticleTestData.GetArticles(2, sameUser: false)))
                 .Calling(c => c.Mine())
                 .ShouldReturn()
                 .View(view => view

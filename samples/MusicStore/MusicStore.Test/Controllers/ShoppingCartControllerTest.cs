@@ -134,6 +134,37 @@
                 });
         }
 
+        [Fact]
+        public void RemoveFromCartShouldReturnNoItemsWhenWrongCartIdIsPassed()
+        {
+            var cartId = "CartId_А";
+            var wrongCartItemId = -1;
+            var numberOfItem = 3;
+            var unitPrice = 5;
+
+            MyMvc
+                .Controller<ShoppingCartController>()
+                .WithSession(session => session.WithEntry("Session", cartId))
+                .WithData(db => db
+                    .WithEntities(entities =>
+                    {
+                        var cartItems = CreateTestCartItems(cartId, unitPrice, numberOfItem);
+                        entities.AddRange(cartItems.Select(n => n.Album).Distinct());
+                        entities.AddRange(cartItems);
+                    }))
+                .Calling(c => c.RemoveFromCart(wrongCartItemId, CancellationToken.None))
+                .ShouldReturn()
+                .Json(json => json
+                    .WithModelOfType<ShoppingCartRemoveViewModel>()
+                    .Passing(model =>
+                    {
+                        Assert.Equal(numberOfItem, model.CartCount);
+                        Assert.Equal((numberOfItem) * unitPrice, model.CartTotal);
+                        Assert.Equal(0, model.ItemCount);
+                        Assert.Equal("Could not find this item, nothing has been removed from your shopping cart.", model.Message);
+                    }));
+        }
+
         private static CartItem[] CreateTestCartItems(string cartId, decimal itemPrice, int numberOfItem)
         {
             var albums = CreateTestAlbums(itemPrice);

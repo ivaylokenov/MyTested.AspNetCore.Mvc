@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Controllers
 {
     using System.Collections.Generic;
+    using Actions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Routing;
@@ -10,11 +11,9 @@
     public class ControllerContextMock : ControllerContext
     {
         private ControllerContextMock(ActionContext actionContext)
-            : base(actionContext)
-        {
-            this.PrepareControllerContext(actionContext);
-        }
-        
+            : base(actionContext) 
+            => this.PrepareControllerContext(actionContext);
+
         public static ControllerContext Default(HttpTestContext testContext)
             => FromActionContext(testContext, new ActionContext());
 

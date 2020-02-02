@@ -9,6 +9,31 @@
     public class SignInTestBuilderTests
     {
         [Fact]
+        public void SignInShouldNotThrowExceptionWithCorrectActionResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.SignInWithAuthenticationPropertiesAndScheme())
+                .ShouldReturn()
+                .SignIn();
+        }
+
+        [Fact]
+        public void ConflictShouldThrowExceptionWithIncorrectActionResult()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.OkResultAction())
+                        .ShouldReturn()
+                        .SignIn();
+                },
+                "When calling OkResultAction action in MvcController expected result to be SignInResult, but instead received OkResult.");
+        }
+
+        [Fact]
         public void ShouldReturnSignInShouldNotThrowExceptionIfResultIsSignInWithCorrectAuthenticationScheme()
         {
             MyController<MvcController>
@@ -32,7 +57,7 @@
                         .SignIn(signIn => signIn
                             .WithAuthenticationScheme(AuthenticationScheme.Digest));
                 },
-                $"When calling SignInWithEmptyAuthenticationPropertiesAndScheme action in MvcController expected sign in result authentication scheme to be 'Digest', but instead received 'Basic'.");
+                "When calling SignInWithEmptyAuthenticationPropertiesAndScheme action in MvcController expected sign in result authentication scheme to be 'Digest', but instead received 'Basic'.");
         }
 
         [Fact]
@@ -63,7 +88,7 @@
                         .SignIn(signIn => signIn
                             .WithAuthenticationProperties(authenticationProperties));
                 },
-                $"When calling SignInWithAuthenticationPropertiesAndScheme action in MvcController expected sign in result authentication properties to be the same as the provided one, but instead received different result.");
+                "When calling SignInWithAuthenticationPropertiesAndScheme action in MvcController expected sign in result authentication properties to be the same as the provided one, but instead received different result. Difference occurs at 'AuthenticationProperties.Items[.refresh].Value'. Expected a value of 'False', but in fact it was 'True'.");
         }
 
         [Fact]
@@ -103,7 +128,7 @@
                         .SignIn(signIn => signIn
                             .Passing(si => si.AuthenticationScheme == AuthenticationScheme.Digest));
                 },
-                $"When calling SignInWithAuthenticationPropertiesAndScheme action in MvcController expected the SignInResult to pass the given predicate, but it failed.");
+                "When calling SignInWithAuthenticationPropertiesAndScheme action in MvcController expected the SignInResult to pass the given predicate, but it failed.");
         }
 
         [Fact]

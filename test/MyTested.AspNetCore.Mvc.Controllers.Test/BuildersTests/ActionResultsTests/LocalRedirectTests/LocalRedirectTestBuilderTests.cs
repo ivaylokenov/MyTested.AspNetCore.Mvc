@@ -7,7 +7,7 @@
     public class LocalRedirectTestBuilderTests
     {
         [Fact]
-        public void AndProvideTheActionResultShouldWorkCorrectly()
+        public void ShouldPassForTheShouldWorkCorrectly()
         {
             MyController<MvcController>
                 .Instance()

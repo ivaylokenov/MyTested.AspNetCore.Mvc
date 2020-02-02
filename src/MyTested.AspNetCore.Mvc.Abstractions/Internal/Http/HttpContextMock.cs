@@ -2,14 +2,20 @@
 {
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
-    using Microsoft.AspNetCore.Http.Internal;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Security.Claims;
+    using System.Threading;
     using Utilities.Validators;
 
     /// <summary>
     /// Mock of HTTP context.
     /// </summary>
-    public class HttpContextMock : DefaultHttpContext
+    public class HttpContextMock : HttpContext
     {
+        private readonly DefaultHttpContext httpContext; 
+
         private HttpRequest httpRequest;
         private HttpResponse httpResponse;
 
@@ -19,7 +25,7 @@
         public HttpContextMock()
             : this(new FeatureCollection())
         {
-            this.PrepareFeatures();
+            this.PrepareDefaultFeatures();
             this.PrepareDefaultValues();
         }
 
@@ -28,10 +34,11 @@
         /// </summary>
         /// <param name="features">HTTP features to initialize.</param>
         public HttpContextMock(IFeatureCollection features)
-            : base(features)
         {
+            this.httpContext = new DefaultHttpContext(features);
+
             this.CustomRequest = this.httpRequest;
-            this.httpResponse = this.httpResponse ?? new HttpResponseMock(this);
+            this.httpResponse ??= new HttpResponseMock(this.httpContext);
         }
 
         /// <summary>
@@ -43,9 +50,16 @@
         {
             CommonValidator.CheckForNullReference(context, nameof(HttpContext));
 
-            this.PrepareFeatures();
+            this.PrepareDefaultFeatures();
             this.PrepareData(context);
             this.PrepareDefaultValues();
+        }
+
+        public HttpRequest CustomRequest
+        {
+            set => this.httpRequest = value ?? (HttpRequest)Activator.CreateInstance(
+                WebFramework.Internals.DefaultHttpRequest, 
+                this.httpContext);
         }
 
         /// <summary>
@@ -60,15 +74,52 @@
         /// <value>Object of HttpResponse type.</value>
         public override HttpResponse Response => this.httpResponse;
 
-        public HttpRequest CustomRequest
+        public override ConnectionInfo Connection => this.httpContext.Connection;
+
+        public override IFeatureCollection Features => this.httpContext.Features;
+
+        public override IDictionary<object, object> Items
+        { 
+            get => this.httpContext.Items; 
+            set => this.httpContext.Items = value; 
+        }
+        
+        public override CancellationToken RequestAborted
         {
-            set => this.httpRequest = value ?? new DefaultHttpRequest(this);
+            get => this.httpContext.RequestAborted;
+            set => this.httpContext.RequestAborted = value;
         }
 
-        public static HttpContextMock From(HttpContext httpContext) 
+        public override IServiceProvider RequestServices
+        {
+            get => this.httpContext.RequestServices;
+            set => this.httpContext.RequestServices = value;
+        }
+
+        public override ISession Session
+        {
+            get => this.httpContext.Session;
+            set => this.httpContext.Session = value;
+        }
+
+        public override string TraceIdentifier
+        {
+            get => this.httpContext.TraceIdentifier;
+            set => this.httpContext.TraceIdentifier = value;
+        }
+
+        public override ClaimsPrincipal User
+        {
+            get => this.httpContext.User;
+            set => this.httpContext.User = value;
+        }
+
+        public override WebSocketManager WebSockets => this.httpContext.WebSockets;
+
+        public static HttpContextMock From(HttpContext httpContext)
             => new HttpContextMock(httpContext);
 
-        private void PrepareFeatures()
+        private void PrepareDefaultFeatures()
         {
             if (this.Features.Get<IHttpRequestFeature>() == null)
             {
@@ -78,6 +129,11 @@
             if (this.Features.Get<IHttpResponseFeature>() == null)
             {
                 this.Features.Set<IHttpResponseFeature>(new HttpResponseFeature());
+            }
+
+            if (this.Features.Get<IHttpResponseBodyFeature>() == null)
+            {
+                this.Features.Set<IHttpResponseBodyFeature>(new StreamResponseBodyFeature(Stream.Null));
             }
 
             if (this.Features.Get<IServiceProvidersFeature>() == null)
@@ -112,5 +168,7 @@
                 this.Request.ContentType = ContentType.FormUrlEncoded;
             }
         }
+
+        public override void Abort() => this.httpContext.Abort();
     }
 }

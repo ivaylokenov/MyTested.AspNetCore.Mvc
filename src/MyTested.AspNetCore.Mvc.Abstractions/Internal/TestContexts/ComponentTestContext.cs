@@ -16,47 +16,17 @@
         private string methodName;
         private MethodInfo method;
         private LambdaExpression methodCall;
+        private object methodResult;
         private IEnumerable<object> methodAttributes;
         private object model;
         
-        public object Component
-        {
-            get
-            {
-                if (this.component == null)
-                {
-                    this.component = this.ComponentConstructionDelegate();
-                }
+        public object Component => this.component ??= this.ComponentConstructionDelegate();
 
-                return this.component;
-            }
-        }
+        public IEnumerable<object> ComponentAttributes 
+            => this.componentAttributes ??= Reflection.GetCustomAttributes(this.Component);
 
-        public IEnumerable<object> ComponentAttributes
-        {
-            get
-            {
-                if (this.componentAttributes == null)
-                {
-                    this.componentAttributes = Reflection.GetCustomAttributes(this.Component);
-                }
-
-                return this.componentAttributes;
-            }
-        }
-
-        public IDictionary<Type, object> AggregatedDependencies
-        {
-            get
-            {
-                if (this.aggregatedDependencies == null)
-                {
-                    this.aggregatedDependencies = new Dictionary<Type, object>();
-                }
-
-                return this.aggregatedDependencies;
-            }
-        }
+        public IDictionary<Type, object> AggregatedDependencies 
+            => this.aggregatedDependencies ??= new Dictionary<Type, object>();
 
         public string MethodName
         {
@@ -93,20 +63,15 @@
             }
         }
 
-        public object MethodResult { get; set; }
+        public object MethodResult
+        { 
+            get => this.methodResult;
 
-        public IEnumerable<object> MethodAttributes
-        {
-            get
-            {
-                if (this.methodAttributes == null)
-                {
-                    this.methodAttributes = Reflection.GetCustomAttributes(this.Method);
-                }
-
-                return this.methodAttributes;
-            }
+            set => this.methodResult = this.ConvertMethodResult(value);
         }
+
+        public IEnumerable<object> MethodAttributes 
+            => this.methodAttributes ??= Reflection.GetCustomAttributes(this.Method);
 
         public Exception CaughtException { get; set; }
 
@@ -150,5 +115,7 @@
             this.MethodResult = invocationTestContext.MethodResult;
             this.CaughtException = invocationTestContext.CaughtException;
         }
+
+        protected virtual object ConvertMethodResult(object convertibleMethodResult) => convertibleMethodResult;
     }
 }

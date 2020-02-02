@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
     using Contracts.Routing;
     using Exceptions;
+    using Internal;
     using Internal.Routing;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Routing;
@@ -32,7 +33,18 @@
         {
         }
 
-        private RouteContext RouteContext => this.TestContext.RouteContext;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShouldMapTestBuilder"/> class.
+        /// </summary>
+        /// <param name="testContext"><see cref="RouteTestContext"/> containing data about the currently executed assertion chain.</param>
+        /// <param name="actionCallExpression">Method call expression indicating the expected resolved action.</param>
+        protected ShouldMapTestBuilder(
+            RouteTestContext testContext,
+            LambdaExpression actionCallExpression)
+            : this(testContext)
+            => this.actionCallExpression = actionCallExpression;
+
+        public RouteContext RouteContext => this.TestContext.RouteContext;
 
         /// <inheritdoc />
         public IAndResolvedRouteTestBuilder ToAction(string actionName)
@@ -97,21 +109,24 @@
                 routeValue = actualInfo.RouteData.Values[key];
             }
 
+            var valueIsString = value is string || routeValue is string;
+            DeepEqualityResult result = null;
+
             bool invalid;
-            if (value is string || routeValue is string)
+            if (valueIsString)
             {
                 invalid = value.ToString() != routeValue.ToString();
             }
             else
             {
-                invalid = Reflection.AreNotDeeplyEqual(value, routeValue);
+                invalid = Reflection.AreNotDeeplyEqual(value, routeValue, out result);
             }
 
             if (invalid)
             {
                 this.ThrowNewRouteAssertionException(
                     $"contain route value with '{key}' key and the provided value",
-                    "the value was different");
+                    $"the value was different{(valueIsString ? $" - {routeValue}" : $". {result}")}");
             }
 
             return this;
@@ -166,11 +181,11 @@
             var actualInfo = this.GetActualRouteInfo();
             var routeValue = actualInfo.RouteData.DataTokens[key];
 
-            if (Reflection.AreNotDeeplyEqual(value, routeValue))
+            if (Reflection.AreNotDeeplyEqual(value, routeValue, out var result))
             {
                 this.ThrowNewRouteAssertionException(
                     $"contain data token with '{key}' key and the provided value",
-                    $"the value was different");
+                    $"the value was different. {result}");
             }
 
             return this;
@@ -218,23 +233,26 @@
 
             if (Reflection.AreDifferentTypes(expectedControllerType, actualControllerType))
             {
+                var (expectedControllerTypeName, actualControllerTypeName) = 
+                    (expectedControllerType, actualControllerType).GetTypeComparisonNames();
+
                 this.ThrowNewRouteAssertionException(
-                    $"match {expectedControllerType.ToFriendlyTypeName()}",
-                    $"in fact matched {actualControllerType.ToFriendlyTypeName()}");
+                    $"match {expectedControllerTypeName}",
+                    $"in fact matched {actualControllerTypeName}");
             }
 
             return this;
         }
 
         /// <inheritdoc />
-        public IAndResolvedRouteTestBuilder To<TController>(Expression<Action<TController>> actionCall)
+        public IControllerRouteTestBuilder<TController> To<TController>(Expression<Action<TController>> actionCall)
             where TController : class 
-            => this.ProcessRouteLambdaExpression(actionCall);
+            => this.ProcessRouteLambdaExpression<TController>(actionCall);
 
         /// <inheritdoc />
-        public IAndResolvedRouteTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
+        public IControllerRouteTestBuilder<TController> To<TController>(Expression<Func<TController, Task>> actionCall)
             where TController : class 
-            => this.ProcessRouteLambdaExpression(actionCall);
+            => this.ProcessRouteLambdaExpression<TController>(actionCall);
 
         /// <inheritdoc />
         public void ToNonExistingRoute()
@@ -251,11 +269,13 @@
         /// <inheritdoc />
         public IResolvedRouteTestBuilder AndAlso() => this;
 
-        private IAndResolvedRouteTestBuilder ProcessRouteLambdaExpression(LambdaExpression actionCall)
+        private IControllerRouteTestBuilder<TController> ProcessRouteLambdaExpression<TController>(LambdaExpression actionCall)
         {
             this.actionCallExpression = actionCall;
+
             this.ValidateRouteInformation();
-            return this;
+
+            return new ControllerRouteTestBuilder<TController>(this.TestContext, actionCall);
         }
 
         private void ValidateRouteInformation()
@@ -273,9 +293,11 @@
 
             if (Reflection.AreDifferentTypes(expectedControllerType, actualControllerType))
             {
+                var (expectedControllerTypeName, actualControllerTypeName) = (expectedControllerType, actualControllerType).GetTypeComparisonNames();
+
                 this.ThrowNewRouteAssertionException(actual: string.Format(
                     "instead matched {0}",
-                    actualControllerType.ToFriendlyTypeName()));
+                    actualControllerTypeName));
             }
 
             if (expectedRouteValues.Action != actualRouteValues.Action)
@@ -298,16 +320,15 @@
         }
 
         public ExpressionParsedRouteContext GetExpectedRouteInfo()
-        {
-            return this.expectedRouteInfo ??
-                   (this.expectedRouteInfo = RouteExpressionParser.Parse(this.actionCallExpression));
-        }
+            => this.expectedRouteInfo ??= RouteExpressionParser.Parse(this.actionCallExpression);
 
         public ResolvedRouteContext GetActualRouteInfo()
-        {
-            return this.actualRouteInfo ??
-                   (this.actualRouteInfo = MvcRouteResolver.Resolve(this.Services, this.Router, this.RouteContext));
-        }
+            => this.actualRouteInfo ??= MvcRouteResolver
+                .Resolve(
+                    this.Services, 
+                    this.Router, 
+                    this.RouteContext,
+                    this.TestContext.FullExecution);
 
         public void ThrowNewRouteAssertionException(string expected = null, string actual = null)
         {

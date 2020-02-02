@@ -18,7 +18,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullNotFoundAction())
                 .ShouldReturn()
                 .NotFound(notFound => notFound
                     .WithStatusCode(201));
@@ -29,7 +29,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullNotFoundAction())
                 .ShouldReturn()
                 .NotFound(notFound => notFound
                     .WithStatusCode(HttpStatusCode.Created));
@@ -43,12 +43,12 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullNotFoundAction())
                         .ShouldReturn()
                         .NotFound(notFound => notFound
                             .WithStatusCode(HttpStatusCode.OK));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected not found result to have 200 (OK) status code, but instead received 201 (Created).");
+                "When calling FullNotFoundAction action in MvcController expected not found result to have 200 (OK) status code, but instead received 201 (Created).");
         }
 
         [Fact]
@@ -56,7 +56,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullNotFoundAction())
                 .ShouldReturn()
                 .NotFound(notFound => notFound
                     .ContainingContentType(ContentType.ApplicationJson));
@@ -67,7 +67,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullNotFoundAction())
                 .ShouldReturn()
                 .NotFound(notFound => notFound
                     .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson)));
@@ -81,12 +81,12 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullNotFoundAction())
                         .ShouldReturn()
                         .NotFound(notFound => notFound
                             .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream)));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected not found result content types to contain application/octet-stream, but in fact such was not found.");
+                "When calling FullNotFoundAction action in MvcController expected not found result content types to contain application/octet-stream, but in fact such was not found.");
         }
 
         [Fact]
@@ -94,7 +94,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullNotFoundAction())
                 .ShouldReturn()
                 .NotFound(notFound => notFound
                     .ContainingContentTypes(new List<string>
@@ -109,7 +109,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullNotFoundAction())
                 .ShouldReturn()
                 .NotFound(notFound => notFound
                     .ContainingContentTypes(
@@ -125,7 +125,7 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullNotFoundAction())
                         .ShouldReturn()
                         .NotFound(notFound => notFound
                             .ContainingContentTypes(new List<string>
@@ -134,7 +134,7 @@
                                 ContentType.ApplicationXml
                             }));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected not found result content types to contain application/octet-stream, but in fact such was not found.");
+                "When calling FullNotFoundAction action in MvcController expected not found result content types to contain application/octet-stream, but in fact such was not found.");
         }
 
         [Fact]
@@ -145,7 +145,7 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullNotFoundAction())
                         .ShouldReturn()
                         .NotFound(notFound => notFound
                             .ContainingContentTypes(new List<string>
@@ -153,7 +153,7 @@
                                 ContentType.ApplicationXml
                             }));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected not found result content types to have 1 item, but instead found 2.");
+                "When calling FullNotFoundAction action in MvcController expected not found result content types to have 1 item, but instead found 2.");
         }
 
         [Fact]
@@ -164,7 +164,7 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullNotFoundAction())
                         .ShouldReturn()
                         .NotFound(notFound => notFound
                             .ContainingContentTypes(new List<string>
@@ -174,7 +174,7 @@
                                 ContentType.ApplicationZip
                             }));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected not found result content types to have 3 items, but instead found 2.");
+                "When calling FullNotFoundAction action in MvcController expected not found result content types to have 3 items, but instead found 2.");
         }
 
         [Fact]
@@ -182,7 +182,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullNotFoundAction())
                 .ShouldReturn()
                 .NotFound(notFound => notFound
                     .ContainingContentTypes(new List<MediaTypeHeaderValue>
@@ -197,7 +197,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullNotFoundAction())
                 .ShouldReturn()
                 .NotFound(notFound => notFound
                     .ContainingContentTypes(
@@ -213,7 +213,7 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullNotFoundAction())
                         .ShouldReturn()
                         .NotFound(notFound => notFound
                             .ContainingContentTypes(new List<MediaTypeHeaderValue>
@@ -222,7 +222,7 @@
                                 new MediaTypeHeaderValue(ContentType.ApplicationXml)
                             }));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected not found result content types to contain application/octet-stream, but in fact such was not found.");
+                "When calling FullNotFoundAction action in MvcController expected not found result content types to contain application/octet-stream, but in fact such was not found.");
         }
 
         [Fact]
@@ -233,7 +233,7 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullNotFoundAction())
                         .ShouldReturn()
                         .NotFound(notFound => notFound
                             .ContainingContentTypes(new List<MediaTypeHeaderValue>
@@ -241,7 +241,7 @@
                                 new MediaTypeHeaderValue(ContentType.ApplicationXml)
                             }));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected not found result content types to have 1 item, but instead found 2.");
+                "When calling FullNotFoundAction action in MvcController expected not found result content types to have 1 item, but instead found 2.");
         }
 
         [Fact]
@@ -252,7 +252,7 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullNotFoundAction())
                         .ShouldReturn()
                         .NotFound(notFound => notFound
                             .ContainingContentTypes(new List<MediaTypeHeaderValue>
@@ -262,7 +262,7 @@
                                 new MediaTypeHeaderValue(ContentType.ApplicationZip)
                             }));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected not found result content types to have 3 items, but instead found 2.");
+                "When calling FullNotFoundAction action in MvcController expected not found result content types to have 3 items, but instead found 2.");
         }
 
         [Fact]
@@ -273,7 +273,7 @@
             MyController<MvcController>
                 .Instance()
                 .WithoutValidation()
-                .Calling(c => c.HttpNotFoundActionWithFormatter(formatter))
+                .Calling(c => c.NotFoundActionWithFormatter(formatter))
                 .ShouldReturn()
                 .NotFound(notFound => notFound
                     .ContainingOutputFormatter(formatter));
@@ -290,12 +290,12 @@
                     MyController<MvcController>
                         .Instance()
                         .WithoutValidation()
-                        .Calling(c => c.HttpNotFoundActionWithFormatter(formatter))
+                        .Calling(c => c.NotFoundActionWithFormatter(formatter))
                         .ShouldReturn()
                         .NotFound(notFound => notFound
                             .ContainingOutputFormatter(TestObjectFactory.GetOutputFormatter()));
                 },
-                "When calling HttpNotFoundActionWithFormatter action in MvcController expected not found result output formatters to contain the provided formatter, but such was not found.");
+                "When calling NotFoundActionWithFormatter action in MvcController expected not found result output formatters to contain the provided formatter, but such was not found.");
         }
 
         [Fact]
@@ -303,10 +303,10 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullNotFoundAction())
                 .ShouldReturn()
                 .NotFound(notFound => notFound
-                    .ContainingOutputFormatterOfType<JsonOutputFormatter>());
+                    .ContainingOutputFormatterOfType<NewtonsoftJsonOutputFormatter>());
         }
 
         [Fact]
@@ -317,12 +317,12 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullNotFoundAction())
                         .ShouldReturn()
                         .NotFound(notFound => notFound
                             .ContainingOutputFormatterOfType<IOutputFormatter>());
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected not found result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
+                "When calling FullNotFoundAction action in MvcController expected not found result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
         }
 
         [Fact]
@@ -330,7 +330,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullNotFoundAction())
                 .ShouldReturn()
                 .NotFound(notFound => notFound
                     .ContainingOutputFormatters(new List<IOutputFormatter>
@@ -345,7 +345,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullNotFoundAction())
                 .ShouldReturn()
                 .NotFound(notFound => notFound
                     .ContainingOutputFormatters(
@@ -361,7 +361,7 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullNotFoundAction())
                         .ShouldReturn()
                         .NotFound(notFound => notFound
                             .ContainingOutputFormatters(new List<IOutputFormatter>
@@ -370,7 +370,7 @@
                                 new CustomOutputFormatter()
                             }));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected not found result output formatters to contain formatter of StringOutputFormatter type, but none was found.");
+                "When calling FullNotFoundAction action in MvcController expected not found result output formatters to contain formatter of StringOutputFormatter type, but none was found.");
         }
 
         [Fact]
@@ -381,7 +381,7 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullNotFoundAction())
                         .ShouldReturn()
                         .NotFound(notFound => notFound
                             .ContainingOutputFormatters(new List<IOutputFormatter>
@@ -389,7 +389,7 @@
                                 TestObjectFactory.GetOutputFormatter()
                             }));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected not found result output formatters to have 1 item, but instead found 2.");
+                "When calling FullNotFoundAction action in MvcController expected not found result output formatters to have 1 item, but instead found 2.");
         }
 
         [Fact]
@@ -400,7 +400,7 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullNotFoundAction())
                         .ShouldReturn()
                         .NotFound(notFound => notFound
                             .ContainingOutputFormatters(new List<IOutputFormatter>
@@ -410,7 +410,7 @@
                                 TestObjectFactory.GetOutputFormatter()
                             }));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected not found result output formatters to have 3 items, but instead found 2.");
+                "When calling FullNotFoundAction action in MvcController expected not found result output formatters to have 3 items, but instead found 2.");
         }
 
         [Fact]
@@ -418,7 +418,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullNotFoundAction())
                 .ShouldReturn()
                 .NotFound(notFound => notFound
                     .WithStatusCode(201)
@@ -434,7 +434,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullNotFoundAction())
                 .ShouldReturn()
                 .NotFound(notFound => notFound
                     .Passing(nf => nf.Formatters?.Count == 2));
@@ -448,12 +448,12 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullNotFoundAction())
                         .ShouldReturn()
                         .NotFound(notFound => notFound
                             .Passing(nf => nf.Formatters?.Count == 0));
                 },
-                $"When calling FullHttpNotFoundAction action in MvcController expected the NotFoundObjectResult to pass the given predicate, but it failed.");
+                $"When calling FullNotFoundAction action in MvcController expected the NotFoundObjectResult to pass the given predicate, but it failed.");
         }
 
         [Fact]
@@ -461,7 +461,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullNotFoundAction())
                 .ShouldReturn()
                 .NotFound(notFound => notFound
                     .Passing(nf =>
