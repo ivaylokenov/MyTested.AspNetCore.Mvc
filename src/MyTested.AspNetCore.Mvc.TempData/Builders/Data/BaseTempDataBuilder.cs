@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Data
 {
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
-    using MyTested.AspNetCore.Mvc.Utilities.Validators;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for building mocked <see cref="ITempDataDictionary"/>.

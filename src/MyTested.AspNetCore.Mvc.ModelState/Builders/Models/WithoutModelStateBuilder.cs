@@ -28,8 +28,10 @@
         /// <inheritdoc />
         public IAndWithoutModelStateBuilder WithoutModelState(string key)
         {
-            if(this.ModelState.ContainsKey(key))
+            if (this.ModelState.ContainsKey(key))
+            {
                 this.ModelState.Remove(key);
+            }
 
             return this;
         }

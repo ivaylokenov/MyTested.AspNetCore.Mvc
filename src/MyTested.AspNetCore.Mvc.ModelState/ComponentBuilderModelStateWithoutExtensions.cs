@@ -24,7 +24,9 @@
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
             string key)
             where TBuilder : IBaseTestBuilder
-            => builder.WithoutModelState(state => state.WithoutModelState(key));
+            => builder
+                .WithoutModelState(state => state
+                .WithoutModelState(key));
 
         /// <summary>
         /// Removes all keys and values from <see cref="ModelStateDictionary"/>.
@@ -35,7 +37,9 @@
         public static TBuilder WithoutModelState<TBuilder>(
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder)
             where TBuilder : IBaseTestBuilder
-            => builder.WithoutModelState(state => state.WithoutModelState());
+            => builder
+                .WithoutModelState(state => state
+                .WithoutModelState());
 
         /// <summary>
         /// Used for removing a model state from <see cref="ModelStateDictionary"/> by using the builder.

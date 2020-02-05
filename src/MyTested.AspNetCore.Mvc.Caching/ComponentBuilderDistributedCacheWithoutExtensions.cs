@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using MyTested.AspNetCore.Mvc.Builders.Base;
-    using MyTested.AspNetCore.Mvc.Builders.Contracts.Base;
-    using MyTested.AspNetCore.Mvc.Builders.Contracts.Data;
-    using MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache.WithoutDistributedCache;
+    using Builders.Base;
+    using Builders.Contracts.Base;
+    using Builders.Contracts.Data;
+    using Builders.Data.DistributedCache.WithoutDistributedCache;
 
     /// <summary>
     /// Contains <see cref="Microsoft.Extensions.Caching.Distributed.IDistributedCache"/> extension methods for <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/>.
@@ -21,7 +21,9 @@
         public static TBuilder WithoutDistributedCache<TBuilder>(
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder)
             where TBuilder : IBaseTestBuilder
-            => builder.WithoutDistributedCache(cache => cache.WithoutAllEntries());
+            => builder
+                .WithoutDistributedCache(cache => cache
+                .WithoutAllEntries());
 
         /// <summary>
         /// Remove given entity with key from <see cref="Microsoft.Extensions.Caching.Distributed.IDistributedCache"/> service.
@@ -34,7 +36,9 @@
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
             string key)
             where TBuilder : IBaseTestBuilder
-            => builder.WithoutDistributedCache(cache => cache.WithoutEntry(key));
+            => builder
+                .WithoutDistributedCache(cache => cache
+                .WithoutEntry(key));
 
         /// <summary>
         /// Remove given entities from <see cref="Microsoft.Extensions.Caching.Distributed.IDistributedCache"/> service.
@@ -47,7 +51,9 @@
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
             IEnumerable<string> keys)
             where TBuilder : IBaseTestBuilder
-            => builder.WithoutDistributedCache(cache => cache.WithoutEntries(keys));
+            => builder
+                .WithoutDistributedCache(cache => cache
+                .WithoutEntries(keys));
 
         /// <summary>
         /// Remove given entities from <see cref="Microsoft.Extensions.Caching.Distributed.IDistributedCache"/> service.
@@ -60,7 +66,9 @@
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
             params string[] keys)
             where TBuilder : IBaseTestBuilder
-            => builder.WithoutDistributedCache(cache => cache.WithoutEntries(keys));
+            => builder
+                .WithoutDistributedCache(cache => cache
+                .WithoutEntries(keys));
 
         /// <summary>
         /// Remove entity or entities from <see cref="Microsoft.Extensions.Caching.Distributed.IDistributedCache"/> service.
@@ -75,7 +83,6 @@
             where TBuilder : IBaseTestBuilder
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
-
             distributedCacheBuilder(new WithoutDistributedCacheBuilder(actualBuilder.TestContext.HttpContext.RequestServices));
 
             return actualBuilder.Builder;

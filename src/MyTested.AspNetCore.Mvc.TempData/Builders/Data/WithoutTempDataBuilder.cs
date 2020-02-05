@@ -1,8 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Data
 {
     using System.Collections.Generic;
+    using System.Linq;
+    using Contracts.Data;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
-    using MyTested.AspNetCore.Mvc.Builders.Contracts.Data;
 
     /// <summary>
     /// Used for building mocked <see cref="ITempDataDictionary"/>.
@@ -33,13 +34,19 @@
         public IAndWithoutTempDataBuilder WithoutEntry(string key)
         {
             if (this.TempData.ContainsKey(key))
+            {
                 this.TempData.Remove(key);
+            }
 
             return this;
         }
 
         /// <inheritdoc />
-        public IAndWithoutTempDataBuilder WithoutAllEntries()
+        public IAndWithoutTempDataBuilder WithoutEntries(params string[] keys)
+            => WithoutEntries(keys.AsEnumerable());
+
+        /// <inheritdoc />
+        public IAndWithoutTempDataBuilder WithoutEntries()
         {
             this.TempData.Clear();
             return this;

@@ -37,7 +37,9 @@
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
             Claim claim)
             where TBuilder : IBaseTestBuilder
-            => builder.WithoutUser(user => user.WithoutClaim(claim));
+            => builder
+                .WithoutUser(user => user
+                .WithoutClaim(claim));
 
         /// <summary>
         /// Removes the <see cref="Claim"/> that have the provided role from <see cref="ClaimsPrincipal"/>
@@ -50,7 +52,9 @@
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
             string role)
             where TBuilder : IBaseTestBuilder
-            => builder.WithoutUser(user => user.WithoutRole(role));
+            => builder
+                .WithoutUser(user => user
+                .WithoutRole(role));
 
         /// <summary>
         /// Sets custom authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the

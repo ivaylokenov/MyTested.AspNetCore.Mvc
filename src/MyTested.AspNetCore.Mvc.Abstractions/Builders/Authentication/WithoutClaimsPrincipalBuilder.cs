@@ -12,15 +12,12 @@
         /// Initializes a new instance of the <see cref="WithoutClaimsPrincipalBuilder"/> class.
         /// </summary>
         public WithoutClaimsPrincipalBuilder(ClaimsPrincipal principal)
-        {
-            base.AddClaims(principal.Claims);
-        }
+            => base.AddClaims(principal.Claims);
 
         /// <inheritdoc />
         public IAndWithoutClaimsPrincipalBuilder WithoutClaim(string type, string value)
         {
             base.RemoveClaim(type, value);
-
             return this;
         }
 
@@ -28,7 +25,6 @@
         public IAndWithoutClaimsPrincipalBuilder WithoutClaim(Claim claim)
         {
             base.RemoveClaim(claim);
-
             return this;
         }
 
@@ -36,7 +32,6 @@
         public IAndWithoutClaimsPrincipalBuilder WithoutRole(string role)
         {
             base.RemoveRole(role);
-
             return this;
         }
 
@@ -44,7 +39,6 @@
         public IAndWithoutClaimsPrincipalBuilder WithoutUsername(string username)
         {
             base.RemoveUsername(username);
-
             return this;
         }
 

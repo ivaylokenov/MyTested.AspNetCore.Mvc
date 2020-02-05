@@ -24,7 +24,9 @@
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
             string key)
             where TBuilder : IBaseTestBuilder
-            => builder.WithoutTempData(tempData => tempData.WithoutEntry(key));
+            => builder
+                .WithoutTempData(tempData => tempData
+                .WithoutEntry(key));
 
         /// <summary>
         /// Remove entities by providing their keys from <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.TempDataDictionary"/>.
@@ -37,7 +39,9 @@
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
             params string[] keys)
             where TBuilder : IBaseTestBuilder
-            => builder.WithoutTempData(tempData => tempData.WithoutEntries(keys));
+            => builder
+                .WithoutTempData(tempData => tempData
+                .WithoutEntries(keys));
 
         /// <summary>
         /// Remove entities by providing their keys from <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.TempDataDictionary"/>.
@@ -50,7 +54,9 @@
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
             IEnumerable<string> keys)
             where TBuilder : IBaseTestBuilder
-            => builder.WithoutTempData(tempData => tempData.WithoutEntries(keys));
+            => builder
+                .WithoutTempData(tempData => tempData
+                .WithoutEntries(keys));
 
         /// <summary>
         /// Removing all entities from <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.TempDataDictionary"/>.
@@ -61,7 +67,9 @@
         public static TBuilder WithoutTempData<TBuilder>(
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder)
             where TBuilder : IBaseTestBuilder
-            => builder.WithoutTempData(tempData => tempData.WithoutAllEntries());
+            => builder
+                .WithoutTempData(tempData => tempData
+                .WithoutEntries());
 
         /// <summary>
         /// Remove values from <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.TempDataDictionary"/> on the tested component.

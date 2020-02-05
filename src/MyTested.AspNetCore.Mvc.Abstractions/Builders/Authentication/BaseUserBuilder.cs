@@ -149,7 +149,9 @@
         protected void RemoveClaim(Claim claim)
         {
             if (this.claims.Contains(claim))
+            {
                 this.claims.Remove(claim);
+            }
         }
 
         /// <summary>
@@ -159,8 +161,9 @@
         /// <param name="value">Claim's value.</param>
         protected void RemoveClaim(string type, string value)
         {
-            var claimsToRemove =
-                this.claims.Where(x => x.Type.Equals(type) && x.Value.Equals(value)).ToList();
+            var claimsToRemove = this.claims
+                .Where(x => x.Type.Equals(type) && x.Value.Equals(value))
+                .ToList();
 
             claimsToRemove.ForEach(claim => this.claims.Remove(claim));
         }

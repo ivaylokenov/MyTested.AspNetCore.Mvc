@@ -6,6 +6,7 @@
     using MyTested.AspNetCore.Mvc.Builders.Contracts.Data;
     using MyTested.AspNetCore.Mvc.Utilities.Extensions;
 
+    /// <inheritdoc />
     public class WithoutDistributedCacheBuilder : BaseDistributedCacheBuilder, IAndWithoutDistributedCacheBuilder
     {
         /// <summary>

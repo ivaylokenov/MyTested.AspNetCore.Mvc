@@ -10,13 +10,13 @@
     /// </summary>
     public class BaseClaimsPrincipalUserBuilder : BaseUserBuilder
     {
-        private readonly ICollection<ClaimsIdentity> _identities;
+        private readonly ICollection<ClaimsIdentity> identities;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseClaimsPrincipalUserBuilder"/> class.
         /// </summary>
         public BaseClaimsPrincipalUserBuilder()
-            => this._identities = new List<ClaimsIdentity>();
+            => this.identities = new List<ClaimsIdentity>();
 
         /// <summary>
         /// Returns the principle based on provided identities and claims.
@@ -24,7 +24,7 @@
         /// <returns>This <see cref="ClaimsPrincipal"/>.</returns>
         public ClaimsPrincipal GetClaimsPrincipal()
         {
-            var claimIdentities = this._identities.Reverse().ToList();
+            var claimIdentities = this.identities.Reverse().ToList();
             claimIdentities.Add(this.GetAuthenticatedClaimsIdentity());
 
             var claimsPrincipal = new ClaimsPrincipal(claimIdentities);
@@ -52,9 +52,7 @@
             = new ClaimsPrincipal(CreateAuthenticatedClaimsIdentity());
 
         protected void AddIdentity(ClaimsIdentity identity)
-        {
-            this._identities.Add(identity);
-        }
+            => this.identities.Add(identity);   
 
         protected void AddIdentities(IEnumerable<ClaimsIdentity> identities)
         {

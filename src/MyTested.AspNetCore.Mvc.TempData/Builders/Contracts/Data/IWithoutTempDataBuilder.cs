@@ -17,14 +17,21 @@
         /// <summary>
         /// Remove temp data entries by providing their keys to the built <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/>.
         /// </summary>
-        /// <param name="entriesKeys">Keys of the temp data entries to be deleted.</param>
+        /// <param name="keys">Keys of the temp data entries to be deleted.</param>
         /// <returns>The same <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/>.</returns>
-        IAndWithoutTempDataBuilder WithoutEntries(IEnumerable<string> entriesKeys);
+        IAndWithoutTempDataBuilder WithoutEntries(IEnumerable<string> keys);
+
+        /// <summary>
+        /// Remove temp data entries by providing their keys as params to the built <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/>.
+        /// </summary>
+        /// <param name="keys">Keys of the temp data entries to be deleted.</param>
+        /// <returns>The same <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/>.</returns>
+        IAndWithoutTempDataBuilder WithoutEntries(params string[] keys);
 
         /// <summary>
         /// Clear all entities from the built <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/>.
         /// </summary>
         /// <returns>The same <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/>.</returns>
-        IAndWithoutTempDataBuilder WithoutAllEntries();
+        IAndWithoutTempDataBuilder WithoutEntries();
     }
 }

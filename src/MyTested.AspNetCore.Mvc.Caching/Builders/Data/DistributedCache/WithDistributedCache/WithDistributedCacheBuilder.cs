@@ -2,12 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
+    using Builders.Contracts.Data;
+    using Builders.Data.DistributedCache;
     using Contracts.Data.DistributedCache;
     using Microsoft.Extensions.Caching.Distributed;
-    using Builders.Data.DistributedCache;
     using Utilities.Extensions;
-    using Builders.Contracts.Data;
 
+    /// <inheritdoc />
     public class WithDistributedCacheBuilder : BaseDistributedCacheBuilder, IAndWithDistributedCacheBuilder
     {
         /// <summary>
