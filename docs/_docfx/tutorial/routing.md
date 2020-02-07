@@ -51,7 +51,7 @@ The simplest route test possible:
 
 ```c#
 [Fact]
-public void GetErrorActionShouldBeRoutedSuccessfuly()
+public void GetErrorActionShouldBeRoutedSuccessfully()
     => MyRouting
         .Configuration()
         .ShouldMap("/Home/Error")
@@ -71,11 +71,11 @@ public async Task<IActionResult> AddToCart(int id)
 }
 ```
 
-Create **"ShoppingCartRouteTest""** class and add the following test:
+Create **"ShoppingCartRouteTest"** class and add the following test:
 
 ```c#
 [Fact]
-public void GetAddToCartActionShouldBeRoutedSuccessfuly()
+public void GetAddToCartActionShouldBeRoutedSuccessfully()
     => MyRouting
         .Configuration()
         .ShouldMap("/ShoppingCart/AddToCart/1")
@@ -91,11 +91,11 @@ public async Task<IActionResult> Browse(string genre)
 }
 ```
 
-Create **"StoreRouteTest""** class and add the following test:
+Create **"StoreRouteTest"** class and add the following test:
 
 ```c#
 [Fact]
-public void GetBrowseActionShouldBeRoutedSuccessfuly()
+public void GetBrowseActionShouldBeRoutedSuccessfully()
     => MyRouting
         .Configuration()
         .ShouldMap("/Store/Browse?genre=HipHop")
@@ -125,7 +125,7 @@ We do not want to test the **"MusicStoreContext"** and the **"IMemoryCache"** ac
 
 ```c#
 [Fact]
-public void GetIndexActionShouldBeRoutedSuccessfuly()
+public void GetIndexActionShouldBeRoutedSuccessfully()
     => MyRouting
         .Configuration()
         .ShouldMap("/Home")
@@ -154,7 +154,7 @@ The following test will fail right away:
 
 ```c#
 [Fact]
-public void PostRemoveFromCartActionShouldBeRoutedSuccessfuly()
+public void PostRemoveFromCartActionShouldBeRoutedSuccessfully()
     => MyRouting
         .Configuration()
         .ShouldMap("/ShoppingCart/RemoveFromCart/1")
@@ -167,7 +167,7 @@ We are testing with HTTP Get request while the action is restricted only for HTT
 
 ```c#
 [Fact]
-public void PostRemoveFromCartActionShouldBeRoutedSuccessfuly()
+public void PostRemoveFromCartActionShouldBeRoutedSuccessfully()
     => MyRouting
         .Configuration()
         .ShouldMap(request => request // <---
@@ -225,7 +225,7 @@ Let's update the test to make it pass:
 
 ```c#
 [Fact]
-public void PostRemoveFromCartActionShouldBeRoutedSuccessfuly()
+public void PostRemoveFromCartActionShouldBeRoutedSuccessfully()
     => MyRouting
         .Configuration()
         .ShouldMap(request => request
@@ -245,7 +245,7 @@ Let's test a **"CheckoutController"** action, because all actions in that contro
 
 ```c#
 [Fact]
-public void GetAddressAndPaymentActionShouldBeRoutedSuccessfuly()
+public void GetAddressAndPaymentActionShouldBeRoutedSuccessfully()
     => MyRouting
         .Configuration()
         .ShouldMap(request => request
@@ -290,7 +290,7 @@ Let's test that route! In **"Routing"**, create an **"Admin"** folder. In it cre
 
 ```c#
 [Fact]
-public void GetIndexActionShouldBeRoutedSuccessfuly()
+public void GetIndexActionShouldBeRoutedSuccessfully()
     => MyRouting
         .Configuration()
         .ShouldMap(request => request
@@ -320,7 +320,7 @@ The login view model should come from the request form so we may decide to ignor
 
 ```c#
 [Fact]
-public void PostLoginActionShouldBeRoutedSuccessfuly()
+public void PostLoginActionShouldBeRoutedSuccessfully()
     => MyRouting
         .Configuration()
         .ShouldMap(request => request
