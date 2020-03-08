@@ -155,7 +155,7 @@
                         .ShouldReturn()
                         .ActionResult<ResponseModel>();
                 },
-                "When calling ActionResultInterface action in MvcController expected result to be ActionResult<ResponseModel>, but instead received IActionResult.");
+                "When calling ActionResultInterface action in MvcController expected result to be ActionResult<ResponseModel> or Task<ActionResult<ResponseModel>>, but instead received IActionResult.");
         }
 
         [Fact]
@@ -170,7 +170,7 @@
                         .ShouldReturn()
                         .ActionResult<ResponseModel>();
                 },
-                "When calling ActionResultBaseClass action in MvcController expected result to be ActionResult<ResponseModel>, but instead received ActionResult.");
+                "When calling ActionResultBaseClass action in MvcController expected result to be ActionResult<ResponseModel> or Task<ActionResult<ResponseModel>>, but instead received ActionResult.");
         }
 
         [Fact]
@@ -185,7 +185,7 @@
                         .ShouldReturn()
                         .ActionResult<RequestModel>();
                 },
-                "When calling ActionResultOfT action in MvcController expected result to be ActionResult<RequestModel>, but instead received ActionResult<ResponseModel>.");
+                "When calling ActionResultOfT action in MvcController expected result to be ActionResult<RequestModel> or Task<ActionResult<RequestModel>>, but instead received ActionResult<ResponseModel>.");
         }
 
         [Fact]
@@ -224,7 +224,7 @@
                         .ActionResult<ResponseModel>(result => result
                             .Ok());
                 },
-                "When calling ActionResultInterface action in MvcController expected result to be ActionResult<ResponseModel>, but instead received IActionResult.");
+                "When calling ActionResultInterface action in MvcController expected result to be ActionResult<ResponseModel> or Task<ActionResult<ResponseModel>>, but instead received IActionResult.");
         }
 
         [Fact]
@@ -240,7 +240,7 @@
                         .ActionResult<ResponseModel>(result => result
                             .Ok());
                 },
-                "When calling ActionResultBaseClass action in MvcController expected result to be ActionResult<ResponseModel>, but instead received ActionResult.");
+                "When calling ActionResultBaseClass action in MvcController expected result to be ActionResult<ResponseModel> or Task<ActionResult<ResponseModel>>, but instead received ActionResult.");
         }
 
         [Fact]
@@ -256,7 +256,7 @@
                         .ActionResult<RequestModel>(result => result
                             .Ok());
                 },
-                "When calling ActionResultOfT action in MvcController expected result to be ActionResult<RequestModel>, but instead received ActionResult<ResponseModel>.");
+                "When calling ActionResultOfT action in MvcController expected result to be ActionResult<RequestModel> or Task<ActionResult<RequestModel>>, but instead received ActionResult<ResponseModel>.");
         }
 
         [Fact]
@@ -363,6 +363,324 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.ActionResultOfT(1))
+                .ShouldReturn()
+                .ActionResult<ResponseModel>()
+                .AndAlso()
+                .ShouldPassForThe<ResponseModel>(model => model.IntegerValue == 1);
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultAsyncShouldNotThrowExceptionWhenResultIsIActionResultInterface()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultInterfaceAsync())
+                .ShouldReturn()
+                .ActionResult();
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultAsyncShouldNotThrowExceptionWhenResultIsActionResultBaseClass()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultBaseClassAsync())
+                .ShouldReturn()
+                .ActionResult();
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultAsyncWithDetailsShouldNotThrowExceptionWhenResultIsIActionResultInterface()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultInterfaceAsync())
+                .ShouldReturn()
+                .ActionResult(result => result
+                    .Ok(okResult => okResult
+                        .Passing(ok => ok.Value?.GetType() == typeof(ResponseModel))));
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultAsyncWithDetailsShouldNotThrowExceptionWhenResultIsActionResultBaseClass()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultBaseClassAsync())
+                .ShouldReturn()
+                .ActionResult(result => result
+                    .Ok(okResult => okResult
+                        .Passing(ok => ok.Value?.GetType() == typeof(ResponseModel))));
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultAsyncWithDetailsShouldNotThrowExceptionWhenResultIsActionResultOfT()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfTAsync(int.MaxValue))
+                .ShouldReturn()
+                .ActionResult(result => result
+                    .Ok(okResult => okResult
+                        .Passing(ok => ok.Value?.GetType() == typeof(ResponseModel))));
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultAsyncWithDetailsShouldThrowExceptionWhenWhenResultIsNotActionResult()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AsyncOkResultAction())
+                        .ShouldReturn()
+                        .ActionResult(result => result
+                            .BadRequest());
+                },
+                "When calling AsyncOkResultAction action in MvcController expected result to be BadRequestResult, but instead received OkResult.");
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTAsyncShouldNotThrowExceptionWhenResultIsActionResultOfTWithActionResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfTAsync(0))
+                .ShouldReturn()
+                .ActionResult<ResponseModel>();
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTAsyncShouldNotThrowExceptionWhenResultIsActionResultOfTWithModel()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfTAsync(1))
+                .ShouldReturn()
+                .ActionResult<ResponseModel>();
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTAsyncShouldThrowExceptionWhenResultIsIActionResultInterface()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ActionResultInterfaceAsync())
+                        .ShouldReturn()
+                        .ActionResult<ResponseModel>();
+                },
+                "When calling ActionResultInterfaceAsync action in MvcController expected result to be ActionResult<ResponseModel> or Task<ActionResult<ResponseModel>>, but instead received Task<IActionResult>.");
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTAsyncShouldThrowExceptionWhenResultIsActionResultBaseClass()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ActionResultBaseClassAsync())
+                        .ShouldReturn()
+                        .ActionResult<ResponseModel>();
+                },
+                "When calling ActionResultBaseClassAsync action in MvcController expected result to be ActionResult<ResponseModel> or Task<ActionResult<ResponseModel>>, but instead received Task<ActionResult>.");
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTAsyncShouldThrowExceptionWhenResultIsActionResultOfWrongModel()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ActionResultOfTAsync(0))
+                        .ShouldReturn()
+                        .ActionResult<RequestModel>();
+                },
+                "When calling ActionResultOfTAsync action in MvcController expected result to be ActionResult<RequestModel> or Task<ActionResult<RequestModel>>, but instead received Task<ActionResult<ResponseModel>>.");
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTAsyncWithDetailsShouldNotThrowExceptionWhenResultIsActionResultOfTWithActionResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfTAsync(0))
+                .ShouldReturn()
+                .ActionResult<ResponseModel>(result => result
+                    .BadRequest());
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTAsyncWithDetailsShouldNotThrowExceptionWhenResultIsActionResultOfTWithModel()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfTAsync(int.MaxValue))
+                .ShouldReturn()
+                .ActionResult<ResponseModel>(result => result
+                    .Ok(okResult => okResult
+                        .Passing(ok => ok.Value?.GetType() == typeof(ResponseModel))));
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTAsyncWithDetailsShouldThrowExceptionWhenResultIsIActionResultInterface()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ActionResultInterfaceAsync())
+                        .ShouldReturn()
+                        .ActionResult<ResponseModel>(result => result
+                            .Ok());
+                },
+                "When calling ActionResultInterfaceAsync action in MvcController expected result to be ActionResult<ResponseModel> or Task<ActionResult<ResponseModel>>, but instead received Task<IActionResult>.");
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTAsyncWithDetailsShouldThrowExceptionWhenResultIsActionResultBaseClass()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ActionResultBaseClassAsync())
+                        .ShouldReturn()
+                        .ActionResult<ResponseModel>(result => result
+                            .Ok());
+                },
+                "When calling ActionResultBaseClassAsync action in MvcController expected result to be ActionResult<ResponseModel> or Task<ActionResult<ResponseModel>>, but instead received Task<ActionResult>.");
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTAsyncWithDetailsShouldThrowExceptionWhenResultIsActionResultOfWrongModel()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ActionResultOfTAsync(0))
+                        .ShouldReturn()
+                        .ActionResult<RequestModel>(result => result
+                            .Ok());
+                },
+                "When calling ActionResultOfTAsync action in MvcController expected result to be ActionResult<RequestModel> or Task<ActionResult<RequestModel>>, but instead received Task<ActionResult<ResponseModel>>.");
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTAsyncWithResultDetailsShouldNotThrowExceptionWhenResultIsActionResultOfTWithCorrectResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfTAsync(1))
+                .ShouldReturn()
+                .ActionResult<ResponseModel>(result => result
+                    .Passing(model => model.IntegerValue == 1));
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTAsyncWithResultDetailsShouldThrowExceptionWhenResultIsActionResultOfTWithIncorrectResult()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ActionResultOfTAsync(1))
+                        .ShouldReturn()
+                        .ActionResult<ResponseModel>(result => result
+                            .Passing(model => model.IntegerValue == 2));
+                },
+                "When calling ActionResultOfTAsync action in MvcController expected the ResponseModel to pass the given predicate, but it failed.");
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTAsyncWithResultDetailsShouldNotThrowExceptionWhenResultIsActionResultOfTWithCorrectAssertion()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfTAsync(1))
+                .ShouldReturn()
+                .ActionResult<ResponseModel>(result => result
+                    .Passing(model =>
+                    {
+                        Assert.True(model.IntegerValue == 1);
+                    }));
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTAsyncWithResultDetailsShouldThrowExceptionWhenResultIsActionResultOfTWithIncorrectAssertion()
+        {
+            Assert.Throws<TrueException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ActionResultOfTAsync(1))
+                        .ShouldReturn()
+                        .ActionResult<ResponseModel>(result => result
+                            .Passing(model =>
+                            {
+                                Assert.True(model.IntegerValue == 2);
+                            }));
+                });
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultAsyncShouldWorkCorrectlyWithShouldPassFotTheMethod()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultInterfaceAsync())
+                .ShouldReturn()
+                .ActionResult()
+                .AndAlso()
+                .ShouldPassForThe<OkObjectResult>(ok => ok
+                    .Value.GetType() == typeof(ResponseModel));
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTAsyncShouldWorkCorrectlyWithShouldPassFotTheMethodAndActionResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfTAsync(int.MaxValue))
+                .ShouldReturn()
+                .ActionResult()
+                .AndAlso()
+                .ShouldPassForThe<OkObjectResult>(ok => ok
+                    .Value.GetType() == typeof(ResponseModel));
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTAsyncShouldWorkCorrectlyWithShouldPassForTheMethodAndObjectResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfTAsync(1))
+                .ShouldReturn()
+                .ActionResult<ResponseModel>()
+                .AndAlso()
+                .ShouldPassForThe<ObjectResult>(model => model
+                    .Value.GetType() == typeof(ResponseModel));
+        }
+
+        [Fact]
+        public void ShouldReturnActionResultOfTAsyncShouldWorkCorrectlyWithShouldPassForTheMethodAndModel()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfTAsync(1))
                 .ShouldReturn()
                 .ActionResult<ResponseModel>()
                 .AndAlso()

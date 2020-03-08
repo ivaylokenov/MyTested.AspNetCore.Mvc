@@ -20,10 +20,8 @@
         /// <see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.
         /// </param>
         public ActionResultOfTTestBuilder(ControllerTestContext testContext) 
-            : base(testContext)
-        {
-            testContext.ConvertMethodResult();
-        }
+            : base(testContext) 
+            => testContext.ConvertMethodResult();
 
         /// <inheritdoc />
         public IActionResultOfTTestBuilder<TResult> AndAlso() => this;

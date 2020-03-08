@@ -1272,6 +1272,31 @@
             return this.ResponseModel.First();
         }
 
+        public async Task<IActionResult> ActionResultInterfaceAsync()
+        {
+            return await Task.Run(() => this.Ok(this.ResponseModel.First()));
+        }
+
+        public async Task<ActionResult> ActionResultBaseClassAsync()
+        {
+            return await Task.Run(() => this.Ok(this.ResponseModel.First()));
+        }
+
+        public async Task<ActionResult<ResponseModel>> ActionResultOfTAsync(int id)
+        {
+            if (id == 0)
+            {
+                return await Task.Run(this.BadRequest);
+            }
+
+            if (id == int.MaxValue)
+            {
+                return await Task.Run(() => this.Ok(this.ResponseModel.First()));
+            }
+
+            return await Task.FromResult(this.ResponseModel.First());
+        }
+
         public ActionResult<object> ActionResultOfAnonymousType()
         {
             return new
