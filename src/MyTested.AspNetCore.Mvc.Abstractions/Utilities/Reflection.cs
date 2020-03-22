@@ -19,6 +19,7 @@
     {
         private static readonly ConcurrentDictionary<Type, ConstructorInfo> TypesWithOneConstructorCache = new ConcurrentDictionary<Type, ConstructorInfo>();
         private static readonly ConcurrentDictionary<Type, IEnumerable<object>> TypeAttributesCache = new ConcurrentDictionary<Type, IEnumerable<object>>();
+        private static readonly ConcurrentDictionary<Type, IEnumerable<object>> TypeInheritedAttributesCache = new ConcurrentDictionary<Type, IEnumerable<object>>();
         private static readonly ConcurrentDictionary<MethodInfo, IEnumerable<object>> MethodAttributesCache = new ConcurrentDictionary<MethodInfo, IEnumerable<object>>();
         private static readonly ConcurrentDictionary<Type, string> FriendlyTypeNames = new ConcurrentDictionary<Type, string>();
         private static readonly ConcurrentDictionary<Type, string> FullFriendlyTypeNames = new ConcurrentDictionary<Type, string>();
@@ -289,6 +290,18 @@
             var type = obj.GetType();
             return TypeAttributesCache
                 .GetOrAdd(type, _ => type.GetTypeInfo().GetCustomAttributes(false));
+        }
+
+        /// <summary>
+        /// Gets custom attributes including inherited ones on the provided object.
+        /// </summary>
+        /// <param name="obj">Object decorated with custom attribute.</param>
+        /// <returns>IEnumerable of objects representing the custom attributes.</returns>
+        public static IEnumerable<object> GetCustomAttributesIncludingInherited(object obj)
+        {
+            var type = obj.GetType();
+            return TypeInheritedAttributesCache
+                .GetOrAdd(type, _ => type.GetTypeInfo().GetCustomAttributes(true));
         }
 
         public static IEnumerable<object> GetCustomAttributes(MethodInfo method)

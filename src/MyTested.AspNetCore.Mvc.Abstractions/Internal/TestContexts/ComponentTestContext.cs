@@ -22,8 +22,11 @@
         
         public object Component => this.component ??= this.ComponentConstructionDelegate();
 
-        public IEnumerable<object> ComponentAttributes 
-            => this.componentAttributes ??= Reflection.GetCustomAttributes(this.Component);
+        public IEnumerable<object> ComponentAttributes
+        {
+            get => this.componentAttributes ??= Reflection.GetCustomAttributes(this.Component);
+            private set => this.componentAttributes = value;
+        }
 
         public IDictionary<Type, object> AggregatedDependencies 
             => this.aggregatedDependencies ??= new Dictionary<Type, object>();
@@ -115,6 +118,9 @@
             this.MethodResult = invocationTestContext.MethodResult;
             this.CaughtException = invocationTestContext.CaughtException;
         }
+
+        public void IncludeInheritedComponentAttributes()
+            => this.ComponentAttributes = Reflection.GetCustomAttributesIncludingInherited(this.Component);
 
         protected virtual object ConvertMethodResult(object convertibleMethodResult) => convertibleMethodResult;
     }
