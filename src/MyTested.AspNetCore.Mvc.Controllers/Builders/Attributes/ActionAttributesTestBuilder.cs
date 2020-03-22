@@ -31,11 +31,7 @@
         public IActionAttributesTestBuilder AndAlso() => this;
 
         public override void ThrowNewAttributeAssertionException(string expectedValue, string actualValue) 
-            => throw new AttributeAssertionException(string.Format(
-                "{0} action to have {1}, but {2}.",
-                this.TestContext.ExceptionMessagePrefix,
-                expectedValue,
-                actualValue));
+            => throw new AttributeAssertionException($"{this.TestContext.ExceptionMessagePrefix} action to have {expectedValue}, but {actualValue}.");
 
         public IAndActionAttributesTestBuilder IncludingInherited()
             => throw new System.NotImplementedException();
