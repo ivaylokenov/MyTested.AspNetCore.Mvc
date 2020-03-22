@@ -33,7 +33,11 @@
         public override void ThrowNewAttributeAssertionException(string expectedValue, string actualValue) 
             => throw new AttributeAssertionException($"{this.TestContext.ExceptionMessagePrefix} action to have {expectedValue}, but {actualValue}.");
 
+        /// <inheritdoc />
         public IAndActionAttributesTestBuilder IncludingInherited()
-            => throw new System.NotImplementedException();
+        { 
+            this.TestContext.IncludeInheritedMethodAttributes();
+            return this;
+        }
     }
 }

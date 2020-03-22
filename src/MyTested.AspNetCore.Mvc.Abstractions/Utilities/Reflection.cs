@@ -17,9 +17,11 @@
     /// </summary>
     public static class Reflection
     {
+        private const bool ShouldInheritAttributes = false;
+
         private static readonly ConcurrentDictionary<Type, ConstructorInfo> TypesWithOneConstructorCache = new ConcurrentDictionary<Type, ConstructorInfo>();
         private static readonly ConcurrentDictionary<Type, object> TypeAttributesCache = new ConcurrentDictionary<Type, object>();
-        private static readonly ConcurrentDictionary<MethodInfo, IEnumerable<object>> MethodAttributesCache = new ConcurrentDictionary<MethodInfo, IEnumerable<object>>();
+        private static readonly ConcurrentDictionary<Type, object> MethodAttributesCache = new ConcurrentDictionary<Type, object>();
         private static readonly ConcurrentDictionary<Type, string> FriendlyTypeNames = new ConcurrentDictionary<Type, string>();
         private static readonly ConcurrentDictionary<Type, string> FullFriendlyTypeNames = new ConcurrentDictionary<Type, string>();
 
@@ -118,8 +120,8 @@
         /// <param name="inheritedType">Inherited type to be checked.</param>
         /// <returns>True or false.</returns>
         public static bool AreAssignableByGeneric(Type baseType, Type inheritedType)
-            => IsGeneric(inheritedType) 
-                && IsGeneric(baseType) 
+            => IsGeneric(inheritedType)
+                && IsGeneric(baseType)
                 && baseType.IsAssignableFrom(inheritedType.GetGenericTypeDefinition());
 
         /// <summary>
@@ -283,27 +285,38 @@
         /// Gets custom attributes on the provided object.
         /// </summary>
         /// <param name="obj">Object decorated with custom attribute.</param>
+        /// <param name="shouldInherit">Indicates whether it should include inherited component attributes</param>
         /// <returns>IEnumerable of objects representing the custom attributes.</returns>
-        public static IEnumerable<object> GetCustomAttributes(object obj)
+        public static IEnumerable<object> GetCustomAttributes(object obj, bool shouldInherit = ShouldInheritAttributes)
         {
-            CacheComponentAttributes(obj);
+            var type = obj.GetType();
+            var attributes = type.GetTypeInfo().GetCustomAttributes(shouldInherit);
+            if (attributes.Length == TypeAttributesCache.Count)
+            {
+                return TypeAttributesCache.Values;
+            }
+
+            CacheAttributes(attributes, TypeAttributesCache);
             return TypeAttributesCache.Values;
         }
 
         /// <summary>
-        /// Gets custom attributes including inherited ones on the provided object.
+        /// Gets custom attributes on the provided method.
         /// </summary>
-        /// <param name="obj">Object decorated with custom attribute.</param>
+        /// <param name="method">Method decorated with custom attribute.</param>
+        /// <param name="shouldInherit">Indicates whether it should include inherited method attributes</param>
         /// <returns>IEnumerable of objects representing the custom attributes.</returns>
-        public static IEnumerable<object> GetCustomAttributesIncludingInherited(object obj)
+        public static IEnumerable<object> GetCustomAttributes(MethodInfo method, bool shouldInherit = ShouldInheritAttributes)
         {
-            CacheComponentAttributes(obj, true);
-            return TypeAttributesCache.Values;
-        }
+            var attributes = method.GetCustomAttributes(shouldInherit);
+            if (attributes.Length == MethodAttributesCache.Count)
+            {
+                return MethodAttributesCache.Values;
+            }
 
-        public static IEnumerable<object> GetCustomAttributes(MethodInfo method)
-            => MethodAttributesCache
-                .GetOrAdd(method, _ => method.GetCustomAttributes(false));
+            CacheAttributes(attributes, MethodAttributesCache);
+            return MethodAttributesCache.Values;
+        }
 
         /// <summary>
         /// Checks whether two objects are deeply equal by reflecting all their public properties recursively. Resolves successfully value and reference types, overridden Equals method, custom == operator, IComparable, nested objects and collection properties.
@@ -398,7 +411,7 @@
                 .FirstOrDefault(methodFilter)
                 ?.CreateDelegate(typeof(TDelegate), instance) as TDelegate;
         }
-        
+
         /// <summary>
         /// Checks whether property with the provided name exists in a dynamic object.
         /// </summary>
@@ -472,8 +485,8 @@
         }
 
         private static bool AreDeeplyEqual(
-            object expected, 
-            object actual, 
+            object expected,
+            object actual,
             ConditionalWeakTable<object, object> processedElements,
             DeepEqualityResult result)
         {
@@ -541,7 +554,7 @@
                     ? result.Success
                     : result.Failure;
             }
-            
+
             var equalsOperator = expectedType.GetMethods().FirstOrDefault(m => m.Name == "op_Equality");
             if (equalsOperator != null)
             {
@@ -593,15 +606,15 @@
         }
 
         private static bool AreNotDeeplyEqual(
-            object expected, 
-            object actual, 
+            object expected,
+            object actual,
             ConditionalWeakTable<object, object> processedElements,
             DeepEqualityResult result)
             => !AreDeeplyEqual(expected, actual, processedElements, result);
 
         private static bool CollectionsAreDeeplyEqual(
-            object expected, 
-            object actual, 
+            object expected,
+            object actual,
             ConditionalWeakTable<object, object> processedElements,
             DeepEqualityResult result)
         {
@@ -685,8 +698,8 @@
                 .FirstOrDefault(i => i.Name.StartsWith("IComparable")) != null;
 
         private static bool ObjectPropertiesAreDeeplyEqual(
-            object expected, 
-            object actual, 
+            object expected,
+            object actual,
             ConditionalWeakTable<object, object> processedElements,
             DeepEqualityResult result)
         {
@@ -706,8 +719,8 @@
                 if (expectedPropertyValue is IEnumerable && expectedPropertyValue.GetType() != typeof(string))
                 {
                     if (!CollectionsAreDeeplyEqual(
-                        expectedPropertyValue, 
-                        actualPropertyValue, 
+                        expectedPropertyValue,
+                        actualPropertyValue,
                         processedElements,
                         result))
                     {
@@ -716,8 +729,8 @@
                 }
 
                 var propertiesAreDifferent = AreNotDeeplyEqual(
-                    expectedPropertyValue, 
-                    actualPropertyValue, 
+                    expectedPropertyValue,
+                    actualPropertyValue,
                     processedElements,
                     result);
 
@@ -732,16 +745,14 @@
             return result.Success;
         }
 
-        private static void CacheComponentAttributes(object obj, bool shouldInherit = false)
+        private static void CacheAttributes(IEnumerable<object> attributes, ConcurrentDictionary<Type, object> result)
         {
-            var type = obj.GetType();
-            var attributes = type.GetTypeInfo().GetCustomAttributes(shouldInherit);
             foreach (var attribute in attributes)
             {
                 var attributeType = attribute.GetType();
-                if (!TypeAttributesCache.ContainsKey(attributeType))
+                if (!result.ContainsKey(attributeType))
                 {
-                    TypeAttributesCache.TryAdd(attributeType, attribute);
+                    result.TryAdd(attributeType, attribute);
                 }
             }
         }
@@ -750,7 +761,7 @@
         {
             const string anonymousTypePrefix = "<>f__";
 
-            var typeName = useFullName 
+            var typeName = useFullName
                 ? type?.FullName ?? type?.Name
                 : type?.Name;
 

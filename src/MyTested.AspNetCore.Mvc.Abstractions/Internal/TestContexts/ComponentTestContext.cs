@@ -69,12 +69,14 @@
         public object MethodResult
         { 
             get => this.methodResult;
-
             set => this.methodResult = this.ConvertMethodResult(value);
         }
 
-        public IEnumerable<object> MethodAttributes 
-            => this.methodAttributes ??= Reflection.GetCustomAttributes(this.Method);
+        public IEnumerable<object> MethodAttributes
+        {
+            get => this.methodAttributes ??= Reflection.GetCustomAttributes(this.Method);
+            private set => this.methodAttributes = value;
+        }
 
         public Exception CaughtException { get; set; }
 
@@ -111,7 +113,10 @@
         }
 
         public void IncludeInheritedComponentAttributes()
-            => this.ComponentAttributes = Reflection.GetCustomAttributesIncludingInherited(this.Component);
+            => this.ComponentAttributes = Reflection.GetCustomAttributes(this.Component, true);
+
+        public void IncludeInheritedMethodAttributes()
+            => this.MethodAttributes = Reflection.GetCustomAttributes(this.Method, true);
 
         protected virtual object ConvertMethodResult(object convertibleMethodResult) => convertibleMethodResult;
     }
