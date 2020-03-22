@@ -80,16 +80,7 @@
 
         public object Model
         {
-            get
-            {
-                if (this.model == null)
-                {
-                    return this.MethodResult;
-                }
-
-                return this.model;
-            }
-
+            get => this.model ?? this.MethodResult;
             set => this.model = value;
         }
 
