@@ -105,5 +105,35 @@
                 },
                 "When testing MvcController was expected to have ActionNameAttribute, but in fact such was not found.");
         }
+
+
+
+        [Fact]
+        public void IncludingInheritedShouldIncludeAllCustomInheritedAttributesFromBaseClassesAndNotThrowException()
+        {
+            MyController<InheritAttributesController>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes.IncludingInherited()
+                    .ContainingAttributeOfType<ValidateAntiForgeryTokenAttribute>()
+                    .ContainingAttributeOfType<AllowAnonymousAttribute>()
+                    .ContainingAttributeOfType<ResponseCacheAttribute>());
+        }
+
+        [Fact]
+        public void TryingToAssertInheritedAttributesWithoutIncludingInheritedShouldThrowException()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<InheritAttributesController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes//.IncludingInherited()
+                            .ContainingAttributeOfType<ValidateAntiForgeryTokenAttribute>()
+                            .ContainingAttributeOfType<AllowAnonymousAttribute>()
+                            .ContainingAttributeOfType<ResponseCacheAttribute>());
+                }, "When testing InheritAttributesController was expected to have ValidateAntiForgeryTokenAttribute, but in fact such was not found.");
+        }
     }
 }
