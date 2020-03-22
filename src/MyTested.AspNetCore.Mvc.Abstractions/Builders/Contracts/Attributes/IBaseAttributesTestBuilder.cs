@@ -44,7 +44,7 @@
 
 
         /// <summary>
-        /// Adds inherited attributes to the attributes.
+        /// Adds inherited attributes.
         /// </summary>
         /// <returns>The same attributes test builder.</returns>
         TAttributesTestBuilder IncludingInherited();
