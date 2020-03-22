@@ -36,5 +36,8 @@
                 this.TestContext.ExceptionMessagePrefix,
                 expectedValue,
                 actualValue));
+
+        public IAndActionAttributesTestBuilder IncludingInherited()
+            => throw new System.NotImplementedException();
     }
 }

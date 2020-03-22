@@ -26,5 +26,8 @@
         
         /// <inheritdoc />
         public IControllerAttributesTestBuilder AndAlso() => this;
+
+        public IAndControllerAttributesTestBuilder IncludingInherited()
+            => throw new System.NotImplementedException();
     }
 }
