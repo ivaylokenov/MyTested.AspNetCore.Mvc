@@ -18,8 +18,7 @@
     public static class Reflection
     {
         private static readonly ConcurrentDictionary<Type, ConstructorInfo> TypesWithOneConstructorCache = new ConcurrentDictionary<Type, ConstructorInfo>();
-        private static readonly ConcurrentDictionary<Type, IEnumerable<object>> TypeAttributesCache = new ConcurrentDictionary<Type, IEnumerable<object>>();
-        private static readonly ConcurrentDictionary<Type, IEnumerable<object>> TypeInheritedAttributesCache = new ConcurrentDictionary<Type, IEnumerable<object>>();
+        private static readonly ConcurrentDictionary<Type, object> TypeAttributesCache = new ConcurrentDictionary<Type, object>();
         private static readonly ConcurrentDictionary<MethodInfo, IEnumerable<object>> MethodAttributesCache = new ConcurrentDictionary<MethodInfo, IEnumerable<object>>();
         private static readonly ConcurrentDictionary<Type, string> FriendlyTypeNames = new ConcurrentDictionary<Type, string>();
         private static readonly ConcurrentDictionary<Type, string> FullFriendlyTypeNames = new ConcurrentDictionary<Type, string>();
@@ -287,9 +286,8 @@
         /// <returns>IEnumerable of objects representing the custom attributes.</returns>
         public static IEnumerable<object> GetCustomAttributes(object obj)
         {
-            var type = obj.GetType();
-            return TypeAttributesCache
-                .GetOrAdd(type, _ => type.GetTypeInfo().GetCustomAttributes(false));
+            CacheComponentAttributes(obj);
+            return TypeAttributesCache.Values;
         }
 
         /// <summary>
@@ -299,9 +297,8 @@
         /// <returns>IEnumerable of objects representing the custom attributes.</returns>
         public static IEnumerable<object> GetCustomAttributesIncludingInherited(object obj)
         {
-            var type = obj.GetType();
-            return TypeInheritedAttributesCache
-                .GetOrAdd(type, _ => type.GetTypeInfo().GetCustomAttributes(true));
+            CacheComponentAttributes(obj, true);
+            return TypeAttributesCache.Values;
         }
 
         public static IEnumerable<object> GetCustomAttributes(MethodInfo method)
@@ -733,6 +730,20 @@
             }
 
             return result.Success;
+        }
+
+        private static void CacheComponentAttributes(object obj, bool shouldInherit = false)
+        {
+            var type = obj.GetType();
+            var attributes = type.GetTypeInfo().GetCustomAttributes(shouldInherit);
+            foreach (var attribute in attributes)
+            {
+                var attributeType = attribute.GetType();
+                if (!TypeAttributesCache.ContainsKey(attributeType))
+                {
+                    TypeAttributesCache.TryAdd(attributeType, attribute);
+                }
+            }
         }
 
         private static string GetFriendlyTypeName(Type type, bool useFullName)
