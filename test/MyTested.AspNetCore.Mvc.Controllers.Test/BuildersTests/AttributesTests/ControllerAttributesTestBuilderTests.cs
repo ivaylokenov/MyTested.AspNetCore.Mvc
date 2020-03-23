@@ -111,7 +111,7 @@
         [Fact]
         public void IncludingInheritedShouldIncludeAllCustomInheritedAttributesFromBaseClassesAndNotThrowException()
         {
-            MyController<InheritAttributesController>
+            MyController<InheritControllerAttributes>
                 .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.IncludingInherited()
@@ -126,7 +126,7 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyController<InheritAttributesController>
+                    MyController<InheritControllerAttributes>
                         .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes//.IncludingInherited()
