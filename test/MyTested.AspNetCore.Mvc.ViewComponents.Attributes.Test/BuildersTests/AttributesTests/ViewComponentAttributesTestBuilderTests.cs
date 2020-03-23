@@ -94,7 +94,7 @@
                         .Attributes(attributes => attributes//.IncludingInherited()
                             .ContainingAttributeOfType<ValidateAntiForgeryTokenAttribute>()
                             .ContainingAttributeOfType<ResponseCacheAttribute>());
-                }, "When testing InheritViewComponent was expected to have ValidateAntiForgeryTokenAttribute, but in fact such was not found.");
+                }, $"When testing {nameof(InheritViewComponent)} was expected to have ValidateAntiForgeryTokenAttribute, but in fact such was not found.");
         }
     }
 }
