@@ -20,8 +20,8 @@
         private const bool ShouldInheritAttributes = false;
 
         private static readonly ConcurrentDictionary<Type, ConstructorInfo> TypesWithOneConstructorCache = new ConcurrentDictionary<Type, ConstructorInfo>();
-        private static readonly ConcurrentDictionary<Type, object> TypeAttributesCache = new ConcurrentDictionary<Type, object>();
-        private static readonly ConcurrentDictionary<Type, object> MethodAttributesCache = new ConcurrentDictionary<Type, object>();
+        private static readonly ConcurrentDictionary<Type, IEnumerable<object>> TypeAttributesCache = new ConcurrentDictionary<Type, IEnumerable<object>>();
+        private static readonly ConcurrentDictionary<MethodInfo, IEnumerable<object>> MethodAttributesCache = new ConcurrentDictionary<MethodInfo, IEnumerable<object>>();
         private static readonly ConcurrentDictionary<Type, string> FriendlyTypeNames = new ConcurrentDictionary<Type, string>();
         private static readonly ConcurrentDictionary<Type, string> FullFriendlyTypeNames = new ConcurrentDictionary<Type, string>();
 
@@ -291,19 +291,10 @@
         {
             var type = obj.GetType();
             var attributes = type.GetTypeInfo().GetCustomAttributes(shouldInherit);
+            UpdateAttributesIfNeeded(type, attributes, TypeAttributesCache);
 
-            if (!HasAnyAttributes(attributes, TypeAttributesCache))
-            {
-                return attributes;
-            }
-
-            if (attributes.Length == TypeAttributesCache.Count)
-            {
-                return TypeAttributesCache.Values;
-            }
-
-            CacheAttributes(attributes, TypeAttributesCache);
-            return TypeAttributesCache.Values;
+            return TypeAttributesCache
+                .GetOrAdd(type, _ => attributes);
         }
 
         /// <summary>
@@ -315,19 +306,10 @@
         public static IEnumerable<object> GetCustomAttributes(MethodInfo method, bool shouldInherit = ShouldInheritAttributes)
         {
             var attributes = method.GetCustomAttributes(shouldInherit);
+            UpdateAttributesIfNeeded(method, attributes, MethodAttributesCache);
 
-            if (!HasAnyAttributes(attributes, MethodAttributesCache))
-            {
-                return attributes;
-            }
-
-            if (attributes.Length == MethodAttributesCache.Count)
-            {
-                return MethodAttributesCache.Values;
-            }
-
-            CacheAttributes(attributes, MethodAttributesCache);
-            return MethodAttributesCache.Values;
+            return MethodAttributesCache
+                .GetOrAdd(method, _ => attributes);
         }
 
         /// <summary>
@@ -757,20 +739,16 @@
             return result.Success;
         }
 
-        private static void CacheAttributes(IEnumerable<object> attributes, ConcurrentDictionary<Type, object> result)
+        private static void UpdateAttributesIfNeeded<T>(
+            T key,
+            object[] attributes,
+            ConcurrentDictionary<T, IEnumerable<object>> result)
         {
-            foreach (var attribute in attributes)
+            if (result.ContainsKey(key))
             {
-                var attributeType = attribute.GetType();
-                if (!result.ContainsKey(attributeType))
-                {
-                    result.TryAdd(attributeType, attribute);
-                }
+                result.AddOrUpdate(key, attributes, (dictKey, oldValue) => attributes);
             }
         }
-
-        private static bool HasAnyAttributes(IReadOnlyCollection<object> attributes, ConcurrentDictionary<Type, object> result)
-            => attributes.Count != 0 || result.Any();
 
         private static string GetFriendlyTypeName(Type type, bool useFullName)
         {
