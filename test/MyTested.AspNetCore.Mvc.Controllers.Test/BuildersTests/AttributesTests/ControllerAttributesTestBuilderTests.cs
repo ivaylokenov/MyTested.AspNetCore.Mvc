@@ -66,7 +66,7 @@
                 },
                 "When testing MvcController was expected to have ActionNameAttribute, but in fact such was not found.");
         }
-        
+
         [Fact]
         public void PassingForShouldNotThrowExceptionWithCorrectPredicate()
         {
@@ -106,8 +106,6 @@
                 "When testing MvcController was expected to have ActionNameAttribute, but in fact such was not found.");
         }
 
-
-
         [Fact]
         public void IncludingInheritedShouldIncludeAllCustomInheritedAttributesFromBaseClassesAndNotThrowException()
         {
@@ -133,7 +131,7 @@
                             .ContainingAttributeOfType<ValidateAntiForgeryTokenAttribute>()
                             .ContainingAttributeOfType<AllowAnonymousAttribute>()
                             .ContainingAttributeOfType<ResponseCacheAttribute>());
-                }, "When testing InheritAttributesController was expected to have ValidateAntiForgeryTokenAttribute, but in fact such was not found.");
+                }, $"When testing {nameof(InheritControllerAttributes)} was expected to have ValidateAntiForgeryTokenAttribute, but in fact such was not found.");
         }
     }
 }
