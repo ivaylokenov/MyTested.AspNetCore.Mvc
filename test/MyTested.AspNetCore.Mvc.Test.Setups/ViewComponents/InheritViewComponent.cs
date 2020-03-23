@@ -6,6 +6,7 @@
     [ResponseCache]
     public class InheritViewComponent : BaseInheritViewComponent
     {
+        public IViewComponentResult Invoke() => this.View();
     }
 
     [AllowAnonymous]

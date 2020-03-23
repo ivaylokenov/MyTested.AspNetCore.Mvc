@@ -4,7 +4,6 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Setups;
-    using Setups.Controllers;
     using Setups.ViewComponents;
     using Xunit;
 
@@ -89,7 +88,7 @@
                 () =>
                 {
                     MyViewComponent<InheritViewComponent>
-                         .Instance()
+                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes//.IncludingInherited()
                             .ContainingAttributeOfType<ValidateAntiForgeryTokenAttribute>()
