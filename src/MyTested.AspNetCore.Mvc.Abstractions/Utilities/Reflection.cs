@@ -291,6 +291,12 @@
         {
             var type = obj.GetType();
             var attributes = type.GetTypeInfo().GetCustomAttributes(shouldInherit);
+
+            if (!HasAnyAttributes(attributes, TypeAttributesCache))
+            {
+                return attributes;
+            }
+
             if (attributes.Length == TypeAttributesCache.Count)
             {
                 return TypeAttributesCache.Values;
@@ -309,6 +315,12 @@
         public static IEnumerable<object> GetCustomAttributes(MethodInfo method, bool shouldInherit = ShouldInheritAttributes)
         {
             var attributes = method.GetCustomAttributes(shouldInherit);
+
+            if (!HasAnyAttributes(attributes, MethodAttributesCache))
+            {
+                return attributes;
+            }
+
             if (attributes.Length == MethodAttributesCache.Count)
             {
                 return MethodAttributesCache.Values;
@@ -756,6 +768,9 @@
                 }
             }
         }
+
+        private static bool HasAnyAttributes(IReadOnlyCollection<object> attributes, ConcurrentDictionary<Type, object> result)
+            => attributes.Count != 0 || result.Any();
 
         private static string GetFriendlyTypeName(Type type, bool useFullName)
         {
