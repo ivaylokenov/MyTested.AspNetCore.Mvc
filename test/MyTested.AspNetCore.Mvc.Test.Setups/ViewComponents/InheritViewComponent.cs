@@ -6,13 +6,12 @@
     [ResponseCache]
     public class InheritViewComponent : BaseInheritViewComponent
     {
-        public IViewComponentResult Invoke() => this.View();
     }
 
     [AllowAnonymous]
     [ValidateAntiForgeryToken]
-    public class BaseInheritViewComponent : ViewComponent
+    public abstract class BaseInheritViewComponent : ViewComponent
     {
-
+        public virtual IViewComponentResult Invoke() => this.View();
     }
 }
