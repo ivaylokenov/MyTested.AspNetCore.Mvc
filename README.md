@@ -20,6 +20,11 @@
   <tbody>
     <tr>
       <td align="center" valign="middle">
+          <a href="https://bit.ly/ciu-zuehlke" target="_blank">
+          <img width="148px" src="https://user-images.githubusercontent.com/3391906/84595391-4ec75080-ae60-11ea-8bc4-2b5e4b17a345.jpg">
+        </a>
+      </td>
+      <td align="center" valign="middle">
         <a href="https://softuni.org/" target="_blank">
           <img width="148px" src="https://softuni.org/platform/assets/icons/logo.svg">
         </a>
