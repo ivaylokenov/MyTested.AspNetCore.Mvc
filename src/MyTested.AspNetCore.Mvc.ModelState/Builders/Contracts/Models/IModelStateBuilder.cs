@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Models
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -28,5 +29,19 @@
         /// <param name="errors">Model state entries as anonymous object.</param>
         /// <returns></returns>
         IAndModelStateBuilder WithErrors(object errors);
+
+        /// <summary>
+        /// Tests whether the model state entry passes the given assertions.
+        /// </summary>
+        /// <param name="assertions">Action containing all assertions for the model state entry.</param>
+        /// <returns>The same <see cref="IAndModelStateBuilder"/>.</returns>
+        IAndModelStateBuilder Passing(Action assertions);
+
+        /// <summary>
+        /// Tests whether the data provider entry passes the given predicate.
+        /// </summary>
+        /// <param name="predicate">Predicate testing the data provider entry.</param>
+        /// <returns>The same <see cref="IAndModelStateBuilder"/>.</returns>
+        IAndModelStateBuilder Passing(Func<bool> predicate);
     }
 }
