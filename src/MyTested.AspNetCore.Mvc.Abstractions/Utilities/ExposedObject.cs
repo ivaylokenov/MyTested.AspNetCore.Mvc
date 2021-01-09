@@ -100,7 +100,7 @@
                     throw ex.InnerException;
                 }
 
-                throw ex;
+                throw;
             }
 
             return true;

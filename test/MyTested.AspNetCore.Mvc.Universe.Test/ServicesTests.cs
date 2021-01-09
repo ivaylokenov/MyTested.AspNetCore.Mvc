@@ -23,6 +23,7 @@
     using Setups.Common;
     using Xunit;
 
+#pragma warning disable EF1001 // Internal EF Core API usage.
     public class ServicesTests
     {
         [Fact]

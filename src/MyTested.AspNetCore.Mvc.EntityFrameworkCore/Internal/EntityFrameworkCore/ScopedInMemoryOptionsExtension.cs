@@ -7,7 +7,7 @@
 
 #pragma warning disable EF1001 // Internal EF Core API usage.
     public class ScopedInMemoryOptionsExtension : InMemoryOptionsExtension
-#pragma warning restore EF1001 // Internal EF Core API usage.
+    //#pragma warning restore EF1001 // Internal EF Core API usage.
     {
         public override void ApplyServices(IServiceCollection services)
             => services
