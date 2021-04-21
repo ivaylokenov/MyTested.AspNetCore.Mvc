@@ -483,14 +483,14 @@
 
         public IActionResult SignInWithAuthenticationPropertiesAndScheme()
         {
-            return this.SignIn(ClaimsPrincipalBuilder.DefaultAuthenticated,
+            return this.SignIn(WithClaimsPrincipalBuilder.DefaultAuthenticated,
                 TestObjectFactory.GetAuthenticationProperties(),
                 AuthenticationScheme.Basic);
         }
 
         public IActionResult SignInWithEmptyAuthenticationPropertiesAndScheme()
         {
-            return this.SignIn(ClaimsPrincipalBuilder.DefaultAuthenticated,
+            return this.SignIn(WithClaimsPrincipalBuilder.DefaultAuthenticated,
                 TestObjectFactory.GetEmptyAuthenticationProperties(),
                 AuthenticationScheme.Basic);
         }
@@ -800,6 +800,11 @@
         public IActionResult BadRequestWithCustomError()
         {
             return this.BadRequest(this.ResponseModel);
+        }
+
+        public IActionResult GetModelStateKeys()
+        {
+            return this.Ok(this.ModelState.Keys.ToList());
         }
 
         public IActionResult AcceptedAction()
@@ -1189,6 +1194,11 @@
             }
 
             return this.BadRequest();
+        }
+
+        public IActionResult GetTempDataKeys()
+        {
+            return this.Ok(this.TempData.Keys.ToList());
         }
 
         public IActionResult SessionAction()

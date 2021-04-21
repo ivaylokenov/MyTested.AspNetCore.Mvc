@@ -11,5 +11,9 @@
         bool TryGetCacheEntryOptions(string key, out DistributedCacheEntryOptions cacheEntryOptions);
 
         Dictionary<string, byte[]> GetCacheAsDictionary();
+
+        void RemoveKeys(IEnumerable<string> keys);
+
+        void ClearCache();
     }
 }
