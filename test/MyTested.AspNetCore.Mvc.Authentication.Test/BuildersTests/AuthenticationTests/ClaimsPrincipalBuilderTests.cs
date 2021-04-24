@@ -8,6 +8,7 @@
     using Setups.Controllers;
     using Microsoft.AspNetCore.Mvc;
     using Xunit;
+    using MyTested.AspNetCore.Mvc.Builders.Authentication;
 
     public class ClaimsPrincipalBuilderTests
     {
@@ -27,7 +28,7 @@
                     Assert.Equal("MyUsername", claim.Value);
                 });
         }
-        
+
         [Fact]
         public void WithRoleTypeShouldOverrideDefaultClaimType()
         {
@@ -69,7 +70,7 @@
                     .WithIdentifier("TestingId"))
                 .ShouldPassForThe<MvcController>(controller =>
                 {
-                        var claim = controller.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+                    var claim = controller.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
 
                     Assert.NotNull(claim);
                     Assert.Equal("TestingId", claim.Value);
@@ -126,7 +127,7 @@
                     Assert.Equal("MySecondValue", secondClaim.Value);
                 });
         }
-        
+
         [Fact]
         public void WithClaimsAsEnumerableShouldSetCorrectClaim()
         {
@@ -277,6 +278,72 @@
                     Assert.Contains("ThirdRole", userRoleClaims);
                     Assert.Contains("ListRole", userRoleClaims);
                     Assert.Contains("AnotherListRole", userRoleClaims);
+                });
+        }
+
+        [Fact]
+        public void WithoutClaimShouldRemoveTheCorrectClaimOnly()
+        {
+            MyController<MvcController>
+                .Instance()
+                .WithUser(user => user
+                    .WithNameType("CustomUsername"))
+                .WithoutUser("CustomUsername", "TestUser")
+                .ShouldPassForThe<MvcController>(controller =>
+                {
+                    var claimToBeDeleted = controller.User.Claims.FirstOrDefault(c => c.Type == "CustomUsername");
+
+                    Assert.Null(claimToBeDeleted);
+                });
+        }
+
+        [Fact]
+        public void WithoutClaimByProvidingClaimsDirectlyShouldRemoveTheCorrectClaimOnly()
+        {
+            var claim =
+                new Claim("CustomUsername", "TestUser", "string", "issuer", "OGissuer",
+                new ClaimsIdentity("Password", "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"));
+
+            var builder = MyController<MvcController>
+                .Instance()
+                .WithUser(u => u.WithClaim(claim));
+
+            var claimToDelete = ((MyController<MvcController>)builder).HttpContext.User.Claims.First(x => x.Value.Equals("TestUser"));
+            builder.WithoutUser(claimToDelete)
+                .ShouldPassForThe<MvcController>(controller =>
+                {
+                    var deletedClaim = controller.User.Claims.FirstOrDefault(c => c.Type.Equals("CustomUsername"));
+                    Assert.Null(deletedClaim);
+                });
+        }
+
+        [Fact]
+        public void WithoutRoleShouldRemoveTheCorrectRole()
+        {
+            MyController<MvcController>
+                .Instance()
+                .WithUser(user => user.InRole("randomRole"))
+                .WithoutUser("randomRole")
+                .ShouldPassForThe<MvcController>(controller =>
+                {
+                    var claimToBeDeleted = controller.User.Claims.FirstOrDefault(c => c.Type == "randomRole");
+
+                    Assert.Null(claimToBeDeleted);
+                });
+        }
+
+        [Fact]
+        public void WithoutUserShouldReturnTheDefaultSetUser()
+        {
+            MyController<MvcController>
+                .Instance()
+                .WithUser(user => user.InRole("randomRole"))
+                .WithoutUser()
+                .ShouldPassForThe<MvcController>(controller =>
+                {
+                    var user = controller.User;
+
+                    Assert.Equal(BaseClaimsPrincipalUserBuilder.DefaultAuthenticated, user);
                 });
         }
     }

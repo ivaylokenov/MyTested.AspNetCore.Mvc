@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
     using Microsoft.AspNetCore.Mvc.ApplicationParts;
     using Microsoft.Extensions.Caching.Distributed;
     using Microsoft.Extensions.DependencyInjection;
@@ -268,6 +270,185 @@
                 .Ok();
         }
 
+        [Fact]
+        public void WithoutDistributedCacheShouldReturnEmptyCache()
+        {
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(distributedCache => distributedCache
+                    .WithEntries(new Dictionary<string, string>
+                    {
+                        ["first"] = "firstValue",
+                        ["second"] = "secondValue",
+                        ["third"] = "thirdValue"
+                    }))
+                .WithoutDistributedCache()
+                .Calling(c => c.GetCount(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok(ok => ok.WithModel(0));
+        }
+
+        [Fact]
+        public void WithoutDistributedCacheShouldReturnEmptyCacheWhenClearingAlreadyEmptyCache()
+        {
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(distributedCache => distributedCache
+                    .WithEntries(new Dictionary<string, string>()))
+                .WithoutDistributedCache()
+                .Calling(c => c.GetCount(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok(ok => ok.WithModel(0));
+        }
+
+        [Fact]
+        public void WithoutDistributedEntryCacheShouldReturnCorrectCacheData()
+        {
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(cache => cache
+                    .WithEntries(new Dictionary<string, string>
+                    {
+                        ["first"] = "firstValue",
+                        ["second"] = "secondValue",
+                        ["third"] = "thirdValue"
+                    }))
+                .WithoutDistributedCache(cache => cache.WithoutEntry("second"))
+                .Calling(c => c.GetAllEntities(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModel(new SortedDictionary<string, byte[]>
+                    {
+                        ["first"] = GetByteArray("firstValue"),
+                        ["third"] = GetByteArray("thirdValue")
+                    }));
+        }
+
+        [Fact]
+        public void WithoutDistributedCacheByKeyShouldReturnCorrectCacheData()
+        {
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(cache => cache
+                    .WithEntries(new Dictionary<string, string>
+                    {
+                        ["first"] = "firstValue",
+                        ["second"] = "secondValue",
+                        ["third"] = "thirdValue"
+                    }))
+                .WithoutDistributedCache("second")
+                .Calling(c => c.GetAllEntities(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModel(new SortedDictionary<string, byte[]>
+                    {
+                        ["third"] = GetByteArray("thirdValue"),
+                        ["first"] = GetByteArray("firstValue")
+                    }));
+        }
+
+        [Fact]
+        public void WithoutDistributedCacheByKeysShouldReturnCorrectCacheData()
+        {
+            var entities = new Dictionary<string, string>
+            {
+                ["first"] = "firstValue",
+                ["second"] = "secondValue",
+                ["third"] = "thirdValue"
+            };
+
+            var entriesToDelete = entities.Select(x => x.Key).ToList();
+            entriesToDelete.RemoveAt(0);
+
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(cache => cache.WithEntries(entities))
+                .WithoutDistributedCache(entriesToDelete)
+                .Calling(c => c.GetAllEntities(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModel(new SortedDictionary<string, byte[]>
+                    {
+                        ["first"] = GetByteArray("firstValue")
+                    }));
+        }
+
+        [Fact]
+        public void WithoutDistributedCacheByNonExistingKeysShouldReturnCorrectCacheData()
+        {
+            var entities = new Dictionary<string, byte[]>
+            {
+                ["first"] = GetByteArray("firstValue"),
+                ["second"] = GetByteArray("secondValue"),
+                ["third"] = GetByteArray("thirdValue")
+            };
+
+            var entitiesToDelete = new List<string> { "key1", "key2" };
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(cache => cache
+                    .WithEntries(entities))
+                .WithoutDistributedCache(entitiesToDelete)
+                .Calling(c => c.GetAllEntities(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModel(new SortedDictionary<string, byte[]>(entities)));
+        }
+
+        [Fact]
+        public void WithoutDistributedCacheByNonExistingKeyShouldReturnCorrectCacheData()
+        {
+            var entities = new Dictionary<string, byte[]>
+            {
+                ["first"] = GetByteArray("firstValue"),
+                ["second"] = GetByteArray("secondValue"),
+                ["third"] = GetByteArray("thirdValue")
+            };
+
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(cache => cache
+                    .WithEntries(entities))
+                .WithoutDistributedCache("firstValue")
+                .Calling(c => c.GetAllEntities(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModel(new SortedDictionary<string, byte[]>(entities)));
+        }
+
+        [Fact]
+        public void WithoutDistributedCacheByParamKeysShouldReturnCorrectCacheData()
+        {
+            var entities = new Dictionary<string, string>
+            {
+                ["first"] = "firstValue",
+                ["second"] = "secondValue",
+                ["third"] = "thirdValue"
+            };
+
+            var entriesToDelete = entities.Select(x => x.Key).ToList();
+            entriesToDelete.RemoveAt(0);
+
+            var encodedValue = GetByteArray("firstValue");
+
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(cache => cache.WithEntries(entities))
+                .WithoutDistributedCache(entriesToDelete[0], entriesToDelete[1])
+                .Calling(c => c.GetAllEntities(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModel(new SortedDictionary<string, byte[]>
+                    {
+                        ["first"] = encodedValue
+                    })); ;
+        }
+
         public void Dispose() => MyApplication.StartsFrom<DefaultStartup>();
+
+        private static byte[] GetByteArray(string str)
+        {
+            return Encoding.ASCII.GetBytes(str);
+        }
     }
 }
