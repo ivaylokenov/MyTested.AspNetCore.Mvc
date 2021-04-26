@@ -9,6 +9,7 @@
     using Exceptions;
     using System;
     using Utilities;
+    using Utilities.Extensions;
     using Utilities.Validators;
 
     /// <summary>
@@ -71,14 +72,16 @@
             var modelIsAssignable = Reflection.AreAssignable(
                     expectedModelType,
                     actualModelType);
-
+            
             if (!modelIsAssignable)
             {
+                var (expectedModelName, actualModelName) = (expectedModelType, actualModelType).GetTypeComparisonNames();
+
                 throw new ResponseModelAssertionException(string.Format(
                     actualBuilder.OfTypeErrorMessageFormat,
                     actualBuilder.TestContext.ExceptionMessagePrefix,
-                    typeof(TModel).ToFriendlyTypeName(),
-                    actualModelType.ToFriendlyTypeName()));
+                    expectedModelName,
+                    actualModelName));
             }
 
             actualBuilder.TestContext.Model = actualBuilder.GetActualModel<TModel>();
@@ -149,15 +152,25 @@
         {
             var actualBuilder = (BaseTestBuilderWithResponseModel)builder;
 
-            actualBuilder.WithModelOfType<TModel>();
+            var modelType = typeof(TModel);
+            var anonymousModel = Reflection.IsAnonymousType(modelType);
 
-            var actualModel = actualBuilder.GetActualModel<TModel>();
-            if (Reflection.AreNotDeeplyEqual(model, actualModel))
+            if (!anonymousModel)
+            {
+                actualBuilder.WithModelOfType<TModel>();
+            }
+
+            var actualModel = anonymousModel 
+                ? actualBuilder.GetActualModel()
+                : actualBuilder.GetActualModel<TModel>();
+
+            if (Reflection.AreNotDeeplyEqual(model, actualModel, out var result))
             {
                 throw new ResponseModelAssertionException(string.Format(
                     actualBuilder.ErrorMessageFormat,
                     actualBuilder.TestContext.ExceptionMessagePrefix,
-                    typeof(TModel).ToFriendlyTypeName()));
+                    modelType.ToFriendlyTypeName(),
+                    result));
             }
 
             actualBuilder.TestContext.Model = actualModel;

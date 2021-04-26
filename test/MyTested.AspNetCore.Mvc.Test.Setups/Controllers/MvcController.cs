@@ -20,10 +20,10 @@
     using Microsoft.Extensions.FileProviders;
     using Microsoft.Net.Http.Headers;
     using Models;
-    using Pipelines;
     using Newtonsoft.Json;
     using Services;
     using ActionFilters;
+    using Pipeline;
 
     [Authorize(Roles = "Admin,Moderator")]
     [FormatFilter]
@@ -254,7 +254,7 @@
             return this.Ok();
         }
 
-        public IActionResult FullHttpBadRequestAction()
+        public IActionResult FullBadRequestAction()
         {
             return new BadRequestObjectResult(this.ResponseModel)
             {
@@ -265,7 +265,7 @@
             };
         }
 
-        public IActionResult HttpBadRequestActionWithFormatter(IOutputFormatter formatter)
+        public IActionResult BadRequestActionWithFormatter(IOutputFormatter formatter)
         {
             return new BadRequestObjectResult(this.ResponseModel)
             {
@@ -331,9 +331,9 @@
             VaryByQueryKeys = new[] { "FirstQuery", "SecondQuery" },
             NoStore = true,
             Order = 2)]
-        [MiddlewareFilter(typeof(MyPipeline), Order = 2)]
-        [ServiceFilter(typeof(MyActionFilter), Order = 2)]
-        [TypeFilter(typeof(MyActionFilterWithArgs), Order = 2, Arguments = new object[] { 10 })]
+        [MiddlewareFilter(typeof(Pipeline), Order = 2)]
+        [ServiceFilter(typeof(CustomActionFilter), Order = 2)]
+        [TypeFilter(typeof(CustomActionFilterWithArgs), Order = 2, Arguments = new object[] { 10 })]
         public IActionResult VariousAttributesAction()
         {
             return this.Ok();
@@ -483,14 +483,14 @@
 
         public IActionResult SignInWithAuthenticationPropertiesAndScheme()
         {
-            return this.SignIn(ClaimsPrincipalBuilder.DefaultAuthenticated,
+            return this.SignIn(WithClaimsPrincipalBuilder.DefaultAuthenticated,
                 TestObjectFactory.GetAuthenticationProperties(),
                 AuthenticationScheme.Basic);
         }
 
         public IActionResult SignInWithEmptyAuthenticationPropertiesAndScheme()
         {
-            return this.SignIn(ClaimsPrincipalBuilder.DefaultAuthenticated,
+            return this.SignIn(WithClaimsPrincipalBuilder.DefaultAuthenticated,
                 TestObjectFactory.GetEmptyAuthenticationProperties(),
                 AuthenticationScheme.Basic);
         }
@@ -505,7 +505,7 @@
             return this.SignOut(TestObjectFactory.GetAuthenticationProperties());
         }
 
-        public FileResult FileWithVirtualPath()
+        public IActionResult FileWithVirtualPath()
         {
             return this.File("/Test", ContentType.ApplicationJson, "FileDownloadName");
         }
@@ -702,7 +702,7 @@
 
         public async Task EmptyActionWithExceptionAsync()
         {
-            await Task.Run(() => this.ThrowNewNullReferenceException());
+            await Task.Run(this.ThrowNewNullReferenceException);
         }
 
         public async Task<IActionResult> ActionWithExceptionAsync()
@@ -764,6 +764,19 @@
             return new ObjectResult(this.ResponseModel.ToList());
         }
 
+        public IActionResult OkResultWithRepeatedName()
+        {
+            return this.Ok(new CustomActionResult());
+        }
+
+        public IActionResult OkResultWithRepeatedCollectionName()
+        {
+            return this.Ok(new List<CustomActionResult>
+            {
+                new CustomActionResult()
+            });
+        }
+
         public IActionResult BadRequestAction()
         {
             return this.BadRequest();
@@ -787,6 +800,11 @@
         public IActionResult BadRequestWithCustomError()
         {
             return this.BadRequest(this.ResponseModel);
+        }
+
+        public IActionResult GetModelStateKeys()
+        {
+            return this.Ok(this.ModelState.Keys.ToList());
         }
 
         public IActionResult AcceptedAction()
@@ -894,17 +912,17 @@
             return this.Ok(this.ResponseModel);
         }
 
-        public IActionResult HttpNotFoundAction()
+        public IActionResult NotFoundAction()
         {
             return this.NotFound();
         }
 
-        public IActionResult HttpNotFoundWithObjectAction()
+        public IActionResult NotFoundWithObjectAction()
         {
             return this.NotFound("test");
         }
 
-        public IActionResult FullHttpNotFoundAction()
+        public IActionResult FullNotFoundAction()
         {
             return new NotFoundObjectResult(this.ResponseModel)
             {
@@ -915,7 +933,7 @@
             };
         }
 
-        public IActionResult HttpNotFoundActionWithFormatter(IOutputFormatter formatter)
+        public IActionResult NotFoundActionWithFormatter(IOutputFormatter formatter)
         {
             return new NotFoundObjectResult(this.ResponseModel)
             {
@@ -1178,6 +1196,11 @@
             return this.BadRequest();
         }
 
+        public IActionResult GetTempDataKeys()
+        {
+            return this.Ok(this.TempData.Keys.ToList());
+        }
+
         public IActionResult SessionAction()
         {
             if (this.HttpContext.Session.GetString("test") != null)
@@ -1198,6 +1221,32 @@
             return this.Ok(this.HttpContext.Session.Keys.Count());
         }
 
+        public object AnonymousResult()
+        {
+            return new
+            {
+                Id = 1,
+                Text = "test",
+                Nested = new
+                {
+                    IsTrue = true
+                }
+            };
+        }
+
+        public IActionResult AnonymousOkResult()
+        {
+            return this.Ok(new 
+            { 
+                Id = 1, 
+                Text = "test",
+                Nested = new
+                {
+                    IsTrue = true
+                }
+            });
+        }
+
         public IActionResult WithService(IHttpContextAccessor httpContextAccessor)
         {
             if (httpContextAccessor == null)
@@ -1206,6 +1255,44 @@
             }
 
             return this.Ok();
+        }
+
+        public IActionResult ActionResultInterface()
+        {
+            return this.Ok(this.ResponseModel.First());
+        }
+
+        public ActionResult ActionResultBaseClass()
+        {
+            return this.Ok(this.ResponseModel.First());
+        }
+
+        public ActionResult<ResponseModel> ActionResultOfT(int id)
+        {
+            if (id == 0)
+            {
+                return this.BadRequest();
+            }
+
+            if (id == int.MaxValue)
+            {
+                return this.Ok(this.ResponseModel.First());
+            }
+
+            return this.ResponseModel.First();
+        }
+
+        public ActionResult<object> ActionResultOfAnonymousType()
+        {
+            return new
+            {
+                Id = 1,
+                Text = "test",
+                Nested = new
+                {
+                    IsTrue = true
+                }
+            };
         }
 
         private void ThrowNewNullReferenceException()

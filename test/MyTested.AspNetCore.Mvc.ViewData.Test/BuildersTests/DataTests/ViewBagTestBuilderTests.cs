@@ -199,7 +199,7 @@
                        .ShouldReturn()
                        .Ok();
                 },
-                "When calling AddViewBagAction action in MvcController expected view bag to have entry with 'Test' key and the provided value, but the value was different.");
+                "When calling AddViewBagAction action in MvcController expected view bag to have entry with 'Test' key and the provided value, but the value was different. Expected a value of 'Invalid', but in fact it was 'BagValue'.");
         }
         
         [Fact]
@@ -395,7 +395,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddViewBagAction action in MvcController expected view bag to have entry with 'Test' key and the provided value, but the value was different.");
+                "When calling AddViewBagAction action in MvcController expected view bag to have entry with 'Test' key and the provided value, but the value was different. Expected a value of 'Value', but in fact it was 'BagValue'.");
         }
     }
 }

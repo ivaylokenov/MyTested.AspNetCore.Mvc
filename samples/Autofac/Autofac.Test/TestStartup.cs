@@ -33,7 +33,13 @@
             // Depending on your needs, you may need to call 'AddMvcUniverseTesting' instead
             // because it includes every feature the testing framework supports - for example,
             // testable DbContext, ISession and IMemoryCache.
-            services.AddMvcTesting();
+            services.AddControllersWithViewsTesting();
+
+            // Equivalent registration.
+            // services.AddMvcTesting();
+
+            // For API scenarios without views.
+            // services.AddControllersTesting();
 
             // If you prefer, you may be more specific about the testing
             // infrastructure by explicitly call each supported feature you want.
@@ -41,7 +47,7 @@
             // services
             //     .AddCoreTesting()
             //     .AddRoutingTesting()
-            //     .AddControllersTesting()
+            //     .AddControllersCoreTesting()
             //     .AddViewFeaturesTesting()
             //     .AddViewComponentsTesting()
             //     .AddStringInputFormatter()

@@ -5,9 +5,9 @@
     using System.IO;
     using Exceptions;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.Extensions.Primitives;
     using Setups;
+    using Setups.Common;
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;
@@ -18,12 +18,11 @@
         public void WithHttpRequestShouldWorkCorrectlyWithDefaultValues()
         {
             var stream = new MemoryStream();
-            var requestCookies = new RequestCookieCollection(
-                new Dictionary<string, string>
-                {
-                    { "MyRequestCookie", "MyRequestCookieValue" },
-                    { "AnotherRequestCookie", "AnotherRequestCookieValue" }
-                });
+            var requestCookies = new CustomRequestCookieCollection
+            {
+                ["MyRequestCookie"] = "MyRequestCookieValue",
+                ["AnotherRequestCookie"] = "AnotherRequestCookieValue"
+            };
 
             var files = new[]
             {

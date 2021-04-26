@@ -327,8 +327,9 @@
                 .Instance()
                 .Calling(c => c.GenericActionWithCollection())
                 .ShouldReturn()
-                .ResultOfType(typeof(ICollection<>))
-                .Passing(c => c.Count == 2);
+                .ResultOfType(
+                    typeof(ICollection<>), 
+                    result => result.Passing(c => c.Count == 2));
         }
 
         [Fact]
@@ -338,8 +339,21 @@
                 .Instance()
                 .Calling(c => c.GenericActionWithCollection())
                 .ShouldReturn()
-                .ResultOfType<ICollection<ResponseModel>>()
-                .Passing(c => c.Count == 2);
+                .ResultOfType<ICollection<ResponseModel>>(result => result
+                    .Passing(c => c.Count == 2));
+        }
+
+        [Fact]
+        public void ShouldReturnResultOfTypeShouldChainCorrectly()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.GenericActionWithCollection())
+                .ShouldReturn()
+                .ResultOfType<ICollection<ResponseModel>>(result => result
+                    .EqualTo(TestObjectFactory.GetListOfResponseModels())
+                    .AndAlso()
+                    .Passing(model => model.Count == 2));
         }
 
         [Fact]
@@ -382,8 +396,8 @@
                         .Instance()
                         .Calling(c => c.GenericActionWithCollection())
                         .ShouldReturn()
-                        .ResultOfType<ICollection<ResponseModel>>()
-                        .Passing(c => c.Count == 1);
+                        .ResultOfType<ICollection<ResponseModel>>(result => result
+                            .Passing(c => c.Count == 1));
                 }, 
                 "When calling GenericActionWithCollection action in MvcController expected response model ICollection<ResponseModel> to pass the given predicate, but it failed.");
         }
@@ -492,6 +506,19 @@
         }
 
         [Fact]
+        public void ShouldReturnResultShouldChainCorrectly()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.GenericActionWithCollection())
+                .ShouldReturn()
+                .Result(result => result
+                    .EqualTo(TestObjectFactory.GetListOfResponseModels())
+                    .AndAlso()
+                    .Passing(model => model.Count == 2));
+        }
+
+        [Fact]
         public void DynamicResultShouldBeProperlyRecognized()
         {
             MyController<MvcController>
@@ -499,6 +526,177 @@
                 .Calling(c => c.DynamicResult())
                 .ShouldReturn()
                 .ResultOfType<List<ResponseModel>>();
+        }
+
+        [Fact]
+        public void AnonymousResultShouldBeProperlyRecognizedWithObjectType()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AnonymousOkResult())
+                .ShouldReturn()
+                .ResultOfType<object>();
+        }
+
+        [Fact]
+        public void AnonymousResultShouldBeProperlyRecognized()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AnonymousResult())
+                .ShouldReturn()
+                .Result(new
+                {
+                    Id = 1,
+                    Text = "test",
+                    Nested = new
+                    {
+                        IsTrue = true
+                    }
+                });
+        }
+
+        [Fact]
+        public void ObjectResultShouldBeProperlyRecognized()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ObjectResultWithResponse())
+                .ShouldReturn()
+                .ResultOfType<ObjectResult>(result => result
+                    .Passing(obj => obj.Value is List<ResponseModel>));
+        }
+
+        [Fact]
+        public void ObjectResultChildrenShouldBeProperlyRecognized()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.OkResultWithResponse())
+                .ShouldReturn()
+                .ResultOfType<OkObjectResult>(result => result
+                    .Passing(obj => obj.Value is List<ResponseModel>));
+        }
+
+        [Fact]
+        public void AnonymousResultShouldBeProperlyRecognizedAndShouldThrowException()
+        {
+            Test.AssertException<ResponseModelAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AnonymousResult())
+                        .ShouldReturn()
+                        .Result(new
+                        {
+                            Id = 1,
+                            Text = "test",
+                            Nested = new
+                            {
+                                IsTrue = false
+                            }
+                        });
+                },
+                "When calling AnonymousResult action in MvcController expected the response model to be the given model, but in fact it was a different one. Difference occurs at 'AnonymousType<Int32, String, AnonymousType<Boolean>>.Nested.IsTrue'. Expected a value of 'False', but in fact it was 'True'.");
+        }
+
+        [Fact]
+        public void ActionResultOfTShouldBeProperlyRecognizedWithActualActionResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(0))
+                .ShouldReturn()
+                .BadRequest();
+        }
+
+        [Fact]
+        public void ActionResultOfTShouldBeProperlyRecognizedWithObjectActionResult()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(int.MaxValue))
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void ActionResultOfTShouldBeProperlyRecognizedWithObjectActionResultAndModel()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(int.MaxValue))
+                .ShouldReturn()
+                .Ok(result => result
+                    .WithModel(new ResponseModel
+                    {
+                        IntegerValue = 1,
+                        StringValue = "Test"
+                    }));
+        }
+
+        [Fact]
+        public void ActionResultOfTShouldBeProperlyRecognizedWithOkResultAndResultChain()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(int.MaxValue))
+                .ShouldReturn()
+                .ResultOfType<OkObjectResult>(result => result
+                    .Passing(ok => ok.Value is ResponseModel));
+        }
+
+        [Fact]
+        public void ActionResultOfTShouldBeProperlyRecognizedWithModelOfGenericType()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(1))
+                .ShouldReturn()
+                .ResultOfType<ResponseModel>();
+        }
+
+        [Fact]
+        public void ActionResultOfTShouldBeProperlyRecognizedWithModelOfType()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(1))
+                .ShouldReturn()
+                .ResultOfType(typeof(ResponseModel));
+        }
+
+        [Fact]
+        public void ActionResultOfTShouldBeProperlyRecognizedWithModel()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfT(1))
+                .ShouldReturn()
+                .Result(new ResponseModel 
+                { 
+                    IntegerValue = 1, 
+                    StringValue = "Test" 
+                });
+        }
+
+        [Fact]
+        public void ActionResultOfTShouldBeProperlyRecognizedWithAnonymousModel()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ActionResultOfAnonymousType())
+                .ShouldReturn()
+                .Result(new
+                {
+                    Id = 1,
+                    Text = "test",
+                    Nested = new
+                    {
+                        IsTrue = true
+                    }
+                });
         }
 
         [Fact]

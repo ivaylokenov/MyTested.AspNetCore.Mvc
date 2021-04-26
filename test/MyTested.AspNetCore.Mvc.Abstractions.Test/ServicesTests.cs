@@ -1,5 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test
 {
+    using System;
+    using System.Diagnostics;
+    using System.Linq;
     using Internal;
     using Internal.Application;
     using Internal.Contracts;
@@ -8,16 +11,16 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Hosting.Builder;
-    using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Routing;
+    using Microsoft.AspNetCore.Routing.Constraints;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.ObjectPool;
     using Microsoft.Extensions.Options;
@@ -25,10 +28,8 @@
     using Setups.Common;
     using Setups.Controllers;
     using Setups.Services;
+    using Setups.StartupFilters;
     using Setups.Startups;
-    using System;
-    using System.Diagnostics;
-    using System.Linq;
     using Xunit;
 
     public class ServicesTests
@@ -38,7 +39,7 @@
         {
             MyApplication.StartsFrom<DefaultStartup>();
 
-            var markerService = TestServiceProvider.GetService<MvcMarkerService>();
+            var markerService = TestServiceProvider.GetService(WebFramework.Internals.MvcMarkerService);
 
             Assert.NotNull(markerService);
         }
@@ -198,7 +199,7 @@
         {
             MyApplication.StartsFrom<DefaultStartup>();
 
-            var markerService = TestServiceProvider.GetService<MvcMarkerService>();
+            var markerService = TestServiceProvider.GetService(WebFramework.Internals.MvcMarkerService);
 
             Assert.NotNull(markerService);
 
@@ -238,7 +239,7 @@
         {
             MyApplication.StartsFrom<DefaultStartup>();
 
-            var service = TestServiceProvider.GetRequiredService<MvcMarkerService>();
+            var service = TestServiceProvider.GetService(WebFramework.Internals.MvcMarkerService);
 
             Assert.NotNull(service);
         }
@@ -264,7 +265,7 @@
                     services.AddMvc();
                 });
 
-            var service = TestServiceProvider.GetRequiredService<MvcMarkerService>();
+            var service = TestServiceProvider.GetService(WebFramework.Internals.MvcMarkerService);
 
             Assert.NotNull(service);
 
@@ -292,6 +293,24 @@
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
+                .WithRoutes(routes =>
+                {
+                    routes.MapRoute(
+                        name: "another",
+                        template: "{controller=Home}/{action=Index}/{id?}");
+                });
+
+            var setRoutes = TestApplication.Router as RouteCollection;
+
+            Assert.NotNull(setRoutes);
+            Assert.Equal(3, setRoutes.Count);
+        }
+
+        [Fact]
+        public void DefaultConfigAndAdditionalRoutesShouldSetOnlyThemWithoutEndpoints()
+        {
+            MyApplication
+                .StartsFrom<NoEndpointsStartup>()
                 .WithRoutes(routes =>
                 {
                     routes.MapRoute(
@@ -499,8 +518,8 @@
         {
             MyApplication.StartsFrom<DefaultStartup>();
 
-            Assert.NotNull(TestServiceProvider.GetService<IHostingEnvironment>());
-            Assert.NotNull(TestServiceProvider.GetService<IApplicationLifetime>());
+            Assert.NotNull(TestServiceProvider.GetService<IHostEnvironment>());
+            Assert.NotNull(TestServiceProvider.GetService<IHostApplicationLifetime>());
             Assert.NotNull(TestServiceProvider.GetService<IApplicationBuilderFactory>());
             Assert.NotNull(TestServiceProvider.GetService<IHttpContextFactory>());
             Assert.NotNull(TestServiceProvider.GetService<IMiddlewareFactory>());
@@ -626,9 +645,9 @@
         {
             MyApplication.StartsFrom<FullConfigureStartup>();
 
-            Assert.NotNull(TestServiceProvider.GetService<IHostingEnvironment>());
+            Assert.NotNull(TestServiceProvider.GetService<IHostEnvironment>());
             Assert.NotNull(TestServiceProvider.GetService<ILoggerFactory>());
-            Assert.NotNull(TestServiceProvider.GetService<IApplicationLifetime>());
+            Assert.NotNull(TestServiceProvider.GetService<IHostApplicationLifetime>());
 
             MyApplication
                 .IsRunningOn(server => server
@@ -696,10 +715,11 @@
         [Fact]
         public void RegisteringServerServicesTwiceShouldResolveThemCorrectly()
         {
-            MyApplication.IsRunningOn(server => server
-                .WithServices(services => services
-                    .AddTransient<IInjectedService, InjectedService>())
-                .WithStartup<DefaultStartup>());
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithServices(services => services
+                        .AddTransient<IInjectedService, InjectedService>())
+                    .WithStartup<DefaultStartup>());
 
             var injectedService = TestServiceProvider.GetService<IInjectedService>();
 
@@ -722,55 +742,121 @@
         }
 
         [Fact]
-        public void StartupConfigureFilterShouldRegisterServices()
+        public void LegacyRoutesShouldHaveAttributeRouteRegistered()
+        {
+            MyApplication.StartsFrom<NoEndpointsStartup>();
+
+            var routes = TestApplication.Router as RouteCollection;
+
+            Assert.NotNull(routes);
+
+            var attributeRoute = routes[0];
+
+            Assert.NotNull(attributeRoute);
+            Assert.Contains(nameof(Attribute), attributeRoute.GetType().Name);
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void EndpointRoutesShouldHaveAttributeRouteRegistered()
+        {
+            MyApplication.StartsFrom<DefaultStartup>();
+
+            var routes = TestApplication.Router as RouteCollection;
+
+            Assert.NotNull(routes);
+
+            var attributeRoute = routes[0];
+
+            Assert.NotNull(attributeRoute);
+            Assert.Contains(nameof(Attribute), attributeRoute.GetType().Name);
+        }
+
+        [Fact]
+        public void EndpointRoutesShouldRegisterCorrectValues()
+        {
+            MyApplication.StartsFrom<EndpointsRoutingStartup>();
+
+            var routes = TestApplication.Router as RouteCollection;
+
+            Assert.NotNull(routes);
+            Assert.Equal(3, routes.Count);
+
+            var attributeRoute = routes[0];
+
+            Assert.Contains(nameof(Attribute), attributeRoute.GetType().Name);
+
+            var areaRoute = routes[1] as Route;
+
+            Assert.NotNull(areaRoute); 
+            Assert.Equal("files", areaRoute.Name);
+            Assert.Equal("Files/{controller=Default}/{action=Test}/{fileName=None}", areaRoute.RouteTemplate);
+
+            var areaRouteDefaults = areaRoute.Defaults;
+
+            Assert.Equal(4, areaRouteDefaults.Count);
+
+            var areaKey = "area";
+
+            Assert.Contains(areaKey, areaRouteDefaults.Keys);
+            Assert.Equal("Files", areaRouteDefaults[areaKey]);
+
+            var normalRoute = routes[2] as Route;
+
+            Assert.NotNull(normalRoute);
+            Assert.Equal("test", normalRoute.Name);
+            Assert.Equal("Test/{action=Index}/{id?}", normalRoute.RouteTemplate);
+
+            var normalRouteDefaults = normalRoute.Defaults;
+            var controllerKey = "controller";
+
+            Assert.Contains(controllerKey, normalRouteDefaults.Keys);
+            Assert.Equal("Test", normalRouteDefaults[controllerKey]);
+
+            var normalRouteConstraints = normalRoute.Constraints;
+            var idKey = "id";
+
+            Assert.Contains(idKey, normalRouteConstraints.Keys);
+
+            var optionalRouteConstraint = normalRouteConstraints[idKey] as OptionalRouteConstraint;
+
+            Assert.NotNull(optionalRouteConstraint);
+
+            var regexRouteConstraint = optionalRouteConstraint.InnerConstraint as RegexRouteConstraint;
+
+            Assert.NotNull(regexRouteConstraint);
+            Assert.Equal(@"^(\d)$", regexRouteConstraint.Constraint.ToString());
+
+            var normalRouteDataTokens = normalRoute.DataTokens;
+
+            Assert.Equal(2, normalRouteDataTokens.Count);
+
+            var firstDataTokenKey = "random";
+            var secondDataTokenKey = "another";
+
+            Assert.Contains(firstDataTokenKey, normalRouteDataTokens.Keys);
+            Assert.Equal("value", normalRouteDataTokens[firstDataTokenKey]);
+            Assert.Contains(secondDataTokenKey, normalRouteDataTokens.Keys);
+            Assert.Equal("token", normalRouteDataTokens[secondDataTokenKey]);
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void StartupFiltersShouldBeRegisteredAndConsidered()
         {
             MyApplication
-                .IsRunningOn(server => server
-                    .WithServices(services =>
-                    {
-                        services
-                            .AddTransient<IServiceProviderFactory<CustomContainer>, CustomContainerFactory>();
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services => services
+                    .AddSingleton<IStartupFilter>(new CustomStartupFilter()));
 
-                        services
-                            .TryAddEnumerable(ServiceDescriptor.Transient(
-                                typeof(IStartupConfigureServicesFilter), typeof(CustomConfigureFilter)));
+            var sameStartupFilter = TestServiceProvider.GetService<IStartupFilter>() as CustomStartupFilter;
 
-                        services
-                            .TryAddEnumerable(ServiceDescriptor.Transient(
-                                typeof(IStartupConfigureContainerFilter<CustomContainer>), typeof(CustomConfigureFilter)));
-                    })
-                    .WithStartup<CustomStartupWithConfigureContainer>());
+            Assert.NotNull(sameStartupFilter);
+            Assert.True(sameStartupFilter.Registered);
 
-            var injectedService = TestApplication.Services.GetService<IInjectedService>();
-            var injectedServiceFromRouteServiceProvider = TestApplication.RoutingServices.GetService<IInjectedService>();
-
-            Assert.NotNull(injectedService);
-            Assert.IsAssignableFrom<InjectedService>(injectedService);
-
-            Assert.NotNull(injectedServiceFromRouteServiceProvider);
-            Assert.IsAssignableFrom<InjectedService>(injectedServiceFromRouteServiceProvider);
-
-            var anotherInjectedService = TestApplication.Services.GetService<IAnotherInjectedService>();
-            var anotherInjectedServiceFromRouteServiceProvider = TestApplication.RoutingServices.GetService<IAnotherInjectedService>();
-
-            Assert.NotNull(anotherInjectedService);
-            Assert.IsAssignableFrom<AnotherInjectedService>(anotherInjectedService);
-
-            Assert.NotNull(anotherInjectedServiceFromRouteServiceProvider);
-            Assert.IsAssignableFrom<AnotherInjectedService>(anotherInjectedServiceFromRouteServiceProvider);
-            
-            var scopedService = TestApplication.Services.GetService<IScopedService>();
-            var scopedServiceFromRouteServiceProvider = TestApplication.RoutingServices.GetService<IScopedService>();
-
-            Assert.NotNull(scopedService);
-            Assert.IsAssignableFrom<ScopedService>(scopedService);
-
-            Assert.NotNull(scopedServiceFromRouteServiceProvider);
-            Assert.IsAssignableFrom<ScopedService>(scopedServiceFromRouteServiceProvider);
-
-            MyApplication
-                .IsRunningOn(server => server
-                    .WithStartup<DefaultStartup>());
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

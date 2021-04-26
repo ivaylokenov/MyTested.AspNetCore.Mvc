@@ -4,21 +4,21 @@ git:
   depth: 10
 group: travis_latest
 sudo: required
-dotnet: 2.2
+dotnet: 3.1
 solution: MyTested.AspNetCore.Mvc.sln
 env:
   global:
     - DOTNET_CLI_TELEMETRY_OPTOUT: 1
     - DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-    - NET_CORE_VERSION: netcoreapp2.2
+    - NET_CORE_VERSION: netcoreapp3.1
 matrix:
   fast_finish: true
   include:
     - os: linux
       dist: xenial
     - os: osx
-      dotnet: 2.2.300
-      osx_image: xcode10.2
+      dotnet: 3.1.100
+      osx_image: xcode11.2
 branches:
   only:
   - master
@@ -31,10 +31,10 @@ script:
   - dotnet test "samples/Autofac/Autofac.AssemblyInit.Test/Autofac.AssemblyInit.Test.csproj" --configuration Release --framework "$NET_CORE_VERSION"
   - dotnet test "samples/Autofac/Autofac.NoContainerBuilder.Test/Autofac.NoContainerBuilder.Test.csproj" --configuration Release --framework "$NET_CORE_VERSION"
   - dotnet test "samples/Autofac/Autofac.Test/Autofac.Test.csproj" --configuration Release --framework "$NET_CORE_VERSION"
-  - dotnet test "samples/Configuration/Test.Core.MissingAppPackage/Test.Core.MissingAppPackage.csproj" --configuration Release --framework "$NET_CORE_VERSION"
   - dotnet test "samples/Configuration/Test.DifferentEnvironment/Test.DifferentEnvironment.csproj" --configuration Release --framework "$NET_CORE_VERSION"
   - dotnet test "samples/Configuration/Test.ExplicitNoStartupType/Test.ExplicitNoStartupType.csproj" --configuration Release --framework "$NET_CORE_VERSION"
   - dotnet test "samples/Configuration/Test.MissingStartupType/Test.MissingStartupType.csproj" --configuration Release --framework "$NET_CORE_VERSION"
+  - dotnet test "samples/Configuration/Test.MultipleEntryPoints/Test.MultipleEntryPoints.csproj" --configuration Release --framework "$NET_CORE_VERSION"
   - dotnet test "samples/Configuration/Test.NoAsync/Test.NoAsync.csproj" --configuration Release --framework "$NET_CORE_VERSION"
   - dotnet test "samples/Configuration/Test.NoStartupType/Test.NoStartupType.csproj" --configuration Release --framework "$NET_CORE_VERSION"
   - dotnet test "samples/Configuration/Test.WrongStartupType/Test.WrongStartupType.csproj" --configuration Release --framework "$NET_CORE_VERSION"

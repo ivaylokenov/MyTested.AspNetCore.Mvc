@@ -50,14 +50,10 @@
         }
 
         private bool CheckValidDefaultValue()
-        {
-            return CommonValidator.CheckForDefaultValue(this.TestContext.MethodResult) && this.CaughtException == null;
-        }
+            => CommonValidator.CheckForDefaultValue(this.TestContext.MethodResult) && this.CaughtException == null;
 
         private void ThrowNewActionResultAssertionException(string message)
-        {
-            throw new InvocationResultAssertionException(
+            => throw new InvocationResultAssertionException(
                 $"{this.TestContext.ExceptionMessagePrefix} view component result to be {message}");
-        }
     }
 }

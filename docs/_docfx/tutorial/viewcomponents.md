@@ -118,9 +118,7 @@ MyViewComponent<CartSummaryComponent>
     .Instance()
     .WithSession(session => session
         .WithEntry("Session", "TestCart"))
-    .WithData(db => db
-        .WithEntities(entities => entities
-            .AddRange(GetCartItems("TestCart", "TestAlbum"))))
+    .WithData(CartItemData.GetMany("TestCart", "TestAlbum"))
     .InvokedWith(vc => vc.InvokeAsync()) // <---
 ```
 
@@ -133,9 +131,7 @@ MyViewComponent<CartSummaryComponent>
     .Instance()
     .WithSession(session => session
         .WithEntry("Session", "TestCart"))
-    .WithData(db => db
-        .WithEntities(entities => entities
-            .AddRange(GetCartItems("TestCart", "TestAlbum"))))
+    .WithData(CartItemData.GetMany("TestCart", "TestAlbum"))
     .InvokedWith(vc => vc.InvokeAsync())
     .ShouldHave() // <---
     .ViewBag(viewBag => viewBag
