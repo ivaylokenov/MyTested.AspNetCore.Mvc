@@ -50,5 +50,101 @@
                 .Ok(ok => ok
                     .WithModel("Valid"));
         }
+
+        [Fact]
+        public void WithoutEntryShouldReturnCorrectValues()
+        {
+            MyController<MvcController>
+                .Instance()
+                .WithTempData(tempData => tempData
+                    .WithEntries(new Dictionary<string, object>
+                    {
+                        ["Test"] = "Valid",
+                        ["Second"] = "SecondValue",
+                    }))
+                .WithoutTempData("Test")
+                .Calling(c => c.GetTempDataKeys())
+                .ShouldReturn()
+                .Ok(ok => ok
+                   .WithModel(new List<string>
+                    {
+                        "Second"
+                    }));
+        }
+
+        [Fact]
+        public void WithoutEntriesShouldReturnCorrectValues()
+        {
+            MyController<MvcController>
+                .Instance()
+                .WithTempData(tempData => tempData
+                    .WithEntries(new Dictionary<string, object>
+                    {
+                        ["Test"] = "Valid",
+                        ["Second"] = "SecondValue",
+                    }))
+                .WithoutTempData(new List<string>() { "Second" })
+                .Calling(c => c.GetTempDataKeys())
+                .ShouldReturn()
+                .Ok(ok => ok
+                   .WithModel(new List<string>
+                    {
+                        "Test"
+                    }));
+        }
+
+        [Fact]
+        public void WithoutEntriesByProvidingParamsShouldReturnCorrectValues()
+        {
+            MyController<MvcController>
+                .Instance()
+                .WithTempData(tempData => tempData
+                    .WithEntries(new Dictionary<string, object>
+                    {
+                        ["Test"] = "Valid",
+                        ["Second"] = "SecondValue",
+                    }))
+                .WithoutTempData("Second", "Test")
+                .Calling(c => c.GetTempDataKeys())
+                .ShouldReturn()
+                .Ok(ok => ok
+                   .WithModel(new List<string>()));
+        }
+
+        [Fact]
+        public void WithoutEntriesShouldRemoveAllEntities()
+        {
+            MyController<MvcController>
+                .Instance()
+                .WithTempData(tempData => tempData
+                    .WithEntries(new Dictionary<string, object>
+                    {
+                        ["Test"] = "Valid",
+                        ["Second"] = "SecondValue",
+                    }))
+                .WithoutTempData()
+                .Calling(c => c.GetTempDataKeys())
+                .ShouldReturn()
+                .Ok(ok => ok
+                   .WithModel(new List<string>()));
+        }
+
+        [Fact]
+        public void WithoutEntryNonExistingItemShouldReturnCorrectValues()
+        {
+            MyController<MvcController>
+                .Instance()
+                .WithTempData(tempData => tempData
+                    .WithEntries(new Dictionary<string, object>
+                    {
+                        ["Test"] = "Valid",
+                        ["Second"] = "SecondValue",
+                    }))
+                .WithoutTempData("NonExisting")
+                .Calling(c => c.GetTempDataKeys())
+                .ShouldReturn()
+                .Ok(ok => ok
+                   .WithModel(new List<string>() { "Test" , "Second"}));
+        }
     }
 }
