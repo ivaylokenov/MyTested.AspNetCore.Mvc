@@ -1,6 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.AttributesTests
 {
     using Exceptions;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
     using Setups;
     using Setups.ViewComponents;
     using Xunit;
@@ -65,6 +67,33 @@
                             .IndicatingViewComponentExplicitly());
                 },
                 "When testing ComponentWithCustomAttribute was expected to have ViewComponentAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void IncludingInheritedShouldIncludeAllCustomInheritedAttributesFromBaseViewComponentAndNotThrowException()
+        {
+            MyViewComponent<InheritViewComponent>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes.IncludingInherited()
+                    .ContainingAttributeOfType<ValidateAntiForgeryTokenAttribute>()
+                    .ContainingAttributeOfType<AllowAnonymousAttribute>()
+                    .ContainingAttributeOfType<ResponseCacheAttribute>());
+        }
+
+        [Fact]
+        public void TryingToAssertInheritedAttributesWithoutIncludingInheritedShouldThrowException()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyViewComponent<InheritViewComponent>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes//.IncludingInherited()
+                            .ContainingAttributeOfType<ValidateAntiForgeryTokenAttribute>()
+                            .ContainingAttributeOfType<ResponseCacheAttribute>());
+                }, $"When testing {nameof(InheritViewComponent)} was expected to have ValidateAntiForgeryTokenAttribute, but in fact such was not found.");
         }
     }
 }
