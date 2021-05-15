@@ -116,6 +116,8 @@
                     options.ClientId = "000000004012C08A";
                     options.ClientSecret = "GaMQ2hCnqAC6EcDLnXsAeBVIJOLmeutL";
                 });
+
+            services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
         //This method is invoked when ASPNETCORE_ENVIRONMENT is 'Development' or is not defined
@@ -128,8 +130,6 @@
             // Display custom error page in production when error occurs
             // During development use the ErrorPage middleware to display error information in the browser
             app.UseDeveloperExceptionPage();
-
-            app.UseDatabaseErrorPage();
 
             Configure(app);
         }

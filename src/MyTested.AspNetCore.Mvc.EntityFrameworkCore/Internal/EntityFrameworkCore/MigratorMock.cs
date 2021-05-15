@@ -7,9 +7,10 @@
     public class MigratorMock : IMigrator
     {
         public string GenerateScript(
-            string fromMigration = null,
-            string toMigration = null,
-            bool idempotent = false)
+            string fromMigration = null, 
+            string toMigration = null, 
+            MigrationsSqlGenerationOptions options = 
+            MigrationsSqlGenerationOptions.Default)
             => string.Empty;
 
         public void Migrate(string targetMigration = null)
