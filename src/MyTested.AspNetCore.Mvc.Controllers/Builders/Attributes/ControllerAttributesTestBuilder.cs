@@ -26,5 +26,12 @@
         
         /// <inheritdoc />
         public IControllerAttributesTestBuilder AndAlso() => this;
+
+        /// <inheritdoc />
+        public IAndControllerAttributesTestBuilder IncludingInherited()
+        {
+            this.TestContext.IncludeInheritedComponentAttributes();
+            return this;
+        }
     }
 }

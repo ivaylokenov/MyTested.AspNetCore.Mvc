@@ -22,8 +22,11 @@
         
         public object Component => this.component ??= this.ComponentConstructionDelegate();
 
-        public IEnumerable<object> ComponentAttributes 
-            => this.componentAttributes ??= Reflection.GetCustomAttributes(this.Component);
+        public IEnumerable<object> ComponentAttributes
+        {
+            get => this.componentAttributes ??= Reflection.GetCustomAttributes(this.Component);
+            private set => this.componentAttributes = value;
+        }
 
         public IDictionary<Type, object> AggregatedDependencies 
             => this.aggregatedDependencies ??= new Dictionary<Type, object>();
@@ -66,27 +69,20 @@
         public object MethodResult
         { 
             get => this.methodResult;
-
             set => this.methodResult = this.ConvertMethodResult(value);
         }
 
-        public IEnumerable<object> MethodAttributes 
-            => this.methodAttributes ??= Reflection.GetCustomAttributes(this.Method);
+        public IEnumerable<object> MethodAttributes
+        {
+            get => this.methodAttributes ??= Reflection.GetCustomAttributes(this.Method);
+            private set => this.methodAttributes = value;
+        }
 
         public Exception CaughtException { get; set; }
 
         public object Model
         {
-            get
-            {
-                if (this.model == null)
-                {
-                    return this.MethodResult;
-                }
-
-                return this.model;
-            }
-
+            get => this.model ?? this.MethodResult;
             set => this.model = value;
         }
 
@@ -115,6 +111,12 @@
             this.MethodResult = invocationTestContext.MethodResult;
             this.CaughtException = invocationTestContext.CaughtException;
         }
+
+        public void IncludeInheritedComponentAttributes()
+            => this.ComponentAttributes = Reflection.GetCustomAttributes(this.Component, true);
+
+        public void IncludeInheritedMethodAttributes()
+            => this.MethodAttributes = Reflection.GetCustomAttributes(this.Method, true);
 
         protected virtual object ConvertMethodResult(object convertibleMethodResult) => convertibleMethodResult;
     }

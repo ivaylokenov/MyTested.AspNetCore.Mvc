@@ -90,6 +90,56 @@
         }
 
         /// <summary>
+        /// Tests whether model of the given type is returned from the invoked method and whether the provided predicate is passing.
+        /// </summary>
+        /// <param name="builder">Instance of <see cref="IBaseTestBuilderWithResponseModel"/> type.</param>
+        /// <typeparam name="TModel">Type of the model.</typeparam>
+        /// <param name="predicate">Predicate testing the model.</param>
+        /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TModel}"/>.</returns>
+        public static IAndModelDetailsTestBuilder<TModel> WithModelOfType<TModel>(
+            this IBaseTestBuilderWithResponseModel builder,
+            Func<TModel, bool> predicate)
+        {
+            var actualBuilder = (BaseTestBuilderWithResponseModel)builder;
+
+            actualBuilder.WithModelOfType<TModel>();
+
+            if (!predicate(actualBuilder.TestContext.ModelAs<TModel>()))
+            {
+                throw new ResponseModelAssertionException(string.Format(
+                    "{0} response model {1} to pass the given predicate, but it failed.",
+                    actualBuilder.TestContext.ExceptionMessagePrefix,
+                    typeof(TModel).ToFriendlyTypeName()));
+            }
+
+            actualBuilder.TestContext.Model = actualBuilder.GetActualModel<TModel>();
+
+            return new ModelDetailsTestBuilder<TModel>(actualBuilder.TestContext);
+        }
+
+        /// <summary>
+        /// Tests whether model of the given type is returned from the invoked method and whether the provided assertions are passing.
+        /// </summary>
+        /// <param name="builder">Instance of <see cref="IBaseTestBuilderWithResponseModel"/> type.</param>
+        /// <typeparam name="TModel">Type of the model.</typeparam>
+        /// <param name="assertions">Method containing all assertions for the model.</param>
+        /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TModel}"/>.</returns>
+        public static IAndModelDetailsTestBuilder<TModel> WithModelOfType<TModel>(
+            this IBaseTestBuilderWithResponseModel builder,
+            Action<TModel> assertions)
+        {
+            var actualBuilder = (BaseTestBuilderWithResponseModel)builder;
+
+            actualBuilder.WithModelOfType<TModel>();
+
+            assertions(actualBuilder.TestContext.ModelAs<TModel>());
+
+            actualBuilder.TestContext.Model = actualBuilder.GetActualModel<TModel>();
+
+            return new ModelDetailsTestBuilder<TModel>(actualBuilder.TestContext);
+        }
+
+        /// <summary>
         /// Tests whether a deeply equal object to the provided one is returned from the invoked method.
         /// </summary>
         /// <typeparam name="TModel">Type of the model.</typeparam>

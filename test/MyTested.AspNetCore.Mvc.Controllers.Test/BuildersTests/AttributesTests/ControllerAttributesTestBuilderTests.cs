@@ -66,7 +66,7 @@
                 },
                 "When testing MvcController was expected to have ActionNameAttribute, but in fact such was not found.");
         }
-        
+
         [Fact]
         public void PassingForShouldNotThrowExceptionWithCorrectPredicate()
         {
@@ -104,6 +104,34 @@
                             .PassingFor<ActionNameAttribute>(authorize => authorize.Name == "Admin"));
                 },
                 "When testing MvcController was expected to have ActionNameAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void IncludingInheritedShouldIncludeAllCustomInheritedAttributesFromBaseClassesAndNotThrowException()
+        {
+            MyController<InheritControllerAttributes>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes.IncludingInherited()
+                    .ContainingAttributeOfType<ValidateAntiForgeryTokenAttribute>()
+                    .ContainingAttributeOfType<AllowAnonymousAttribute>()
+                    .ContainingAttributeOfType<ResponseCacheAttribute>());
+        }
+
+        [Fact]
+        public void TryingToAssertInheritedAttributesWithoutIncludingInheritedShouldThrowException()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<InheritControllerAttributes>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes//.IncludingInherited()
+                            .ContainingAttributeOfType<ValidateAntiForgeryTokenAttribute>()
+                            .ContainingAttributeOfType<AllowAnonymousAttribute>()
+                            .ContainingAttributeOfType<ResponseCacheAttribute>());
+                }, $"When testing {nameof(InheritControllerAttributes)} was expected to have ValidateAntiForgeryTokenAttribute, but in fact such was not found.");
         }
     }
 }

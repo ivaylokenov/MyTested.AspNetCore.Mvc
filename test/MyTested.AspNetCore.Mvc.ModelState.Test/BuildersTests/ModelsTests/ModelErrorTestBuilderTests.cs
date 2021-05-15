@@ -147,6 +147,23 @@
         }
 
         [Fact]
+        public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithPredicate()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.OkResultWithResponse())
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModelOfType<List<ResponseModel>>(m => m.Count == 2)
+                    .ShouldPassForThe<List<ResponseModel>>(responseModel =>
+                    {
+                        Assert.NotNull(responseModel);
+                        Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
+                        Assert.Equal(2, responseModel.Count);
+                    }));
+        }
+
+        [Fact]
         public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithModelStateError()
         {
             MyController<MvcController>
