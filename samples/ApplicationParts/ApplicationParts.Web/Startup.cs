@@ -48,6 +48,7 @@
             
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
         
