@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
     using System.Collections.Generic;
-
     using Microsoft.Extensions.Configuration;
 
     public static class ConfigurationBuilderExtensions
