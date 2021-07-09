@@ -79,18 +79,22 @@
             return base.TryGetMember(binder, out result);
         }
 
-        public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
+        public override bool TryInvokeMember(InvokeMemberBinder binder, object[] arguments, out object result)
         {
-            args = args
+            arguments = arguments
                 .Select(a => Unwrap(a))
                 .ToArray();
 
-            var method = this.type.GetMethod(binder.Name, args.Select(a => a.GetType()).ToArray());
+            var argumentsTypes = arguments
+                .Select(a => a?.GetType() ?? typeof(object))
+                .ToArray();
+
+            var method = this.type.GetMethod(binder.Name, argumentsTypes);
 
             try
             {
                 result = method
-                    .Invoke(this.instance, args)
+                    .Invoke(this.instance, arguments)
                     .Exposed();
             }
             catch (Exception ex)

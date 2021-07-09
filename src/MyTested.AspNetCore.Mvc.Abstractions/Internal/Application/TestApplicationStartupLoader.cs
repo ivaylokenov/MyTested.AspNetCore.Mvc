@@ -116,7 +116,8 @@
                 startupMethods = startupLoader.LoadMethods(
                     serviceCollection.BuildServiceProviderFromFactory(),
                     StartupType,
-                    TestWebServer.Environment.EnvironmentName);
+                    TestWebServer.Environment.EnvironmentName,
+                    null);
                 
                 if (typeof(IStartup).GetTypeInfo().IsAssignableFrom(StartupType.GetTypeInfo()))
                 {

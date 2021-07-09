@@ -109,7 +109,7 @@
                             .WithJsonSerializerSettings(s =>
                                 s.WithCulture(CultureInfo.GetCultureInfo("en-US"))));
                 },
-                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have 'English (United States)' culture, but in fact found 'Invariant Language (Invariant Country)'.");
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have 'English (United States)' culture, but in fact found 'Unknown language'.");
         }
 
         [Fact]
