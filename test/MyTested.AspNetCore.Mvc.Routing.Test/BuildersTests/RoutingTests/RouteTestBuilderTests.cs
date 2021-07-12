@@ -432,6 +432,24 @@
         }
 
         [Fact]
+        public void ToShouldResolveCorrectlyWithIgnoredParameterButActualValue()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap("/Home/Contact/1")
+                .To<HomeController>(c => c.Contact(With.Value(2)));
+        }
+
+        [Fact]
+        public void ToShouldResolveCorrectlyWithIgnoredParameterButActualValueLongName()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap("/Home/Contact/1")
+                .To<HomeController>(c => c.Contact(With.IgnoredRouteValue(2)));
+        }
+
+        [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithNoModel()
         {
             MyRouting
