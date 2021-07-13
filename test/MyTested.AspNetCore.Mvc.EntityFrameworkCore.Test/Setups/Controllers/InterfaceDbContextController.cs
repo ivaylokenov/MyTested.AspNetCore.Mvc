@@ -4,11 +4,11 @@
     using Common;
     using Microsoft.AspNetCore.Mvc;
 
-    public class DbContextController : Controller
+    public class InterfaceDbContextController : Controller
     {
-        private readonly CustomDbContext data;
+        private readonly ICustomDbContext data;
 
-        public DbContextController(CustomDbContext data) => this.data = data;
+        public InterfaceDbContextController(ICustomDbContext data) => this.data = data;
 
         public IActionResult Create(CustomModel model)
         {

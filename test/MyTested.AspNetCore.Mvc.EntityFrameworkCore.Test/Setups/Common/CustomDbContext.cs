@@ -2,7 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
 
-    public class CustomDbContext : DbContext
+    public class CustomDbContext : DbContext, ICustomDbContext
     {
         public CustomDbContext(DbContextOptions<CustomDbContext> options)
             : base(options)

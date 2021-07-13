@@ -87,6 +87,9 @@
         public static void SaveServiceLifetime(Type serviceType, ServiceLifetime lifetime)
             => ServiceLifetimes[serviceType] = lifetime;
 
+        public static void SaveServiceLifetime<TService>(ServiceLifetime lifetime)
+            => SaveServiceLifetime(typeof(TService), lifetime);
+
         public static ServiceLifetime GetServiceLifetime(Type serviceType)
             => ServiceLifetimes.ContainsKey(serviceType)
                 ? ServiceLifetimes[serviceType]

@@ -24,19 +24,15 @@
         }
 
         /// <inheritdoc />
-        public IAndWithDbContextTestBuilder WithEntities(Action<DbContext> assertions)
-        {
-            return this.WithEntities<DbContext>(assertions);
-        }
+        public IAndWithDbContextTestBuilder WithEntities(Action<DbContext> assertions) 
+            => this.WithEntities<DbContext>(assertions);
 
         /// <inheritdoc />
-        public IAndWithDbContextTestBuilder WithEntities(Func<DbContext, bool> predicate)
-        {
-            return this.WithEntities<DbContext>(predicate);
-        }
+        public IAndWithDbContextTestBuilder WithEntities(Func<DbContext, bool> predicate) 
+            => this.WithEntities<DbContext>(predicate);
 
         /// <inheritdoc />
-        public IAndWithDbContextTestBuilder WithEntities<TDbContext>(Func<TDbContext, bool> predicate) where TDbContext : DbContext
+        public IAndWithDbContextTestBuilder WithEntities<TDbContext>(Func<TDbContext, bool> predicate) where TDbContext : class
         {
             CommonValidator.CheckForNullReference(predicate, nameof(predicate));
 
@@ -52,7 +48,7 @@
         }
 
         /// <inheritdoc />
-        public IAndWithDbContextTestBuilder WithEntities<TDbContext>(Action<TDbContext> assertions) where TDbContext : DbContext
+        public IAndWithDbContextTestBuilder WithEntities<TDbContext>(Action<TDbContext> assertions) where TDbContext : class
         {
             CommonValidator.CheckForNullReference(assertions, nameof(assertions));
 
@@ -63,38 +59,34 @@
 
         /// <inheritdoc />
         public IAndWithDbContextTestBuilder WithSet<TEntity>(Action<DbSet<TEntity>> assertions)
-            where TEntity : class
-        {
-            return this.WithSet<DbContext, TEntity>(assertions);
-        }
+            where TEntity : class 
+            => this.WithSet<DbContext, TEntity>(assertions);
 
         /// <inheritdoc />
         public IAndWithDbContextTestBuilder WithSet<TEntity>(Func<DbSet<TEntity>, bool> predicate)
-            where TEntity : class
-        {
-            return this.WithSet<DbContext, TEntity>(predicate);
-        }
+            where TEntity : class 
+            => this.WithSet<DbContext, TEntity>(predicate);
 
         /// <inheritdoc />
         public IAndWithDbContextTestBuilder WithSet<TDbContext, TEntity>(Action<DbSet<TEntity>> assertions)
-            where TDbContext : DbContext
+            where TDbContext : class
             where TEntity : class
         {
             CommonValidator.CheckForNullReference(assertions, nameof(assertions));
 
-            assertions(this.TestContext.GetDbContext<TDbContext>().Set<TEntity>());
+            assertions(this.TestContext.GetBaseDbContext<TDbContext>().Set<TEntity>());
 
             return this;
         }
 
         /// <inheritdoc />
         public IAndWithDbContextTestBuilder WithSet<TDbContext, TEntity>(Func<DbSet<TEntity>, bool> predicate)
-            where TDbContext : DbContext
+            where TDbContext : class
             where TEntity : class
         {
             CommonValidator.CheckForNullReference(predicate, nameof(predicate));
 
-            if (!predicate(this.TestContext.GetDbContext<TDbContext>().Set<TEntity>()))
+            if (!predicate(this.TestContext.GetBaseDbContext<TDbContext>().Set<TEntity>()))
             {
                 throw new DataProviderAssertionException(string.Format(
                     "{0} the {1} set of {2} to pass the given predicate, but it failed.",

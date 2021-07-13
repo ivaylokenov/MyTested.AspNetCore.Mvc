@@ -29,8 +29,8 @@
 
         /// <inheritdoc />
         public IAndWithDbContextBuilder WithEntities<TDbContext>(IEnumerable<object> entities)
-            where TDbContext : DbContext
-            => this.WithEntities<TDbContext>(dbContext => dbContext.AddRange(entities));
+            where TDbContext : class
+            => this.WithEntities<TDbContext>(dbContext => (dbContext as DbContext).AddRange(entities));
 
         /// <inheritdoc />
         public IAndWithDbContextBuilder WithEntities(params object[] entities)
@@ -38,7 +38,7 @@
 
         /// <inheritdoc />
         public IAndWithDbContextBuilder WithEntities<TDbContext>(params object[] entities)
-            where TDbContext : DbContext
+            where TDbContext : class
             => this.WithEntities<TDbContext>(entities.AsEnumerable());
 
         /// <inheritdoc />
@@ -47,13 +47,13 @@
 
         /// <inheritdoc />
         public IAndWithDbContextBuilder WithEntities<TDbContext>(Action<TDbContext> dbContextSetup)
-            where TDbContext : DbContext
+            where TDbContext : class
         {
             CommonValidator.CheckForNullReference(dbContextSetup, nameof(dbContextSetup));
 
             var dbContext = this.TestContext.GetDbContext<TDbContext>();
             dbContextSetup(dbContext);
-            dbContext.SaveChanges();
+            (dbContext as DbContext).SaveChanges();
 
             return this;
         }
@@ -65,12 +65,12 @@
 
         /// <inheritdoc />
         public IAndWithDbContextBuilder WithSet<TDbContext, TEntity>(Action<DbSet<TEntity>> entitySetup)
-            where TDbContext : DbContext
+            where TDbContext : class
             where TEntity : class
         {
             CommonValidator.CheckForNullReference(entitySetup, nameof(entitySetup));
 
-            var dbContext = this.TestContext.GetDbContext<TDbContext>();
+            var dbContext = this.TestContext.GetBaseDbContext<TDbContext>();
             entitySetup(dbContext.Set<TEntity>());
             dbContext.SaveChanges();
 

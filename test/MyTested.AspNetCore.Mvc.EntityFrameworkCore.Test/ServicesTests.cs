@@ -12,6 +12,8 @@
 
     public class ServicesTests
     {
+        private const string TestConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;";
+
         [Fact]
         public void ReplaceDbContextShouldReplaceNonInMemoryDatabaseWithInMemoryScopedOne()
         {
@@ -63,6 +65,49 @@
         }
 
         [Fact]
+        public void ReplaceDbContextWithInterfaceShouldReplaceDbContextCorrectly()
+        {
+            var services = new ServiceCollection();
+
+            services.AddDbContext<ICustomDbContext, CustomDbContext>(options => options.UseSqlServer(TestConnectionString));
+
+            services.ReplaceDbContext();
+
+            var baseDbContextService = services.FirstOrDefault(s => s.ServiceType == typeof(DbContext));
+            var classDbContextService = services.FirstOrDefault(s => s.ServiceType == typeof(CustomDbContext));
+            var interfaceDbContextService = services.FirstOrDefault(s => s.ServiceType == typeof(ICustomDbContext));
+
+            Assert.NotNull(baseDbContextService);
+            Assert.NotNull(classDbContextService);
+            Assert.NotNull(interfaceDbContextService);
+
+            Assert.Equal(ServiceLifetime.Scoped, baseDbContextService.Lifetime);
+            Assert.Equal(ServiceLifetime.Scoped, classDbContextService.Lifetime);
+            Assert.Equal(ServiceLifetime.Scoped, interfaceDbContextService.Lifetime);
+
+            var serviceProvider = services.BuildServiceProvider();
+
+            var baseDbContext = serviceProvider.GetService<DbContext>();
+            var classDbContext = serviceProvider.GetService<CustomDbContext>();
+            var interfaceDbContext = serviceProvider.GetService<ICustomDbContext>();
+
+            Assert.NotNull(baseDbContext);
+            Assert.NotNull(classDbContext);
+            Assert.NotNull(interfaceDbContext);
+
+            baseDbContext.Add(new CustomModel());
+            baseDbContext.SaveChanges();
+
+            baseDbContext = serviceProvider.GetService<DbContext>();
+            classDbContext = serviceProvider.GetService<CustomDbContext>();
+            interfaceDbContext = serviceProvider.GetService<ICustomDbContext>();
+
+            Assert.Single(baseDbContext.Set<CustomModel>());
+            Assert.Single(classDbContext.Models);
+            Assert.Single(interfaceDbContext.Models);
+        }
+
+        [Fact]
         public void CallingMigrateShouldNotThrowExceptionWithInMemoryDatabase()
         {
             var services = new ServiceCollection();
@@ -79,8 +124,7 @@
 
         private void AddDbContextWithSqlServer<TDbContext>(IServiceCollection services)
             where TDbContext : DbContext
-            => services.AddDbContext<TDbContext>(options =>
-                options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
+            => services.AddDbContext<TDbContext>(options => options.UseSqlServer(TestConnectionString));
 
         private void AssertCorrectDbContextAndOptions(IServiceCollection services)
             => this.AssertCorrectDbContextAndOptions<CustomDbContext>(services);

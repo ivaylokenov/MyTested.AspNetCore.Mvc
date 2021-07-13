@@ -59,7 +59,7 @@
                     }
 
                     AddScopedDatabaseMethodInfo
-                        .MakeGenericMethod(existingDbContextService.ImplementationType)
+                        .MakeGenericMethod(existingDbContextService.ServiceType, existingDbContextService.ImplementationType)
                         .Invoke(null, new object[] { serviceCollection });
                 });
             
@@ -68,11 +68,19 @@
             return serviceCollection;
         }
 
-        private static void AddScopedDatabase<TDbContext>(IServiceCollection serviceCollection)
-            where TDbContext : DbContext
+        private static void AddScopedDatabase<TDbContextService, TDbContextImplementation>(IServiceCollection serviceCollection)
+            where TDbContextImplementation : DbContext, TDbContextService
         {
-            serviceCollection.AddScoped<DbContext>(s => s.GetRequiredService<TDbContext>());
-            serviceCollection.AddDbContext<TDbContext>(opts =>
+            serviceCollection.AddScoped(s => s.GetRequiredService<TDbContextService>() as DbContext);
+
+            if (typeof(TDbContextService) != typeof(TDbContextImplementation))
+            {
+                serviceCollection.AddScoped(s => s.GetRequiredService<TDbContextService>() as TDbContextImplementation);
+
+                TestServiceProvider.SaveServiceLifetime<TDbContextImplementation>(ServiceLifetime.Scoped);
+            }
+
+            serviceCollection.AddDbContext<TDbContextService, TDbContextImplementation>(opts =>
             {
                 opts.UseInMemoryDatabase(Guid.NewGuid().ToString());
 
