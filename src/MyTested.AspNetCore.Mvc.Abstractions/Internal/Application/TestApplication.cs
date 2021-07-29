@@ -31,7 +31,7 @@
                 {
                     return;
                 }
-
+                
                 var generalConfiguration = ServerTestConfiguration.General;
 
                 if (StartupType == null && generalConfiguration.AutomaticStartup)

@@ -39,40 +39,52 @@
 
         private static void PrepareServices(IServiceCollection serviceCollection)
         {
-            var knownServicesReplaced = false;
-
-            if (startupMethods?.ConfigureServicesDelegate != null)
+            try
             {
-                var startupServiceProvider = PrepareStartupServices(serviceCollection);
-                var hasTestMarkerService = ValidateTestServices(startupServiceProvider);
+                var knownServicesReplaced = false;
 
-                if (hasTestMarkerService)
+                if (startupMethods?.ConfigureServicesDelegate != null)
                 {
-                    knownServicesReplaced = true;
-                    serviceProvider = startupServiceProvider;
+                    var startupServiceProvider = PrepareStartupServices(serviceCollection);
+                    var hasTestMarkerService = ValidateTestServices(startupServiceProvider);
+
+                    if (hasTestMarkerService)
+                    {
+                        knownServicesReplaced = true;
+                        serviceProvider = startupServiceProvider;
+                    }
                 }
+                else
+                {
+                    // Server additional services delegate is never invoked because Startup is null.
+                    TestWebServer.AdditionalServices?.Invoke(serviceCollection);
+
+                    PrepareDefaultServices(serviceCollection);
+                }
+
+                if (!knownServicesReplaced)
+                {
+                    AdditionalServices?.Invoke(serviceCollection);
+
+                    TryReplaceKnownServices(serviceCollection);
+                }
+
+                serviceProvider ??= serviceCollection.BuildServiceProviderFromFactory();
+
+                PrepareRoutingServices(knownServicesReplaced);
+                EnsureApplicationParts(serviceProvider);
+
+                PluginsContainer.InitializationPlugins.ForEach(plugin => plugin.InitializationDelegate(serviceProvider));
             }
-            else
+            catch (Exception exception)
             {
-                // Server additional services delegate is never invoked because Startup is null.
-                TestWebServer.AdditionalServices?.Invoke(serviceCollection);
+                if (exception is InvalidOperationException)
+                {
+                    throw;
+                }
 
-                PrepareDefaultServices(serviceCollection);
+                throw new InvalidOperationException($"Test application could not be initialized. You may need to create a custom mock for one of your registered services. If you are having difficulties debugging this error, open an issue at https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/issues. Provide your Startup classes and this exception message: '{exception.Message}'.");
             }
-
-            if (!knownServicesReplaced)
-            {
-                AdditionalServices?.Invoke(serviceCollection);
-
-                TryReplaceKnownServices(serviceCollection);
-            }
-
-            serviceProvider ??= serviceCollection.BuildServiceProviderFromFactory();
-
-            PrepareRoutingServices(knownServicesReplaced);
-            EnsureApplicationParts(serviceProvider);
-
-            PluginsContainer.InitializationPlugins.ForEach(plugin => plugin.InitializationDelegate(serviceProvider));
         }
 
         private static bool ValidateTestServices(IServiceProvider startupServiceProvider)
@@ -113,7 +125,7 @@
             }
             catch (InvalidOperationException exception)
             {
-                throw new InvalidOperationException($"{exception.Message} Services could not be configured. If your web project is registering services outside of the Startup class (during the WebHost configuration in the Program.cs file for example), you should provide them to the test framework too by calling 'IsRunningOn(server => server.WithServices(servicesAction))'. Since this method should be called only once per test project, you may invoke it in the static constructor of your {TestWebServer.Environment.EnvironmentName}Startup class or if your test runner supports it - in the test assembly initialization.");
+                throw new InvalidOperationException($"An exception with the following message was thrown during initialization: '{exception.Message}'. Services could not be configured. If your web project is registering services outside of the Startup class (during the WebHost configuration in the Program.cs file for example), you should provide them to the test framework too by calling 'IsRunningOn(server => server.WithServices(servicesAction))'. Since this method should be called only once per test project, you may invoke it in the static constructor of your {TestWebServer.Environment.EnvironmentName}Startup class or if your test runner supports it - in the test assembly initialization.");
             }
         }
 

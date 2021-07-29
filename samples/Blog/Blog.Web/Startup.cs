@@ -63,7 +63,7 @@
             services
                 .AddControllersWithViews(options => options
                     .AddAutoValidateAntiforgeryToken())
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+                .AddRazorRuntimeCompilation();
 
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
