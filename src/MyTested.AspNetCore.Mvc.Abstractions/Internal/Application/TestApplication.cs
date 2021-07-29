@@ -1,9 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Application
 {
     using System;
-    using System.Globalization;
     using Configuration;
-    using Licensing;
+    // using Licensing;
     using Microsoft.AspNetCore.Builder;
     using Server;
     using Services;
@@ -67,11 +66,11 @@
 
             ValidateStartup();
 
-            TestCounter.SetLicenseData(
-                ServerTestConfiguration.Global.Licenses,
-                DateTime.UtcNow,
-                DateTime.ParseExact(TestFramework.ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                TestWebServer.TestAssemblyName);
+            //TestCounter.SetLicenseData(
+            //    ServerTestConfiguration.Global.Licenses,
+            //    DateTime.UtcNow,
+            //    DateTime.ParseExact(TestFramework.ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
+            //    TestWebServer.TestAssemblyName);
 
             PluginsContainer.LoadPlugins(TestWebServer.GetDependencyContext());
 
@@ -112,7 +111,7 @@
             AdditionalRouting = null;
             TestServiceProvider.Current = null;
             TestServiceProvider.ClearServiceLifetimes();
-            LicenseValidator.ClearLicenseDetails();
+            // LicenseValidator.ClearLicenseDetails();
             PluginsContainer.Reset();
         }
     }

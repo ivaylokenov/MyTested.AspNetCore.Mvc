@@ -2,7 +2,7 @@
 {
     using Contracts.Base;
     using Internal.TestContexts;
-    using Licensing;
+    // using Licensing;
     using Microsoft.AspNetCore.Http;
     using Utilities.Validators;
 
@@ -19,7 +19,7 @@
         /// <param name="testContext"><see cref="HttpTestContext"/> containing data about the currently executed assertion chain.</param>
         protected BaseTestBuilder(HttpTestContext testContext)
         {
-            TestCounter.IncrementAndValidate();
+            // TestCounter.IncrementAndValidate();
             this.TestContext = testContext;
         }
 
