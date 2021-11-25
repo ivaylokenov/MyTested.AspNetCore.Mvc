@@ -94,7 +94,7 @@ Take a look around and...
 
 ## Sponsors &amp; Backers
 
-**MyTested.AspNetCore.Mvc** is a community-driven open source library. It's an independent project with its ongoing development made possible thanks to the support by these awesome [backers](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/BACKERS.md). If you'd like to join them, please consider:
+**MyTested.AspNetCore.Mvc** is a community-driven open source library. It's an independent project with its ongoing development made possible thanks to the support by all my awesome backers. If you'd like to join them, please consider:
 
 - [Become a backer or sponsor on Patreon](https://www.patreon.com/ivaylokenov)
 - [Become a backer or sponsor on OpenCollective](https://opencollective.com/mytestedaspnet)
