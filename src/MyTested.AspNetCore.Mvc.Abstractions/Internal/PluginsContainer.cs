@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using Licensing;
     using Microsoft.DotNet.PlatformAbstractions;
     using Microsoft.Extensions.DependencyModel;
     using Plugins;
@@ -36,11 +35,6 @@
                 .GetRuntimeAssemblyNames(RuntimeEnvironment.GetRuntimeIdentifier())
                 .Where(l => l.Name.StartsWith(testFrameworkName))
                 .ToArray();
-
-            if (testFrameworkAssemblies.Length == 7 && testFrameworkAssemblies.Any(t => t.Name == $"{testFrameworkName}.Lite"))
-            {
-                TestCounter.SkipValidation = true;
-            }
 
             var plugins = testFrameworkAssemblies
                 .Select(l => Assembly

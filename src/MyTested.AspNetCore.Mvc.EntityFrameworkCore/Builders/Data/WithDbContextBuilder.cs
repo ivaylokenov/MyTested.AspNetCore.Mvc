@@ -53,13 +53,8 @@
 
             var dbContext = this.TestContext.GetDbContext<TDbContext>();
             dbContextSetup(dbContext);
-            dbContext.SaveChanges();
 
-            // Clear change tracker entries to clean up for the test execution.
-            foreach (var entry in dbContext.ChangeTracker.Entries())
-            {
-                entry.State = EntityState.Detached;
-            }
+            this.SaveChangesAndCleanUp(dbContext);
 
             return this;
         }
@@ -78,12 +73,24 @@
 
             var dbContext = this.TestContext.GetDbContext<TDbContext>();
             entitySetup(dbContext.Set<TEntity>());
-            dbContext.SaveChanges();
+
+            this.SaveChangesAndCleanUp(dbContext);
 
             return this;
         }
 
         /// <inheritdoc />
         public IWithDbContextBuilder AndAlso() => this;
+
+        private void SaveChangesAndCleanUp(DbContext dbContext)
+        {
+            dbContext.SaveChanges();
+
+            // Clear change tracker entries to clean up for the test execution.
+            foreach (var entry in dbContext.ChangeTracker.Entries())
+            {
+                entry.State = EntityState.Detached;
+            }
+        }
     }
 }

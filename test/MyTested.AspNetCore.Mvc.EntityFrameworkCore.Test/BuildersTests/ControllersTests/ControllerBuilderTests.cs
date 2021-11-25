@@ -390,6 +390,19 @@
                 .ShouldReturn()
                 .Ok();
 
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(data => data
+                    .WithEntities(new CustomModel
+                    {
+                        Id = 1,
+                        Name = "Test"
+                    }))
+                .Calling(c => c.Update(1))
+                .ShouldReturn()
+                .Ok();
+
             MyApplication.StartsFrom<DefaultStartup>();
         }
 

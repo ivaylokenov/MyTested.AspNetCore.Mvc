@@ -30,7 +30,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Configuration\MyTested.AspNetCore.Mvc.Configuration.csproj" />
-    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Licensing\MyTested.AspNetCore.Mvc.Licensing.csproj" />
   </ItemGroup>
 
   <ItemGroup>

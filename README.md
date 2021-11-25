@@ -26,7 +26,7 @@
     <tr>
       <td align="center" valign="middle">
         <a href="https://softuni.org/" target="_blank">
-          <img width="148px" src="https://softuni.org/platform/assets/icons/logo.svg">
+          <img width="148px" src="https://about.softuni.bg/Content/images/svg-logos/softuni-logo-white.svg">
         </a>
       </td>
 	    <td align="center" valign="middle">
@@ -58,9 +58,9 @@
 
 *Downloads:* [![NuGet Badge](https://buildstats.info/nuget/MyTested.AspNetCore.Mvc)](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc/)
 
-<img src="https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/version-2.2/tools/test-sample.gif" />
+<img src="https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/version-3.1/tools/test-sample.gif" />
 
-**MyTested.AspNetCore.Mvc** has [more than 500 assertion methods](https://MyTestedASP.NET/Core/Mvc/Features) and is 100% covered by [more than 2500 unit tests](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/version-2.2/test). It should work correctly. Almost all items in the [issues page](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/issues) are expected future features and enhancements.
+**MyTested.AspNetCore.Mvc** has [more than 500 assertion methods](https://MyTestedASP.NET/Core/Mvc/Features) and is 100% covered by [more than 2500 unit tests](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/version-3.1/test). It should work correctly. Almost all items in the [issues page](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/issues) are expected future features and enhancements.
 
 **MyTested.AspNetCore.Mvc** helps you speed up the testing process in your web development team! If you find that statement unbelievable, these are the words which some of the many happy **MyTested.AspNetCore.Mvc** users once said: 
 > "I’ve been using your packages for almost 3 years now and it has saved me countless hours in creating unit tests and wanted to thank you for making this. I cannot imagine how much code I would have had to write to create the 450+ and counting unit tests I have for my controllers."
@@ -79,7 +79,7 @@ Take a look around and...
 
 👀 ...if you want to learn cool C# coding techniques, **subscribe** to my **[YouTube channel](https://www.youtube.com/channel/UCP5Ons7fK3yKhX6lhc9XcfQ)**, where I regularly post online video lessons!
 
-✔ ...if you want to **support** the project, **[become a sponsor/backer](#sponsors--backers)** or go to [https://MyTestedASP.NET](https://MyTestedASP.NET), and consider **purchasing a premium [license](#license)**!
+✔ ...if you want to **support** the project, **[become a sponsor/backer](#sponsors--backers)**!
 
 #### Featured in
 
@@ -106,7 +106,7 @@ Take a look around and...
 
 Funds donated via both platforms are used for development and marketing purposes. Funds donated via [OpenCollective](https://opencollective.com/mytestedaspnet) are managed with transparent expenses. Your name/logo will receive proper recognition and exposure by donating on either platform.
 
-Additionally, funds donated via [Patreon](https://www.patreon.com/ivaylokenov) (see the stretch goals) give me the freedom to add more features to the free `Lite` edition of the library.
+Additionally, funds donated via [Patreon](https://www.patreon.com/ivaylokenov) give me the freedom to continue the library development.
 
 ## Main Features
 
@@ -222,19 +222,19 @@ namespace MyApp.Tests.Controllers
 }
 ```
 
-Basically, **MyTested.AspNetCore.Mvc** throws an unhandled exception with a friendly error message if the assertion does not pass and the test fails. The example uses [xUnit](http://xunit.github.io/), but you can use any other framework you like. See the [samples](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/version-2.2/samples) for other types of test runners and `Startup` class configurations.
+Basically, **MyTested.AspNetCore.Mvc** throws an unhandled exception with a friendly error message if the assertion does not pass and the test fails. The example uses [xUnit](http://xunit.github.io/), but you can use any other framework you like. See the [samples](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/version-3.1/samples) for other types of test runners and `Startup` class configurations.
 
 ## Detailed Documentation
 
-It is **strongly advised** to read the [tutorial](http://docs.mytestedasp.net/tutorial/intro.html) or watch [this online video lesson](https://www.youtube.com/watch?v=Tf2P-410Za4) to get familiar with **MyTested.AspNetCore.Mvc** in more details. Additionally, you may see the [testing guide](http://docs.mytestedasp.net/guide/intro.html) or the [API reference](http://docs.mytestedasp.net/api/index.html) for a full list of available features.
+It is **strongly advised** to read the [tutorial](https://docs.mytestedasp.net/tutorial/intro.html) or watch [this online video lesson](https://www.youtube.com/watch?v=Tf2P-410Za4) to get familiar with **MyTested.AspNetCore.Mvc** in more details. Additionally, you may see the [testing guide](https://docs.mytestedasp.net/guide/intro.html) or the [API reference](https://docs.mytestedasp.net/api/index.html) for a full list of available features.
 
-You can also check out the [provided samples](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/version-2.2/samples) for real-life ASP.NET Core MVC application testing.
+You can also check out the [provided samples](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/version-3.1/samples) for real-life ASP.NET Core MVC application testing.
 
 ## Test Examples
 
 Here are some examples of how **powerful** the fluent testing API actually is! 
 
-**MyTested.AspNetCore.Mvc** is so **awesome** that each test can be written in **one single line** like in this [application sample](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/version-2.2/samples/Blog)!
+**MyTested.AspNetCore.Mvc** is so **awesome** that each test can be written in **one single line** like in this [application sample](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/version-3.1/samples/Blog)!
 
 ### Controller Integration Tests
 
@@ -635,13 +635,13 @@ MyMvc
 
 ## Package Installation
 
-You can install this library using [NuGet](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc.Universe) into your test project (or reference it directly in your `.csproj` file). Currently **MyTested.AspNetCore.Mvc** is fully compatible with ASP.NET Core MVC 2.2.0 and all older versions available on the official NuGet feed.
+You can install this library using [NuGet](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc.Universe) into your test project (or reference it directly in your `.csproj` file). Currently **MyTested.AspNetCore.Mvc** is fully compatible with ASP.NET Core MVC 3.1.0 and all older versions available on the official NuGet feed.
 
 ```powershell
 Install-Package MyTested.AspNetCore.Mvc.Universe
 ```
 
-This package will include all available assertion methods in your test project, including ones for authentication, database, session, caching and more. If you want only the MVC related features, install `MyTested.AspNetCore.Mvc`. If you want to use the completely **FREE** and **UNLIMITED** version of the library, install only `MyTested.AspNetCore.Mvc.Lite` and no other package. Additionally, if you prefer, you can be more specific by including only some of the packages:
+This package will include all available assertion methods in your test project, including ones for authentication, database, session, caching and more. If you want only the MVC related features, install `MyTested.AspNetCore.Mvc`. Additionally, if you prefer, you can be more specific by including only some of the packages:
 
  - `MyTested.AspNetCore.Mvc.Configuration` - Contains setup and assertion methods for configurations
  - `MyTested.AspNetCore.Mvc.Controllers` - Contains setup and assertion methods for controllers
@@ -669,7 +669,6 @@ This package will include all available assertion methods in your test project, 
  - `MyTested.AspNetCore.Mvc.Session` - Contains setup and assertion methods for `ISession`
  - `MyTested.AspNetCore.Mvc.Options` - Contains setup and assertion methods for `IOptions`
  - `MyTested.AspNetCore.Mvc.Helpers` - Contains additional helper methods for easier assertions
- - `MyTested.AspNetCore.Mvc.Lite` - Completely **FREE** and **UNLIMITED** version of the library. It should not be used in combination with any other package. Includes `Controllers`, `Controllers.Views` and `ViewComponents`.
  
 After the downloading is complete, just add `using MyTested.AspNetCore.Mvc;` to your source code and you are ready to test in the most elegant and developer friendly way.
 
@@ -685,17 +684,9 @@ The public interface of **MyTested.AspNetCore.Mvc** will not have any breaking c
 
 ## License
 
-Code by Ivaylo Kenov. Copyright 2015-2019 Ivaylo Kenov ([https://MyTestedASP.NET](https://MyTestedASP.NET))
+Code by Ivaylo Kenov. Copyright 2015-2022 Ivaylo Kenov ([https://docs.mytestedasp.net/](https://docs.mytestedasp.net/))
 
-**MyTested.AspNetCore.Mvc.Lite** (the **FREE** and **UNLIMITED** version of the testing library) is dual-licensed under either the Apache License, Version 2.0, or the Microsoft Public License (Ms-PL).
-
-The source code of **MyTested.AspNetCore.Mvc** and its extensions (the full version of the testing library) is available under GNU Affero General Public License/FOSS License Exception. 
-
-Without a license code, the full version of the library allows up to 100 assertions (around 25 test cases) per test project. **MyTested.AspNetCore.Mvc versions before 3.0.0 do not have such restrictions and work without any limitations.**
-
-**Full-featured license codes can be requested for free by small businesses (up to 5 developers), individuals, open-source projects, startups, and educational institutions**. See [https://MyTestedASP.NET/Core/Mvc#free-usage](https://MyTestedASP.NET/Core/Mvc#free-usage) for more information.
-
-Commercial licensing with premium support options is also available at [https://MyTestedASP.NET/Core/Mvc#pricing](https://MyTestedASP.NET/Core/Mvc#pricing).
+**MyTested.AspNetCore.Mvc** is dual-licensed under either the Apache License, Version 2.0, or the Microsoft Public License (Ms-PL).
 
 See the [LICENSE](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE) for detailed information.
 
