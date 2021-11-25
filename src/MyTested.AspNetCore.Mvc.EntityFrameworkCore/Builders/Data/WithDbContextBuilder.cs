@@ -55,6 +55,12 @@
             dbContextSetup(dbContext);
             dbContext.SaveChanges();
 
+            // Clear change tracker entries to clean up for the test execution.
+            foreach (var entry in dbContext.ChangeTracker.Entries())
+            {
+                entry.State = EntityState.Detached;
+            }
+
             return this;
         }
 

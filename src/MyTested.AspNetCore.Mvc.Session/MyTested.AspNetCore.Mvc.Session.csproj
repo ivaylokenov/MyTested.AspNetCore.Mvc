@@ -4,7 +4,7 @@
     <Description>My Tested ASP.NET Core MVC session middleware components.</Description>
     <Copyright>2015-2019 Ivaylo Kenov</Copyright>
     <AssemblyTitle>MyTested.AspNetCore.Mvc.Session</AssemblyTitle>
-    <VersionPrefix>3.1.2</VersionPrefix>
+    <VersionPrefix>3.1.3</VersionPrefix>
     <Authors>Ivaylo Kenov</Authors>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
