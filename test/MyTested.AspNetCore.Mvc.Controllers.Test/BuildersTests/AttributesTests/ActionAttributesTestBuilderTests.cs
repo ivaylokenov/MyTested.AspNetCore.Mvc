@@ -6,6 +6,7 @@
     using Setups.Controllers;
     using Xunit;
     using System;
+    using Microsoft.AspNetCore.Authorization;
 
     public class ActionAttributesTestBuilderTests
     {
@@ -117,6 +118,18 @@
                             .PassingFor<ActionNameAttribute>(authorize => authorize.Name == "Admin"));
                 },
                 "When calling OtherAttributes action in MvcController expected action to have ActionNameAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void IncludingInheritedShouldIncludeAllCustomInheritedAttributesFromBaseMethodsAndNotThrowException()
+        {
+            MyController<InheritControllerAttributes>
+                .Instance()
+                .Calling(c=> c.MethodA())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.IncludingInherited()
+                    .ContainingAttributeOfType<HttpPostAttribute>()
+                    .ContainingAttributeOfType<AuthorizeAttribute>());
         }
     }
 }

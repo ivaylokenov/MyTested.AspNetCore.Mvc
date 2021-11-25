@@ -186,7 +186,8 @@ public void AddressAndPaymentShouldRerurnRedirectWithValidData(
 
 Running this test will give us the following strange error message:
 
-``` When calling AddressAndPayment action in CheckoutController expected redirect result to have resolved location to '/Checkout/Complete/1', but in fact received '/Home/Complete/1'.
+``` 
+When calling AddressAndPayment action in CheckoutController expected redirect result to have resolved location to '/Checkout/Complete/1', but in fact received '/Home/Complete/1'.
 ```
 
 The problem is that the request path is empty which makes the action route data being invalid. For that reason, we are receiving wrong redirection location. The fix is easy - just call **"WithRouteData"**:

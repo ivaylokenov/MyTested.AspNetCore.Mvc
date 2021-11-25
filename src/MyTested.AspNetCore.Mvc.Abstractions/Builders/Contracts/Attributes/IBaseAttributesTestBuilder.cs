@@ -41,5 +41,12 @@
         /// <returns>The same attributes test builder.</returns>
         TAttributesTestBuilder PassingFor<TAttribute>(Func<TAttribute, bool> predicate)
             where TAttribute : Attribute;
+
+
+        /// <summary>
+        /// Adds inherited attributes.
+        /// </summary>
+        /// <returns>The same attributes test builder.</returns>
+        TAttributesTestBuilder IncludingInherited();
     }
 }
