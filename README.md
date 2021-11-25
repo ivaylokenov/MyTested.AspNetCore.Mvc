@@ -1,19 +1,14 @@
 <h1><img src="https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/logo.png" align="left" alt="MyTested.AspNetCore.Mvc" width="100">&nbsp; MyTested.AspNetCore.Mvc - Fluent Testing<br />&nbsp; Library for ASP.NET Core MVC</h1> 
 
-## Special Sponsors
+## Diamond Sponsors
 
 <table>
   <tbody>
     <tr>
       <td align="center" valign="middle">
-          <a href="http://bit.ly/bellatrixsolutions" target="_blank">
-    <img width="323px" src="https://user-images.githubusercontent.com/3391906/68993273-d4f5c700-087e-11ea-9b39-e173733fcbfb.png" alt="The Ultimate Cross-Platform .NET Framework">
-          </a>
-      </td>
-      <td align="center" valign="middle">
-          <a href="https://www.jetbrains.com/?from=MyTestedASP.NET" target="_blank">
-    <img width="323px" src="https://user-images.githubusercontent.com/3391906/72542498-ee21f080-388c-11ea-92ac-0b0153028933.png" alt="JetBrains">
-          </a>
+        <a href="http://bit.ly/3da6h7f" target="_blank">
+          <img width="323px" src="https://user-images.githubusercontent.com/3391906/77253785-5b734880-6c65-11ea-92d5-71dcfc833fe0.png">
+        </a>
       </td>
     </tr>
   </tbody>
@@ -26,23 +21,32 @@
     <tr>
       <td align="center" valign="middle">
         <a href="https://softuni.org/" target="_blank">
-          <img width="148px" src="https://about.softuni.bg/Content/images/svg-logos/softuni-logo-white.svg">
+          <img width="148px" src="https://softuni.org/platform/assets/icons/logo.svg">
         </a>
       </td>
 	    <td align="center" valign="middle">
         <a href="http://bit.ly/30xsnsC" target="_blank">
-          <img width="148px" src="https://user-images.githubusercontent.com/3391906/65251792-dd848800-daef-11e9-8857-637a48048cda.png">
+          <img width="148px" src="https://softuni.foundation/wp-content/uploads/2017/08/SoftUni_Foundation_Logo_Oneline-1.png">
         </a>
       </td>
+    </tr>
+  </tbody>
+</table>
+
+## Special Sponsors
+
+<table>
+  <tbody>
+    <tr>
       <td align="center" valign="middle">
-          <a href="http://noblehire.io?utm_medium=social&utm_source=projects&utm_campaign=platform-leads-knv" target="_blank">
-          <img width="148px" src="https://user-images.githubusercontent.com/3391906/66921689-637fea00-f02e-11e9-944a-b07c6f345a06.png">
-        </a>
+          <a href="http://bit.ly/bellatrixsolutions" target="_blank">
+    <img width="148px" src="https://user-images.githubusercontent.com/3391906/68993273-d4f5c700-087e-11ea-9b39-e173733fcbfb.png" alt="The Ultimate Cross-Platform .NET Framework">
+          </a>
       </td>
       <td align="center" valign="middle">
-          <a href="http://bit.ly/onebitsoftware" target="_blank">
-          <img width="148px" height="70px" src="https://user-images.githubusercontent.com/3391906/69410626-1a4d4500-0d14-11ea-905f-c1705b6364bf.png">
-        </a>
+          <a href="https://www.jetbrains.com/?from=MyTestedASP.NET" target="_blank">
+    <img width="148px" src="https://user-images.githubusercontent.com/3391906/72542498-ee21f080-388c-11ea-92ac-0b0153028933.png" alt="JetBrains">
+          </a>
       </td>
     </tr>
   </tbody>
