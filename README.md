@@ -57,25 +57,6 @@
   </tbody>
 </table>
 
-## Special Sponsors
-
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="middle">
-          <a href="http://bit.ly/bellatrixsolutions" target="_blank">
-    <img width="148px" src="https://user-images.githubusercontent.com/3391906/68993273-d4f5c700-087e-11ea-9b39-e173733fcbfb.png" alt="The Ultimate Cross-Platform .NET Framework">
-          </a>
-      </td>
-      <td align="center" valign="middle">
-          <a href="https://www.jetbrains.com/?from=MyTestedASP.NET" target="_blank">
-    <img width="148px" src="https://user-images.githubusercontent.com/3391906/72542498-ee21f080-388c-11ea-92ac-0b0153028933.png" alt="JetBrains">
-          </a>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
 ## Project Description
 
 **MyTested.AspNetCore.Mvc** is a strongly-typed unit testing library providing an easy fluent interface to test the [ASP.NET Core](https://github.com/aspnet/AspNetCore) framework, perfectly suitable for both MVC and API scenarios. It is testing framework agnostic so that you can combine it with a test runner of your choice (e.g. [xUnit](https://github.com/xunit/xunit), [NUnit](https://github.com/nunit/nunit), etc.). 
