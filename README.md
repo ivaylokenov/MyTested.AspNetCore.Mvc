@@ -40,12 +40,12 @@
     <tr>
       <td align="center" valign="middle">
           <a href="http://bit.ly/bellatrixsolutions" target="_blank">
-    <img width="148px" src="https://user-images.githubusercontent.com/3391906/68993273-d4f5c700-087e-11ea-9b39-e173733fcbfb.png" alt="The Ultimate Cross-Platform .NET Framework">
+    <img width="100px" src="https://user-images.githubusercontent.com/3391906/68993273-d4f5c700-087e-11ea-9b39-e173733fcbfb.png" alt="The Ultimate Cross-Platform .NET Framework">
           </a>
       </td>
       <td align="center" valign="middle">
           <a href="https://www.jetbrains.com/?from=MyTestedASP.NET" target="_blank">
-    <img width="148px" src="https://user-images.githubusercontent.com/3391906/72542498-ee21f080-388c-11ea-92ac-0b0153028933.png" alt="JetBrains">
+    <img width="100px" src="https://user-images.githubusercontent.com/3391906/72542498-ee21f080-388c-11ea-92ac-0b0153028933.png" alt="JetBrains">
           </a>
       </td>
     </tr>
