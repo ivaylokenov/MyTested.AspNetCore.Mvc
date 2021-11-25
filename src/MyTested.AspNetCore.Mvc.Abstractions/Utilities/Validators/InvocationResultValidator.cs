@@ -52,6 +52,7 @@
             ComponentTestContext testContext,
             bool canBeAssignable = false,
             bool allowDifferentGenericTypeDefinitions = false,
+            Type typeOfActualReturnValue = null,
             params Type[] typesOfExpectedReturnValue)
         {
             var invalid = false;
@@ -62,7 +63,8 @@
                     testContext,
                     type,
                     canBeAssignable,
-                    allowDifferentGenericTypeDefinitions);
+                    allowDifferentGenericTypeDefinitions,
+                    typeOfActualReturnValue);
 
                 if (!invalid)
                 {
@@ -76,7 +78,8 @@
                     " or ", 
                     typesOfExpectedReturnValue.Select(t => t.ToFriendlyTypeName()));
 
-                var actualTypeName = testContext.MethodResult?.GetType().ToFriendlyTypeName();
+                var actualTypeName = typeOfActualReturnValue?.ToFriendlyTypeName() 
+                    ?? testContext.MethodResult?.GetType().ToFriendlyTypeName();
 
                 ThrowNewInvocationResultAssertionException(
                     testContext,

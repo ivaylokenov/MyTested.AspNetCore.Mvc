@@ -367,6 +367,46 @@
         }
 
         [Fact]
+        public void WithDataShouldCleanUpChangeTrackerBeforeTestExecution()
+        {
+            MyApplication
+                   .StartsFrom<TestStartup>()
+                   .WithServices(services =>
+                   {
+                       services.AddDbContext<CustomDbContext>(options =>
+                           options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
+                   });
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(data => data
+                    .WithSet<CustomDbContext, CustomModel>(set => set
+                        .Add(new CustomModel
+                        {
+                            Id = 1,
+                            Name = "Test"
+                        })))
+                .Calling(c => c.Update(1))
+                .ShouldReturn()
+                .Ok();
+
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(data => data
+                    .WithEntities(new CustomModel
+                    {
+                        Id = 1,
+                        Name = "Test"
+                    }))
+                .Calling(c => c.Update(1))
+                .ShouldReturn()
+                .Ok();
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
         public void WithDataThrowCorrectExceptionWhenMultipleDbContextsAreRegisteredAndDbContextIsNotSpecified()
         {
             MyApplication

@@ -159,7 +159,7 @@
 
                     TestServiceProvider.GetService<IInjectedService>();
                 },
-                "Testing services could not be resolved. If your ConfigureServices method returns an IServiceProvider, you should either change it to return 'void' or manually register the required testing services by calling one of the provided IServiceCollection extension methods in the 'MyTested.AspNetCore.Mvc' namespace.");
+                "Testing services could not be resolved. If your ConfigureServices method returns an IServiceProvider, you should either change it to return 'void' or manually register the required testing services by calling one of the provided IServiceCollection extension methods in the 'MyTested.AspNetCore.Mvc' namespace. An easy way to do the second option is to add a TestStartup class at the root of your test project and invoke the extension methods there.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }

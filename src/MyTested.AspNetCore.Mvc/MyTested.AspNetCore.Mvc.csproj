@@ -4,7 +4,7 @@
     <Description>My Tested ASP.NET Core MVC is a powerful testing library providing easy fluent interface to test the ASP.NET Core MVC framework.</Description>
     <Copyright>2015-2019 Ivaylo Kenov</Copyright>
     <AssemblyTitle>MyTested.AspNetCore.Mvc</AssemblyTitle>
-    <VersionPrefix>3.1.1</VersionPrefix>
+    <VersionPrefix>3.1.3</VersionPrefix>
     <Authors>Ivaylo Kenov</Authors>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
@@ -17,7 +17,7 @@
     <PackageId>MyTested.AspNetCore.Mvc</PackageId>
     <PackageTags>aspnetcore;aspnetcoremvc;testing;unit;tests;fluent;testing;framework;asp;net;core;mvc;test;mymvc;mytested</PackageTags>
     <PackageIcon>nuget-logo.png</PackageIcon>
-    <PackageProjectUrl>https://mytestedasp.net/</PackageProjectUrl>
+    <PackageProjectUrl>https://docs.mytestedasp.net/</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>

@@ -8,6 +8,7 @@
     using System.Linq.Expressions;
     using System.Reflection;
     using System.Runtime.CompilerServices;
+    using System.Threading.Tasks;
     using Extensions;
     using Internal;
     using Microsoft.AspNetCore.Routing;
@@ -123,6 +124,24 @@
             => IsGeneric(inheritedType)
                 && IsGeneric(baseType)
                 && baseType.IsAssignableFrom(inheritedType.GetGenericTypeDefinition());
+
+        /// <summary>
+        /// Checks whether two types are assignable by generic task definition.
+        /// </summary>
+        /// <param name="baseTaskType">Base type to be checked.</param>
+        /// <param name="inheritedTaskType">Inherited type to be checked.</param>
+        /// <returns>True or false.</returns>
+        public static bool AreAssignableByTaskGeneric(Type baseTaskType, Type inheritedTaskType)
+        {
+            if (!AreAssignableByGeneric(typeof(Task<>), inheritedTaskType))
+            {
+                return false;
+            }
+
+            var inheritedGenericArgument = inheritedTaskType.GetGenericArguments().First();
+
+            return AreAssignableByGeneric(baseTaskType, inheritedGenericArgument);
+        }
 
         /// <summary>
         /// Checks whether two generic types have different generic arguments.

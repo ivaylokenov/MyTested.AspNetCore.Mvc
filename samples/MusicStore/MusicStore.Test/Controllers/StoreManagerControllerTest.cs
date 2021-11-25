@@ -177,7 +177,7 @@
                     .Passing(model =>
                     {
                         Assert.NotNull(model);
-                        Assert.Equal(album, model);
+                        Assert.Equal(album.AlbumId, model.AlbumId);
                     }));
         }
 
@@ -304,7 +304,7 @@
                     .Passing(model =>
                     {
                         Assert.NotNull(model);
-                        Assert.Equal(album, model);
+                        Assert.Equal(album.AlbumId, model.AlbumId);
                     }));
         }
 
