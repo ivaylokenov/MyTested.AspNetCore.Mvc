@@ -692,7 +692,7 @@ Code by Ivaylo Kenov. Copyright 2015-2022 Ivaylo Kenov ([https://docs.mytestedas
 
 **MyTested.AspNetCore.Mvc** is intended to be used in both open-source and commercial environments. To allow its use in as many
 situations as possible, **MyTested.AspNetCore.Mvc** is dual-licensed. You may choose to use **MyTested.AspNetCore.Mvc** under
-either the Apache License, Version 2.0, or the Microsoft Public License (Ms-PL). These licenses are essentially 
+either the `Apache License, Version 2.0`, or the `Microsoft Public License (Ms-PL)`. These licenses are essentially 
 identical, but you are encouraged to evaluate both to determine which best fits your intended use.
 
 See the [LICENSE](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE) for detailed information.
