@@ -6,7 +6,7 @@
     <AssemblyTitle>MyTested.AspNetCore.Mvc.ViewComponents.Attributes</AssemblyTitle>
     <VersionPrefix>5.0.0</VersionPrefix>
     <Authors>Ivaylo Kenov</Authors>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
