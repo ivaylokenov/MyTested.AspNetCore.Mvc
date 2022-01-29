@@ -108,7 +108,8 @@
         public static IOutputFormatter GetOutputFormatter() => new NewtonsoftJsonOutputFormatter(
             GetJsonSerializerSettings(), 
             ArrayPool<char>.Create(),
-            new MvcOptions());
+            new MvcOptions(),
+            null);
 
         public static Uri GetUri() => new Uri("http://somehost.com/someuri/1?query=Test");
 
