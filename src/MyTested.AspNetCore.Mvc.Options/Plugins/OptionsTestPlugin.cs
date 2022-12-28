@@ -6,15 +6,16 @@
 
     public class OptionsTestPlugin : IServiceRegistrationPlugin
     {
+        private const string DefaultOptionsImplementationTypeFullName = "Microsoft.Extensions.Options.UnnamedOptionsManager`1";
+
         private readonly Type defaultOptionsServiceType = typeof(IOptions<>);
-        private readonly Type defaultOptionsImplementationType = typeof(OptionsManager<>);
-        
+
         public Func<ServiceDescriptor, bool> ServiceSelectorPredicate
             => serviceDescriptor =>
                 serviceDescriptor.ServiceType == this.defaultOptionsServiceType &&
-                serviceDescriptor.ImplementationType == this.defaultOptionsImplementationType;
+                serviceDescriptor.ImplementationType?.FullName == DefaultOptionsImplementationTypeFullName;
 
-        public Action<IServiceCollection> ServiceRegistrationDelegate 
+        public Action<IServiceCollection> ServiceRegistrationDelegate
             => serviceCollection => serviceCollection.ReplaceOptions();
     }
 }

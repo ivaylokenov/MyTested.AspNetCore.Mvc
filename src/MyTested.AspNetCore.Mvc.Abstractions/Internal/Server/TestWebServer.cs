@@ -20,7 +20,8 @@
                 ApplicationName = ApplicationName,
                 EnvironmentName = ServerTestConfiguration.General.EnvironmentName,
                 ContentRootPath = AppContext.BaseDirectory,
-                WebRootFileProvider = new NullFileProvider()
+                WebRootFileProvider = new NullFileProvider(),
+                ContentRootFileProvider = new NullFileProvider()
             };
 
         internal static void ResetConfigurationAndAssemblies()

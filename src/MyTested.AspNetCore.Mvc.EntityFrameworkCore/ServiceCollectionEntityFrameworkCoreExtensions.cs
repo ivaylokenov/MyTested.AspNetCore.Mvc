@@ -8,6 +8,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Utilities.Extensions;
 
     /// <summary>
@@ -62,7 +63,7 @@
                         .MakeGenericMethod(existingDbContextService.ServiceType, existingDbContextService.ImplementationType)
                         .Invoke(null, new object[] { serviceCollection });
                 });
-            
+
             TestServiceProvider.SaveServiceLifetime(BaseDbContextType, ServiceLifetime.Scoped);
 
             return serviceCollection;
@@ -75,7 +76,7 @@
 
             if (typeof(TDbContextService) != typeof(TDbContextImplementation))
             {
-                serviceCollection.AddScoped(s => s.GetRequiredService<TDbContextService>() as TDbContextImplementation);
+                serviceCollection.TryAddScoped(s => s.GetRequiredService<TDbContextService>() as TDbContextImplementation);
 
                 TestServiceProvider.SaveServiceLifetime<TDbContextImplementation>(ServiceLifetime.Scoped);
             }
