@@ -1025,7 +1025,7 @@
             Assert.False(Reflection.AreDeeplyEqual(1, "1", out result));
             Assert.Equal("Expected a value of Int32 type, but in fact it was String", result.ToString());
             Assert.False(Reflection.AreDeeplyEqual(new DateTime(2015, 10, 19), new DateTime(2015, 10, 20), out result));
-            Assert.Equal("Difference occurs at 'DateTime.== (Equality Operator)'. Expected a value of '10/19/2015 12:00:00 AM', but in fact it was '10/20/2015 12:00:00 AM'", result.ToString());
+            Assert.Equal($"Difference occurs at 'DateTime.== (Equality Operator)'. Expected a value of '{new DateTime(2015, 10, 19)}', but in fact it was '{new DateTime(2015, 10, 20)}'", result.ToString());
         }
 
         [Fact]

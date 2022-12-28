@@ -8,10 +8,7 @@
     /// </summary>
     public static class From
     {
-        static From()
-        {
-            TestApplication.TryInitialize();
-        }
+        static From() => TestApplication.TryInitialize();
 
         /// <summary>
         /// Indicates that a argument should be resolved from the application <see cref="System.IServiceProvider"/> in a method call lambda expression.

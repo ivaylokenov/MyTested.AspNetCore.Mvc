@@ -15,7 +15,7 @@
             => this.Configuration = configuration;
 
         public IConfiguration Configuration { get; }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -27,7 +27,7 @@
             services.AddTransient<IDataService, DataService>();
             services.AddTransient<IDateTimeService, DateTimeService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -4,20 +4,20 @@ git:
   depth: 10
 group: travis_latest
 sudo: required
-dotnet: 3.1
+dotnet: 6.0
 solution: MyTested.AspNetCore.Mvc.sln
 env:
   global:
     - DOTNET_CLI_TELEMETRY_OPTOUT: 1
     - DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-    - NET_CORE_VERSION: netcoreapp3.1
+    - NET_CORE_VERSION: net6.0
 matrix:
   fast_finish: true
   include:
     - os: linux
       dist: xenial
     - os: osx
-      dotnet: 3.1.100
+      dotnet: 6.0.101
       osx_image: xcode11.2
 branches:
   only:

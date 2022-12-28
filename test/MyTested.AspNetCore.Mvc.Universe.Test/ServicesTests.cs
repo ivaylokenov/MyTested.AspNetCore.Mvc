@@ -166,9 +166,11 @@
             Assert.NotNull(dbContextOptions);
             Assert.Equal(3, dbContextOptions.Extensions.Count());
 
+#pragma warning disable EF1001 // Internal EF Core API usage.
             var coreOptionsExtension = dbContextOptions.FindExtension<CoreOptionsExtension>();
             var inMemoryOptionsExtension = dbContextOptions.FindExtension<InMemoryOptionsExtension>();
             var scopedInMemoryOptionsExtension = dbContextOptions.FindExtension<ScopedInMemoryOptionsExtension>();
+#pragma warning restore EF1001 // Internal EF Core API usage.
 
             Assert.NotNull(coreOptionsExtension);
             Assert.NotNull(inMemoryOptionsExtension);

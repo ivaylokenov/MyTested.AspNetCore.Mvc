@@ -23,7 +23,7 @@
         /// <param name="key">Primary key of entity to remove from the registered <see cref="DbContext"/>.</param>
         /// <returns>The same <see cref="DbContext"/> builder.</returns>
         IAndWithoutDbContextBuilder WithoutEntityByKey<TDbContext, TEntity>(object key)
-            where TDbContext : DbContext;
+            where TDbContext : class;
 
         /// <summary>
         /// Remove entities by providing their primary keys from the registered <see cref="DbContext"/>.
@@ -42,7 +42,7 @@
         /// <param name="keys">Primary keys for entities to remove from the registered <see cref="DbContext"/>.</param>
         /// <returns>The same <see cref="DbContext"/> builder.</returns>
         IAndWithoutDbContextBuilder WithoutEntitiesByKeys<TDbContext, TEntity>(IEnumerable<object> keys)
-            where TDbContext : DbContext;
+            where TDbContext : class;
 
         /// <summary>
         /// Remove entity from the registered <see cref="DbContext"/>.
@@ -58,7 +58,7 @@
         /// <param name="entity">Entity to remove from the registered <see cref="DbContext"/>.</param>
         /// <returns>The same <see cref="DbContext"/> builder.</returns>
         IAndWithoutDbContextBuilder WithoutEntity<TDbContext>(object entity)
-            where TDbContext : DbContext;
+            where TDbContext : class;
 
         /// <summary>
         /// Remove values from the registered <see cref="DbContext"/>.
@@ -74,7 +74,7 @@
         /// <param name="entities">Values to remove from the registered <see cref="DbContext"/>.</param>
         /// <returns>The same <see cref="DbContext"/> builder.</returns>
         IAndWithoutDbContextBuilder WithoutEntities<TDbContext>(IEnumerable<object> entities)
-            where TDbContext : DbContext;
+            where TDbContext : class;
 
         /// <summary>
         /// Remove values from the registered <see cref="DbContext"/>.
@@ -90,7 +90,7 @@
         /// <param name="entities">Values to remove from the provided <see cref="DbContext"/>.</param>
         /// <returns>The same <see cref="DbContext"/> builder.</returns>
         IAndWithoutDbContextBuilder WithoutEntities<TDbContext>(params object[] entities)
-            where TDbContext : DbContext;
+            where TDbContext : class;
 
         /// <summary>
         /// Remove values from the registered <see cref="DbContext"/>.
@@ -106,7 +106,7 @@
         /// <param name="dbContextSetup">Action setting the <see cref="DbContext"/>.</param>
         /// <returns>The same <see cref="DbContext"/> builder.</returns>
         IAndWithoutDbContextBuilder WithoutEntities<TDbContext>(Action<TDbContext> dbContextSetup)
-            where TDbContext : DbContext;
+            where TDbContext : class;
 
         /// <summary>
         /// Remove values from the provided <see cref="DbContext"/> entity.
@@ -125,7 +125,7 @@
         /// <param name="entitySetup">Action setting the <see cref="DbContext"/> entity.</param>
         /// <returns>The same <see cref="DbContext"/> builder.</returns>
         IAndWithoutDbContextBuilder WithoutSet<TDbContext, TEntity>(Action<DbSet<TEntity>> entitySetup)
-            where TDbContext : DbContext
+            where TDbContext : class
             where TEntity : class;
 
         /// <summary>

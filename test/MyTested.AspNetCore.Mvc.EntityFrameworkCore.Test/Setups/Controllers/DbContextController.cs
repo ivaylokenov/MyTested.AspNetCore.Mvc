@@ -8,10 +8,7 @@
     {
         private readonly CustomDbContext data;
 
-        public DbContextController(CustomDbContext data)
-        {
-            this.data = data;
-        }
+        public DbContextController(CustomDbContext data) => this.data = data;
 
         public IActionResult Create(CustomModel model)
         {

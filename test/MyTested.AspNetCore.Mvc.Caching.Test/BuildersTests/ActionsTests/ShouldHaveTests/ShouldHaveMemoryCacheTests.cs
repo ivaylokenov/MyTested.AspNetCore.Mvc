@@ -268,7 +268,8 @@
         [Fact]
         public void MemoryCacheWithBuilderShouldThrowWithMemoryCacheEntryOptionsWithInvalidAbsoluteExpiration()
         {
-            var invalidExpirationDate = new DateTime(2017, 1, 1, 1, 1, 1, DateTimeKind.Utc);
+            var invalidExpirationDate = new DateTimeOffset(new DateTime(2017, 1, 1, 1, 1, 1, DateTimeKind.Utc));
+            var actualExpirationDate = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc));
 
             Test.AssertException<DataProviderAssertionException>(
                 () =>
@@ -280,7 +281,7 @@
                         .MemoryCache(cache => cache
                             .ContainingEntry("test", "value", new MemoryCacheEntryOptions
                             {
-                                AbsoluteExpiration = new DateTimeOffset(invalidExpirationDate),
+                                AbsoluteExpiration = invalidExpirationDate,
                                 AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1),
                                 Priority = CacheItemPriority.High,
                                 SlidingExpiration = TimeSpan.FromMinutes(5)
@@ -289,7 +290,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given options, but in fact they were different. Difference occurs at 'MemoryCacheEntryOptions.AbsoluteExpiration.== (Equality Operator)'. Expected a value of '1/1/2017 1:01:01 AM +00:00', but in fact it was '1/1/2016 1:01:01 AM +00:00'.");
+                $"When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given options, but in fact they were different. Difference occurs at 'MemoryCacheEntryOptions.AbsoluteExpiration.== (Equality Operator)'. Expected a value of '{invalidExpirationDate}', but in fact it was '{actualExpirationDate}'.");
         }
 
         [Fact]

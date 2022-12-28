@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <Description>My Tested ASP.NET Core MVC controller action result components.</Description>
-    <Copyright>2015-2019 Ivaylo Kenov</Copyright>
+    <Copyright>2015-2022 Ivaylo Kenov</Copyright>
     <AssemblyTitle>MyTested.AspNetCore.Mvc.Controllers.ActionResults</AssemblyTitle>
-    <VersionPrefix>3.1.3</VersionPrefix>
+    <VersionPrefix>6.0.0</VersionPrefix>
     <Authors>Ivaylo Kenov</Authors>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

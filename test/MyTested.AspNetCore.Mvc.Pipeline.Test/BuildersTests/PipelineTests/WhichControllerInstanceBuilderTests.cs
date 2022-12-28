@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.PipelineTests
 {
+    using System.Threading;
     using Exceptions;
     using Microsoft.Extensions.DependencyInjection;
     using Setups;
@@ -60,6 +61,136 @@
                 .To<HomeController>(c => c.EmptyTask())
                 .Which()
                 .ShouldReturnEmpty();
+        }
+
+        [Fact]
+        public void WhichShouldResolveCorrectActionWithIgnoredRouteValue()
+        {
+            MyPipeline
+                .Configuration()
+                .ShouldMap("/Home/Contact/1")
+                .To<HomeController>(c => c.Contact(With.Value(2)))
+                .Which()
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .Passing(result => result
+                        .Value
+                        .Equals(2)));
+        }
+
+        [Fact]
+        public void WhichShouldResolveCorrectActionWithIgnoredRouteValueLongName()
+        {
+            MyPipeline
+                .Configuration()
+                .ShouldMap("/Home/Contact/1")
+                .To<HomeController>(c => c.Contact(With.IgnoredRouteValue(2)))
+                .Which()
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .Passing(result => result
+                        .Value
+                        .Equals(2)));
+        }
+
+        [Fact]
+        public void WhichShouldResolveCorrectActionWithIgnoredCancellationTokenCancelled()
+        {
+            MyPipeline
+                .Configuration()
+                .ShouldMap("/Home/CancelledTask/1")
+                .To<HomeController>(c => c.CancelledTask(1, With.Value(new CancellationToken(true))))
+                .Which()
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .Passing(result => result
+                        .Value
+                        .Equals("Cancelled with id: 1")));
+        }
+
+        [Fact]
+        public void WhichShouldResolveCorrectActionWithIgnoredCancellationTokenLongNameCancelled()
+        {
+            MyPipeline
+                .Configuration()
+                .ShouldMap("/Home/CancelledTask/1")
+                .To<HomeController>(c => c.CancelledTask(1, With.IgnoredRouteValue(new CancellationToken(true))))
+                .Which()
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .Passing(result => result
+                        .Value
+                        .Equals("Cancelled with id: 1")));
+        }
+
+        [Fact]
+        public void WhichShouldResolveCorrectActionWithIgnoredCancellationToken()
+        {
+            MyPipeline
+                .Configuration()
+                .ShouldMap("/Home/CancelledTask/1")
+                .To<HomeController>(c => c.CancelledTask(1, With.Value(new CancellationToken(false))))
+                .Which()
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .Passing(result => result
+                        .Value
+                        .Equals(1)));
+        }
+
+        [Fact]
+        public void WhichShouldResolveCorrectActionWithIgnoredCancellationTokenLongName()
+        {
+            MyPipeline
+                .Configuration()
+                .ShouldMap("/Home/CancelledTask/1")
+                .To<HomeController>(c => c.CancelledTask(1, With.IgnoredRouteValue(new CancellationToken(false))))
+                .Which()
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .Passing(result => result
+                        .Value
+                        .Equals(1)));
+        }
+
+        [Fact]
+        public void WhichShouldResolveCorrectActionValuesWithIgnoredCancellationToken()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyPipeline
+                        .Configuration()
+                        .ShouldMap("/Home/CancelledTask/1")
+                        .To<HomeController>(c => c.CancelledTask(2, With.Value(new CancellationToken(false))))
+                        .Which()
+                        .ShouldReturn()
+                        .Ok(ok => ok
+                            .Passing(result => result
+                                .Value
+                                .Equals(2)));
+                },
+                "Expected route '/Home/CancelledTask/1' to contain route value with 'id' key and the provided value but the value was different. Expected a value of '2', but in fact it was '1'.");
+        }
+
+        [Fact]
+        public void WhichShouldResolveCorrectActionValuesWithIgnoredCancellationTokenLongName()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyPipeline
+                       .Configuration()
+                       .ShouldMap("/Home/CancelledTask/1")
+                       .To<HomeController>(c => c.CancelledTask(2, With.IgnoredRouteValue(new CancellationToken(false))))
+                       .Which()
+                       .ShouldReturn()
+                       .Ok(ok => ok
+                           .Passing(result => result
+                               .Value
+                               .Equals(2)));
+                },
+                "Expected route '/Home/CancelledTask/1' to contain route value with 'id' key and the provided value but the value was different. Expected a value of '2', but in fact it was '1'.");
         }
 
         [Fact]

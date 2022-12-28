@@ -48,6 +48,8 @@
             
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            services.AddDatabaseDeveloperPageExceptionFilter();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -55,7 +57,6 @@
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
             else
             {

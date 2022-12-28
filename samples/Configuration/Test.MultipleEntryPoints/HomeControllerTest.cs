@@ -19,7 +19,6 @@ namespace Test.MultipleEntryPoints
             });
 
             Assert.Equal("Web application WebApplication could not be loaded in the application part manager by convention. You need to set it manually by providing your web project's name in the test configuration's 'General:WebAssemblyName' section ('testsettings.json' file by default).", exception.Message);
-
         }
     }
 }

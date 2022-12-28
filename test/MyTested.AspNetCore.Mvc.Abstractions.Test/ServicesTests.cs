@@ -35,6 +35,21 @@
     public class ServicesTests
     {
         [Fact]
+        public void ExceptionDuringStartupServiceRegistrationShouldThrowProperErrorMessage()
+        {
+            Test.AssertException<InvalidOperationException>(
+                () =>
+                {
+                    MyApplication.StartsFrom<StartupWithException>();
+
+                    TestServiceProvider.GetService(WebFramework.Internals.MvcMarkerService);
+                },
+                "Test application could not be initialized. You may need to create a custom mock for one of your registered services. If you are having difficulties debugging this error, open an issue at https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/issues. Provide your Startup classes and this exception message: 'Exception during service registration.'.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
         public void UsesDefaultServicesShouldPopulateDefaultServices()
         {
             MyApplication.StartsFrom<DefaultStartup>();
@@ -235,7 +250,7 @@
         }
 
         [Fact]
-        public void DefaultConfigShouldSetMvc()
+        public void DefaultConfigurationShouldSetMvc()
         {
             MyApplication.StartsFrom<DefaultStartup>();
 
@@ -245,7 +260,7 @@
         }
         
         [Fact]
-        public void DefaultConfigShouldSetDefaultRoutes()
+        public void DefaultConfigurationShouldSetDefaultRoutes()
         {
             MyApplication.StartsFrom<DefaultStartup>();
 
@@ -256,7 +271,7 @@
         }
 
         [Fact]
-        public void DefaultConfigAndAdditionalServicesShouldWorkCorrectly()
+        public void DefaultConfigurationAndAdditionalServicesShouldWorkCorrectly()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -273,7 +288,7 @@
         }
 
         [Fact]
-        public void DefaultConfigAndAdditionalApplicationShouldWorkCorrectly()
+        public void DefaultConfigurationAndAdditionalApplicationShouldWorkCorrectly()
         {
             var set = false;
 
@@ -289,7 +304,7 @@
         }
 
         [Fact]
-        public void DefaultConfigAndAdditionalRoutesShouldSetOnlyThem()
+        public void DefaultConfigurationAndAdditionalRoutesShouldSetOnlyThem()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -307,7 +322,7 @@
         }
 
         [Fact]
-        public void DefaultConfigAndAdditionalRoutesShouldSetOnlyThemWithoutEndpoints()
+        public void DefaultConfigurationAndAdditionalRoutesShouldSetOnlyThemWithoutEndpoints()
         {
             MyApplication
                 .StartsFrom<NoEndpointsStartup>()
@@ -707,7 +722,7 @@
                     // This call ensures services are loaded (uses lazy loading).
                     var setupServices = TestApplication.Services;
                 },
-                "No service for type 'Microsoft.Extensions.DependencyInjection.IServiceProviderFactory`1[MyTested.AspNetCore.Mvc.Test.Setups.Common.CustomContainer]' has been registered. Services could not be configured. If your web project is registering services outside of the Startup class (during the WebHost configuration in the Program.cs file for example), you should provide them to the test framework too by calling 'IsRunningOn(server => server.WithServices(servicesAction))'. Since this method should be called only once per test project, you may invoke it in the static constructor of your TestStartup class or if your test runner supports it - in the test assembly initialization.");
+                "An exception with the following message was thrown during initialization: 'No service for type 'Microsoft.Extensions.DependencyInjection.IServiceProviderFactory`1[MyTested.AspNetCore.Mvc.Test.Setups.Common.CustomContainer]' has been registered.'. Services could not be configured. If your web project is registering services outside of the Startup class (during the WebHost configuration in the Program.cs file for example), you should provide them to the test framework too by calling 'IsRunningOn(server => server.WithServices(servicesAction))'. Since this method should be called only once per test project, you may invoke it in the static constructor of your TestStartup class or if your test runner supports it - in the test assembly initialization.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -857,6 +872,6 @@
             Assert.True(sameStartupFilter.Registered);
 
             MyApplication.StartsFrom<DefaultStartup>();
-        }
+        } 
     }
 }

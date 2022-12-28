@@ -30,13 +30,15 @@
 
         /// <inheritdoc />
         public IAndWithoutDbContextBuilder WithoutEntityByKey<TDbContext, TEntity>(object key)
-            where TDbContext : DbContext
+            where TDbContext : class
         {
-            var dbContext = this.TestContext.GetDbContext<TDbContext>();
+            var dbContext = this.TestContext.GetBaseDbContext<TDbContext>();
 
             var entity = dbContext.Find(typeof(TEntity), key);
             if (entity == null)
+            {
                 return this;
+            }
 
             dbContext.Remove(entity);
             dbContext.SaveChanges();
@@ -51,17 +53,18 @@
 
         /// <inheritdoc />
         public IAndWithoutDbContextBuilder WithoutEntitiesByKeys<TDbContext, TEntity>(IEnumerable<object> keys)
-            where TDbContext : DbContext
+            where TDbContext : class
         {
-            var dbContext = this.TestContext.GetDbContext<TDbContext>();
+            var dbContext = this.TestContext.GetBaseDbContext<TDbContext>();
 
-            var entityType = typeof(TEntity);
             var entities = keys
-                .Select(key => dbContext.Find(entityType, key))
+                .Select(key => dbContext.Find(typeof(TEntity), key))
                 .Where(entity => entity != null);
 
             if (entities.Any() == false)
+            {
                 return this;
+            }
 
             dbContext.RemoveRange(entities);
             dbContext.SaveChanges();
@@ -75,7 +78,7 @@
 
         /// <inheritdoc />
         public IAndWithoutDbContextBuilder WithoutEntity<TDbContext>(object entity)
-            where TDbContext : DbContext
+            where TDbContext : class
             => this.WithoutEntities<TDbContext>(entity);
 
         /// <inheritdoc />
@@ -84,8 +87,8 @@
 
         /// <inheritdoc />
         public IAndWithoutDbContextBuilder WithoutEntities<TDbContext>(IEnumerable<object> entities)
-            where TDbContext : DbContext
-            => this.WithoutEntities<TDbContext>(dbContext => dbContext.RemoveRange(entities));
+            where TDbContext : class
+            => this.WithoutEntities<TDbContext>(dbContext => (dbContext as DbContext).RemoveRange(entities));
 
         /// <inheritdoc />
         public IAndWithoutDbContextBuilder WithoutEntities(params object[] entities)
@@ -93,7 +96,7 @@
 
         /// <inheritdoc />
         public IAndWithoutDbContextBuilder WithoutEntities<TDbContext>(params object[] entities)
-            where TDbContext : DbContext
+            where TDbContext : class
             => this.WithoutEntities<TDbContext>(entities.AsEnumerable());
 
         /// <inheritdoc />
@@ -105,20 +108,21 @@
             => this.WithoutEntities<DbContext>(dbContext => dbContext.Database.EnsureDeleted());
 
         /// <inheritdoc />
-        public IAndWithoutDbContextBuilder WithoutEntities<TDbContext>(Action<TDbContext> dbContextSetup) where TDbContext : DbContext
+        public IAndWithoutDbContextBuilder WithoutEntities<TDbContext>(Action<TDbContext> dbContextSetup) where TDbContext : class
         {
             CommonValidator.CheckForNullReference(dbContextSetup, nameof(dbContextSetup));
 
             var dbContext = this.TestContext.GetDbContext<TDbContext>();
+
             dbContextSetup(dbContext);
 
             try
             {
-                dbContext.SaveChanges();
+                (dbContext as DbContext).SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                // Intentional silent fail, when deleting entities that does not exist in the database or have been already deleted.
+                // Intentional silent fail, when deleting entities that do not exist in the database or have been already deleted.
             }
 
             return this;
@@ -131,12 +135,13 @@
 
         /// <inheritdoc />
         public IAndWithoutDbContextBuilder WithoutSet<TDbContext, TEntity>(Action<DbSet<TEntity>> entitySetup)
-            where TDbContext : DbContext
+            where TDbContext : class
             where TEntity : class
         {
             CommonValidator.CheckForNullReference(entitySetup, nameof(entitySetup));
 
-            var dbContext = this.TestContext.GetDbContext<TDbContext>();
+            var dbContext = this.TestContext.GetBaseDbContext<TDbContext>();
+
             entitySetup(dbContext.Set<TEntity>());
 
             try
@@ -145,7 +150,7 @@
             }
             catch (DbUpdateConcurrencyException)
             {
-                // Intentional silent fail, when deleting entities that does not exist in the database or have been already deleted.
+                // Intentional silent fail, when deleting entities that do not exist in the database or have been already deleted.
             }
 
             return this;

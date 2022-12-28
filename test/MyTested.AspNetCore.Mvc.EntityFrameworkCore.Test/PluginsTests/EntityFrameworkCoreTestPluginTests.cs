@@ -27,9 +27,6 @@
 
             testPlugin.ServiceRegistrationDelegate(serviceCollection);
 
-            var methodReturnType = testPlugin.ServiceRegistrationDelegate.Method.ReturnType.Name;
-
-            Assert.True(methodReturnType == "Void");
             Assert.Contains(serviceCollection, s => s.ServiceType == typeof(DbContextOptions));
         }
     }

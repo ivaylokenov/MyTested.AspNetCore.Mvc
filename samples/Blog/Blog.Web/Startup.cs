@@ -63,9 +63,10 @@
             services
                 .AddControllersWithViews(options => options
                     .AddAutoValidateAntiforgeryToken())
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+                .AddRazorRuntimeCompilation();
 
             services.AddRazorPages();
+            services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -73,7 +74,6 @@
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
             else
             {

@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <Description>My Tested ASP.NET Core MVC Entity Framework Core components.</Description>
-    <Copyright>2015-2019 Ivaylo Kenov</Copyright>
+    <Copyright>2015-2022 Ivaylo Kenov</Copyright>
     <AssemblyTitle>MyTested.AspNetCore.Mvc.EntityFrameworkCore</AssemblyTitle>
-    <VersionPrefix>3.1.3</VersionPrefix>
+    <VersionPrefix>6.0.0</VersionPrefix>
     <Authors>Ivaylo Kenov</Authors>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -33,8 +33,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.3" />
   </ItemGroup>
 
   <ItemGroup>

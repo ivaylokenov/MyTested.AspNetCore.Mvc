@@ -8,6 +8,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Utilities.Extensions;
 
     /// <summary>
@@ -59,20 +60,28 @@
                     }
 
                     AddScopedDatabaseMethodInfo
-                        .MakeGenericMethod(existingDbContextService.ImplementationType)
+                        .MakeGenericMethod(existingDbContextService.ServiceType, existingDbContextService.ImplementationType)
                         .Invoke(null, new object[] { serviceCollection });
                 });
-            
+
             TestServiceProvider.SaveServiceLifetime(BaseDbContextType, ServiceLifetime.Scoped);
 
             return serviceCollection;
         }
 
-        private static void AddScopedDatabase<TDbContext>(IServiceCollection serviceCollection)
-            where TDbContext : DbContext
+        private static void AddScopedDatabase<TDbContextService, TDbContextImplementation>(IServiceCollection serviceCollection)
+            where TDbContextImplementation : DbContext, TDbContextService
         {
-            serviceCollection.AddScoped<DbContext>(s => s.GetRequiredService<TDbContext>());
-            serviceCollection.AddDbContext<TDbContext>(opts =>
+            serviceCollection.AddScoped(s => s.GetRequiredService<TDbContextService>() as DbContext);
+
+            if (typeof(TDbContextService) != typeof(TDbContextImplementation))
+            {
+                serviceCollection.TryAddScoped(s => s.GetRequiredService<TDbContextService>() as TDbContextImplementation);
+
+                TestServiceProvider.SaveServiceLifetime<TDbContextImplementation>(ServiceLifetime.Scoped);
+            }
+
+            serviceCollection.AddDbContext<TDbContextService, TDbContextImplementation>(opts =>
             {
                 opts.UseInMemoryDatabase(Guid.NewGuid().ToString());
 

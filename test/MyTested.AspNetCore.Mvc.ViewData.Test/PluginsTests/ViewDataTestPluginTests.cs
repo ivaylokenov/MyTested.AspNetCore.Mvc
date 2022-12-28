@@ -33,6 +33,7 @@
 
             testPlugin.DefaultServiceRegistrationDelegate(serviceCollection);
 
-            Assert.True(serviceCollection.Count == 157);        }
+            Assert.True(serviceCollection.Count == 165);
+        }
     }
 }

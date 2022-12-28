@@ -83,6 +83,8 @@
                 // These expressions types should be ignored and can be skipped: 
                 // - c => c.Action(With.No<int>()) 
                 // - c => c.Action(With.Any<int>()) 
+                // - c => c.Action(With.Value(value)) 
+                // - c => c.Action(With.IgnoredRouteValue(value)) 
                 // - c => c.Action(From.Services<IService>())
                 var expressionArgumentAsMethodCall = (MethodCallExpression)expression;
                 var expressionMethodDeclaringType = expressionArgumentAsMethodCall.Method.DeclaringType;
@@ -92,7 +94,9 @@
                     var expressionArgumentMethodName = expressionArgumentAsMethodCall.Method.Name;
 
                     if (expressionMethodDeclaringType == TypeOfWith 
-                        && expressionArgumentMethodName == nameof(With.Any))
+                        && (expressionArgumentMethodName == nameof(With.Any)
+                        || expressionArgumentMethodName == nameof(With.Value)
+                        || expressionArgumentMethodName == nameof(With.IgnoredRouteValue)))
                     {
                         return IgnoredExpressionArgument;
                     }

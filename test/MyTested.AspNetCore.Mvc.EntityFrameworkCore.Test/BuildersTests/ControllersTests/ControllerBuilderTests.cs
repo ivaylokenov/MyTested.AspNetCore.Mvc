@@ -12,6 +12,9 @@
 
     public class ControllerBuilderTests
     {
+        private const string TestConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;";
+        private const string AnotherConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=AnotherTestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;";
+
         [Fact]
         public void WithDataShouldSetupDbContext()
         {
@@ -19,8 +22,9 @@
                 .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
-                    services.AddDbContext<CustomDbContext>(options =>
-                        options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
+                    services
+                        .AddDbContext<CustomDbContext>(options => options
+                            .UseSqlServer(TestConnectionString));
                 });
 
             MyController<DbContextController>
@@ -46,8 +50,9 @@
                 .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
-                    services.AddDbContext<CustomDbContext>(options =>
-                        options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
+                    services
+                        .AddDbContext<CustomDbContext>(options => options
+                            .UseSqlServer(TestConnectionString));
                 });
 
             MyController<DbContextController>
@@ -140,14 +145,116 @@
         }
 
         [Fact]
+        public void WithEntitiesShouldSetupDbContextThroughInterface()
+        {
+            MyApplication
+                .StartsFrom<TestStartup>()
+                .WithServices(services =>
+                {
+                    services
+                        .AddDbContext<ICustomDbContext, CustomDbContext>(options => options
+                            .UseSqlServer(TestConnectionString));
+                });
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(data => data
+                    .WithEntities<ICustomDbContext>(db => db
+                        .Models.Add(new CustomModel
+                        {
+                            Id = 1,
+                            Name = "Test"
+                        })))
+                .Calling(c => c.Get(1))
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModelOfType<CustomModel>()
+                    .Passing(m => m.Name == "Test"));
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(data => data
+                    .WithEntities(db => db.Add(new CustomModel
+                    {
+                        Id = 1,
+                        Name = "Test"
+                    })))
+                .Calling(c => c.Get(1))
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModelOfType<CustomModel>()
+                    .Passing(m => m.Name == "Test"));
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(data => data
+                    .WithEntities(
+                        new CustomModel
+                        {
+                            Id = 1,
+                            Name = "Test 1"
+                        },
+                        new CustomModel
+                        {
+                            Id = 2,
+                            Name = "Test 2"
+                        }))
+                .Calling(c => c.Get(1))
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModelOfType<CustomModel>()
+                    .Passing(m => m.Name == "Test 1"));
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(data => data
+                    .WithEntities<ICustomDbContext>(db => db
+                        .Models.Add(new CustomModel
+                        {
+                            Id = 2,
+                            Name = "Test"
+                        })))
+                .Calling(c => c.Get(1))
+                .ShouldReturn()
+                .NotFound();
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(data => data
+                    .WithEntities<ICustomDbContext>(
+                        new CustomModel
+                        {
+                            Id = 2,
+                            Name = "Test 2"
+                        },
+                        new CustomModel
+                        {
+                            Id = 3,
+                            Name = "Test 3"
+                        }))
+                .Calling(c => c.Get(1))
+                .ShouldReturn()
+                .NotFound();
+
+            MyController<DbContextController>
+                .Instance()
+                .Calling(c => c.Get(1))
+                .ShouldReturn()
+                .NotFound();
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
         public void WithSetShouldSetupDbContext()
         {
             MyApplication
                 .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
-                    services.AddDbContext<CustomDbContext>(options =>
-                        options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
+                    services
+                        .AddDbContext<CustomDbContext>(options => options
+                            .UseSqlServer(TestConnectionString));
                 });
 
             MyController<DbContextController>
@@ -188,17 +295,68 @@
         }
 
         [Fact]
+        public void WithSetShouldSetupDbContextThroughInterface()
+        {
+            MyApplication
+                .StartsFrom<TestStartup>()
+                .WithServices(services =>
+                {
+                    services
+                        .AddDbContext<ICustomDbContext, CustomDbContext>(options => options
+                            .UseSqlServer(TestConnectionString));
+                });
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(data => data
+                    .WithSet<ICustomDbContext, CustomModel>(set => set
+                        .Add(new CustomModel
+                        {
+                            Id = 1,
+                            Name = "Test"
+                        })))
+                .Calling(c => c.Get(1))
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModelOfType<CustomModel>()
+                    .Passing(m => m.Name == "Test"));
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(data => data
+                    .WithSet<ICustomDbContext, CustomModel>(set => set
+                        .Add(new CustomModel
+                        {
+                            Id = 2,
+                            Name = "Test"
+                        })))
+                .Calling(c => c.Get(1))
+                .ShouldReturn()
+                .NotFound();
+
+            MyController<DbContextController>
+                .Instance()
+                .Calling(c => c.Get(1))
+                .ShouldReturn()
+                .NotFound();
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
         public void WithEntitiesShouldSetupMultipleDbContext()
         {
             MyApplication
                 .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
-                    services.AddDbContext<CustomDbContext>(options =>
-                        options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
+                    services
+                        .AddDbContext<CustomDbContext>(options => options
+                            .UseSqlServer(TestConnectionString));
 
-                    services.AddDbContext<AnotherDbContext>(options =>
-                        options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=AnotherTestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
+                    services
+                        .AddDbContext<AnotherDbContext>(options => options
+                            .UseSqlServer(AnotherConnectionString));
                 });
 
             var modelName = "Test";
@@ -297,11 +455,13 @@
                 .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
-                    services.AddDbContext<CustomDbContext>(options =>
-                        options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
+                    services
+                        .AddDbContext<CustomDbContext>(options => options
+                            .UseSqlServer(TestConnectionString));
 
-                    services.AddDbContext<AnotherDbContext>(options =>
-                        options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=AnotherTestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
+                    services
+                        .AddDbContext<AnotherDbContext>(options => options
+                            .UseSqlServer(AnotherConnectionString));
                 });
 
             var modelName = "Test";
@@ -413,11 +573,13 @@
                 .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
-                    services.AddDbContext<CustomDbContext>(options =>
-                        options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
+                    services
+                        .AddDbContext<CustomDbContext>(options => options
+                            .UseSqlServer(TestConnectionString));
 
-                    services.AddDbContext<AnotherDbContext>(options =>
-                        options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=AnotherTestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
+                    services
+                        .AddDbContext<AnotherDbContext>(options => options
+                            .UseSqlServer(AnotherConnectionString));
                 });
 
             Test.AssertException<InvalidOperationException>(() =>
@@ -534,8 +696,8 @@
                 () =>
                 {
                     MyApplication
-                    .StartsFrom<TestStartup>()
-                    .WithServices(services => services.AddDbContext<CustomDbContext>());
+                        .StartsFrom<TestStartup>()
+                        .WithServices(services => services.AddDbContext<CustomDbContext>());
 
                     var model = new CustomModel
                     {

@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Routing
 {
     using System;
+    using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
 
@@ -21,5 +22,15 @@
         public void Empty() { }
 
         public async Task EmptyTask() => await Task.CompletedTask;
+
+        public async Task<IActionResult> CancelledTask(int id, CancellationToken cancellationToken)
+        {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return await Task.FromResult(Ok($"Cancelled with id: {id}"));
+            }
+
+            return await Task.FromResult(Ok(id));
+        }
     }
 }

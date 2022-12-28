@@ -2,6 +2,7 @@
 {
     using Contracts.Base;
     using Internal.TestContexts;
+    // using Licensing;
     using Microsoft.AspNetCore.Http;
     using Utilities.Validators;
 
@@ -16,7 +17,11 @@
         /// Initializes a new instance of the <see cref="BaseTestBuilder"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="HttpTestContext"/> containing data about the currently executed assertion chain.</param>
-        protected BaseTestBuilder(HttpTestContext testContext) => this.TestContext = testContext;
+        protected BaseTestBuilder(HttpTestContext testContext)
+        {
+            // TestCounter.IncrementAndValidate();
+            this.TestContext = testContext;
+        }
 
         public HttpContext HttpContext => this.TestContext.HttpContext;
 

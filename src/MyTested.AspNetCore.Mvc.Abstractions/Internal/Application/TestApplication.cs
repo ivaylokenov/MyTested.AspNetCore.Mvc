@@ -2,6 +2,7 @@
 {
     using System;
     using Configuration;
+    // using Licensing;
     using Microsoft.AspNetCore.Builder;
     using Server;
     using Services;
@@ -29,7 +30,7 @@
                 {
                     return;
                 }
-
+                
                 var generalConfiguration = ServerTestConfiguration.General;
 
                 if (StartupType == null && generalConfiguration.AutomaticStartup)
@@ -64,6 +65,12 @@
             TestFramework.EnsureCorrectVersion(TestWebServer.GetDependencyContext());
 
             ValidateStartup();
+
+            //TestCounter.SetLicenseData(
+            //    ServerTestConfiguration.Global.Licenses,
+            //    DateTime.UtcNow,
+            //    DateTime.ParseExact(TestFramework.ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
+            //    TestWebServer.TestAssemblyName);
 
             PluginsContainer.LoadPlugins(TestWebServer.GetDependencyContext());
 
@@ -104,6 +111,7 @@
             AdditionalRouting = null;
             TestServiceProvider.Current = null;
             TestServiceProvider.ClearServiceLifetimes();
+            // LicenseValidator.ClearLicenseDetails();
             PluginsContainer.Reset();
         }
     }

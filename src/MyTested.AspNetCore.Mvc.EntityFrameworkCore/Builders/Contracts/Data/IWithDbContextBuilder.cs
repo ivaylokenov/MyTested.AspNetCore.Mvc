@@ -23,7 +23,7 @@
         /// <param name="entities">Initial values to add to the provided <see cref="DbContext"/>.</param>
         /// <returns>The same <see cref="DbContext"/> builder.</returns>
         IAndWithDbContextBuilder WithEntities<TDbContext>(IEnumerable<object> entities)
-            where TDbContext : DbContext;
+            where TDbContext : class;
 
         /// <summary>
         /// Sets initial values to the registered <see cref="DbContext"/>.
@@ -39,7 +39,7 @@
         /// <param name="entities">Initial values to add to the provided <see cref="DbContext"/>.</param>
         /// <returns>The same <see cref="DbContext"/> builder.</returns>
         IAndWithDbContextBuilder WithEntities<TDbContext>(params object[] entities)
-            where TDbContext : DbContext;
+            where TDbContext : class;
 
         /// <summary>
         /// Sets initial values to the registered <see cref="DbContext"/>.
@@ -55,7 +55,7 @@
         /// <param name="dbContextSetup">Action setting the <see cref="DbContext"/>.</param>
         /// <returns>The same <see cref="DbContext"/> builder.</returns>
         IAndWithDbContextBuilder WithEntities<TDbContext>(Action<TDbContext> dbContextSetup)
-            where TDbContext : DbContext;
+            where TDbContext : class;
 
         /// <summary>
         /// Sets initial values to the provided <see cref="DbContext"/> entity.
@@ -74,7 +74,7 @@
         /// <param name="entitySetup">Action setting the <see cref="DbContext"/> entity.</param>
         /// <returns>The same <see cref="DbContext"/> builder.</returns>
         IAndWithDbContextBuilder WithSet<TDbContext, TEntity>(Action<DbSet<TEntity>> entitySetup)
-            where TDbContext : DbContext
+            where TDbContext : class
             where TEntity : class;
     }
 }
