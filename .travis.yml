@@ -40,6 +40,5 @@ script:
   - dotnet test "samples/Configuration/Test.WrongStartupType/Test.WrongStartupType.csproj" --configuration Release --framework "$NET_CORE_VERSION"
   - dotnet test "samples/Configuration/Test.WrongTestAssembly/Test.WrongTestAssembly.csproj" --configuration Release --framework "$NET_CORE_VERSION"
   - dotnet test "samples/Configuration/Test.WrongWebAssembly/Test.WrongWebAssembly.csproj" --configuration Release --framework "$NET_CORE_VERSION"
-  - dotnet test "samples/Lite/Lite.Test/Lite.Test.csproj" --configuration Release --framework "$NET_CORE_VERSION"
   - dotnet test "samples/NoStartup/NoStartup.Test/NoStartup.Test.csproj" --configuration Release --framework "$NET_CORE_VERSION"
   - dotnet test "samples/WebStartup/WebStartup.Test/WebStartup.Test.csproj" --configuration Release --framework "$NET_CORE_VERSION"

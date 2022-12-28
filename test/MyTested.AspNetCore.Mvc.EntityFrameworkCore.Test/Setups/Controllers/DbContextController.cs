@@ -13,6 +13,8 @@
         public IActionResult Create(CustomModel model)
         {
             this.data.Models.Add(model);
+            this.data.SaveChanges();
+
             return this.Ok();
         }
 
@@ -36,6 +38,20 @@
             }
 
             return this.Ok(models.ToList());
+        }
+
+        public IActionResult Update(int id)
+        {
+            var model = new CustomModel
+            {
+                Id = id,
+                Name = "Updated"
+            };
+
+            this.data.Update(model);
+            this.data.SaveChanges();
+
+            return this.Ok();
         }
     }
 }

@@ -17,7 +17,7 @@
     <PackageId>MyTested.AspNetCore.Mvc.Versioning</PackageId>
     <PackageTags>aspnetcore;aspnetcoremvc;testing;unit;tests;fluent;testing;framework;asp;net;core;mvc;test;mymvc;mytested</PackageTags>
     <PackageIcon>nuget-logo.png</PackageIcon>
-    <PackageProjectUrl>https://mytestedasp.net/</PackageProjectUrl>
+    <PackageProjectUrl>https://docs.mytestedasp.net/</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>

@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Utilities.Extensions
 {
     using System;
+    using System.Threading.Tasks;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +14,8 @@
         {
             var methodReturnType = testContext.Method.ReturnType;
 
-            if (Reflection.AreAssignableByGeneric(ActionResultGenericType, methodReturnType))
+            if (Reflection.AreAssignableByGeneric(ActionResultGenericType, methodReturnType)
+                || Reflection.AreAssignableByTaskGeneric(ActionResultGenericType, methodReturnType))
             {
                 var methodResultType = testContext.MethodResult.GetType();
 

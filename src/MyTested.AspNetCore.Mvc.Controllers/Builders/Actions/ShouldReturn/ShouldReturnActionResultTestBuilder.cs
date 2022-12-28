@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
     using System;
+    using System.Threading.Tasks;
     using ActionResults.ActionResult;
     using And;
     using Contracts.ActionResults.ActionResult;
@@ -84,8 +85,13 @@
                 typesOfExpectedReturnValue: new[] { ActionResultType, GenericActionResultType });
 
         private void ValidateActionResult<TResult>()
-            => InvocationResultValidator.ValidateInvocationResultType<ActionResult<TResult>>(
+            => InvocationResultValidator.ValidateInvocationResultTypes(
                 this.TestContext,
-                typeOfActualReturnValue: this.TestContext.Method.ReturnType);
+                typeOfActualReturnValue: this.TestContext.Method.ReturnType,
+                typesOfExpectedReturnValue: new[]
+                {
+                    typeof(ActionResult<TResult>), 
+                    typeof(Task<ActionResult<TResult>>)
+                });
     }
 }

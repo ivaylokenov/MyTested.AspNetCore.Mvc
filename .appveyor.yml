@@ -28,7 +28,6 @@ test_script:
 - cmd: dotnet test "samples/Configuration/Test.WrongStartupType/Test.WrongStartupType.csproj" --configuration Release --no-build
 - cmd: dotnet test "samples/Configuration/Test.WrongTestAssembly/Test.WrongTestAssembly.csproj" --configuration Release --no-build
 - cmd: dotnet test "samples/Configuration/Test.WrongWebAssembly/Test.WrongWebAssembly.csproj" --configuration Release --no-build
-- cmd: dotnet test "samples/Lite/Lite.Test/Lite.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "samples/NoStartup/NoStartup.Test/NoStartup.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "samples/WebStartup/WebStartup.Test/WebStartup.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Abstractions.Test/MyTested.AspNetCore.Mvc.Abstractions.Test.csproj" --configuration Release --no-build
@@ -45,8 +44,6 @@ test_script:
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.EntityFrameworkCore.Test/MyTested.AspNetCore.Mvc.EntityFrameworkCore.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Helpers.Test/MyTested.AspNetCore.Mvc.Helpers.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Http.Test/MyTested.AspNetCore.Mvc.Http.Test.csproj" --configuration Release --no-build
-- cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Licensing.Test/MyTested.AspNetCore.Mvc.Licensing.Test.csproj" --configuration Release --no-build
-- cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Lite.Test/MyTested.AspNetCore.Mvc.Lite.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Models.Test/MyTested.AspNetCore.Mvc.Models.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.ModelState.Test/MyTested.AspNetCore.Mvc.ModelState.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.NewtonsoftJson.Test/MyTested.AspNetCore.Mvc.NewtonsoftJson.Test.csproj" --configuration Release --no-build
