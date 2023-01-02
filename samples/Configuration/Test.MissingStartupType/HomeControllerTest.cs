@@ -18,7 +18,7 @@ namespace Test.MissingStartupType
                     .View();
             });
 
-            Assert.Equal("TestStartup class could not be found at the root of the test project. Either add it or set 'General:AutomaticStartup' in the test configuration ('testsettings.json' file by default) to 'false'.", exception.InnerException.Message);
+            Assert.Equal("TestStartup class could not be found at the root of the test project. Either add it or set 'General:AutomaticStartup' in the test configuration ('testsettings.json' file by default) to 'false'.", exception.InnerException?.Message);
         }
     }
 }

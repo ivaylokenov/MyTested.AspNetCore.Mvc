@@ -1,40 +1,40 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<Description>My Tested ASP.NET Core MVC configuration components.</Description>
-		<Copyright>2015-2022 Ivaylo Kenov</Copyright>
-		<AssemblyTitle>MyTested.AspNetCore.Mvc.Configuration</AssemblyTitle>
-		<VersionPrefix>6.0.0</VersionPrefix>
-		<Authors>Ivaylo Kenov</Authors>
-		<TargetFramework>net6.0</TargetFramework>
-		<NoWarn>$(NoWarn);CS1591</NoWarn>
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<AssemblyName>MyTested.AspNetCore.Mvc.Configuration</AssemblyName>
-		<AssemblyOriginatorKeyFile>../../tools/Key.snk</AssemblyOriginatorKeyFile>
-		<SignAssembly>true</SignAssembly>
-		<PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
-		<PackageId>MyTested.AspNetCore.Mvc.Configuration</PackageId>
-		<PackageTags>aspnetcore;aspnetcoremvc;testing;unit;tests;fluent;testing;framework;asp;net;core;mvc;test;mymvc;mytested</PackageTags>
-		<PackageIcon>nuget-logo.png</PackageIcon>
-		<PackageProjectUrl>https://mytestedasp.net/</PackageProjectUrl>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc</RepositoryUrl>
-		<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-		<RootNamespace>MyTested.AspNetCore.Mvc</RootNamespace>
-		<IncludeSymbols>true</IncludeSymbols>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-	</PropertyGroup>
+    <PropertyGroup>
+        <Description>My Tested ASP.NET Core MVC configuration components.</Description>
+        <Copyright>2015-2022 Ivaylo Kenov</Copyright>
+        <AssemblyTitle>MyTested.AspNetCore.Mvc.Configuration</AssemblyTitle>
+        <VersionPrefix>7.0.0</VersionPrefix>
+        <Authors>Ivaylo Kenov</Authors>
+        <TargetFramework>net7.0</TargetFramework>
+        <NoWarn>$(NoWarn);CS1591</NoWarn>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <AssemblyName>MyTested.AspNetCore.Mvc.Configuration</AssemblyName>
+        <AssemblyOriginatorKeyFile>../../tools/Key.snk</AssemblyOriginatorKeyFile>
+        <SignAssembly>true</SignAssembly>
+        <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+        <PackageId>MyTested.AspNetCore.Mvc.Configuration</PackageId>
+        <PackageTags>aspnetcore;aspnetcoremvc;testing;unit;tests;fluent;testing;framework;asp;net;core;mvc;test;mymvc;mytested</PackageTags>
+        <PackageIcon>nuget-logo.png</PackageIcon>
+        <PackageProjectUrl>https://mytestedasp.net/</PackageProjectUrl>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc</RepositoryUrl>
+        <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+        <RootNamespace>MyTested.AspNetCore.Mvc</RootNamespace>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
+    </ItemGroup>
 
-	<ItemGroup>
-		<None Include="../../LICENSE" Pack="true" PackagePath="" />
-		<None Include="../../tools/nuget-logo.png" Pack="true" PackagePath="" />
-	</ItemGroup>
+    <ItemGroup>
+        <None Include="../../LICENSE" Pack="true" PackagePath="" />
+        <None Include="../../tools/nuget-logo.png" Pack="true" PackagePath="" />
+    </ItemGroup>
 </Project>

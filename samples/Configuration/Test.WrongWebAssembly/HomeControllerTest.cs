@@ -19,7 +19,7 @@ namespace Test.WrongWebAssembly
                     .View();
             });
 
-            Assert.Equal("Web assembly could not be loaded. The provided 'WrongWebAssembly' name in the 'General:WebAssemblyName' configuration is not valid.", exception.InnerException.Message);
+            Assert.Equal("Web assembly could not be loaded. The provided 'WrongWebAssembly' name in the 'General:WebAssemblyName' configuration is not valid.", exception.InnerException?.Message);
         }
     }
 }

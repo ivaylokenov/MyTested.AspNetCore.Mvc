@@ -19,7 +19,7 @@
         public IActionResult FailingAction() 
             => throw new InvalidOperationException();
 
-        public void Empty() { }
+        public void EmptyAction() { }
 
         public async Task EmptyTask() => await Task.CompletedTask;
 

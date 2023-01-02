@@ -46,8 +46,8 @@
         {
             MyPipeline
                 .Configuration()
-                .ShouldMap("/Home/Empty")
-                .To<HomeController>(c => c.Empty())
+                .ShouldMap("/Home/EmptyAction")
+                .To<HomeController>(c => c.EmptyAction())
                 .Which()
                 .ShouldReturnEmpty();
         }
