@@ -11,7 +11,7 @@
             string fieldName)
             => func
                .Target
-               .GetType()
+               ?.GetType()
                .GetTypeInfo()
                .DeclaredFields
                .FirstOrDefault(m => m.Name == fieldName);

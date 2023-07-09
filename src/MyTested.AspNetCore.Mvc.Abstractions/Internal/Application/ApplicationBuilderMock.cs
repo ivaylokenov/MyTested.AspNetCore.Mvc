@@ -128,10 +128,12 @@
 
         private void ExtractEndpointRoutes(Func<RequestDelegate, RequestDelegate> middleware)
         {
-            var middlewareTypeField = middleware.GetTargetField("middleware");
+            var stateTypeField = middleware.GetTargetField("state");
+            var stateType = stateTypeField?.GetValue(middleware.Target);
 
-            if (!(middlewareTypeField?.GetValue(middleware.Target) is Type middlewareType)
-                || middlewareType.Name != "EndpointMiddleware")
+            var middlewareTypeProperty = stateType?.GetType().GetProperty("Middleware");
+
+            if (middlewareTypeProperty?.GetValue(stateType) is not Type { Name: "EndpointMiddleware" })
             {
                 return;
             }
@@ -157,7 +159,7 @@
                 endpointDataSource
                     .Endpoints
                     .OfType<RouteEndpoint>()
-                    .Where(route => route.Metadata.All(m => 
+                    .Where(route => route.Metadata.All(m =>
                         Reflection.AreNotAssignable(typeof(IRouteTemplateProvider), m.GetType())))
                     .OrderBy(route => route.Order)
                     .ForEach(route =>
