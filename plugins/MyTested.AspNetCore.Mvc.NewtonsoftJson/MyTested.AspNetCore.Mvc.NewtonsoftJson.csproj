@@ -2,11 +2,11 @@
   
   <PropertyGroup>
     <Description>My Tested ASP.NET Core MVC Newtonsoft JSON components.</Description>
-    <Copyright>2015-2022 Ivaylo Kenov</Copyright>
+    <Copyright>2015-2023 Ivaylo Kenov</Copyright>
     <AssemblyTitle>MyTested.AspNetCore.Mvc.NewtonsoftJson</AssemblyTitle>
-    <VersionPrefix>6.0.0</VersionPrefix>
+    <VersionPrefix>7.0.0</VersionPrefix>
     <Authors>Ivaylo Kenov</Authors>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -29,7 +29,7 @@
   </PropertyGroup>
     
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.1" />
   </ItemGroup>
     
   <ItemGroup>

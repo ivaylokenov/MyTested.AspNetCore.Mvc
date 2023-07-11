@@ -19,7 +19,7 @@ namespace Test.WrongTestAssembly
                     .View();
             });
 
-            Assert.Equal("Test assembly could not be loaded. The provided 'WrongTestAssembly' name in the 'General:TestAssemblyName' configuration is not valid.", exception.InnerException.InnerException.Message);
+            Assert.Equal("Test assembly could not be loaded. The provided 'WrongTestAssembly' name in the 'General:TestAssemblyName' configuration is not valid.", exception.InnerException?.InnerException?.Message);
         }
     }
 }

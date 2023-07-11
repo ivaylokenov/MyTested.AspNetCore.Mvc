@@ -47,7 +47,7 @@
                     .WithCookies(new
                     {
                         ObjectCookie = "ObjectCookieValue",
-                        AnotherObjectCookie = "AnotherObjectCookieValue"  
+                        AnotherObjectCookie = "AnotherObjectCookieValue"
                     })
                     .AndAlso()
                     .WithFormField("Field", "FieldValue")
@@ -181,7 +181,7 @@
                     Assert.Equal("AnotherFieldValue", builtRequest.Form["AnotherField"]);
                 });
         }
-        
+
         [Fact]
         public void WithFormAsStringDictionaryShouldWorkCorrectly()
         {
@@ -269,7 +269,7 @@
                     Assert.Equal("AnotherHeaderValue,SecondHeaderValue", builtRequest.Headers["AnotherHeader"]);
                 });
         }
-        
+
         [Fact]
         public void WithHeadersAsObjectDictionaryShouldWorkCorrectly()
         {
@@ -560,7 +560,7 @@
                         Assert.Equal(ContentType.TextPlain, builtRequest.ContentType);
                         Assert.Equal(reader.BaseStream.Length, builtRequest.ContentLength);
                     }
-                });            
+                });
         }
 
         [Fact]
@@ -708,7 +708,7 @@
                 .WithHttpRequest(request => request.WithLocation("/Home/Index"))
                 .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
-                    Assert.Null(builtRequest.Host.Value);
+                    Assert.Equal(string.Empty, builtRequest.Host.Value);
                     Assert.Equal("/Home/Index", builtRequest.PathBase);
                     Assert.Equal("http", builtRequest.Scheme);
                     Assert.Equal("/Home/Index", builtRequest.Path);
@@ -724,7 +724,7 @@
                 .WithHttpRequest(request => request.WithLocation("/Home/Index?test=text"))
                 .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
-                    Assert.Null(builtRequest.Host.Value);
+                    Assert.Equal(string.Empty, builtRequest.Host.Value);
                     Assert.Equal("/Home/Index", builtRequest.PathBase);
                     Assert.Equal("http", builtRequest.Scheme);
                     Assert.Equal("/Home/Index", builtRequest.Path);
