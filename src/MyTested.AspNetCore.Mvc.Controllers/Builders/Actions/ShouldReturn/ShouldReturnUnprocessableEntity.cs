@@ -1,9 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
     using System;
-    using ActionResults.BadRequest;
     using ActionResults.UnprocessableEntity;
-    using Contracts.ActionResults.BadRequest;
     using Contracts.ActionResults.UnprocessableEntity;
     using Contracts.And;
     using Microsoft.AspNetCore.Mvc;

@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Utilities.Extensions
 {
     using System;
-    using System.Threading.Tasks;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
 

@@ -6,7 +6,6 @@ namespace MyTested.AspNetCore.Mvc.Test
     using System.Threading.Tasks;
     using Internal;
     using Internal.Caching;
-    using Internal.Contracts;
     using Internal.Services;
     using Microsoft.Extensions.Caching.Distributed;
     using Microsoft.Extensions.Caching.Memory;

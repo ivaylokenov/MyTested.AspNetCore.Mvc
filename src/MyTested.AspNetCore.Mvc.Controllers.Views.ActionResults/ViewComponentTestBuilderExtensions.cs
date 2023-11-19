@@ -6,7 +6,6 @@
     using Builders.Contracts.ActionResults.View;
     using Exceptions;
     using Microsoft.AspNetCore.Routing;
-    using Utilities;
     using Utilities.Extensions;
     using Utilities.Validators;
 
