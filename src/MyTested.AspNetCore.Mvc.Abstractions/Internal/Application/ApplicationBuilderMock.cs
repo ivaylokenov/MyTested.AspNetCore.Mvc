@@ -128,12 +128,10 @@
 
         private void ExtractEndpointRoutes(Func<RequestDelegate, RequestDelegate> middleware)
         {
-            var stateTypeField = middleware.GetTargetField("state");
-            var stateType = stateTypeField?.GetValue(middleware.Target);
+            var middlewareTypeField = middleware.GetTargetField("_middleware");
+            var middlewareType = middlewareTypeField?.GetValue(middleware.Target);
 
-            var middlewareTypeProperty = stateType?.GetType().GetProperty("Middleware");
-
-            if (middlewareTypeProperty?.GetValue(stateType) is not Type { Name: "EndpointMiddleware" })
+            if (middlewareType is not Type { Name: "EndpointMiddleware" })
             {
                 return;
             }
@@ -220,7 +218,7 @@
 
         private void ExtractLegacyRoutes(Func<RequestDelegate, RequestDelegate> middleware)
         {
-            var middlewareArguments = middleware.GetTargetField("args");
+            var middlewareArguments = middleware.GetTargetField("_args");
 
             if (middlewareArguments?.GetValue(middleware.Target) is object[] argumentsValues)
             {

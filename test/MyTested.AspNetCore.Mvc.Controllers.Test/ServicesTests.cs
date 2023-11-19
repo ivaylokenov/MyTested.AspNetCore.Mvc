@@ -1,4 +1,6 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test
+﻿#pragma warning disable xUnit1030
+#pragma warning disable xUnit1031
+namespace MyTested.AspNetCore.Mvc.Test
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

@@ -41,7 +41,7 @@
                     .WithEntry("key", "value"))
                 .ShouldPassForThe<TempDataComponent>(viewComponent =>
                 {
-                    Assert.Equal(1, viewComponent.ViewContext.TempData.Count);
+                    Assert.Single(viewComponent.ViewContext.TempData);
                 });
         }
 
@@ -62,7 +62,7 @@
                 .Result("POCO")
                 .ShouldPassForThe<PocoViewComponent>(viewComponent =>
                 {
-                    Assert.Equal(1, viewComponent.Context.ViewContext.TempData.Count);
+                    Assert.Single(viewComponent.Context.ViewContext.TempData);
                 });
 
             MyApplication.StartsFrom<DefaultStartup>();

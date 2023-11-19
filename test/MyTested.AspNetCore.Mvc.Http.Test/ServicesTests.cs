@@ -1,4 +1,6 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test
+﻿#pragma warning disable xUnit1030
+#pragma warning disable xUnit1031
+namespace MyTested.AspNetCore.Mvc.Test
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -34,7 +36,7 @@
 
             Assert.Equal(120, builtOptions.Value.MaxModelValidationErrors);
             Assert.Contains(typeof(StringInputFormatter), builtOptions.Value.InputFormatters.Select(f => f.GetType()));
-            Assert.Equal(1, builtOptions.Value.Conventions.Count);
+            Assert.Single(builtOptions.Value.Conventions);
 
             MyApplication.StartsFrom<DefaultStartup>();
         }

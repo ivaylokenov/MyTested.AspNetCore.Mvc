@@ -1,4 +1,6 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test
+﻿#pragma warning disable xUnit1030
+#pragma warning disable xUnit1031
+namespace MyTested.AspNetCore.Mvc.Test
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -115,7 +117,7 @@
                 },
                 "ServicesComponent could not be instantiated because it contains no constructor taking no parameters.");
         }
-        
+
         [Fact]
         public void IActionContextAccessorShouldWorkCorrectlySynchronously()
         {
@@ -415,7 +417,7 @@
                 });
 
             var actionDescriptor = new ActionDescriptor { DisplayName = "Test" };
-            
+
             MyViewComponent<AccessorComponent>
                 .Instance()
                 .WithViewComponentContext(context =>
@@ -431,7 +433,7 @@
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
-        
+
         [Fact]
         public void WithCustomViewContextShouldSetItToAccessor()
         {
