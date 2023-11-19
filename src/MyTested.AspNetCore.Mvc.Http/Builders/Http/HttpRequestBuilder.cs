@@ -205,7 +205,7 @@
         /// <inheritdoc />
         public IAndHttpRequestBuilder WithHeader(string name, string value)
         {
-            this.request.Headers.Add(name, value);
+            this.request.Headers.Append(name, value);
             return this;
         }
 
@@ -220,7 +220,7 @@
         /// <inheritdoc />
         public IAndHttpRequestBuilder WithHeader(string name, StringValues values)
         {
-            this.request.Headers.Add(name, values);
+            this.request.Headers.Append(name, values);
             return this;
         }
 

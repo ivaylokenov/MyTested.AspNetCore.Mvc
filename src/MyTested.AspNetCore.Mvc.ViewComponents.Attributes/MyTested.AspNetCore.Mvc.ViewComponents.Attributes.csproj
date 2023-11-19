@@ -4,9 +4,9 @@
     <Description>My Tested ASP.NET Core MVC view component attribute assertion methods.</Description>
     <Copyright>2015-2023 Ivaylo Kenov</Copyright>
     <AssemblyTitle>MyTested.AspNetCore.Mvc.ViewComponents.Attributes</AssemblyTitle>
-    <VersionPrefix>7.0.0</VersionPrefix>
+    <VersionPrefix>8.0.0</VersionPrefix>
     <Authors>Ivaylo Kenov</Authors>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

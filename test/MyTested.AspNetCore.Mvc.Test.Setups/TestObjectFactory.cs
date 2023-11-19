@@ -76,9 +76,9 @@
 
             response.ContentType = ContentType.ApplicationJson;
             response.StatusCode = 500;
-            response.Headers.Add("TestHeader", "TestHeaderValue");
-            response.Headers.Add("AnotherTestHeader", "AnotherTestHeaderValue");
-            response.Headers.Add("MultipleTestHeader", new[] { "FirstMultipleTestHeaderValue", "AnotherMultipleTestHeaderValue" });
+            response.Headers.Append("TestHeader", "TestHeaderValue");
+            response.Headers.Append("AnotherTestHeader", "AnotherTestHeaderValue");
+            response.Headers.Append("MultipleTestHeader", new[] { "FirstMultipleTestHeaderValue", "AnotherMultipleTestHeaderValue" });
             response.Cookies.Append(
                 "TestCookie",
                 "TestCookieValue",

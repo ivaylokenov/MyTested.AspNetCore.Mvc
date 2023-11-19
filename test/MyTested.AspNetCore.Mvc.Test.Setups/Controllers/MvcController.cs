@@ -225,7 +225,7 @@
 
         public void CustomCookieHeadersAction(string cookie)
         {
-            this.Response.Headers.Add("Set-Cookie", cookie);
+            this.Response.Headers.Append("Set-Cookie", cookie);
         }
 
         public IActionResult CustomResponseAction()

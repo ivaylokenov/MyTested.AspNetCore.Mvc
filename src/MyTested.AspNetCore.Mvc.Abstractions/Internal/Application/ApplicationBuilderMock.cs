@@ -103,7 +103,7 @@
             RequestDelegate app = context =>
             {
                 context.Response.StatusCode = 404;
-                return Task.FromResult(0);
+                return Task.CompletedTask;
             };
 
             foreach (var component in this.components.Reverse())
