@@ -5,7 +5,7 @@
     [ApiController]
     [ApiVersion("2.0")]
     [Route("api/versioning")]
-    public class QueryVersioningController : Controller
+    public class QueryVersioningController : ControllerBase
     {
         [HttpGet]
         public IActionResult Index() => this.Ok();

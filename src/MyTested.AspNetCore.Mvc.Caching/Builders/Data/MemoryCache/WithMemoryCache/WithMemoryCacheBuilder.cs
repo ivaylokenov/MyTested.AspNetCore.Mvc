@@ -6,7 +6,6 @@
     using Contracts.Data.MemoryCache;
     using Data.MemoryCache;
     using Microsoft.Extensions.Caching.Memory;
-    using Microsoft.Extensions.DependencyInjection;
     using Utilities.Extensions;
 
     /// <inheritdoc />

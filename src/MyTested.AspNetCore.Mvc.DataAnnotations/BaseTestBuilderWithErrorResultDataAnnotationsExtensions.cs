@@ -4,7 +4,6 @@
     using Builders.Contracts.Base;
     using Builders.Contracts.Models;
     using Builders.Models;
-    using Exceptions;
     using Internal.Contracts.ActionResults;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;

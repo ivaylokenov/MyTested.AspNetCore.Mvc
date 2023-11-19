@@ -1,6 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Controllers
 {
-    using System;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 

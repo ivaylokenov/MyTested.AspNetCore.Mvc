@@ -34,7 +34,7 @@
 
             Assert.Equal(120, builtOptions.Value.MaxModelValidationErrors);
             Assert.Contains(typeof(StringInputFormatter), builtOptions.Value.InputFormatters.Select(f => f.GetType()));
-            Assert.Equal(1, builtOptions.Value.Conventions.Count);
+            Assert.Single(builtOptions.Value.Conventions);
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -80,7 +80,7 @@
         }
 
         [Fact]
-        public void HttpContextAccessorShouldWorkCorrectlyAsynchronously()
+        public async Task HttpContextAccessorShouldWorkCorrectlyAsynchronously()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -89,7 +89,7 @@
                     services.AddHttpContextAccessor();
                 });
 
-            Task
+            await Task
                 .Run(async () =>
                 {
                     HttpContext firstContextAsync = null;
@@ -165,10 +165,7 @@
                     Assert.NotSame(thirdContextAsync, fourthContextAsync);
                     Assert.NotSame(fourthContextAsync, fifthContextAsync);
                     Assert.NotSame(thirdContextAsync, fifthContextAsync);
-                })
-                .ConfigureAwait(false)
-                .GetAwaiter()
-                .GetResult();
+                });
 
             MyApplication.StartsFrom<DefaultStartup>();
         }

@@ -1,6 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using Internal.Contracts;
     using Microsoft.AspNetCore.Mvc;

@@ -1,5 +1,3 @@
-using System;
-
 namespace Autofac.NoContainerBuilder.Web.Models
 {
     public class ErrorViewModel

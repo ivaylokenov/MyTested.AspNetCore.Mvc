@@ -4,7 +4,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Contracts.Attributes;
     using Internal.TestContexts;
-    using Utilities;
 
     /// <summary>
     /// Used for testing <see cref="MiddlewareFilterAttribute"/>.

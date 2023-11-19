@@ -4,8 +4,9 @@
 
     [ApiController]
     [ApiVersion("2.0")]
+    [ApiVersion("3.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
-    public class VersioningController : Controller
+    public class VersioningController : ControllerBase
     {
         [HttpGet]
         public IActionResult Index() => this.Ok();

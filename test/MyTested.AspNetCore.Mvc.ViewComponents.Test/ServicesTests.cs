@@ -115,7 +115,7 @@
                 },
                 "ServicesComponent could not be instantiated because it contains no constructor taking no parameters.");
         }
-        
+
         [Fact]
         public void IActionContextAccessorShouldWorkCorrectlySynchronously()
         {
@@ -153,7 +153,7 @@
         }
 
         [Fact]
-        public void IActionContextAccessorShouldWorkCorrectlyAsynchronously()
+        public async Task IActionContextAccessorShouldWorkCorrectlyAsynchronously()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -162,7 +162,7 @@
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
                 });
 
-            Task
+            await Task
                 .Run(async () =>
                 {
                     ActionContext firstContextAsync = null;
@@ -238,10 +238,7 @@
                     Assert.NotSame(thirdContextAsync, fourthContextAsync);
                     Assert.NotSame(fourthContextAsync, fifthContextAsync);
                     Assert.NotSame(thirdContextAsync, fifthContextAsync);
-                })
-                .ConfigureAwait(false)
-                .GetAwaiter()
-                .GetResult();
+                });
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -415,7 +412,7 @@
                 });
 
             var actionDescriptor = new ActionDescriptor { DisplayName = "Test" };
-            
+
             MyViewComponent<AccessorComponent>
                 .Instance()
                 .WithViewComponentContext(context =>
@@ -431,7 +428,7 @@
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
-        
+
         [Fact]
         public void WithCustomViewContextShouldSetItToAccessor()
         {

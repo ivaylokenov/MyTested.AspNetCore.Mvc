@@ -287,7 +287,7 @@
                         .ShouldHave()
                         .HttpResponse(response => response.ContainingCookie("Test"));
                 },
-                "When calling CustomCookieHeadersAction action in MvcController expected HTTP response to have set cookies, but none were found.");
+                "When calling CustomCookieHeadersAction action in MvcController expected HTTP response headers to contain header with 'Set-Cookie' name, but such was not found.");
         }
 
         [Fact]
@@ -302,7 +302,7 @@
                         .ShouldHave()
                         .HttpResponse(response => response.ContainingCookie("Test"));
                 },
-                "When calling CustomCookieHeadersAction action in MvcController expected HTTP response to have valid cookie values, but some of them were invalid.");
+                "When calling CustomCookieHeadersAction action in MvcController expected HTTP response headers to contain header with 'Set-Cookie' name, but such was not found.");
         }
 
         [Fact]

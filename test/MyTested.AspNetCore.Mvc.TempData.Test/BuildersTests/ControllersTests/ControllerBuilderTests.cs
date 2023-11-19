@@ -41,7 +41,7 @@
                     .WithEntry("key", "value"))
                 .ShouldPassForThe<MvcController>(controller =>
                 {
-                    Assert.Equal(1, controller.TempData.Count);
+                    Assert.Single(controller.TempData);
                 });
         }
 

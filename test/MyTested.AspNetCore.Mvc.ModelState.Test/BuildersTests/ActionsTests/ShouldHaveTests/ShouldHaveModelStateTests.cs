@@ -1,8 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ActionsTests.ShouldHaveTests
 {
     using Exceptions;
-    using Microsoft.Extensions.DependencyInjection;
-    using Plugins;
     using Setups;
     using Setups.Controllers;
     using Setups.ViewComponents;

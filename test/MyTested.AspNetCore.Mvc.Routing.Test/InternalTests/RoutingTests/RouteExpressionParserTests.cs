@@ -24,7 +24,7 @@
 
             Assert.Equal(controllerName, result.ControllerName);
             Assert.Equal(actionName, result.Action);
-            Assert.Equal(0, result.ActionArguments.Count);
+            Assert.Empty(result.ActionArguments);
         }
 
         [Theory]
@@ -53,7 +53,7 @@
 
             Assert.Equal("Route", result.ControllerName);
             Assert.Equal("Index", result.Action);
-            Assert.Equal(0, result.ActionArguments.Count);
+            Assert.Empty(result.ActionArguments);
         }
 
         [Fact]
@@ -82,7 +82,7 @@
 
             Assert.Equal("Poco", result.ControllerName);
             Assert.Equal("Action", result.Action);
-            Assert.Equal(1, result.ActionArguments.Count);
+            Assert.Single(result.ActionArguments);
             Assert.True(result.ActionArguments.ContainsKey("id"));
             Assert.Equal(1, result.ActionArguments["id"].Value);
         }
@@ -101,7 +101,7 @@
             Assert.True(result.ActionArguments.ContainsKey("area"));
             Assert.Equal("MyArea", result.ActionArguments["area"].Value);
         }
-        
+
         [Fact]
         public void ParseCustomConventionsCustomConventionsAreParsed()
         {
@@ -110,7 +110,7 @@
 
             Assert.Equal("ChangedController", result.ControllerName);
             Assert.Equal("ChangedAction", result.Action);
-            Assert.Equal(1, result.ActionArguments.Count);
+            Assert.Single(result.ActionArguments);
             Assert.True(result.ActionArguments.ContainsKey("ChangedParameter"));
             Assert.Equal(1, result.ActionArguments["ChangedParameter"].Value);
         }
@@ -123,7 +123,7 @@
 
             Assert.Equal("ChangedController", result.ControllerName);
             Assert.Equal("ChangedAction", result.Action);
-            Assert.Equal(1, result.ActionArguments.Count);
+            Assert.Single(result.ActionArguments);
             Assert.True(result.ActionArguments.ContainsKey("id"));
             Assert.Equal(1, result.ActionArguments["id"].Value);
         }
@@ -197,13 +197,13 @@
                     controllerName,
                     actionName,
                     new Dictionary<string, object> { ["id"] = 1 });
-                
+
                 data.Add(
                     c => c.ActionWithOverloads(With.No<int?>()),
                     controllerName,
                     actionName,
                     new Dictionary<string, object>());
-                
+
                 data.Add(
                     c => c.ActionWithOverloads(With.No<int>()),
                     controllerName,

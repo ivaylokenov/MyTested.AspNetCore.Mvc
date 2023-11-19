@@ -13,12 +13,11 @@ build:
   project: MyTested.AspNetCore.Mvc.sln
   verbosity: minimal
 test_script:
-- cmd: dotnet test "samples/MusicStore/MusicStore.Test/MusicStore.Test.csproj" --configuration Release --no-build
-- cmd: dotnet test "samples/Blog/Blog.Test/Blog.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "samples/ApplicationParts/ApplicationParts.Test/ApplicationParts.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "samples/Autofac/Autofac.AssemblyInit.Test/Autofac.AssemblyInit.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "samples/Autofac/Autofac.NoContainerBuilder.Test/Autofac.NoContainerBuilder.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "samples/Autofac/Autofac.Test/Autofac.Test.csproj" --configuration Release --no-build
+- cmd: dotnet test "samples/Blog/Blog.Test/Blog.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "samples/Configuration/Test.DifferentEnvironment/Test.DifferentEnvironment.csproj" --configuration Release --no-build
 - cmd: dotnet test "samples/Configuration/Test.ExplicitNoStartupType/Test.ExplicitNoStartupType.csproj" --configuration Release --no-build
 - cmd: dotnet test "samples/Configuration/Test.MissingStartupType/Test.MissingStartupType.csproj" --configuration Release --no-build
@@ -28,6 +27,7 @@ test_script:
 - cmd: dotnet test "samples/Configuration/Test.WrongStartupType/Test.WrongStartupType.csproj" --configuration Release --no-build
 - cmd: dotnet test "samples/Configuration/Test.WrongTestAssembly/Test.WrongTestAssembly.csproj" --configuration Release --no-build
 - cmd: dotnet test "samples/Configuration/Test.WrongWebAssembly/Test.WrongWebAssembly.csproj" --configuration Release --no-build
+- cmd: dotnet test "samples/MusicStore/MusicStore.Test/MusicStore.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "samples/NoStartup/NoStartup.Test/NoStartup.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "samples/WebStartup/WebStartup.Test/WebStartup.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Abstractions.Test/MyTested.AspNetCore.Mvc.Abstractions.Test.csproj" --configuration Release --no-build
@@ -49,11 +49,14 @@ test_script:
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.NewtonsoftJson.Test/MyTested.AspNetCore.Mvc.NewtonsoftJson.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Options.Test/MyTested.AspNetCore.Mvc.Options.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Pipeline.Test/MyTested.AspNetCore.Mvc.Pipeline.Test.csproj" --configuration Release --no-build
+- cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Razor.RuntimeCompilation.Test/MyTested.AspNetCore.Mvc.Razor.RuntimeCompilation.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Routing.Test/MyTested.AspNetCore.Mvc.Routing.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Session.Test/MyTested.AspNetCore.Mvc.Session.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.TempData.Test/MyTested.AspNetCore.Mvc.TempData.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Test/MyTested.AspNetCore.Mvc.Test.csproj" --configuration Release --no-build
+- cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Test.Setups/MyTested.AspNetCore.Mvc.Test.Setups.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Universe.Test/MyTested.AspNetCore.Mvc.Universe.Test.csproj" --configuration Release --no-build
+- cmd: dotnet test "test/MyTested.AspNetCore.Mvc.Versioning.Test/MyTested.AspNetCore.Mvc.Versioning.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.ViewComponents.Attributes.Test/MyTested.AspNetCore.Mvc.ViewComponents.Attributes.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.ViewComponents.Results.Test/MyTested.AspNetCore.Mvc.ViewComponents.Results.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "test/MyTested.AspNetCore.Mvc.ViewComponents.Test/MyTested.AspNetCore.Mvc.ViewComponents.Test.csproj" --configuration Release --no-build

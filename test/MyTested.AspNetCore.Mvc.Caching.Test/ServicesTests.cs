@@ -4,7 +4,6 @@
     using System.Threading.Tasks;
     using Internal;
     using Internal.Caching;
-    using Internal.Contracts;
     using Internal.Services;
     using Microsoft.Extensions.Caching.Distributed;
     using Microsoft.Extensions.Caching.Memory;
@@ -53,7 +52,7 @@
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
-        
+
         [Fact]
         public void MockMemoryCacheShouldBeDifferentForEveryViewComponentCallSynchronously()
         {
@@ -149,9 +148,9 @@
         }
 
         [Fact]
-        public void MockMemoryCacheShouldBeDifferentForEveryCallAsynchronously()
+        public async Task MockMemoryCacheShouldBeDifferentForEveryCallAsynchronously()
         {
-            Task
+            await Task
                 .Run(async () =>
                 {
                     MyApplication
@@ -215,10 +214,7 @@
                     Assert.Equal("fifth", fifthValue);
 
                     MyApplication.StartsFrom<DefaultStartup>();
-                })
-                .ConfigureAwait(false)
-                .GetAwaiter()
-                .GetResult();
+                });
         }
 
         [Fact]
@@ -243,7 +239,7 @@
             // second call should not have cache entries
             MyController<MvcController>
                 .Instance()
-                .WithDistributedCache(cache => cache.WithEntry("test", new byte[] { 127, 127,127 }))
+                .WithDistributedCache(cache => cache.WithEntry("test", new byte[] { 127, 127, 127 }))
                 .Calling(c => c.DistributedCacheAction())
                 .ShouldReturn()
                 .Ok();
@@ -268,7 +264,7 @@
 
             // second call should not have cache entries
             controller
-                .WithDistributedCache(cache => cache.WithEntry("test", new byte[] { 127, 127,127 }))
+                .WithDistributedCache(cache => cache.WithEntry("test", new byte[] { 127, 127, 127 }))
                 .Calling(c => c.DistributedCacheAction())
                 .ShouldReturn()
                 .Ok();

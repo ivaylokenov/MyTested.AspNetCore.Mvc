@@ -29,7 +29,7 @@
             Assert.Equal(typeof(HomeController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Home", routeInfo.ControllerName);
             Assert.Equal("Index", routeInfo.Action);
-            Assert.Equal(0, routeInfo.ActionArguments.Count);
+            Assert.Empty(routeInfo.ActionArguments);
             Assert.True(routeInfo.ModelState.IsValid);
         }
 
@@ -46,7 +46,7 @@
             Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("AnotherName", routeInfo.Action);
-            Assert.Equal(0, routeInfo.ActionArguments.Count);
+            Assert.Empty(routeInfo.ActionArguments);
             Assert.True(routeInfo.ModelState.IsValid);
         }
 
@@ -63,7 +63,7 @@
             Assert.Equal(typeof(RouteController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Route", routeInfo.ControllerName);
             Assert.Equal("Index", routeInfo.Action);
-            Assert.Equal(0, routeInfo.ActionArguments.Count);
+            Assert.Empty(routeInfo.ActionArguments);
             Assert.True(routeInfo.ModelState.IsValid);
         }
 
@@ -80,7 +80,7 @@
             Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("ActionWithParameters", routeInfo.Action);
-            Assert.Equal(1, routeInfo.ActionArguments.Count);
+            Assert.Single(routeInfo.ActionArguments);
             Assert.Equal(5, routeInfo.ActionArguments["id"].Value);
             Assert.True(routeInfo.ModelState.IsValid);
         }
@@ -98,7 +98,7 @@
             Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("ActionWithStringParameters", routeInfo.Action);
-            Assert.Equal(1, routeInfo.ActionArguments.Count);
+            Assert.Single(routeInfo.ActionArguments);
             Assert.Equal("Test", routeInfo.ActionArguments["id"].Value);
             Assert.True(routeInfo.ModelState.IsValid);
         }
@@ -116,7 +116,7 @@
             Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("ActionWithParameters", routeInfo.Action);
-            Assert.Equal(0, routeInfo.ActionArguments.Count);
+            Assert.Empty(routeInfo.ActionArguments);
             Assert.False(routeInfo.ModelState.IsValid);
         }
 
@@ -153,7 +153,7 @@
             Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("GetMethod", routeInfo.Action);
-            Assert.Equal(0, routeInfo.ActionArguments.Count);
+            Assert.Empty(routeInfo.ActionArguments);
             Assert.True(routeInfo.ModelState.IsValid);
         }
 
@@ -206,7 +206,7 @@
             Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("QueryString", routeInfo.Action);
-            Assert.Equal(1, routeInfo.ActionArguments.Count);
+            Assert.Single(routeInfo.ActionArguments);
             Assert.Equal("test", routeInfo.ActionArguments["first"].Value);
             Assert.True(routeInfo.ModelState.IsValid);
         }
@@ -224,7 +224,7 @@
             Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("QueryString", routeInfo.Action);
-            Assert.Equal(0, routeInfo.ActionArguments.Count);
+            Assert.Empty(routeInfo.ActionArguments);
             Assert.True(routeInfo.ModelState.IsValid);
         }
 
@@ -267,7 +267,7 @@
             Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("ActionWithModel", routeInfo.Action);
-            Assert.Equal(1, routeInfo.ActionArguments.Count);
+            Assert.Single(routeInfo.ActionArguments);
             Assert.Equal(5, routeInfo.ActionArguments["id"].Value);
             Assert.False(routeInfo.ActionArguments.ContainsKey("model"));
             Assert.False(routeInfo.ModelState.IsValid);
@@ -344,7 +344,7 @@
             Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("FiltersAction", routeInfo.Action);
-            Assert.Equal(0, routeInfo.ActionArguments.Count);
+            Assert.Empty(routeInfo.ActionArguments);
             Assert.True(routeInfo.ModelState.IsValid);
         }
 
