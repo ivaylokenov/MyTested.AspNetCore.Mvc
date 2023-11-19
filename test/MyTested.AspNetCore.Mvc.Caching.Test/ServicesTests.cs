@@ -1,6 +1,4 @@
-﻿#pragma warning disable xUnit1030
-#pragma warning disable xUnit1031
-namespace MyTested.AspNetCore.Mvc.Test
+﻿namespace MyTested.AspNetCore.Mvc.Test
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -54,7 +52,7 @@ namespace MyTested.AspNetCore.Mvc.Test
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
-        
+
         [Fact]
         public void MockMemoryCacheShouldBeDifferentForEveryViewComponentCallSynchronously()
         {
@@ -150,9 +148,9 @@ namespace MyTested.AspNetCore.Mvc.Test
         }
 
         [Fact]
-        public void MockMemoryCacheShouldBeDifferentForEveryCallAsynchronously()
+        public async Task MockMemoryCacheShouldBeDifferentForEveryCallAsynchronously()
         {
-            Task
+            await Task
                 .Run(async () =>
                 {
                     MyApplication
@@ -216,10 +214,7 @@ namespace MyTested.AspNetCore.Mvc.Test
                     Assert.Equal("fifth", fifthValue);
 
                     MyApplication.StartsFrom<DefaultStartup>();
-                })
-                .ConfigureAwait(false)
-                .GetAwaiter()
-                .GetResult();
+                });
         }
 
         [Fact]
@@ -244,7 +239,7 @@ namespace MyTested.AspNetCore.Mvc.Test
             // second call should not have cache entries
             MyController<MvcController>
                 .Instance()
-                .WithDistributedCache(cache => cache.WithEntry("test", new byte[] { 127, 127,127 }))
+                .WithDistributedCache(cache => cache.WithEntry("test", new byte[] { 127, 127, 127 }))
                 .Calling(c => c.DistributedCacheAction())
                 .ShouldReturn()
                 .Ok();
@@ -269,7 +264,7 @@ namespace MyTested.AspNetCore.Mvc.Test
 
             // second call should not have cache entries
             controller
-                .WithDistributedCache(cache => cache.WithEntry("test", new byte[] { 127, 127,127 }))
+                .WithDistributedCache(cache => cache.WithEntry("test", new byte[] { 127, 127, 127 }))
                 .Calling(c => c.DistributedCacheAction())
                 .ShouldReturn()
                 .Ok();

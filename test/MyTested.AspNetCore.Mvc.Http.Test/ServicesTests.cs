@@ -1,6 +1,4 @@
-﻿#pragma warning disable xUnit1030
-#pragma warning disable xUnit1031
-namespace MyTested.AspNetCore.Mvc.Test
+﻿namespace MyTested.AspNetCore.Mvc.Test
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -82,7 +80,7 @@ namespace MyTested.AspNetCore.Mvc.Test
         }
 
         [Fact]
-        public void HttpContextAccessorShouldWorkCorrectlyAsynchronously()
+        public async Task HttpContextAccessorShouldWorkCorrectlyAsynchronously()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -91,7 +89,7 @@ namespace MyTested.AspNetCore.Mvc.Test
                     services.AddHttpContextAccessor();
                 });
 
-            Task
+            await Task
                 .Run(async () =>
                 {
                     HttpContext firstContextAsync = null;
@@ -167,10 +165,7 @@ namespace MyTested.AspNetCore.Mvc.Test
                     Assert.NotSame(thirdContextAsync, fourthContextAsync);
                     Assert.NotSame(fourthContextAsync, fifthContextAsync);
                     Assert.NotSame(thirdContextAsync, fifthContextAsync);
-                })
-                .ConfigureAwait(false)
-                .GetAwaiter()
-                .GetResult();
+                });
 
             MyApplication.StartsFrom<DefaultStartup>();
         }

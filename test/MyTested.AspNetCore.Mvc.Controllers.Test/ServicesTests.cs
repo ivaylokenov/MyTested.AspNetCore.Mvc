@@ -1,6 +1,4 @@
-﻿#pragma warning disable xUnit1030
-#pragma warning disable xUnit1031
-namespace MyTested.AspNetCore.Mvc.Test
+﻿namespace MyTested.AspNetCore.Mvc.Test
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -140,7 +138,7 @@ namespace MyTested.AspNetCore.Mvc.Test
         }
 
         [Fact]
-        public void IActionContextAccessorShouldWorkCorrectlyAsynchronously()
+        public async Task IActionContextAccessorShouldWorkCorrectlyAsynchronously()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -149,7 +147,7 @@ namespace MyTested.AspNetCore.Mvc.Test
                     services.AddActionContextAccessor();
                 });
 
-            Task
+            await Task
                 .Run(async () =>
                 {
                     ActionContext firstContextAsync = null;
@@ -225,10 +223,7 @@ namespace MyTested.AspNetCore.Mvc.Test
                     Assert.NotSame(thirdContextAsync, fourthContextAsync);
                     Assert.NotSame(fourthContextAsync, fifthContextAsync);
                     Assert.NotSame(thirdContextAsync, fifthContextAsync);
-                })
-                .ConfigureAwait(false)
-                .GetAwaiter()
-                .GetResult();
+                });
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -312,7 +307,7 @@ namespace MyTested.AspNetCore.Mvc.Test
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
-        
+
         [Fact]
         public void WithControllerContextFuncShouldSetItToAccessor()
         {
@@ -323,7 +318,7 @@ namespace MyTested.AspNetCore.Mvc.Test
                     services.AddActionContextAccessor();
                 });
 
-            var actionDescriptor = new ControllerActionDescriptor { DisplayName = "Test" };;
+            var actionDescriptor = new ControllerActionDescriptor { DisplayName = "Test" };
 
             MyController<ActionContextController>
                 .Instance()
