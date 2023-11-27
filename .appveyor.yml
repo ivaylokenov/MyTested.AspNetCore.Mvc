@@ -7,12 +7,8 @@ branches:
 image: Visual Studio 2022
 configuration: Release
 clone_depth: 1
-install:
-- ps: |
-    dotnet tool install -g InheritDocTool
-    Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile dotnet-install.ps1
-    ./dotnet-install.ps1 -Channel 8.0
 before_build:
+- cmd: choco install dotnet-sdk --version 8.0.100
 - cmd: dotnet restore
 build:
   project: MyTested.AspNetCore.Mvc.sln
