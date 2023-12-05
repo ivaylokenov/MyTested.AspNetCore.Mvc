@@ -8,7 +8,6 @@ image: Visual Studio 2022
 configuration: Release
 clone_depth: 1
 before_build:
-- cmd: choco install dotnet-sdk --version 8.0.100
 - cmd: dotnet restore
 build:
   project: MyTested.AspNetCore.Mvc.sln
