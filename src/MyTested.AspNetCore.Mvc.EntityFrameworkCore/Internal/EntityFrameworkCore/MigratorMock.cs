@@ -7,11 +7,13 @@
     public class MigratorMock : IMigrator
     {
         public string GenerateScript(
-            string fromMigration = null, 
-            string toMigration = null, 
-            MigrationsSqlGenerationOptions options = 
-            MigrationsSqlGenerationOptions.Default)
+            string fromMigration = null,
+            string toMigration = null,
+            MigrationsSqlGenerationOptions options = MigrationsSqlGenerationOptions.Default)
             => string.Empty;
+
+        public bool HasPendingModelChanges()
+            => false;
 
         public void Migrate(string targetMigration = null)
         {
