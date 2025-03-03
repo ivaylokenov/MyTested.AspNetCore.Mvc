@@ -72,6 +72,9 @@
         private static void AddScopedDatabase<TDbContextService, TDbContextImplementation>(IServiceCollection serviceCollection)
             where TDbContextImplementation : DbContext, TDbContextService
         {
+            // See: https://github.com/dotnet/efcore/issues/35126#issuecomment-2576387727
+            serviceCollection.RemoveAll<IDbContextOptionsConfiguration<TDbContextImplementation>>();
+
             serviceCollection.AddScoped(s => s.GetRequiredService<TDbContextService>() as DbContext);
 
             if (typeof(TDbContextService) != typeof(TDbContextImplementation))
