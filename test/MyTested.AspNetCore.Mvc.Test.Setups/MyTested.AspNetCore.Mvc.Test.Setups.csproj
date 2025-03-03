@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
+    <NoWarn>$(NoWarn);ASP0026</NoWarn>
     <AssemblyName>MyTested.AspNetCore.Mvc.Test.Setups</AssemblyName>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyOriginatorKeyFile>../../tools/Key.snk</AssemblyOriginatorKeyFile>
