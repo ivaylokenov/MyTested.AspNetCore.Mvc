@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.InternalTests.RoutingTests
 {
+    using System;
     using System.IO;
     using System.Reflection;
     using Internal.Application;
@@ -303,6 +304,8 @@
         [Fact]
         public void ResolveShouldReturnProperErrorWhenTwoActionsAreMatched()
         {
+            var newLine = Environment.NewLine;
+            
             var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
@@ -310,7 +313,7 @@
 
             Assert.False(routeInfo.IsResolved);
             Assert.Equal(
-                "exception was thrown when trying to select an action: 'Multiple actions matched. The following actions matched route data and had all constraints satisfied:\n\nMyTested.AspNetCore.Mvc.Test.Setups.Routing.NormalController.ActionWithOverloads (MyTested.AspNetCore.Mvc.Test.Setups)\nMyTested.AspNetCore.Mvc.Test.Setups.Routing.NormalController.ActionWithOverloads (MyTested.AspNetCore.Mvc.Test.Setups)'",
+                $"exception was thrown when trying to select an action: 'Multiple actions matched. The following actions matched route data and had all constraints satisfied:{newLine}{newLine}MyTested.AspNetCore.Mvc.Test.Setups.Routing.NormalController.ActionWithOverloads (MyTested.AspNetCore.Mvc.Test.Setups){newLine}MyTested.AspNetCore.Mvc.Test.Setups.Routing.NormalController.ActionWithOverloads (MyTested.AspNetCore.Mvc.Test.Setups)'",
                 routeInfo.UnresolvedError);
             Assert.Null(routeInfo.ControllerType);
             Assert.Null(routeInfo.ControllerName);
