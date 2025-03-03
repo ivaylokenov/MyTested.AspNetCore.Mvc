@@ -430,7 +430,7 @@
 
         private void ValidateHeaderValues(string name, string expectedValue, StringValues headerValues)
         {
-            if (!headerValues.Contains(expectedValue) && string.Join(",", headerValues) != expectedValue)
+            if (!headerValues.Contains(expectedValue) && string.Join(",", headerValues.ToArray()) != expectedValue)
             {
                 this.ThrowNewHttpResponseAssertionException(
                     "headers",
