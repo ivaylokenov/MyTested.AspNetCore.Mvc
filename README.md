@@ -60,7 +60,7 @@
 
 *Ubuntu & Mac OS:* [![Build Status](https://travis-ci.org/ivaylokenov/MyTested.AspNetCore.Mvc.svg?branch=development)](https://travis-ci.com/ivaylokenov/MyTested.AspNetCore.Mvc) 
 
-*Downloads:* [![NuGet Badge](https://buildstats.info/nuget/MyTested.AspNetCore.Mvc)](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc/)
+*Downloads:* [![NuGet Badge](https://img.shields.io/nuget/v/MyTested.AspNetCore.Mvc)](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc/)
 
 <img src="https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/version-3.1/tools/test-sample.gif" />
 
