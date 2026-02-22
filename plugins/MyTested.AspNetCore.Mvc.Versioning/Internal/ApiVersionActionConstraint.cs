@@ -5,6 +5,8 @@ namespace MyTested.AspNetCore.Mvc.Internal
     using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.ActionConstraints;
     using Microsoft.AspNetCore.Routing;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Options;
 
     internal class ApiVersionActionConstraint : IActionConstraint
     {
@@ -67,16 +69,20 @@ namespace MyTested.AspNetCore.Mvc.Internal
                 return parsedVersion;
             }
 
-            var queryVersion = context.HttpContext.Request.Query["api-version"].FirstOrDefault();
-            if (queryVersion != null && parser.TryParse(queryVersion, out var parsedQueryVersion))
-            {
-                return parsedQueryVersion;
-            }
+            var reader = context.HttpContext.RequestServices
+                ?.GetService<IOptions<ApiVersioningOptions>>()
+                ?.Value
+                ?.ApiVersionReader;
 
-            var headerVersion = context.HttpContext.Request.Headers["x-api-version"].FirstOrDefault();
-            if (headerVersion != null && parser.TryParse(headerVersion, out var parsedHeaderVersion))
+            if (reader != null)
             {
-                return parsedHeaderVersion;
+                var rawVersions = reader.Read(context.HttpContext.Request);
+
+                if (rawVersions.Count > 0
+                    && parser.TryParse(rawVersions[0], out var parsedReaderVersion))
+                {
+                    return parsedReaderVersion;
+                }
             }
 
             return null;

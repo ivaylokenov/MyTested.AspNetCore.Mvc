@@ -28,7 +28,7 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.RoutingTests
         {
             MyRouting
                 .Configuration()
-                .ShouldMap("api/versioning?api-version=2.0")
+                .ShouldMap("api/versioning?v=2.0")
                 .To<QueryVersioningController>(c => c.Index());
         }
 
@@ -37,7 +37,7 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.RoutingTests
         {
             MyRouting
                 .Configuration()
-                .ShouldMap("api/versioning?api-version=1.0")
+                .ShouldMap("api/versioning?v=1.0")
                 .ToNonExistingRoute();
         }
 
@@ -57,7 +57,7 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.RoutingTests
                 .Configuration()
                 .ShouldMap(request => request
                     .WithLocation("api/header-versioning")
-                    .WithHeader("x-api-version", "1.0"))
+                    .WithHeader("X-Custom-Version", "1.0"))
                 .To<HeaderVersioningController>(c => c.Index());
         }
 
@@ -68,7 +68,7 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.RoutingTests
                 .Configuration()
                 .ShouldMap(request => request
                     .WithLocation("api/header-versioning")
-                    .WithHeader("x-api-version", "2.0"))
+                    .WithHeader("X-Custom-Version", "2.0"))
                 .ToNonExistingRoute();
         }
 
@@ -77,7 +77,7 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.RoutingTests
         {
             MyRouting
                 .Configuration()
-                .ShouldMap("api/neutral-query?api-version=99.0")
+                .ShouldMap("api/neutral-query?v=99.0")
                 .To<NeutralQueryController>(c => c.Index());
         }
 
@@ -97,7 +97,7 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.RoutingTests
                 .Configuration()
                 .ShouldMap(request => request
                     .WithLocation("api/neutral-header")
-                    .WithHeader("x-api-version", "99.0"))
+                    .WithHeader("X-Custom-Version", "99.0"))
                 .To<NeutralHeaderController>(c => c.Index());
         }
 
@@ -142,7 +142,7 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.RoutingTests
         {
             MyRouting
                 .Configuration()
-                .ShouldMap("api/query-competing?api-version=1.0")
+                .ShouldMap("api/query-competing?v=1.0")
                 .To<QueryCompetingV1Controller>(c => c.Index());
         }
 
@@ -151,7 +151,7 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.RoutingTests
         {
             MyRouting
                 .Configuration()
-                .ShouldMap("api/query-competing?api-version=2.0")
+                .ShouldMap("api/query-competing?v=2.0")
                 .To<QueryCompetingV2Controller>(c => c.Index());
         }
 
@@ -160,7 +160,7 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.RoutingTests
         {
             MyRouting
                 .Configuration()
-                .ShouldMap("api/query-competing?api-version=3.0")
+                .ShouldMap("api/query-competing?v=3.0")
                 .ToNonExistingRoute();
         }
 
@@ -171,7 +171,7 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.RoutingTests
                 .Configuration()
                 .ShouldMap(request => request
                     .WithLocation("api/header-competing")
-                    .WithHeader("x-api-version", "1.0"))
+                    .WithHeader("X-Custom-Version", "1.0"))
                 .To<HeaderCompetingV1Controller>(c => c.Index());
         }
 
@@ -182,7 +182,7 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.RoutingTests
                 .Configuration()
                 .ShouldMap(request => request
                     .WithLocation("api/header-competing")
-                    .WithHeader("x-api-version", "2.0"))
+                    .WithHeader("X-Custom-Version", "2.0"))
                 .To<HeaderCompetingV2Controller>(c => c.Index());
         }
 
@@ -193,7 +193,7 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.RoutingTests
                 .Configuration()
                 .ShouldMap(request => request
                     .WithLocation("api/header-competing")
-                    .WithHeader("x-api-version", "3.0"))
+                    .WithHeader("X-Custom-Version", "3.0"))
                 .ToNonExistingRoute();
         }
     }
