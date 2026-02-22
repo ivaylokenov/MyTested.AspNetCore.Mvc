@@ -29,6 +29,7 @@
   </PropertyGroup>
     
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.1" />
   </ItemGroup>
     
