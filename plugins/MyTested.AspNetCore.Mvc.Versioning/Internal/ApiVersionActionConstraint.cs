@@ -73,6 +73,12 @@ namespace MyTested.AspNetCore.Mvc.Internal
                 return parsedQueryVersion;
             }
 
+            var headerVersion = context.HttpContext.Request.Headers["x-api-version"].FirstOrDefault();
+            if (headerVersion != null && parser.TryParse(headerVersion, out var parsedHeaderVersion))
+            {
+                return parsedHeaderVersion;
+            }
+
             return null;
         }
     }
