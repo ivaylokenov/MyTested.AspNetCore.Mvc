@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Controllers
 {
+    using Asp.Versioning;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiController]

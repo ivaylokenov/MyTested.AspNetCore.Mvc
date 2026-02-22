@@ -2,7 +2,7 @@
 {
     using System;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc.Versioning;
+    using Asp.Versioning;
 
     public class VersioningTestPlugin : IHttpFeatureRegistrationPlugin
     {

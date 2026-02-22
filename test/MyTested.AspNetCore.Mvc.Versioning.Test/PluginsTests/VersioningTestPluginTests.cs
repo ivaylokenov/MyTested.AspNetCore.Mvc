@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
 {
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc.Versioning;
+    using Asp.Versioning;
     using Plugins;
     using Xunit;
 

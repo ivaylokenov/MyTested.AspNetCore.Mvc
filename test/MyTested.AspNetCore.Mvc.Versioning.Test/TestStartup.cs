@@ -8,7 +8,7 @@
         public override void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddApiVersioning();
+            services.AddApiVersioning().AddMvc();
         }
     }
 }
