@@ -12,7 +12,7 @@
             => services
                 .AddScoped<IMigrator, MigratorMock>()
                 .ReplaceLifetime<IInMemorySingletonOptions>(ServiceLifetime.Scoped)
-                .ReplaceLifetime<IInMemoryStoreCache>(ServiceLifetime.Scoped)
+                .ReplaceLifetime<IInMemoryStoreProvider>(ServiceLifetime.Scoped)
                 .ReplaceLifetime<IInMemoryTableFactory>(ServiceLifetime.Scoped);
     }
 #pragma warning restore EF1001 // Internal EF Core API usage.
