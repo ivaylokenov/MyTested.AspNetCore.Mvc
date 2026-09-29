@@ -1,49 +1,63 @@
-namespace MyTested.AspNetCore.Mvc.Plugins
+﻿namespace MyTested.AspNetCore.Mvc.Plugins
 {
     using System;
     using System.Linq;
     using Asp.Versioning;
-    using Internal;
+    using Internal.Versioning;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc.ActionConstraints;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.Extensions.DependencyInjection;
 
-    public class VersioningTestPlugin
-        : IHttpFeatureRegistrationPlugin,
-          IServiceRegistrationPlugin,
-          IRoutingServiceRegistrationPlugin
+    public class VersioningTestPlugin : IServiceRegistrationPlugin, IRoutingServiceRegistrationPlugin, IHttpFeatureRegistrationPlugin
     {
-        public Action<HttpContext> HttpFeatureRegistrationDelegate
-            => httpContext => httpContext
-                .Features
-                .Set<IApiVersioningFeature>(new ApiVersioningFeature(httpContext));
+        private readonly Type apiVersionParserServiceType = typeof(IApiVersionParser);
+        private readonly Type actionSelectorServiceType = typeof(IActionSelector);
 
         public Func<ServiceDescriptor, bool> ServiceSelectorPredicate
-            => serviceDescriptor
-                => serviceDescriptor.ServiceType == typeof(IActionConstraintProvider);
+            => serviceDescriptor => serviceDescriptor.ServiceType == this.apiVersionParserServiceType;
 
+        // The attribute routes are resolved with the application services, so their action selector is decorated too.
         public Action<IServiceCollection> ServiceRegistrationDelegate
-            => serviceCollection
-                => serviceCollection.AddSingleton<IActionConstraintProvider, ApiVersionActionConstraintProvider>();
+            => serviceCollection => this.TryDecorateActionSelector(serviceCollection);
 
         public Action<IServiceCollection> RoutingServiceRegistrationDelegate
-            => serviceCollection =>
+            => serviceCollection => this.TryDecorateActionSelector(serviceCollection);
+
+        // The existing feature keeps the API version resolved during the route matching.
+        public Action<HttpContext> HttpFeatureRegistrationDelegate
+            => httpContext =>
             {
-                var selectorDescriptor = serviceCollection
-                    .FirstOrDefault(d => d.ServiceType == typeof(IActionSelector));
-
-                if (selectorDescriptor != null)
+                if (httpContext.Features.Get<IApiVersioningFeature>() == null)
                 {
-                    serviceCollection.Remove(selectorDescriptor);
-                    serviceCollection.AddSingleton<IActionSelector>(sp =>
-                    {
-                        var innerSelector = (IActionSelector)ActivatorUtilities
-                            .CreateInstance(sp, selectorDescriptor.ImplementationType);
-
-                        return new ApiVersionAwareActionSelector(innerSelector);
-                    });
+                    httpContext.Features.Set<IApiVersioningFeature>(new ApiVersioningFeature(httpContext));
                 }
             };
+
+        private void TryDecorateActionSelector(IServiceCollection serviceCollection)
+        {
+            // API versioning is not configured by the tested application.
+            if (serviceCollection.All(s => s.ServiceType != this.apiVersionParserServiceType))
+            {
+                return;
+            }
+
+            for (var index = serviceCollection.Count - 1; index >= 0; index--)
+            {
+                var serviceDescriptor = serviceCollection[index];
+
+                if (serviceDescriptor.ServiceType != this.actionSelectorServiceType
+                    || serviceDescriptor.IsKeyedService)
+                {
+                    continue;
+                }
+
+                if (!(serviceDescriptor is ApiVersionAwareActionSelectorServiceDescriptor))
+                {
+                    serviceCollection[index] = new ApiVersionAwareActionSelectorServiceDescriptor(serviceDescriptor);
+                }
+
+                return;
+            }
+        }
     }
 }

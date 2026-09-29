@@ -29,7 +29,6 @@
   </PropertyGroup>
     
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Asp.Versioning.Mvc" Version="10.2.1" />
   </ItemGroup>
     
