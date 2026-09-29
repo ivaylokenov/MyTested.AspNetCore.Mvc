@@ -1,19 +1,17 @@
 ﻿namespace Autofac.Web
 {
     using Extensions.DependencyInjection;
-    using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Hosting;
 
-#pragma warning disable ASPDEPR008 // Obsolete WebHost, kept to show the Startup class based hosting which MyTested supports.
     public class Program
     {
-        public static void Main(string[] args) => CreateWebHostBuilder(args).Build().Run();
+        public static void Main(string[] args) => CreateHostBuilder(args).Build().Run();
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host
                 .CreateDefaultBuilder(args)
-                .ConfigureServices(services => services.AddAutofac())
-                .UseStartup<Startup>();
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
     }
-#pragma warning restore ASPDEPR008 // Obsolete WebHost, kept to show the Startup class based hosting which MyTested supports.
 }
