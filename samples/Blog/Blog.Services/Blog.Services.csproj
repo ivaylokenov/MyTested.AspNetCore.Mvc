@@ -14,4 +14,9 @@
     <ProjectReference Include="..\Blog.Data\Blog.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- AutoMapper 14.0.0 is intentionally kept (15+ is commercially licensed); the advisory only affects this sample. -->
+    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-rvv3-g6hj-g44x" />
+  </ItemGroup>
+
 </Project>

@@ -30,7 +30,7 @@
     
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.1" />
+    <PackageReference Include="Asp.Versioning.Mvc" Version="10.2.1" />
   </ItemGroup>
     
   <ItemGroup>

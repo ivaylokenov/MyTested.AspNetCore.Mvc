@@ -12,16 +12,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.10.1" />
+    <PackageReference Include="Moq" Version="4.21.0" />
     <PackageReference Include="Shouldly" Version="4.3.0" />
-    <PackageReference Include="xunit" Version="2.6.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.0.2" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\MyTested.AspNetCore.Mvc.Universe\MyTested.AspNetCore.Mvc.Universe.csproj" />
     <ProjectReference Include="..\Blog.Web\Blog.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- AutoMapper 14.0.0 is intentionally kept (15+ is commercially licensed); the advisory only affects this sample. -->
+    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-rvv3-g6hj-g44x" />
+    <!-- NuGet.Packaging/NuGet.Protocol 6.12.1 come from Microsoft.VisualStudio.Web.CodeGeneration.Design 10.0.2 (latest, design-time scaffolding only); the advisory only affects this sample. -->
+    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-g4vj-cjjj-v7hg" />
   </ItemGroup>
 
 </Project>
