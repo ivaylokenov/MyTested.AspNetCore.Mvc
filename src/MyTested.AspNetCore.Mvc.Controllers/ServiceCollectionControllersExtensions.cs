@@ -21,7 +21,9 @@
         public static IServiceCollection AddActionContextAccessor(this IServiceCollection serviceCollection)
         {
             CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
+#pragma warning disable ASPDEPR006 // Obsolete ActionContextAccessor, still registered for applications which use it.
             return serviceCollection.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+#pragma warning restore ASPDEPR006 // Obsolete ActionContextAccessor, still registered for applications which use it.
         }
 
         /// <summary>

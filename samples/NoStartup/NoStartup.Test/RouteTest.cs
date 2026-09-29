@@ -11,7 +11,7 @@
         [TestMethod]
         public void RouteTestShouldThrowExceptionWithoutStartupClass()
         {
-            var exception = Assert.ThrowsException<InvalidOperationException>(() =>
+            var exception = Assert.ThrowsExactly<InvalidOperationException>(() =>
             {
                 MyRouting
                     .Configuration()

@@ -5,10 +5,12 @@
 
     public class ActionContextController : Controller
     {
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
         public ActionContextController(IActionContextAccessor actionContextAccessor)
         {
             this.Context = actionContextAccessor.ActionContext;
         }
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
 
         public ActionContext Context { get; private set; }
 

@@ -53,7 +53,9 @@
         
         public static void SetActionContextToAccessor(ActionContext actionContext)
         {
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, still populated for applications which use it.
             var actionContextAccessor = TestServiceProvider.GetService<IActionContextAccessor>();
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, still populated for applications which use it.
             if (actionContextAccessor != null)
             {
                 actionContextAccessor.ActionContext = actionContext;
