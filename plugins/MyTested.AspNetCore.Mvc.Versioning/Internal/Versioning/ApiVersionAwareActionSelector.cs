@@ -34,7 +34,6 @@
             RouteContext context,
             IReadOnlyList<ActionDescriptor> candidates)
         {
-            // API versioning applies only when at least one of the candidates is versioned.
             if (candidates == null || candidates.All(IsUnversioned))
             {
                 return this.ActionSelector.SelectBestCandidate(context, candidates);
@@ -50,7 +49,6 @@
             }
             catch (AmbiguousApiVersionException)
             {
-                // Multiple different API versions are requested.
                 return null;
             }
 
@@ -58,7 +56,6 @@
             {
                 if (!string.IsNullOrEmpty(apiVersioningFeature.RawRequestedApiVersion))
                 {
-                    // The requested API version is malformed.
                     return null;
                 }
 
@@ -104,9 +101,6 @@
             return options.ApiVersionSelector.SelectVersion(request, model);
         }
 
-        // Mirrors the endpoint routing API version matching. Unversioned candidates are always valid,
-        // explicitly mapped and version-neutral candidates take precedence over the implicitly mapped ones,
-        // and all other candidates are rejected.
         private static IReadOnlyList<ActionDescriptor> MatchApiVersion(
             IReadOnlyList<ActionDescriptor> candidates,
             ApiVersion apiVersion)

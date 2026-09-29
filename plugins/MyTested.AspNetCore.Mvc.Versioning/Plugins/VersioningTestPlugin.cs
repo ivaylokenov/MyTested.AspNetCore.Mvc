@@ -16,14 +16,12 @@
         public Func<ServiceDescriptor, bool> ServiceSelectorPredicate
             => serviceDescriptor => serviceDescriptor.ServiceType == this.apiVersionParserServiceType;
 
-        // The attribute routes are resolved with the application services, so their action selector is decorated too.
         public Action<IServiceCollection> ServiceRegistrationDelegate
             => serviceCollection => this.TryDecorateActionSelector(serviceCollection);
 
         public Action<IServiceCollection> RoutingServiceRegistrationDelegate
             => serviceCollection => this.TryDecorateActionSelector(serviceCollection);
 
-        // The existing feature keeps the API version resolved during the route matching.
         public Action<HttpContext> HttpFeatureRegistrationDelegate
             => httpContext =>
             {
@@ -35,7 +33,6 @@
 
         private void TryDecorateActionSelector(IServiceCollection serviceCollection)
         {
-            // API versioning is not configured by the tested application.
             if (serviceCollection.All(s => s.ServiceType != this.apiVersionParserServiceType))
             {
                 return;
