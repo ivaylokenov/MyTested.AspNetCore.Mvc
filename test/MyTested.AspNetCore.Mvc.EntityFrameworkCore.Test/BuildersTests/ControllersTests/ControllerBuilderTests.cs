@@ -1015,5 +1015,60 @@
                     .WithModelOfType<CustomModel>()
                     .Passing(cm => cm.Name.Equals(models[0].Name)));
         }
+
+        [Fact]
+        public void DbContextDataShouldNotBeSharedBetweenTests()
+        {
+            MyApplication
+                .StartsFrom<TestStartup>()
+                .WithServices(services =>
+                {
+                    services
+                        .AddDbContext<CustomDbContext>(options => options
+                            .UseSqlServer(TestConnectionString));
+                });
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(new CustomModel
+                {
+                    Id = 1,
+                    Name = "Test"
+                })
+                .Calling(c => c.Get(1))
+                .ShouldReturn()
+                .Ok();
+
+            MyController<DbContextController>
+                .Instance()
+                .Calling(c => c.Get(1))
+                .ShouldReturn()
+                .NotFound();
+
+            MyController<DbContextController>
+                .Instance()
+                .Calling(c => c.Create(new CustomModel
+                {
+                    Id = 1,
+                    Name = "Created"
+                }))
+                .ShouldHave()
+                .Data(data => data
+                    .WithEntities<CustomDbContext>(db =>
+                    {
+                        Assert.Equal("Created", Assert.Single(db.Models).Name);
+                    }))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+
+            MyController<DbContextController>
+                .Instance()
+                .Calling(c => c.GetAll())
+                .ShouldReturn()
+                .NotFound();
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
     }
 }

@@ -6,10 +6,12 @@
 
     public class AccessorComponent : ViewComponent
     {
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
         public AccessorComponent(IActionContextAccessor accessor)
         {
             this.ActionContext = accessor.ActionContext as ViewContext;
         }
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
 
         public ViewContext ActionContext { get; private set; }
 

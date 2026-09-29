@@ -123,7 +123,9 @@
                 .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                 });
 
             ActionContext firstContext = null;
@@ -159,7 +161,9 @@
                 .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                 });
 
             await Task
@@ -250,7 +254,9 @@
                 .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                 });
 
             var actionDescriptor = new ActionDescriptor { DisplayName = "Test" };
@@ -276,7 +282,9 @@
                 .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                 });
 
             var actionDescriptor = new ActionDescriptor { DisplayName = "Test" };
@@ -304,7 +312,9 @@
                 .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                 });
 
             var actionDescriptor = new ActionDescriptor { DisplayName = "Test" };
@@ -330,7 +340,9 @@
                 .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                 });
 
             ViewDataDictionary viewData = null;
@@ -359,7 +371,9 @@
                 .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                 });
 
             var context = new ViewComponentContext { ViewComponentDescriptor = null };
@@ -384,7 +398,9 @@
                 .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                 });
 
             var context = new ViewComponentContext { ViewContext = null };
@@ -408,7 +424,9 @@
                 .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                 });
 
             var actionDescriptor = new ActionDescriptor { DisplayName = "Test" };
@@ -436,7 +454,9 @@
                 .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                 });
 
             var actionDescriptor = new ActionDescriptor { DisplayName = "Test" };
@@ -470,7 +490,9 @@
                 .WithServices(services =>
                 {
                     services.AddSingleton(mvcOptions);
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                 });
 
             MyViewComponent<AccessorComponent>
@@ -503,7 +525,9 @@
                 .WithServices(services =>
                 {
                     services.AddSingleton(mvcOptions);
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                 });
 
             MyViewComponent<AccessorComponent>
@@ -528,7 +552,9 @@
                 .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, kept to verify the library still supports applications which use it.
                 });
 
             var actionDescriptor = new ActionDescriptor { DisplayName = "Test" };

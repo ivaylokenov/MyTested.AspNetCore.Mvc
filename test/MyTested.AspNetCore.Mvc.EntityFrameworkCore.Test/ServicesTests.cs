@@ -1,10 +1,12 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test
 {
     using System.Linq;
+    using System.Threading.Tasks;
     using Internal.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.EntityFrameworkCore.InMemory.Infrastructure.Internal;
+    using Microsoft.EntityFrameworkCore.Migrations;
     using Microsoft.Extensions.DependencyInjection;
     using Setups;
     using Setups.Common;
@@ -117,6 +119,84 @@
             services.ReplaceDbContext();
             
             services.BuildServiceProvider().GetRequiredService<CustomDbContext>().Database.Migrate();
+        }
+
+        [Fact]
+        public async Task CallingMigrateAsyncShouldNotThrowExceptionWithInMemoryDatabase()
+        {
+            var services = new ServiceCollection();
+
+            this.AddDbContextWithSqlServer(services);
+
+            services.ReplaceDbContext();
+
+            var database = services.BuildServiceProvider().GetRequiredService<CustomDbContext>().Database;
+
+            await database.MigrateAsync();
+            await database.MigrateAsync("TargetMigration");
+        }
+
+        [Fact]
+        public void HasPendingModelChangesShouldReturnFalseWithInMemoryDatabase()
+        {
+            var services = new ServiceCollection();
+
+            this.AddDbContextWithSqlServer(services);
+
+            services.ReplaceDbContext();
+
+            var database = services.BuildServiceProvider().GetRequiredService<CustomDbContext>().Database;
+
+            Assert.False(database.HasPendingModelChanges());
+        }
+
+        [Fact]
+        public void ReplaceDbContextShouldRegisterMigratorMock()
+        {
+            var services = new ServiceCollection();
+
+            this.AddDbContextWithSqlServer(services);
+
+            services.ReplaceDbContext();
+
+            var dbContext = services.BuildServiceProvider().GetRequiredService<CustomDbContext>();
+
+            var migrator = Assert.IsType<MigratorMock>(dbContext.GetService<IMigrator>());
+
+            Assert.Empty(migrator.GenerateScript());
+        }
+
+        [Fact]
+        public void ReplaceDbContextShouldIsolateDataBetweenScopes()
+        {
+            var services = new ServiceCollection();
+
+            this.AddDbContextWithSqlServer(services);
+
+            services.ReplaceDbContext();
+
+            using var serviceProvider = services.BuildServiceProvider();
+            using var firstScope = serviceProvider.CreateScope();
+            using var secondScope = serviceProvider.CreateScope();
+
+            var firstDbContext = firstScope.ServiceProvider.GetRequiredService<CustomDbContext>();
+            var secondDbContext = secondScope.ServiceProvider.GetRequiredService<CustomDbContext>();
+
+            firstDbContext.Models.Add(new CustomModel { Id = 1, Name = "First" });
+            firstDbContext.SaveChanges();
+
+            Assert.Single(firstDbContext.Models);
+            Assert.Empty(secondDbContext.Models);
+
+            secondDbContext.Models.Add(new CustomModel { Id = 1, Name = "Second" });
+            secondDbContext.SaveChanges();
+
+            Assert.Equal("First", Assert.Single(firstDbContext.Models.AsNoTracking()).Name);
+            Assert.Equal("Second", Assert.Single(secondDbContext.Models.AsNoTracking()).Name);
+
+            using var thirdScope = serviceProvider.CreateScope();
+
+            Assert.Empty(thirdScope.ServiceProvider.GetRequiredService<CustomDbContext>().Models);
         }
 
         private void AddDbContextWithSqlServer(IServiceCollection services)

@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
 
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, still required by the framework's ControllerActionInvoker.
     public class ActionContextAccessorMock
     {
         internal static readonly IActionContextAccessor Null = new NullActionContextAccessor();
@@ -16,4 +17,5 @@
             }
         }
     }
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, still required by the framework's ControllerActionInvoker.
 }

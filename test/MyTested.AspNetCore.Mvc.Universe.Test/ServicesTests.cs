@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using Internal;
+    using Internal.Application;
     using Internal.Caching;
     using Internal.Contracts;
     using Internal.EntityFrameworkCore;
@@ -10,7 +11,9 @@
     using Internal.Routing;
     using Internal.Services;
     using Internal.Session;
+    using Internal.Versioning;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Session;
     using Microsoft.EntityFrameworkCore;
@@ -422,6 +425,17 @@
                     services.AddMvcUniverseTesting();
                 },
                 "serviceCollection cannot be null.");
+        }
+
+        [Fact]
+        public void VersioningPluginShouldNotDecorateActionSelectorWithoutApiVersioning()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            Assert.IsNotType<ApiVersionAwareActionSelector>(TestApplication.Services.GetRequiredService<IActionSelector>());
+            Assert.IsNotType<ApiVersionAwareActionSelector>(TestApplication.RoutingServices.GetRequiredService<IActionSelector>());
+
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

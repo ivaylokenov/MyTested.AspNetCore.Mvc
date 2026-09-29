@@ -33,7 +33,9 @@
 
             testPlugin.DefaultServiceRegistrationDelegate(serviceCollection);
 
-            Assert.Equal(195, serviceCollection.Count);
+            var expectedCount = OperatingSystem.IsWindows() ? 204 : 203;
+
+            Assert.Equal(expectedCount, serviceCollection.Count);
         }
     }
 }

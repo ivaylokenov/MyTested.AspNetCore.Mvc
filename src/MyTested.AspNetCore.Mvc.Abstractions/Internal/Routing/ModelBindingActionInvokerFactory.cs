@@ -20,7 +20,9 @@
         private readonly ILogger logger;
         private readonly DiagnosticListener diagnosticListener;
         private readonly IActionResultTypeMapper mapper;
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, still required by the framework's ControllerActionInvoker.
         private readonly IActionContextAccessor actionContextAccessor;
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, still required by the framework's ControllerActionInvoker.
 
         public ModelBindingActionInvokerFactory(
             ModelBindingActionInvokerCache modelBindingActionInvokerCache,
@@ -38,7 +40,9 @@
             ILoggerFactory loggerFactory,
             DiagnosticListener diagnosticListener,
             IActionResultTypeMapper mapper,
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, still populated for applications which use it.
             IActionContextAccessor actionContextAccessor)
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, still populated for applications which use it.
         {
             this.modelBindingActionInvokerCache = modelBindingActionInvokerCache;
             this.valueProviderFactories = optionsAccessor.Value.ValueProviderFactories.ToArray();

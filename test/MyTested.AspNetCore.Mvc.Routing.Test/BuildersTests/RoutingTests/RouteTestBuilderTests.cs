@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
     using Exceptions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -529,6 +531,28 @@
                     {
                         Integer = 1,
                         String = "Text"
+                    }));
+        }
+
+        [Fact]
+        public void ToShouldResolveCorrectControllerAndActionWithUtf16RequestModelAsStream()
+        {
+            var body = Encoding.Unicode.GetBytes(@"{""Integer"":1,""String"":""Текст""}");
+
+            MyRouting
+                .Configuration()
+                .ShouldMap(request => request
+                    .WithLocation("/Normal/ActionWithMultipleParameters/1")
+                    .WithMethod(HttpMethod.Post)
+                    .WithContentType("application/json; charset=utf-16")
+                    .WithBody(new MemoryStream(body)))
+                .To<NormalController>(c => c.ActionWithMultipleParameters(
+                    1,
+                    With.No<string>(),
+                    new RequestModel
+                    {
+                        Integer = 1,
+                        String = "Текст"
                     }));
         }
 

@@ -25,7 +25,9 @@
         public ModelBindingActionInvoker(
             ILogger logger,
             DiagnosticListener diagnosticListener,
+#pragma warning disable ASPDEPR006 // Obsolete IActionContextAccessor, still required by the framework's ControllerActionInvoker.
             IActionContextAccessor actionContextAccessor,
+#pragma warning restore ASPDEPR006 // Obsolete IActionContextAccessor, still required by the framework's ControllerActionInvoker.
             IActionResultTypeMapper mapper,
             ControllerContext controllerContext,
             dynamic cacheEntry,
