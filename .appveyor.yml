@@ -7,10 +7,6 @@ branches:
 image: Visual Studio 2026
 configuration: Release
 clone_depth: 1
-install:
-- ps: Invoke-WebRequest -Uri https://dot.net/v1/dotnet-install.ps1 -UseBasicParsing -OutFile "$env:TEMP\dotnet-install.ps1"
-- ps: '& "$env:TEMP\dotnet-install.ps1" -Channel 10.0 -InstallDir "$env:ProgramFiles\dotnet"'
-- cmd: dotnet --version
 before_build:
 - cmd: dotnet restore
 build:
