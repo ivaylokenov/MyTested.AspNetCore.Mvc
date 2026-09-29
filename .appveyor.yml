@@ -3,7 +3,7 @@ branches:
   only:
   - master
   - development
-  - /^version-.*$/
+  - ^version-.*$
 image: Visual Studio 2026
 configuration: Release
 clone_depth: 1
