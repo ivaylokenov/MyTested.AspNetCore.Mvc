@@ -11,7 +11,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="10.0.12" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.12" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,8 +23,6 @@
   <ItemGroup>
     <!-- AutoMapper 14.0.0 is intentionally kept (15+ is commercially licensed); the advisory only affects this sample. -->
     <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-rvv3-g6hj-g44x" />
-    <!-- NuGet.Packaging/NuGet.Protocol 6.12.1 come from Microsoft.VisualStudio.Web.CodeGeneration.Design 10.0.2 (latest, design-time scaffolding only); the advisory only affects this sample. -->
-    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-g4vj-cjjj-v7hg" />
   </ItemGroup>
 
 </Project>
