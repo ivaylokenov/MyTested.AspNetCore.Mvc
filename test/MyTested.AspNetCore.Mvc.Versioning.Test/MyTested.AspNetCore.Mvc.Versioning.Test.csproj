@@ -15,6 +15,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Update="testconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\plugins\MyTested.AspNetCore.Mvc.Versioning\MyTested.AspNetCore.Mvc.Versioning.csproj" />
     <ProjectReference Include="..\..\src\MyTested.AspNetCore.Mvc.Controllers\MyTested.AspNetCore.Mvc.Controllers.csproj" />
     <ProjectReference Include="..\..\src\MyTested.AspNetCore.Mvc.Pipeline\MyTested.AspNetCore.Mvc.Pipeline.csproj" />

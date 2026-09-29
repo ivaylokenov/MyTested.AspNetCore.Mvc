@@ -1,4 +1,4 @@
-namespace MyTested.AspNetCore.Mvc.Test
+﻿namespace MyTested.AspNetCore.Mvc.Test
 {
     using Asp.Versioning;
     using Microsoft.Extensions.DependencyInjection;
@@ -12,8 +12,9 @@ namespace MyTested.AspNetCore.Mvc.Test
             services.AddApiVersioning(options =>
             {
                 options.ApiVersionReader = ApiVersionReader.Combine(
-                    new QueryStringApiVersionReader("v"),
+                    new QueryStringApiVersionReader("api-version", "v"),
                     new HeaderApiVersionReader("X-Custom-Version"),
+                    new MediaTypeApiVersionReader(),
                     new UrlSegmentApiVersionReader());
             }).AddMvc();
         }
