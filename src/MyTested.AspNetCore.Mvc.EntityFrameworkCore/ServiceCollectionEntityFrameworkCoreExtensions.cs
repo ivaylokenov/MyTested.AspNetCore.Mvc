@@ -6,6 +6,7 @@
     using Internal.EntityFrameworkCore;
     using Internal.Services;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Diagnostics;
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -86,7 +87,9 @@
 
             serviceCollection.AddDbContext<TDbContextService, TDbContextImplementation>(opts =>
             {
-                opts.UseInMemoryDatabase(Guid.NewGuid().ToString());
+                opts
+                    .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                    .ConfigureWarnings(w => w.Ignore(InMemoryEventId.TransactionIgnoredWarning));
 
                 ((IDbContextOptionsBuilderInfrastructure)opts).AddOrUpdateExtension(new ScopedInMemoryOptionsExtension());
             });
