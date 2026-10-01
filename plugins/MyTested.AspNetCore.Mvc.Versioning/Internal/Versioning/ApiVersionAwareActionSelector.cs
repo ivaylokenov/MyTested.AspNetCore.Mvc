@@ -67,13 +67,35 @@
                 }
             }
 
-            var matchingCandidates = MatchApiVersion(candidates, requestedApiVersion);
-            if (matchingCandidates.Count == 0)
+            var mappedCandidates = candidates
+                .Where(c => IsUnversioned(c)
+                    || c.ApiVersionMetadata.IsApiVersionNeutral
+                    || c.ApiVersionMetadata.MappingTo(requestedApiVersion) != ApiVersionMapping.None)
+                .ToArray();
+
+            if (mappedCandidates.Length == 0)
             {
                 return null;
             }
 
-            return this.ActionSelector.SelectBestCandidate(context, matchingCandidates);
+            // Explicitly mapped actions win over implicitly mapped ones, but only among the
+            // actions which satisfy the action constraints of the request (such as the HTTP method).
+            // An action explicitly mapped for one HTTP method must not hide an implicitly
+            // mapped action for another HTTP method on the same route template.
+            var explicitCandidates = mappedCandidates
+                .Where(c => IsUnversioned(c) || IsExplicitlyMapped(c, requestedApiVersion))
+                .ToArray();
+
+            if (explicitCandidates.Length > 0 && explicitCandidates.Length < mappedCandidates.Length)
+            {
+                var explicitMatch = this.ActionSelector.SelectBestCandidate(context, explicitCandidates);
+                if (explicitMatch != null)
+                {
+                    return explicitMatch;
+                }
+            }
+
+            return this.ActionSelector.SelectBestCandidate(context, mappedCandidates);
         }
 
         private static bool IsUnversioned(ActionDescriptor candidate)
@@ -99,19 +121,6 @@
                 .Aggregate();
 
             return options.ApiVersionSelector.SelectVersion(request, model);
-        }
-
-        private static IReadOnlyList<ActionDescriptor> MatchApiVersion(
-            IReadOnlyList<ActionDescriptor> candidates,
-            ApiVersion apiVersion)
-        {
-            var hasExplicitMatch = candidates.Any(c => IsExplicitlyMapped(c, apiVersion));
-
-            return candidates
-                .Where(c => IsUnversioned(c)
-                    || IsExplicitlyMapped(c, apiVersion)
-                    || (!hasExplicitMatch && c.ApiVersionMetadata.MappingTo(apiVersion) == ApiVersionMapping.Implicit))
-                .ToArray();
         }
     }
 }
