@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Text;
     using Exceptions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
@@ -665,6 +666,64 @@
                         Assert.Equal(ContentType.ApplicationXml, builtRequest.ContentType);
                         Assert.Equal(100, builtRequest.ContentLength);
                     }
+                });
+        }
+
+        [Fact]
+        public void WithStringBodyShouldUseTheProvidedEncoding()
+        {
+            var expectedBody = Encoding.Unicode.GetBytes("Текст");
+
+            MyController<MvcController>
+                .Instance()
+                .WithHttpRequest(request => request
+                    .WithStringBody("Текст", Encoding.Unicode))
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
+                {
+                    var body = ((MemoryStream)builtRequest.Body).ToArray();
+                    Assert.Equal(expectedBody, body);
+                    Assert.Equal(ContentType.TextPlain, builtRequest.ContentType);
+                    Assert.Equal(expectedBody.Length, builtRequest.ContentLength);
+                });
+        }
+
+        [Fact]
+        public void WithJsonBodyAsStringShouldUseTheProvidedEncoding()
+        {
+            var expectedBody = Encoding.Unicode.GetBytes(@"{""id"":1,""text"":""Текст""}");
+
+            MyController<MvcController>
+                .Instance()
+                .WithHttpRequest(request => request
+                    .WithJsonBody(@"{""id"":1,""text"":""Текст""}", Encoding.Unicode))
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
+                {
+                    var body = ((MemoryStream)builtRequest.Body).ToArray();
+                    Assert.Equal(expectedBody, body);
+                    Assert.Equal(ContentType.ApplicationJson, builtRequest.ContentType);
+                    Assert.Equal(expectedBody.Length, builtRequest.ContentLength);
+                });
+        }
+
+        [Fact]
+        public void WithJsonBodyShouldUseTheProvidedEncoding()
+        {
+            var expectedBody = Encoding.Unicode.GetBytes(@"{""integer"":1,""requiredString"":""Text"",""nonRequiredString"":null,""notValidateInteger"":0}");
+
+            MyController<MvcController>
+                .Instance()
+                .WithHttpRequest(request => request
+                    .WithJsonBody(new RequestModel
+                    {
+                        Integer = 1,
+                        RequiredString = "Text"
+                    }, Encoding.Unicode))
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
+                {
+                    var body = ((MemoryStream)builtRequest.Body).ToArray();
+                    Assert.Equal(expectedBody, body);
+                    Assert.Equal(ContentType.ApplicationJson, builtRequest.ContentType);
+                    Assert.Equal(expectedBody.Length, builtRequest.ContentLength);
                 });
         }
 

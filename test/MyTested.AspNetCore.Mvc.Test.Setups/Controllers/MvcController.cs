@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text;
     using System.Threading.Tasks;
     using Builders.Authentication;
     using Common;
@@ -250,6 +251,24 @@
             var writer = new StreamWriter(this.Response.Body);
             writer.Write("Test");
             writer.Flush();
+
+            return this.Ok();
+        }
+
+        public IActionResult CustomResponseBodyWithUtf16StringBody()
+        {
+            this.SetCustomResponse();
+            this.Response.Body = new MemoryStream(Encoding.Unicode.GetBytes("Текст"));
+            this.Response.ContentType = ContentType.TextPlain;
+
+            return this.Ok();
+        }
+
+        public IActionResult CustomResponseBodyWithUtf16JsonBody()
+        {
+            this.SetCustomResponse();
+            this.Response.Body = new MemoryStream(Encoding.Unicode.GetBytes(@"{""Integer"":1,""RequiredString"":""Текст""}"));
+            this.Response.ContentType = ContentType.ApplicationJson;
 
             return this.Ok();
         }
