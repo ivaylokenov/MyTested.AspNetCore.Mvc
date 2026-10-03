@@ -465,6 +465,95 @@
         }
 
         [Fact]
+        public void RouteAssertionShouldWorkCorrectlyWithImplicitlyMappedActionAndExplicitlyMappedActionsOfOtherHttpMethods()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap(request => request
+                    .WithMethod(HttpMethod.Put)
+                    .WithLocation("api/mixed-method-versioning/1?v=2.0"))
+                .To<MixedMethodVersioningController>(c => c.Edit(1));
+        }
+
+        [Fact]
+        public void RouteAssertionShouldWorkCorrectlyWithImplicitlyMappedActionAndExplicitlyMappedActionOfOtherHttpMethod()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap(request => request
+                    .WithMethod(HttpMethod.Put)
+                    .WithLocation("api/mixed-method-versioning/1?v=1.0"))
+                .To<MixedMethodVersioningController>(c => c.Edit(1));
+        }
+
+        [Fact]
+        public void RouteAssertionShouldWorkCorrectlyWithImplicitlyMappedActionAndExplicitlyMappedActionsOfOtherHttpMethodsAndHeaderVersion()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap(request => request
+                    .WithMethod(HttpMethod.Put)
+                    .WithLocation("api/mixed-method-versioning/1")
+                    .WithHeader("X-Custom-Version", "2.0"))
+                .To<MixedMethodVersioningController>(c => c.Edit(1));
+        }
+
+        [Fact]
+        public void RouteAssertionShouldWorkCorrectlyWithImplicitlyMappedActionAndUndeclaredVersion()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap(request => request
+                    .WithMethod(HttpMethod.Put)
+                    .WithLocation("api/mixed-method-versioning/1?v=3.0"))
+                .ToNonExistingRoute();
+        }
+
+        [Fact]
+        public void RouteAssertionShouldWorkCorrectlyWithExplicitlyMappedActionNextToImplicitlyMappedActionOfOtherHttpMethod()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap(request => request
+                    .WithMethod(HttpMethod.Get)
+                    .WithLocation("api/mixed-method-versioning/1?v=2.0"))
+                .To<MixedMethodVersioningController>(c => c.Details(1));
+        }
+
+        [Fact]
+        public void RouteAssertionShouldWorkCorrectlyWithExplicitlyMappedActionForLowerVersionNextToImplicitlyMappedActionOfOtherHttpMethod()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap(request => request
+                    .WithMethod(HttpMethod.Get)
+                    .WithLocation("api/mixed-method-versioning/1?v=1.0"))
+                .To<MixedMethodVersioningController>(c => c.DetailsV1(1));
+        }
+
+        [Fact]
+        public void RouteAssertionShouldWorkCorrectlyWithExplicitlyMappedDeleteActionNextToImplicitlyMappedActionOfOtherHttpMethod()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap(request => request
+                    .WithMethod(HttpMethod.Delete)
+                    .WithLocation("api/mixed-method-versioning/1?v=2.0"))
+                .To<MixedMethodVersioningController>(c => c.Delete(1));
+        }
+
+        [Fact]
+        public void RouteAssertionShouldWorkCorrectlyWithExplicitlyMappedDeleteActionWhichDoesNotExist()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap(request => request
+                    .WithMethod(HttpMethod.Delete)
+                    .WithLocation("api/mixed-method-versioning/1?v=1.0"))
+                .ToNonExistingRoute();
+        }
+
+        [Fact]
         public void RouteAssertionShouldWorkCorrectlyWithUnversionedController()
         {
             MyRouting
@@ -559,6 +648,21 @@
                 .Configuration()
                 .ShouldMap("api/mapped-versioning")
                 .To<MappedVersioningController>(c => c.SpecificVersion());
+
+            MyApplication.StartsFrom<TestStartup>();
+        }
+
+        [Fact]
+        public void RouteAssertionShouldWorkCorrectlyWithAssumedDefaultVersionAndImplicitlyMappedActionNextToExplicitlyMappedActionsOfOtherHttpMethods()
+        {
+            MyApplication.StartsFrom<AssumeDefaultVersionStartup>();
+
+            MyRouting
+                .Configuration()
+                .ShouldMap(request => request
+                    .WithMethod(HttpMethod.Put)
+                    .WithLocation("api/mixed-method-versioning/1"))
+                .To<MixedMethodVersioningController>(c => c.Edit(1));
 
             MyApplication.StartsFrom<TestStartup>();
         }
