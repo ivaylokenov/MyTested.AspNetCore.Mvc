@@ -273,6 +273,24 @@
             return this.Ok();
         }
 
+        public IActionResult CustomResponseBodyWithUtf16StringBodyAndCharset()
+        {
+            this.SetCustomResponse();
+            this.Response.Body = new MemoryStream(Encoding.Unicode.GetBytes("Текст"));
+            this.Response.ContentType = "text/plain; charset=utf-16";
+
+            return this.Ok();
+        }
+
+        public IActionResult CustomResponseBodyWithUtf16JsonBodyAndCharset()
+        {
+            this.SetCustomResponse();
+            this.Response.Body = new MemoryStream(Encoding.Unicode.GetBytes(@"{""Integer"":1,""RequiredString"":""Текст""}"));
+            this.Response.ContentType = "application/json; charset=utf-16";
+
+            return this.Ok();
+        }
+
         public IActionResult FullBadRequestAction()
         {
             return new BadRequestObjectResult(this.ResponseModel)

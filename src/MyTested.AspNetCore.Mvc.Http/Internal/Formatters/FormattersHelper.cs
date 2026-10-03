@@ -26,11 +26,13 @@
 
         public static TModel ReadFromStream<TModel>(Stream stream, string contentType, Encoding encoding)
         {
+            CommonValidator.CheckForNullReference(encoding, nameof(Encoding));
+
             stream.Restart();
 
             // Formatters do not support non-HTTP context processing.
             var httpContext = new HttpContextMock();
-            httpContext.Request.Body = encoding.CodePage == Encoding.UTF8.CodePage
+            httpContext.Request.Body = encoding.CodePage == Encoding.UTF8.CodePage || new MediaType(contentType).Charset.HasValue
                 ? stream
                 : Encoding.CreateTranscodingStream(stream, encoding, Encoding.UTF8, leaveOpen: true);
             httpContext.Request.ContentType = contentType;
@@ -100,6 +102,8 @@
 
         public static Stream WriteAsStringToStream<TBody>(TBody value, string contentType, Encoding encoding)
         {
+            CommonValidator.CheckForNullReference(encoding, nameof(Encoding));
+
             var stream = WriteToStream(value, contentType, Encoding.UTF8);
 
             using (var streamReader = new StreamReader(stream))
