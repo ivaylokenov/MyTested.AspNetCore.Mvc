@@ -32,10 +32,7 @@
 
             // Formatters do not support non-HTTP context processing.
             var httpContext = new HttpContextMock();
-            httpContext.Request.Body = encoding.CodePage == Encoding.UTF8.CodePage
-                || (!string.IsNullOrEmpty(contentType) && new MediaType(contentType).Charset.HasValue)
-                ? stream
-                : Encoding.CreateTranscodingStream(stream, encoding, Encoding.UTF8, leaveOpen: true);
+            httpContext.Request.Body = GetInputStream(stream, contentType, encoding);
             httpContext.Request.ContentType = contentType;
 
             var typeOfModel = typeof(TModel);
@@ -114,5 +111,13 @@
                 return new MemoryStream(encoding.GetBytes(streamAsString));
             }
         }
+
+        private static Stream GetInputStream(Stream stream, string contentType, Encoding encoding)
+            => encoding.CodePage == Encoding.UTF8.CodePage || HasCharset(contentType)
+                ? stream
+                : Encoding.CreateTranscodingStream(stream, encoding, Encoding.UTF8, leaveOpen: true);
+
+        private static bool HasCharset(string contentType)
+            => !string.IsNullOrEmpty(contentType) && new MediaType(contentType).Charset.HasValue;
     }
 }
