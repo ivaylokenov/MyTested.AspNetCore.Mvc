@@ -32,7 +32,8 @@
 
             // Formatters do not support non-HTTP context processing.
             var httpContext = new HttpContextMock();
-            httpContext.Request.Body = encoding.CodePage == Encoding.UTF8.CodePage || new MediaType(contentType).Charset.HasValue
+            httpContext.Request.Body = encoding.CodePage == Encoding.UTF8.CodePage
+                || (!string.IsNullOrEmpty(contentType) && new MediaType(contentType).Charset.HasValue)
                 ? stream
                 : Encoding.CreateTranscodingStream(stream, encoding, Encoding.UTF8, leaveOpen: true);
             httpContext.Request.ContentType = contentType;
