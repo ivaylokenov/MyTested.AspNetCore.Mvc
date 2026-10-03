@@ -557,6 +557,50 @@
         }
 
         [Fact]
+        public void ToShouldResolveCorrectControllerAndActionWithUtf16RequestModelAsJsonString()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap(request => request
+                    .WithLocation("/Normal/ActionWithMultipleParameters/1")
+                    .WithMethod(HttpMethod.Post)
+                    .WithContentType("application/json; charset=utf-16")
+                    .WithJsonBody(@"{""Integer"":1,""String"":""Текст""}", Encoding.Unicode))
+                .To<NormalController>(c => c.ActionWithMultipleParameters(
+                    1,
+                    With.No<string>(),
+                    new RequestModel
+                    {
+                        Integer = 1,
+                        String = "Текст"
+                    }));
+        }
+
+        [Fact]
+        public void ToShouldResolveCorrectControllerAndActionWithUtf16RequestModelAsObject()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap(request => request
+                    .WithLocation("/Normal/ActionWithMultipleParameters/1")
+                    .WithMethod(HttpMethod.Post)
+                    .WithContentType("application/json; charset=utf-16")
+                    .WithJsonBody(new RequestModel
+                    {
+                        Integer = 1,
+                        String = "Текст"
+                    }, Encoding.Unicode))
+                .To<NormalController>(c => c.ActionWithMultipleParameters(
+                    1,
+                    With.No<string>(),
+                    new RequestModel
+                    {
+                        Integer = 1,
+                        String = "Текст"
+                    }));
+        }
+
+        [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithActionNameAttribute()
         {
             MyRouting

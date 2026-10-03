@@ -10,6 +10,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Text;
     using Xunit;
 
     public class HttpResponseTestBuilderTests
@@ -691,7 +692,72 @@
                 .ShouldHave()
                 .HttpResponse(response => response.WithJsonBody(@"{""Integer"":1,""RequiredString"":""Text""}"));
         }
-        
+
+        [Fact]
+        public void WithStringBodyShouldWorkCorrectlyWithEncoding()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.CustomResponseBodyWithUtf16StringBody())
+                .ShouldHave()
+                .HttpResponse(response => response.WithStringBody("Текст", Encoding.Unicode));
+        }
+
+        [Fact]
+        public void WithJsonBodyShouldWorkCorrectlyWithEncoding()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.CustomResponseBodyWithUtf16JsonBody())
+                .ShouldHave()
+                .HttpResponse(response => response.WithJsonBody(new RequestModel { Integer = 1, RequiredString = "Текст" }, Encoding.Unicode));
+        }
+
+        [Fact]
+        public void WithJsonBodyAsStringShouldWorkCorrectlyWithEncoding()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.CustomResponseBodyWithUtf16JsonBody())
+                .ShouldHave()
+                .HttpResponse(response => response.WithJsonBody(@"{""Integer"":1,""RequiredString"":""Текст""}", Encoding.Unicode));
+        }
+
+        [Fact]
+        public void WithBodyShouldWorkCorrectlyWithEncodingAndCharset()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.CustomResponseBodyWithUtf16JsonBodyAndCharset())
+                .ShouldHave()
+                .HttpResponse(response => response.WithBody(new RequestModel { Integer = 1, RequiredString = "Текст" }, "application/json; charset=utf-16", Encoding.Unicode));
+        }
+
+        [Fact]
+        public void WithBodyAsStringShouldWorkCorrectlyWithEncodingAndCharset()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.CustomResponseBodyWithUtf16StringBodyAndCharset())
+                .ShouldHave()
+                .HttpResponse(response => response.WithBody("Текст", "text/plain; charset=utf-16", Encoding.Unicode));
+        }
+
+        [Fact]
+        public void WithJsonBodyShouldThrowExceptionWithNullEncoding()
+        {
+            Test.AssertException<NullReferenceException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.CustomResponseAction())
+                        .ShouldHave()
+                        .HttpResponse(response => response.WithJsonBody(new RequestModel { Integer = 1, RequiredString = "Text" }, null));
+                },
+                "Encoding cannot be null.");
+        }
+
         [Fact]
         public void ViewComponentInvocationShouldNotThrowExceptionWithCorrectResponse()
         {
