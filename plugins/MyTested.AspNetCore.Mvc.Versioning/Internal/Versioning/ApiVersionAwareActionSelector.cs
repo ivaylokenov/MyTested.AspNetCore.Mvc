@@ -69,7 +69,6 @@
 
             var mappedCandidates = candidates
                 .Where(c => IsUnversioned(c)
-                    || c.ApiVersionMetadata.IsApiVersionNeutral
                     || c.ApiVersionMetadata.MappingTo(requestedApiVersion) != ApiVersionMapping.None)
                 .ToArray();
 
@@ -78,10 +77,6 @@
                 return null;
             }
 
-            // Explicitly mapped actions win over implicitly mapped ones, but only among the
-            // actions which satisfy the action constraints of the request (such as the HTTP method).
-            // An action explicitly mapped for one HTTP method must not hide an implicitly
-            // mapped action for another HTTP method on the same route template.
             var explicitCandidates = mappedCandidates
                 .Where(c => IsUnversioned(c) || IsExplicitlyMapped(c, requestedApiVersion))
                 .ToArray();
