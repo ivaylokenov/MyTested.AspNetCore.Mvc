@@ -89,7 +89,7 @@
             if (explicitCandidates.Length > 0 && explicitCandidates.Length < mappedCandidates.Length)
             {
                 var explicitMatch = this.ActionSelector.SelectBestCandidate(context, explicitCandidates);
-                if (explicitMatch != null)
+                if (explicitMatch != null && !IsUnversioned(explicitMatch))
                 {
                     return explicitMatch;
                 }
