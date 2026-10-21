@@ -62,6 +62,19 @@
         }
 
         [Fact]
+        public void ReadFromStreamShouldThrowExceptionWithEmptyContentTypeAndNonUtf8Encoding()
+        {
+            Test.AssertException<NullReferenceException>(
+                () =>
+                {
+                    var stream = new MemoryStream(Encoding.Unicode.GetBytes("test"));
+
+                    FormattersHelper.ReadFromStream<string>(stream, string.Empty, Encoding.Unicode);
+                },
+                "Formatter able to process '' could not be resolved from the services provider. Before running this test case, the formatter should be registered in the 'StartsFrom' method and cannot be null.");
+        }
+
+        [Fact]
         public void ReadFromStreamShouldThrowExceptionIfNoModelIsDifferentType()
         {
             Test.AssertException<InvalidDataException>(

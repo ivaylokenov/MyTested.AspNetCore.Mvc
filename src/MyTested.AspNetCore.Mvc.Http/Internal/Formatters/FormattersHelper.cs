@@ -26,11 +26,13 @@
 
         public static TModel ReadFromStream<TModel>(Stream stream, string contentType, Encoding encoding)
         {
+            CommonValidator.CheckForNullReference(encoding, nameof(Encoding));
+
             stream.Restart();
 
             // Formatters do not support non-HTTP context processing.
             var httpContext = new HttpContextMock();
-            httpContext.Request.Body = stream;
+            httpContext.Request.Body = GetInputStream(stream, contentType, encoding);
             httpContext.Request.ContentType = contentType;
 
             var typeOfModel = typeof(TModel);
@@ -42,7 +44,7 @@
                 string.Empty,
                 new ModelStateDictionary(),
                 modelMetadata,
-                (str, enc) => new StreamReader(httpContext.Request.Body, encoding));
+                (str, enc) => new StreamReader(str, enc));
 
             var inputFormatter = inputFormatters.GetOrAdd(contentType, _ =>
             {
@@ -98,14 +100,24 @@
 
         public static Stream WriteAsStringToStream<TBody>(TBody value, string contentType, Encoding encoding)
         {
-            var stream = WriteToStream(value, contentType, encoding);
+            CommonValidator.CheckForNullReference(encoding, nameof(Encoding));
+
+            var stream = WriteToStream(value, contentType, Encoding.UTF8);
 
             using (var streamReader = new StreamReader(stream))
             {
                 var streamAsString = streamReader.ReadToEnd();
 
-                return WriteToStream(streamAsString, ContentType.TextPlain, encoding);
+                return new MemoryStream(encoding.GetBytes(streamAsString));
             }
         }
+
+        private static Stream GetInputStream(Stream stream, string contentType, Encoding encoding)
+            => encoding.CodePage == Encoding.UTF8.CodePage || HasCharset(contentType)
+                ? stream
+                : Encoding.CreateTranscodingStream(stream, encoding, Encoding.UTF8, leaveOpen: true);
+
+        private static bool HasCharset(string contentType)
+            => !string.IsNullOrEmpty(contentType) && new MediaType(contentType).Charset.HasValue;
     }
 }

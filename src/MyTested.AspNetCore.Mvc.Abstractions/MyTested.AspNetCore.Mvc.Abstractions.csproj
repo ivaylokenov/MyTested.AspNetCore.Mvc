@@ -4,7 +4,7 @@
     <Description>My Tested ASP.NET Core MVC common abstractions and interfaces.</Description>
     <Copyright>2015-2026 Ivaylo Kenov</Copyright>
     <AssemblyTitle>MyTested.AspNetCore.Mvc.Abstractions</AssemblyTitle>
-    <VersionPrefix>10.0.0</VersionPrefix>
+    <VersionPrefix>10.0.1</VersionPrefix>
     <Authors>Ivaylo Kenov</Authors>
     <TargetFramework>net10.0</TargetFramework>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
@@ -34,9 +34,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" Version="3.1.6" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.12" />
-    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="10.0.12" />
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="10.0.12" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.13" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="10.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="10.0.13" />
   </ItemGroup>
 
   <ItemGroup>
